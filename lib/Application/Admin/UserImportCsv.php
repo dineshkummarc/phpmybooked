@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2017-2020 Nick Korbel
+=======
+ * Copyright 2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -31,20 +35,31 @@ class UserImportCsvRow
 	public $timezone;
 	public $language;
 	public $groups = array();
+<<<<<<< HEAD
     public $attributes = array();
     public $status = 1;
     public $credits;
     public $color;
+=======
+>>>>>>> old/master
 
 	private $values = array();
 	private $indexes = array();
 
+<<<<<<< HEAD
     /**
      * @param $values array
      * @param $indexes array
      * @param $attributes CustomAttribute[]
      */
     public function __construct($values, $indexes, $attributes)
+=======
+	/**
+	 * @param $values array
+	 * @param $indexes array
+	 */
+	public function __construct($values, $indexes)
+>>>>>>> old/master
 	{
 		$this->values = $values;
 		$this->indexes = $indexes;
@@ -59,6 +74,7 @@ class UserImportCsvRow
 		$this->position = $this->valueOrDefault('position');
 		$this->timezone = $this->valueOrDefault('timezone');
 		$this->language = $this->valueOrDefault('language');
+<<<<<<< HEAD
 		$this->status = $this->valueOrDefault('status');
 		$this->credits = $this->valueOrDefault('credits');
 		$this->color = $this->valueOrDefault('color');
@@ -67,6 +83,9 @@ class UserImportCsvRow
         {
             $this->attributes[$label] = $this->valueOrDefault($label);
         }
+=======
+		$this->groups = (!array_key_exists('groups', $this->indexes) || $indexes['groups'] === false) ? array() : array_map('trim', explode(',', htmlspecialchars($values[$indexes['groups']])));
+>>>>>>> old/master
 	}
 
 	public function IsValid()
@@ -79,6 +98,7 @@ class UserImportCsvRow
         return $isValid;
 	}
 
+<<<<<<< HEAD
     /**
      * @param string[] $values
      * @param CustomAttribute[] $attributes
@@ -89,6 +109,15 @@ class UserImportCsvRow
         $values = array_map('strtolower', $values);
 
         if (!in_array('email', $values) && !in_array('username', $values))
+=======
+	/**
+	 * @param $values
+	 * @return bool|string[]
+	 */
+	public static function GetHeaders($values)
+	{
+		if (!in_array('email', $values) && !in_array('username', $values))
+>>>>>>> old/master
 		{
 			return false;
 		}
@@ -104,6 +133,7 @@ class UserImportCsvRow
 		$indexes['timezone'] = self::indexOrFalse('timezone', $values);
 		$indexes['language'] = self::indexOrFalse('language', $values);
 		$indexes['groups'] = self::indexOrFalse('groups', $values);
+<<<<<<< HEAD
 		$indexes['status'] = self::indexOrFalse('status', $values);
 		$indexes['credits'] = self::indexOrFalse('credits', $values);
 		$indexes['color'] = self::indexOrFalse('color', $values);
@@ -114,6 +144,8 @@ class UserImportCsvRow
             $escapedLabel = str_replace('\'', '\\\\', $label);
             $indexes[$label] = self::indexOrFalse($escapedLabel, $values);
         }
+=======
+>>>>>>> old/master
 
 		return $indexes;
 	}
@@ -134,6 +166,7 @@ class UserImportCsvRow
 	 */
 	private function valueOrDefault($column)
 	{
+<<<<<<< HEAD
 		return ($this->indexes[$column] === false || !array_key_exists($this->indexes[$column], $this->values)) ? '' : $this->tryToGetEscapedValue($this->values[$this->indexes[$column]]);
 	}
 
@@ -147,6 +180,9 @@ class UserImportCsvRow
 		}
 
 		return $value;
+=======
+		return ($this->indexes[$column] === false || !array_key_exists($this->indexes[$column], $this->values)) ? '' : htmlspecialchars(trim($this->values[$this->indexes[$column]]));
+>>>>>>> old/master
 	}
 }
 
@@ -162,6 +198,7 @@ class UserImportCsv
 	 */
 	private $skippedRowNumbers = array();
 
+<<<<<<< HEAD
     /**
      * @var CustomAttribute[]
      */
@@ -176,6 +213,12 @@ class UserImportCsv
 		$this->file = $file;
         $this->attributes = $attributes;
     }
+=======
+	public function __construct(UploadedFile $file)
+	{
+		$this->file = $file;
+	}
+>>>>>>> old/master
 
 	/**
 	 * @return UserImportCsvRow[]
@@ -197,7 +240,11 @@ class UserImportCsv
 
         Log::Debug('%s rows in user import file', count($csvRows));
 
+<<<<<<< HEAD
 		$headers = UserImportCsvRow::GetHeaders(str_getcsv($csvRows[0]), $this->attributes);
+=======
+		$headers = UserImportCsvRow::GetHeaders(str_getcsv($csvRows[0]));
+>>>>>>> old/master
 
 		if (!$headers)
 		{
@@ -209,7 +256,11 @@ class UserImportCsv
 		{
 			$values = str_getcsv($csvRows[$i]);
 
+<<<<<<< HEAD
 			$row = new UserImportCsvRow($values, $headers, $this->attributes);
+=======
+			$row = new UserImportCsvRow($values, $headers);
+>>>>>>> old/master
 
 			if ($row->IsValid())
 			{

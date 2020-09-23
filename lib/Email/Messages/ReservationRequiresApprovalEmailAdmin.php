@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,6 +22,7 @@ require_once(ROOT_DIR . 'lib/Email/namespace.php');
 
 class ReservationRequiresApprovalEmailAdmin extends ReservationCreatedEmailAdmin
 {
+<<<<<<< HEAD
     /**
      * @param UserDto $adminDto
      * @param User $reservationOwner
@@ -29,10 +34,26 @@ class ReservationRequiresApprovalEmailAdmin extends ReservationCreatedEmailAdmin
 	public function __construct(UserDto $adminDto, User $reservationOwner, ReservationSeries $reservationSeries, IResource $primaryResource, IAttributeRepository $attributeRepository, IUserRepository $userRepository)
 	{
 		parent::__construct($adminDto, $reservationOwner, $reservationSeries, $primaryResource, $attributeRepository, $userRepository);
+=======
+	/**
+	 * @param UserDto $adminDto
+	 * @param User $reservationOwner
+	 * @param ReservationSeries $reservationSeries
+	 * @param IResource $primaryResource
+	 * @param IAttributeRepository $attributeRepository
+	 */
+	public function __construct(UserDto $adminDto, User $reservationOwner, ReservationSeries $reservationSeries, IResource $primaryResource, IAttributeRepository $attributeRepository)
+	{
+		parent::__construct($adminDto, $reservationOwner, $reservationSeries, $primaryResource, $attributeRepository);
+>>>>>>> old/master
 	}
 
 	public function Subject()
 	{
+<<<<<<< HEAD
         return $this->Translate('ReservationApprovalAdminSubjectWithResource', array($this->resource->GetName()));
+=======
+		return $this->Translate('ReservationApprovalAdminSubject');
+>>>>>>> old/master
 	}
 }

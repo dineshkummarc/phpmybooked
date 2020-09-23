@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -38,8 +42,14 @@ class StringBuilder
 		return count($this->_string);
 	}
 
+<<<<<<< HEAD
 	public function ToString($glue = '')
 	{
 		return join($glue, $this->_string);
+=======
+	public function ToString()
+	{
+		return join('', $this->_string);
+>>>>>>> old/master
 	}
 }

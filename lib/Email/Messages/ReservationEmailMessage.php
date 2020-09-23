@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2012-2020 Nick Korbel
+=======
+ * Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,6 +52,7 @@ abstract class ReservationEmailMessage extends EmailMessage
 	 */
 	protected $attributeRepository;
 
+<<<<<<< HEAD
     /**
      * @var IUserRepository
      */
@@ -58,6 +63,9 @@ abstract class ReservationEmailMessage extends EmailMessage
                                 $language,
                                 IAttributeRepository $attributeRepository,
                                 IUserRepository $userRepository)
+=======
+	public function __construct(User $reservationOwner, ReservationSeries $reservationSeries, $language = null, IAttributeRepository $attributeRepository)
+>>>>>>> old/master
 	{
 		if (empty($language))
 		{
@@ -70,8 +78,12 @@ abstract class ReservationEmailMessage extends EmailMessage
 		$this->timezone = $reservationOwner->Timezone();
 		$this->attributeRepository = $attributeRepository;
 		$this->primaryResource = $reservationSeries->Resource();
+<<<<<<< HEAD
         $this->userRepository = $userRepository;
     }
+=======
+	}
+>>>>>>> old/master
 
 	/**
 	 * @abstract
@@ -120,17 +132,26 @@ abstract class ReservationEmailMessage extends EmailMessage
 		$this->Set('Description', $this->reservationSeries->Description());
 
 		$repeatDates = array();
+<<<<<<< HEAD
 		$repeatRanges = array();
+=======
+>>>>>>> old/master
 		if ($this->reservationSeries->IsRecurring())
 		{
 			foreach ($this->reservationSeries->Instances() as $repeated)
 			{
 				$repeatDates[] = $repeated->StartDate()->ToTimezone($this->timezone);
+<<<<<<< HEAD
 				$repeatRanges[] = $repeated->Duration()->ToTimezone($this->timezone);
 			}
 		}
 		$this->Set('RepeatDates', $repeatDates);
 		$this->Set('RepeatRanges', $repeatRanges);
+=======
+			}
+		}
+		$this->Set('RepeatDates', $repeatDates);
+>>>>>>> old/master
 		$this->Set('RequiresApproval', $this->reservationSeries->RequiresApproval());
 		$this->Set('ReservationUrl', sprintf("%s?%s=%s", Pages::RESERVATION, QueryStringKeys::REFERENCE_NUMBER, $currentInstance->ReferenceNumber()));
 		$icalUrl = sprintf("export/%s?%s=%s", Pages::CALENDAR_EXPORT, QueryStringKeys::REFERENCE_NUMBER, $currentInstance->ReferenceNumber());
@@ -179,6 +200,7 @@ abstract class ReservationEmailMessage extends EmailMessage
         $this->PopulateIcsAttachment($currentInstance, $attributeValues);
 
 		$this->Set('AutoReleaseMinutes', $minimumAutoRelease);
+<<<<<<< HEAD
 		$this->Set('ReferenceNumber', $currentInstance->ReferenceNumber());
 
         $participants = array();
@@ -199,6 +221,8 @@ abstract class ReservationEmailMessage extends EmailMessage
 
         $this->Set('CreditsCurrent', $currentInstance->GetCreditsRequired());
         $this->Set('CreditsTotal', $this->reservationSeries->GetCreditsRequired());
+=======
+>>>>>>> old/master
 	}
 
 	private function GetFullImagePath($img)

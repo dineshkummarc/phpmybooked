@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -42,9 +46,16 @@ class DashboardPresenter
 		$upcomingReservations = new UpcomingReservations(new SmartyPage());
 		$availability = new ResourceAvailabilityControl(new SmartyPage());
 
+<<<<<<< HEAD
 		$this->_page->AddItem($announcement);
 		$this->_page->AddItem($upcomingReservations);
 		$this->_page->AddItem($availability);
+=======
+		
+		$this->_page->AddItem($upcomingReservations);
+		$this->_page->AddItem($availability);
+        $this->_page->AddItem($announcement);
+>>>>>>> old/master
 
 		if (ServiceLocator::GetServer()->GetUserSession()->IsAdmin)
 		{

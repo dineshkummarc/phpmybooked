@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 Copyright 2012-2014 Alois Schloegl
 
 This file is part of Booked Scheduler.

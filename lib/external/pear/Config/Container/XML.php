@@ -15,7 +15,11 @@
 // | Author: Bertrand Mansion <bmansion@mamasam.com>                      |
 // +----------------------------------------------------------------------+
 //
+<<<<<<< HEAD
 // $Id: XML.php 203592 2005-12-24 02:24:30Z aashley $
+=======
+// $Id: XML.php,v 1.15 2005/12/24 02:24:30 aashley Exp $
+>>>>>>> old/master
 
 require_once('XML/Parser.php');
 require_once('XML/Util.php');
@@ -81,7 +85,11 @@ class Config_Container_XML extends XML_Parser
     *                               useAttr     : whether to use the attributes
     *                               isFile      : whether the given content is a file or an XML string
     */
+<<<<<<< HEAD
     function __construct($options = array())
+=======
+    function Config_Container_XML($options = array())
+>>>>>>> old/master
     {
         foreach ($options as $key => $value) {
             $this->options[$key] = $value;
@@ -246,4 +254,8 @@ class Config_Container_XML extends XML_Parser
         return $string;
     } // end func toString
 } // end class Config_Container_XML
+<<<<<<< HEAD
 ?>
+=======
+?>
+>>>>>>> old/master

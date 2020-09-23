@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -17,6 +21,7 @@ You should have received a copy of the GNU General Public License
 along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 *}
 
+<<<<<<< HEAD
 Esta ï¿½ sua senha temporï¿½ria no Booked Scheduler: {$TemporaryPassword}
 
 <br/>
@@ -24,4 +29,13 @@ Esta ï¿½ sua senha temporï¿½ria no Booked Scheduler: {$TemporaryPassword}
 Sua senha antiga nï¿½o funcionarï¿½ mais.
 
 <a href="{$ScriptUrl}">Faï¿½a login no Booked Scheduler</a> e altere sua senha o mais rï¿½pido possï¿½vel.
+=======
+Esta é sua senha temporária no Booked Scheduler: {$TemporaryPassword}
+
+<br/>
+
+Sua senha antiga não funcionará mais.
+
+<a href="{$ScriptUrl}">Faça login no Booked Scheduler</a> e altere sua senha o mais rápido possível.
+>>>>>>> old/master
 

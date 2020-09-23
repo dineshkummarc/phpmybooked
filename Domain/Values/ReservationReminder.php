@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2013-2020 Nick Korbel
+=======
+Copyright 2013-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -26,21 +30,37 @@ class ReservationReminder
 
 	public function __construct($value, $interval)
 	{
+<<<<<<< HEAD
 		$this->value = is_numeric($value) ? $value : 0;
+=======
+		$this->value = $value;
+>>>>>>> old/master
 		$this->interval = $interval;
 
 		if ($interval == ReservationReminderInterval::Days)
 		{
+<<<<<<< HEAD
 			$this->minutesPrior = $this->value * 60 * 24;
 		}
 		elseif ($interval == ReservationReminderInterval::Hours)
 		{
 			$this->minutesPrior = $this->value * 60;
+=======
+			$this->minutesPrior = $value * 60 * 24;
+		}
+		elseif ($interval == ReservationReminderInterval::Hours)
+		{
+			$this->minutesPrior = $value * 60;
+>>>>>>> old/master
 		}
 		else
 		{
 			$this->interval = ReservationReminderInterval::Minutes;
+<<<<<<< HEAD
 			$this->minutesPrior = $this->value;
+=======
+			$this->minutesPrior = $value;
+>>>>>>> old/master
 		}
 	}
 

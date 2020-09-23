@@ -2,22 +2,37 @@
 /**
  * Smarty Internal Plugin Resource File
  *
+<<<<<<< HEAD
  * @package    Smarty
  * @subpackage TemplateResources
  * @author     Uwe Tews
  * @author     Rodney Rehm
+=======
+ * @package Smarty
+ * @subpackage TemplateResources
+ * @author Uwe Tews
+ * @author Rodney Rehm
+>>>>>>> old/master
  */
 
 /**
  * Smarty Internal Plugin Resource File
+<<<<<<< HEAD
  * Implements the file system as resource for Smarty templates
  *
  * @package    Smarty
+=======
+ *
+ * Implements the file system as resource for Smarty templates
+ *
+ * @package Smarty
+>>>>>>> old/master
  * @subpackage TemplateResources
  */
 class Smarty_Internal_Resource_File extends Smarty_Resource
 {
     /**
+<<<<<<< HEAD
      * build template filepath by traversing the template_dir array
      *
      * @param Smarty_Template_Source    $source    source object
@@ -108,16 +123,23 @@ class Smarty_Internal_Resource_File extends Smarty_Resource
     }
 
     /**
+=======
+>>>>>>> old/master
      * populate Source Object with meta data from Resource
      *
      * @param Smarty_Template_Source   $source    source object
      * @param Smarty_Internal_Template $_template template object
      */
+<<<<<<< HEAD
     public function populate(Smarty_Template_Source $source, Smarty_Internal_Template $_template = null)
+=======
+    public function populate(Smarty_Template_Source $source, Smarty_Internal_Template $_template=null)
+>>>>>>> old/master
     {
         $source->filepath = $this->buildFilepath($source, $_template);
 
         if ($source->filepath !== false) {
+<<<<<<< HEAD
             if (isset($source->smarty->security_policy) && is_object($source->smarty->security_policy)) {
                 $source->smarty->security_policy->isTrustedResourceDir($source->filepath, $source->isConfig);
             }
@@ -127,6 +149,17 @@ class Smarty_Internal_Resource_File extends Smarty_Resource
             $source->timestamp = filemtime($source->filepath);
         } else {
             $source->timestamp = $source->exists = false;
+=======
+            if (is_object($source->smarty->security_policy)) {
+                $source->smarty->security_policy->isTrustedResourceDir($source->filepath);
+            }
+
+            $source->uid = sha1($source->filepath);
+            if ($source->smarty->compile_check && !isset($source->timestamp)) {
+                $source->timestamp = @filemtime($source->filepath);
+                $source->exists = !!$source->timestamp;
+            }
+>>>>>>> old/master
         }
     }
 
@@ -137,40 +170,72 @@ class Smarty_Internal_Resource_File extends Smarty_Resource
      */
     public function populateTimestamp(Smarty_Template_Source $source)
     {
+<<<<<<< HEAD
         if (!$source->exists) {
             $source->timestamp = $source->exists = is_file($source->filepath);
         }
         if ($source->exists) {
             $source->timestamp = filemtime($source->filepath);
         }
+=======
+        $source->timestamp = @filemtime($source->filepath);
+        $source->exists = !!$source->timestamp;
+>>>>>>> old/master
     }
 
     /**
      * Load template's source from file into current template object
      *
      * @param  Smarty_Template_Source $source source object
+<<<<<<< HEAD
      *
+=======
+>>>>>>> old/master
      * @return string                 template source
      * @throws SmartyException        if source cannot be loaded
      */
     public function getContent(Smarty_Template_Source $source)
     {
+<<<<<<< HEAD
         if ($source->exists) {
             return file_get_contents($source->filepath);
         }
         throw new SmartyException('Unable to read ' . ($source->isConfig ? 'config' : 'template') .
                                   " {$source->type} '{$source->name}'");
+=======
+        if ($source->timestamp) {
+            return file_get_contents($source->filepath);
+        }
+        if ($source instanceof Smarty_Config_Source) {
+            throw new SmartyException("Unable to read config {$source->type} '{$source->name}'");
+        }
+        throw new SmartyException("Unable to read template {$source->type} '{$source->name}'");
+>>>>>>> old/master
     }
 
     /**
      * Determine basename for compiled filename
      *
      * @param  Smarty_Template_Source $source source object
+<<<<<<< HEAD
      *
+=======
+>>>>>>> old/master
      * @return string                 resource's basename
      */
     public function getBasename(Smarty_Template_Source $source)
     {
+<<<<<<< HEAD
         return basename($source->filepath);
     }
+=======
+        $_file = $source->name;
+        if (($_pos = strpos($_file, ']')) !== false) {
+            $_file = substr($_file, $_pos + 1);
+        }
+
+        return basename($_file);
+    }
+
+>>>>>>> old/master
 }

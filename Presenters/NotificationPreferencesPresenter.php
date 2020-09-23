@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -43,7 +47,10 @@ class NotificationPreferencesPresenter
 	public function PageLoad()
 	{
         $this->page->SetEmailEnabled(Configuration::Instance()->GetKey(ConfigKeys::ENABLE_EMAIL, new BooleanConverter()));
+<<<<<<< HEAD
         $this->page->SetParticipationEnabled(!Configuration::Instance()->GetSectionKey(ConfigSection::RESERVATION, ConfigKeys::RESERVATION_PREVENT_PARTICIPATION, new BooleanConverter()));
+=======
+>>>>>>> old/master
 
         $userSession = ServiceLocator::GetServer()->GetUserSession();
         $user = $this->userRepository->LoadById($userSession->UserId);
@@ -58,8 +65,11 @@ class NotificationPreferencesPresenter
         $this->page->SetCreated($user->WantsEventEmail(new ReservationCreatedEvent()));
         $this->page->SetUpdated($user->WantsEventEmail(new ReservationUpdatedEvent()));
         $this->page->SetDeleted($user->WantsEventEmail(new ReservationDeletedEvent()));
+<<<<<<< HEAD
         $this->page->SetSeriesEnding($user->WantsEventEmail(new ReservationSeriesEndingEvent()));
         $this->page->SetParticipantChanged($user->WantsEventEmail(new ParticipationChangedEvent()));
+=======
+>>>>>>> old/master
 	}
 
 	private function UpdateProfile(User $user)
@@ -68,8 +78,11 @@ class NotificationPreferencesPresenter
         $user->ChangeEmailPreference(new ReservationCreatedEvent(), $this->page->GetCreated());
         $user->ChangeEmailPreference(new ReservationUpdatedEvent(), $this->page->GetUpdated());
         $user->ChangeEmailPreference(new ReservationDeletedEvent(), $this->page->GetDeleted());
+<<<<<<< HEAD
         $user->ChangeEmailPreference(new ReservationSeriesEndingEvent(), $this->page->GetSeriesEnding());
         $user->ChangeEmailPreference(new ParticipationChangedEvent(), $this->page->GetParticipantChanged());
+=======
+>>>>>>> old/master
 
         $this->userRepository->Update($user);
 	}

@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -20,14 +24,21 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 	</div><!-- close main-->
 
 	<footer class="footer navbar">
+<<<<<<< HEAD
 		&copy; 2020 <a href="http://www.twinkletoessoftware.com">Twinkle Toes Software</a> <br/><a href="http://www.bookedscheduler.com">Booked Scheduler v{$Version}</a>
+=======
+		&copy; 2016 <a href="http://www.twinkletoessoftware.com">Twinkle Toes Software</a> <br/><a href="http://www.bookedscheduler.com">Booked Scheduler v{$Version}</a>
+>>>>>>> old/master
 	</footer>
 
 	<script type="text/javascript">
 		init();
 		$.blockUI.defaults.css.border = 'none';
 		$.blockUI.defaults.css.top = '25%';
+<<<<<<< HEAD
 
+=======
+>>>>>>> old/master
 	</script>
 
 	{if !empty($GoogleAnalyticsTrackingId)}
@@ -42,6 +53,9 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 			  ga('send', 'pageview');
 			</script>
 	{/if}
+<<<<<<< HEAD
 
+=======
+>>>>>>> old/master
 	</body>
 </html>

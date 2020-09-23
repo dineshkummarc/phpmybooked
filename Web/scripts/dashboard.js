@@ -1,5 +1,6 @@
 function Dashboard(opts) {
 	var options = opts;
+<<<<<<< HEAD
 	
 	var ShowReservationAjaxResponse = function () {
         $('.blockUI').css('cursor', 'default');
@@ -19,6 +20,9 @@ function Dashboard(opts) {
     var CloseSaveDialog = function () {
         $.unblockUI();
     };
+=======
+
+>>>>>>> old/master
 	Dashboard.prototype.init = function () {
 		function setIcon(dash, targetIcon) {
 			var iconSpan = dash.find('.dashboardHeader').find('a>.glyphicon');
@@ -62,6 +66,12 @@ function Dashboard(opts) {
 
 		$('.resourceNameSelector').each(function () {
 			$(this).bindResourceDetails($(this).attr('resource-id'));
+<<<<<<< HEAD
+=======
+			$(this).click(function (e) {
+				e.preventDefault();
+			});
+>>>>>>> old/master
 		});
 
 		var reservations = $(".reservation");
@@ -128,6 +138,7 @@ function Dashboard(opts) {
 			var form = $('#form-checkin');
 			var refNum = $(this).attr('data-referencenumber');
 			$('#referenceNumber').val(refNum);
+<<<<<<< HEAD
 			$.blockUI({message: $('#wait-box')});
 			ajaxPost(form, $(this).data('url'), null, function (data) {
 				$('button[data-referencenumber="' + refNum + '"]').addClass('no-show');
@@ -151,6 +162,11 @@ function Dashboard(opts) {
 				$('button[data-referencenumber="' + refNum + '"]').addClass('no-show');
 				$('#result').html(data);
                 ShowReservationAjaxResponse();
+=======
+
+			ajaxPost(form, null, null, function (data) {
+				$('button[data-referencenumber="' + refNum + '"]').addClass('no-show');
+>>>>>>> old/master
 			});
 		});
 	};

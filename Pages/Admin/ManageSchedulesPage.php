@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -28,66 +32,115 @@ interface IUpdateSchedulePage
 	/**
 	 * @return int
 	 */
+<<<<<<< HEAD
 	public function GetScheduleId();
+=======
+	function GetScheduleId();
+>>>>>>> old/master
 
 	/**
 	 * @return string
 	 */
+<<<<<<< HEAD
 	public function GetScheduleName();
+=======
+	function GetScheduleName();
+>>>>>>> old/master
 
 	/**
 	 * @return string
 	 */
+<<<<<<< HEAD
 	public function GetStartDay();
+=======
+	function GetStartDay();
+>>>>>>> old/master
 
 	/**
 	 * @return string
 	 */
+<<<<<<< HEAD
 	public function GetDaysVisible();
+=======
+	function GetDaysVisible();
+>>>>>>> old/master
 
 	/**
 	 * @return string
 	 */
+<<<<<<< HEAD
 	public function GetReservableSlots();
+=======
+	function GetReservableSlots();
+>>>>>>> old/master
 
 	/**
 	 * @return string
 	 */
+<<<<<<< HEAD
 	public function GetBlockedSlots();
+=======
+	function GetBlockedSlots();
+>>>>>>> old/master
 
 	/**
 	 * @return string[]
 	 */
+<<<<<<< HEAD
 	public function GetDailyReservableSlots();
+=======
+	function GetDailyReservableSlots();
+>>>>>>> old/master
 
 	/**
 	 * @return string[]
 	 */
+<<<<<<< HEAD
 	public function GetDailyBlockedSlots();
+=======
+	function GetDailyBlockedSlots();
+>>>>>>> old/master
 
 	/**
 	 * @return string
 	 */
+<<<<<<< HEAD
 	public function GetLayoutTimezone();
+=======
+	function GetLayoutTimezone();
+>>>>>>> old/master
 
 	/**
 	 * @return bool
 	 */
+<<<<<<< HEAD
 	public function GetUsingSingleLayout();
+=======
+	function GetUsingSingleLayout();
+>>>>>>> old/master
 
 	/**
 	 * @return int
 	 */
+<<<<<<< HEAD
 	public function GetSourceScheduleId();
+=======
+	function GetSourceScheduleId();
+>>>>>>> old/master
 
 	/**
 	 * @return int
 	 */
+<<<<<<< HEAD
 	public function GetTargetScheduleId();
+=======
+	function GetTargetScheduleId();
+>>>>>>> old/master
 
 	/**
 	 * @return string
 	 */
+<<<<<<< HEAD
 	public function GetValue();
 
 	/**
@@ -109,6 +162,9 @@ interface IUpdateSchedulePage
 	 * @return bool
 	 */
 	public function GetIsUnlimitedMaximumResourcesPerReservation();
+=======
+	function GetValue();
+>>>>>>> old/master
 }
 
 interface IManageSchedulesPage extends IUpdateSchedulePage, IActionPage, IPageable
@@ -181,13 +237,18 @@ interface IManageSchedulesPage extends IUpdateSchedulePage, IActionPage, IPageab
 	 * @return int
 	 */
 	public function GetPeakEndDMonth();
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> old/master
 	public function DisplayPeakTimes(IScheduleLayout $layout);
 
 	/**
 	 * @return bool
 	 */
 	public function GetDeletePeakTimes();
+<<<<<<< HEAD
 
 	/**
 	 * @param BookableResource[] $resources
@@ -264,6 +325,8 @@ interface IManageSchedulesPage extends IUpdateSchedulePage, IActionPage, IPageab
 	 * @return int
 	 */
 	public function GetDefaultStyle();
+=======
+>>>>>>> old/master
 }
 
 class ManageSchedulesPage extends ActionPage implements IManageSchedulesPage
@@ -289,6 +352,7 @@ class ManageSchedulesPage extends ActionPage implements IManageSchedulesPage
 	{
 		$this->_presenter->PageLoad();
 
+<<<<<<< HEAD
 		$resources = Resources::GetInstance();
 		$this->Set('DayNames', $resources->GetDays('full'));
 		$this->Set('Today', Resources::GetInstance()->GetString('Today'));
@@ -303,6 +367,15 @@ class ManageSchedulesPage extends ActionPage implements IManageSchedulesPage
 				ScheduleStyle::CondensedWeek => $resources->GetString('Week'),
 		));
 		$this->Display('Admin/Schedules/manage_schedules.tpl');
+=======
+		$this->Set('DayNames', Resources::GetInstance()->GetDays('full'));
+		$this->Set('Today', Resources::GetInstance()->GetString('Today'));
+		$this->Set('TimeFormat', Resources::GetInstance()->GetDateFormat('general_time_js'));
+		$this->Set('DefaultDate', Date::Now()->SetTimeString('08:00'));
+		$this->Set('Months', Resources::GetInstance()->GetMonths('full'));
+		$this->Set('DayList', range(1, 31));
+		$this->Display('Admin/manage_schedules.tpl');
+>>>>>>> old/master
 	}
 
 	public function DisplayPeakTimes(IScheduleLayout $layout)
@@ -411,7 +484,11 @@ class ManageSchedulesPage extends ActionPage implements IManageSchedulesPage
 
 	public function ProcessDataRequest($dataRequest)
 	{
+<<<<<<< HEAD
 		$this->_presenter->ProcessDataRequest($dataRequest);
+=======
+		// no-op
+>>>>>>> old/master
 	}
 
 	/**
@@ -574,6 +651,7 @@ class ManageSchedulesPage extends ActionPage implements IManageSchedulesPage
 		$delete = $this->GetForm(FormKeys::PEAK_DELETE);
 		return $delete == '1';
 	}
+<<<<<<< HEAD
 
 	public function BindResources($resources)
 	{
@@ -671,4 +749,6 @@ class ManageSchedulesPage extends ActionPage implements IManageSchedulesPage
 	{
 		return $this->GetCheckbox(FormKeys::MAXIMUM_RESOURCES_PER_RESERVATION_UNLIMITED);
 	}
+=======
+>>>>>>> old/master
 }

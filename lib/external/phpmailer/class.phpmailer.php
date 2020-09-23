@@ -31,7 +31,11 @@ class PHPMailer
      * The PHPMailer Version number.
      * @var string
      */
+<<<<<<< HEAD
     public $Version = '5.2.21';
+=======
+    public $Version = '5.2.16';
+>>>>>>> old/master
 
     /**
      * Email priority.
@@ -201,9 +205,12 @@ class PHPMailer
     /**
      * An ID to be used in the Message-ID header.
      * If empty, a unique id will be generated.
+<<<<<<< HEAD
      * You can set your own, but it must be in the format "<id@domain>",
      * as defined in RFC5322 section 3.6.4 or it will be ignored.
      * @see https://tools.ietf.org/html/rfc5322#section-3.6.4
+=======
+>>>>>>> old/master
      * @var string
      */
     public $MessageID = '';
@@ -424,6 +431,7 @@ class PHPMailer
     public $DKIM_private = '';
 
     /**
+<<<<<<< HEAD
      * DKIM private key string.
      * If set, takes precedence over `$DKIM_private`.
      * @var string
@@ -431,6 +439,8 @@ class PHPMailer
     public $DKIM_private_string = '';
 
     /**
+=======
+>>>>>>> old/master
      * Callback Action function name.
      *
      * The function that handles the result of the send email action.
@@ -691,16 +701,26 @@ class PHPMailer
         } else {
             $subject = $this->encodeHeader($this->secureHeader($subject));
         }
+<<<<<<< HEAD
 
         //Can't use additional_parameters in safe_mode, calling mail() with null params breaks
         //@link http://php.net/manual/en/function.mail.php
         if (ini_get('safe_mode') or !$this->UseSendmailOptions or is_null($params)) {
+=======
+        //Can't use additional_parameters in safe_mode
+        //@link http://php.net/manual/en/function.mail.php
+        if (ini_get('safe_mode') or !$this->UseSendmailOptions) {
+>>>>>>> old/master
             $result = @mail($to, $subject, $body, $header);
         } else {
             $result = @mail($to, $subject, $body, $header, $params);
         }
         return $result;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> old/master
     /**
      * Output debugging info via user-defined method.
      * Only generates output if SMTP debug output is enabled (@see SMTP::$do_debug).
@@ -1294,11 +1314,17 @@ class PHPMailer
 
             // Sign with DKIM if enabled
             if (!empty($this->DKIM_domain)
+<<<<<<< HEAD
                 && !empty($this->DKIM_selector)
                 && (!empty($this->DKIM_private_string)
                    || (!empty($this->DKIM_private) && file_exists($this->DKIM_private))
                 )
             ) {
+=======
+                && !empty($this->DKIM_private)
+                && !empty($this->DKIM_selector)
+                && file_exists($this->DKIM_private)) {
+>>>>>>> old/master
                 $header_dkim = $this->DKIM_Add(
                     $this->MIMEHeader . $this->mailHeader,
                     $this->encodeHeader($this->secureHeader($this->Subject)),
@@ -1364,6 +1390,7 @@ class PHPMailer
      */
     protected function sendmailSend($header, $body)
     {
+<<<<<<< HEAD
         // CVE-2016-10033, CVE-2016-10045: Don't pass -f if characters will be escaped.
         if (!empty($this->Sender) and self::isShellSafe($this->Sender)) {
             if ($this->Mailer == 'qmail') {
@@ -1382,6 +1409,21 @@ class PHPMailer
         // TODO: If possible, this should be changed to escapeshellarg.  Needs thorough testing.
         $sendmail = sprintf($sendmailFmt, escapeshellcmd($this->Sendmail), $this->Sender);
 
+=======
+        if ($this->Sender != '') {
+            if ($this->Mailer == 'qmail') {
+                $sendmail = sprintf('%s -f%s', escapeshellcmd($this->Sendmail), escapeshellarg($this->Sender));
+            } else {
+                $sendmail = sprintf('%s -oi -f%s -t', escapeshellcmd($this->Sendmail), escapeshellarg($this->Sender));
+            }
+        } else {
+            if ($this->Mailer == 'qmail') {
+                $sendmail = sprintf('%s', escapeshellcmd($this->Sendmail));
+            } else {
+                $sendmail = sprintf('%s -oi -t', escapeshellcmd($this->Sendmail));
+            }
+        }
+>>>>>>> old/master
         if ($this->SingleTo) {
             foreach ($this->SingleToArray as $toAddr) {
                 if (!@$mail = popen($sendmail, 'w')) {
@@ -1428,6 +1470,7 @@ class PHPMailer
     }
 
     /**
+<<<<<<< HEAD
      * Fix CVE-2016-10033 and CVE-2016-10045 by disallowing potentially unsafe shell characters.
      *
      * Note that escapeshellarg and escapeshellcmd are inadequate for our purposes, especially on Windows.
@@ -1462,6 +1505,8 @@ class PHPMailer
     }
 
     /**
+=======
+>>>>>>> old/master
      * Send mail using the PHP mail() function.
      * @param string $header The message headers
      * @param string $body The message body
@@ -1480,6 +1525,7 @@ class PHPMailer
 
         $params = null;
         //This sets the SMTP envelope sender which gets turned into a return-path header by the receiver
+<<<<<<< HEAD
         if (!empty($this->Sender) and $this->validateAddress($this->Sender)) {
             // CVE-2016-10033, CVE-2016-10045: Don't pass -f if characters will be escaped.
             if (self::isShellSafe($this->Sender)) {
@@ -1487,6 +1533,12 @@ class PHPMailer
             }
         }
         if (!empty($this->Sender) and !ini_get('safe_mode') and $this->validateAddress($this->Sender)) {
+=======
+        if (!empty($this->Sender)) {
+            $params = sprintf('-f%s', $this->Sender);
+        }
+        if ($this->Sender != '' and !ini_get('safe_mode')) {
+>>>>>>> old/master
             $old_from = ini_get('sendmail_from');
             ini_set('sendmail_from', $this->Sender);
         }
@@ -1540,10 +1592,17 @@ class PHPMailer
         if (!$this->smtpConnect($this->SMTPOptions)) {
             throw new phpmailerException($this->lang('smtp_connect_failed'), self::STOP_CRITICAL);
         }
+<<<<<<< HEAD
         if (!empty($this->Sender) and $this->validateAddress($this->Sender)) {
             $smtp_from = $this->Sender;
         } else {
             $smtp_from = $this->From;
+=======
+        if ('' == $this->Sender) {
+            $smtp_from = $this->From;
+        } else {
+            $smtp_from = $this->Sender;
+>>>>>>> old/master
         }
         if (!$this->smtp->mail($smtp_from)) {
             $this->setError($this->lang('from_failed') . $smtp_from . ' : ' . implode(',', $this->smtp->getError()));
@@ -1735,6 +1794,7 @@ class PHPMailer
      */
     public function setLanguage($langcode = 'en', $lang_path = '')
     {
+<<<<<<< HEAD
         // Backwards compatibility for renamed language codes
         $renamed_langcodes = array(
             'br' => 'pt_br',
@@ -1748,6 +1808,8 @@ class PHPMailer
             $langcode = $renamed_langcodes[$langcode];
         }
 
+=======
+>>>>>>> old/master
         // Define full set of translatable strings in English
         $PHPMAILER_LANG = array(
             'authenticate' => 'SMTP Error: Could not authenticate.',
@@ -1774,10 +1836,13 @@ class PHPMailer
             // Calculate an absolute path so it can work if CWD is not here
             $lang_path = dirname(__FILE__). DIRECTORY_SEPARATOR . 'language'. DIRECTORY_SEPARATOR;
         }
+<<<<<<< HEAD
         //Validate $langcode
         if (!preg_match('/^[a-z]{2}(?:_[a-zA-Z]{2})?$/', $langcode)) {
             $langcode = 'en';
         }
+=======
+>>>>>>> old/master
         $foundlang = true;
         $lang_file = $lang_path . 'phpmailer.lang-' . $langcode . '.php';
         // There is no English translation file
@@ -2071,8 +2136,11 @@ class PHPMailer
             $result .= $this->headerLine('Subject', $this->encodeHeader($this->secureHeader($this->Subject)));
         }
 
+<<<<<<< HEAD
         // Only allow a custom message ID if it conforms to RFC 5322 section 3.6.4
         // https://tools.ietf.org/html/rfc5322#section-3.6.4
+=======
+>>>>>>> old/master
         if ('' != $this->MessageID and preg_match('/^<.*@.*>$/', $this->MessageID)) {
             $this->lastMessageID = $this->MessageID;
         } else {
@@ -2179,6 +2247,7 @@ class PHPMailer
     }
 
     /**
+<<<<<<< HEAD
      * Create unique ID
      * @return string
      */
@@ -2187,6 +2256,8 @@ class PHPMailer
     }
 
     /**
+=======
+>>>>>>> old/master
      * Assemble the message body.
      * Returns an empty string on failure.
      * @access public
@@ -2197,7 +2268,11 @@ class PHPMailer
     {
         $body = '';
         //Create unique IDs and preset boundaries
+<<<<<<< HEAD
         $this->uniqueid = $this->generateId();
+=======
+        $this->uniqueid = md5(uniqid(time()));
+>>>>>>> old/master
         $this->boundary[1] = 'b1_' . $this->uniqueid;
         $this->boundary[2] = 'b2_' . $this->uniqueid;
         $this->boundary[3] = 'b3_' . $this->uniqueid;
@@ -3377,6 +3452,7 @@ class PHPMailer
     }
 
     /**
+<<<<<<< HEAD
      * Create a message body from an HTML string.
      * Automatically inlines images and creates a plain-text version by converting the HTML,
      * overwriting any existing values in Body and AltBody.
@@ -3389,6 +3465,18 @@ class PHPMailer
      * @param boolean|callable $advanced Whether to use the internal HTML to text converter
      *    or your own custom converter @see PHPMailer::html2text()
      * @return string $message The transformed message Body
+=======
+     * Create a message from an HTML string.
+     * Automatically makes modifications for inline images and backgrounds
+     * and creates a plain-text version by converting the HTML.
+     * Overwrites any existing values in $this->Body and $this->AltBody
+     * @access public
+     * @param string $message HTML message string
+     * @param string $basedir baseline directory for path
+     * @param boolean|callable $advanced Whether to use the internal HTML to text converter
+     *    or your own custom converter @see PHPMailer::html2text()
+     * @return string $message
+>>>>>>> old/master
      */
     public function msgHTML($message, $basedir = '', $advanced = false)
     {
@@ -3458,7 +3546,11 @@ class PHPMailer
      * Convert an HTML string into plain text.
      * This is used by msgHTML().
      * Note - older versions of this function used a bundled advanced converter
+<<<<<<< HEAD
      * which was been removed for license reasons in #232.
+=======
+     * which was been removed for license reasons in #232
+>>>>>>> old/master
      * Example usage:
      * <code>
      * // Use default conversion
@@ -3758,7 +3850,11 @@ class PHPMailer
      * @access public
      * @param string $signHeader
      * @throws phpmailerException
+<<<<<<< HEAD
      * @return string The DKIM signature value
+=======
+     * @return string
+>>>>>>> old/master
      */
     public function DKIM_Sign($signHeader)
     {
@@ -3768,12 +3864,18 @@ class PHPMailer
             }
             return '';
         }
+<<<<<<< HEAD
         $privKeyStr = !empty($this->DKIM_private_string) ? $this->DKIM_private_string : file_get_contents($this->DKIM_private);
         if ('' != $this->DKIM_passphrase) {
+=======
+        $privKeyStr = file_get_contents($this->DKIM_private);
+        if ($this->DKIM_passphrase != '') {
+>>>>>>> old/master
             $privKey = openssl_pkey_get_private($privKeyStr, $this->DKIM_passphrase);
         } else {
             $privKey = openssl_pkey_get_private($privKeyStr);
         }
+<<<<<<< HEAD
         //Workaround for missing digest algorithms in old PHP & OpenSSL versions
         //@link http://stackoverflow.com/a/11117338/333340
         if (version_compare(PHP_VERSION, '5.3.0') >= 0 and
@@ -3795,6 +3897,11 @@ class PHPMailer
                 openssl_pkey_free($privKey);
                 return base64_encode($signature);
             }
+=======
+        if (openssl_sign($signHeader, $signature, $privKey, 'sha256WithRSAEncryption')) { //sha1WithRSAEncryption
+            openssl_pkey_free($privKey);
+            return base64_encode($signature);
+>>>>>>> old/master
         }
         openssl_pkey_free($privKey);
         return '';
@@ -4022,4 +4129,8 @@ class phpmailerException extends Exception
         $errorMsg = '<strong>' . $this->getMessage() . "</strong><br />\n";
         return $errorMsg;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> old/master

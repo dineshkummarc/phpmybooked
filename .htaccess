@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 RewriteEngine On
 # Set RewriteBase if your physical path is different from the URL. For example, if using an alias
 
@@ -14,3 +15,6 @@ RewriteRule ^(.*)$ Web/$1 [QSA,L]
 #Header add Access-Control-Allow-Headers "origin, x-requested-with, content-type"
 #Header add Access-Control-Allow-Methods "PUT, GET, POST, DELETE, OPTIONS"
 #php_value max_input_vars 10000
+=======
+deny from all
+>>>>>>> old/master

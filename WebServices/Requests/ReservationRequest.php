@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2012-2020 Nick Korbel
+=======
+ * Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -82,12 +86,17 @@ class ReservationRequest
 	 * @var ReservationRetryParameterRequestResponse[]
 	 */
 	public $retryParameters;
+<<<<<<< HEAD
     /**
      * @var bool
      */
     public $termsAccepted;
 
     public static function Example()
+=======
+
+	public static function Example()
+>>>>>>> old/master
 	{
 		$date = Date::Now()->ToIso();
 		$request = new ReservationRequest();
@@ -108,7 +117,10 @@ class ReservationRequest
 		$request->startReminder = ReminderRequestResponse::Example();
 		$request->allowParticipation = true;
 		$request->retryParameters = array(ReservationRetryParameterRequestResponse::Example());
+<<<<<<< HEAD
 		$request->termsAccepted = true;
+=======
+>>>>>>> old/master
 
 		return $request;
 	}

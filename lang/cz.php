@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -18,7 +22,11 @@
  * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+<<<<<<< HEAD
 require_once('en_gb.php');
+=======
+require_once('en_us.php');
+>>>>>>> old/master
 
 class cz extends en_us
 {
@@ -32,6 +40,7 @@ class cz extends en_us
 	 */
 	protected function _LoadDates()
 	{
+<<<<<<< HEAD
 		$dates = array();
 
 		$dates['general_date'] = 'j.n.Y';
@@ -56,6 +65,20 @@ class cz extends en_us
 		$dates['embedded_time'] = 'H:i';
 		$dates['embedded_datetime'] = 'j.n. H:i';
 		$dates['report_date'] = '%d.%m.';
+=======
+		$dates = parent::_LoadDates();
+
+		$dates['general_date'] = 'd.m.Y';
+		$dates['general_datetime'] = 'd.m.Y H:i:s';
+		$dates['schedule_daily'] = 'l, d.m.Y';
+		$dates['reservation_email'] = 'd.m.Y H:i';
+		$dates['res_popup'] = 'd.m.Y H:i';
+		$dates['dashboard'] = 'l, d.m.Y H:i';
+		$dates['period_time'] = 'H:i';
+		$dates['general_date_js'] = 'dd.mm.yy';
+		$dates['calendar_time'] = 'HH:mm';
+		$dates['calendar_dates'] = 'd.M.';
+>>>>>>> old/master
 
 		$this->Dates = $dates;
 
@@ -67,7 +90,11 @@ class cz extends en_us
 	 */
 	protected function _LoadStrings()
 	{
+<<<<<<< HEAD
 		$strings = parent::_LoadStrings();
+=======
+		$strings = array();
+>>>>>>> old/master
 
 		$strings['FirstName'] = 'Jméno';
 		$strings['LastName'] = 'Příjmení';
@@ -115,7 +142,11 @@ class cz extends en_us
 		$strings['ReturnToPreviousPage'] = 'Vrátit se zpět';
 		$strings['UnknownError'] = 'Neznámá chyba';
 		$strings['InsufficientPermissionsError'] = 'Nemáte oprávnení';
+<<<<<<< HEAD
 		$strings['MissingReservationResourceError'] = 'Nebyl vybrán prostředek';
+=======
+		$strings['MissingReservationResourceError'] = 'Nebyl vybrán přístroj';
+>>>>>>> old/master
 		$strings['MissingReservationScheduleError'] = 'Nebyl zaškrtnut žádný den';
 		$strings['DoesNotRepeat'] = 'Neopakovat';
 		$strings['Daily'] = 'Denní';
@@ -181,10 +212,13 @@ class cz extends en_us
 		$strings['ResourcePermissionNotAutoGranted'] = 'Povolení není automaticky získáno';
 		$strings['ResourceMinNotice'] = 'Rezervace musí být uskutečněna nejméně %s před začátkem';
 		$strings['ResourceMinNoticeNone'] = 'Rezervace lze provést až do současné doby';
+<<<<<<< HEAD
 		$strings['ResourceMinNoticeUpdate'] = 'Rezervace může být upravena nejpozději %s před začátkem';
 		$strings['ResourceMinNoticeNoneUpdate'] = 'Rezervace může být upravena kdykoliv před začátekem';
 		$strings['ResourceMinNoticeDelete'] = 'Rezervace může být smazána nejpozději %s před začátkem';
 		$strings['ResourceMinNoticeNoneDelete'] = 'Rezervace může být smazána kdykoliv před začátekem';
+=======
+>>>>>>> old/master
 		$strings['ResourceMaxNotice'] = 'Rezervace nesmí končit více než %s před současností';
 		$strings['ResourceMaxNoticeNone'] = 'Rezervace může skončit kdykoliv v budoucnu';
 		$strings['ResourceBufferTime'] = 'Mezi rezervacemi musí být pauza %s.';
@@ -192,12 +226,21 @@ class cz extends en_us
 		$strings['ResourceAllowMultiDay'] = 'Rezervace může být vytvořena na několik dnů';
 		$strings['ResourceNotAllowMultiDay'] = 'Rezervace nelze provádět v rámci několika dnů';
 		$strings['ResourceCapacity'] = 'Tento přístoj má omezenou kapacitu na %s osob';
+<<<<<<< HEAD
 		$strings['ResourceCapacityNone'] = 'Tento prostředek má neomezenou kapacitu';
 		$strings['AddNewResource'] = 'Přidat nový prostředek';
 		$strings['AddNewUser'] = 'Přidat nového uživatele';
 		$strings['AddUser'] = 'Přidat uživatele';
 		$strings['Schedule'] = 'Plánování';
 		$strings['AddResource'] = 'Přidat prostředek';
+=======
+		$strings['ResourceCapacityNone'] = 'Tento přístroj má neomezenou kapacitu';
+		$strings['AddNewResource'] = 'Přidat nový přístroj';
+		$strings['AddNewUser'] = 'Přidat nového uživatele';
+		$strings['AddUser'] = 'Přidat uživatele';
+		$strings['Schedule'] = 'Plánování';
+		$strings['AddResource'] = 'Přidat přístroj';
+>>>>>>> old/master
 		$strings['Capacity'] = 'Kapacita';
 		$strings['Access'] = 'Přístup';
 		$strings['Duration'] = 'Trvání';
@@ -206,7 +249,11 @@ class cz extends en_us
 		$strings['ResetPassword'] = 'Obnovit heslo';
 		$strings['LastLogin'] = 'Poslední přihlášení';
 		$strings['Search'] = 'Hledání';
+<<<<<<< HEAD
 		$strings['ResourcePermissions'] = 'Oprávnění prostředků';
+=======
+		$strings['ResourcePermissions'] = 'Oprávnění přístrojů';
+>>>>>>> old/master
 		$strings['Reservations'] = 'Rezervace';
 		$strings['Groups'] = 'Skupiny';
 		$strings['ResetPassword'] = 'Resetovat heslo';
@@ -217,7 +264,11 @@ class cz extends en_us
 		$strings['Members'] = 'Členové';
 		$strings['QuickSlotCreation'] = 'Vytvořit místo každých %s minut mezi %s a %s';
 		$strings['ApplyUpdatesTo'] = 'provést update';
+<<<<<<< HEAD
 		$strings['CancelParticipation'] = 'Zrušení účastníků';
+=======
+		$strings['CancelParticipation'] = 'Zrušení participantů';
+>>>>>>> old/master
 		$strings['Attending'] = 'Účast';
 		$strings['QuotaConfiguration'] = 'pro %s pro %s uživatelům v %s omezení počtu %s %s na %s';
 		$strings['reservations'] = 'rezervací';
@@ -240,6 +291,7 @@ class cz extends en_us
 		$strings['NotSignedIn'] = 'Nepřihlášený';
 		$strings['ReservationTitle'] = 'Název rezervace';
 		$strings['ReservationDescription'] = 'Volitelný popis';
+<<<<<<< HEAD
 		$strings['ResourceList'] = 'Rezervované prostředky';
 		$strings['Accessories'] = 'Příslušenství';
 		$strings['ParticipantList'] = 'Seznam účastníků';
@@ -250,6 +302,18 @@ class cz extends en_us
 		$strings['Participants'] = 'Účastníci';
 		$strings['User'] = 'Uživatel';
 		$strings['Resource'] = 'Prostředek';
+=======
+		$strings['ResourceList'] = 'Rezervované přístroje';
+		$strings['Accessories'] = 'Příslušenství';
+		$strings['ParticipantList'] = 'Seznam participantů';
+		$strings['InvitationList'] = 'Pozvání';
+		$strings['AccessoryName'] = 'Název příslušenství';
+		$strings['QuantityAvailable'] = 'Dostupné množství';
+		$strings['Resources'] = 'Přístroje';
+		$strings['Participants'] = 'Participanti';
+		$strings['User'] = 'Uživatel';
+		$strings['Resource'] = 'Přístroj';
+>>>>>>> old/master
 		$strings['Status'] = 'Stav';
 		$strings['Approve'] = 'Schválit';
 		$strings['Page'] = 'Strana';
@@ -265,6 +329,7 @@ class cz extends en_us
 		$strings['Reset'] = 'Reset';
 		$strings['FindGroup'] = 'Najít skupinu';
 		$strings['Manage'] = 'Spravovat';
+<<<<<<< HEAD
 		$strings['None'] = 'Žádné';
 		$strings['AddToOutlook'] = 'Přidat do Outlooku';
 		$strings['AddToGoogleCalendar'] = 'Přidat do Google';
@@ -272,6 +337,13 @@ class cz extends en_us
 		$strings['Done'] = 'Hotovo';
 		$strings['RememberMe'] = 'Přihlásit se trvale';
 		$strings['FirstTimeUser?'] = 'Nemáte účet?';
+=======
+		$strings['None'] = 'prázdné';
+		$strings['AddToOutlook'] = 'Přidat do aplikace Outlook';
+		$strings['Done'] = 'Hotovo';
+		$strings['RememberMe'] = 'Přihlásit se trvale';
+		$strings['FirstTimeUser?'] = 'Nemáte zde založený účet?';
+>>>>>>> old/master
 		$strings['CreateAnAccount'] = 'Registrovat se';
 		$strings['ViewSchedule'] = 'Zobrazit plánování';
 		$strings['ForgotMyPassword'] = 'Zapomenuté heslo';
@@ -301,12 +373,21 @@ class cz extends en_us
 		$strings['YourReferenceNumber'] = 'Referenční číslo: %s';
 		$strings['UpdatingReservation'] = 'Obnovení rezervace';
 		$strings['ChangeUser'] = 'Změnit uživatele';
+<<<<<<< HEAD
 		$strings['MoreResources'] = 'Přidat další prostředek';
 		$strings['ReservationLength'] = 'Délka rezervace';
 		$strings['ParticipantList'] = 'Seznam účastníků';
 		$strings['AddParticipants'] = 'Přidat účastníka';
 		$strings['InviteOthers'] = 'Pozvat ostatní';
 		$strings['AddResources'] = 'Přidat prostředky';
+=======
+		$strings['MoreResources'] = 'Přidat další přístroj';
+		$strings['ReservationLength'] = 'Délka rezervace';
+		$strings['ParticipantList'] = 'Seznam participantů';
+		$strings['AddParticipants'] = 'Přidat participanta';
+		$strings['InviteOthers'] = 'Pozvat ostatní';
+		$strings['AddResources'] = 'Přidat přístroje';
+>>>>>>> old/master
 		$strings['AddAccessories'] = 'Přidat příslušenství';
 		$strings['Accessory'] = 'Příslušenství';
 		$strings['QuantityRequested'] = 'Požadované množství';
@@ -316,7 +397,11 @@ class cz extends en_us
 		$strings['DeleteAccessoryWarning'] = 'Při odstranění tohoto příslušenství jej odstraníte také ze všech rezervací.';
 		$strings['AddAccessory'] = 'Přidat příslušenství';
 		$strings['AddBlackout'] = 'Přidat dobu užavření';
+<<<<<<< HEAD
 		$strings['AllResourcesOn'] = 'všechny prostředky na';
+=======
+		$strings['AllResourcesOn'] = 'všechny přístroje na';
+>>>>>>> old/master
 		$strings['Reason'] = 'Odůvodnění';
 		$strings['BlackoutShowMe'] = 'Zobrazit rezervace, které jsou v konfliktu s jinými';
 		$strings['BlackoutDeleteConflicts'] = 'Odstranit rezervace, které jsou v konfliktu s jinými';
@@ -331,7 +416,11 @@ class cz extends en_us
 		$strings['ReservationConflicts'] = 'Jsou zde rezervované čase v konfliktu s jinými';
 		$strings['UsersInGroup'] = 'Uživatelé v této skupině';
 		$strings['Browse'] = 'Prohledat';
+<<<<<<< HEAD
 		$strings['DeleteGroupWarning'] = 'Odstraněním této skupiny budou odstraněny všechny související oprávnění k prostředkům. Uživatelé v této skupině mohou přijít o přístup k prostředkům.';
+=======
+		$strings['DeleteGroupWarning'] = 'Odstraněním této skupiny budou odstraněny všechny související oprávnění k přístrojům. Uživatelé v této skupině mohou přijít o přístup ke přístrojům.';
+>>>>>>> old/master
 		$strings['WhatRolesApplyToThisGroup'] = 'Jaká role se vztahuje k této skupině?';
 		$strings['WhoCanManageThisGroup'] = 'Kdo může spravovat tuto skupinu?';
 		$strings['WhoCanManageThisSchedule'] = 'Kdo může spravovat tento kalendář?';
@@ -342,16 +431,26 @@ class cz extends en_us
 		$strings['PendingReservations'] = 'Nevyřízené rezervace';
 		$strings['Approving'] = 'Schvalování';
 		$strings['MoveToSchedule'] = 'Přesunout do plánování';
+<<<<<<< HEAD
 		$strings['DeleteResourceWarning'] = 'Odstraněním tohoto prostředku vymažete všechna související data.';
+=======
+		$strings['DeleteResourceWarning'] = 'Odstraněním tohoto přístroje vymažete všechna související data.';
+>>>>>>> old/master
 		$strings['DeleteResourceWarningReservations'] = 'všechny minulé, současné a budoucí rezervace s ním spojené';
 		$strings['DeleteResourceWarningPermissions'] = 'všechna přiřazená povolení';
 		$strings['DeleteResourceWarningReassign'] = 'Prosím přeřaďte cokoli, co nechcete, aby bylo vymazáno.';
 		$strings['ScheduleLayout'] = 'Rozvržení (časy v %s)';
 		$strings['ReservableTimeSlots'] = 'Rezervovatelné časové úseky';
 		$strings['BlockedTimeSlots'] = 'Blokovaný časový úsek';
+<<<<<<< HEAD
 		$strings['ThisIsTheDefaultSchedule'] = 'Toto je výchozí plánování';
 		$strings['DefaultScheduleCannotBeDeleted'] = 'výchozí plánování nemůže být odstraněno';
 		$strings['MakeDefault'] = 'Vytvořit jako výchozí';
+=======
+		$strings['ThisIsTheDefaultSchedule'] = 'Toto je původní plánování';
+		$strings['DefaultScheduleCannotBeDeleted'] = 'původní plánování nemůže být odstraněno';
+		$strings['MakeDefault'] = 'Vytvořit jako původní';
+>>>>>>> old/master
 		$strings['BringDown'] = 'Snížit';
 		$strings['ChangeLayout'] = 'Změnit rozvržení';
 		$strings['AddSchedule'] = 'Přidat plánování';
@@ -362,7 +461,11 @@ class cz extends en_us
 		$strings['OptionalLabel'] = 'Nepovinné pole';
 		$strings['LayoutInstructions'] = 'Vložte každý časový úsek na jeden řádek. Časové úseky musí být naplánovány na celý den - 24hodin';
 		$strings['AddUser'] = 'Ruční přidání nového uživatele';
+<<<<<<< HEAD
 		$strings['UserPermissionInfo'] = 'Aktuální přístup k prostředku se může lišit v závislosti na roli uživatele a skupiny oprávnění nebo externím nastavení oprávnění';
+=======
+		$strings['UserPermissionInfo'] = 'Aktuální přístup k přístroji se může lišit v závislosti na roli uživatele a skupiny oprávnění nebo externím nastavení oprávnění';
+>>>>>>> old/master
 		$strings['DeleteUserWarning'] = 'Po odstranění tohoto uživatele odstraníte také jeho všechny současné, budoucí a minulé rezervace.';
 		$strings['AddAnnouncement'] = 'Naplánovat uzavření provozu';
 		$strings['Announcement'] = 'Text při úplném uzavření provozu';
@@ -372,17 +475,30 @@ class cz extends en_us
 		$strings['Reserved'] = 'Rezervováno';
 		$strings['MyReservation'] = 'Mé rezervace';
 		$strings['Pending'] = 'Před schválením';
+<<<<<<< HEAD
 		$strings['Past'] = 'Minulost';
 		$strings['Restricted'] = 'Mimo provoz';
 		$strings['ViewAll'] = 'Zobrazit vše';
 		$strings['MoveResourcesAndReservations'] = 'Přesunout prostředek a rezervace do';
+=======
+		$strings['Past'] = 'Zmeškané';
+		$strings['Restricted'] = 'Mimo provoz';
+		$strings['ViewAll'] = 'Zobrazit vše';
+		$strings['MoveResourcesAndReservations'] = 'Přesunout přístroje a rezervace do';
+>>>>>>> old/master
 		$strings['TurnOffSubscription'] = 'Vypnout zapisování do kalendáře';
 		$strings['TurnOnSubscription'] = 'Zapnout zapisování do kalendáře';
 		$strings['SubscribeToCalendar'] = 'Zapisovací kalendář';
 		$strings['SubscriptionsAreDisabled'] = 'Administrátor zakázal zapisování do kalendáře';
+<<<<<<< HEAD
 		$strings['NoResourceAdministratorLabel'] = '(Žádné administrátorské prostředky)';
 		$strings['WhoCanManageThisResource'] = 'Kdo může spravovat tyto prostředku?';
 		$strings['ResourceAdministrator'] = 'Administrátorské prostředky';
+=======
+		$strings['NoResourceAdministratorLabel'] = '(Žádné administrátorské přístroje)';
+		$strings['WhoCanManageThisResource'] = 'Kdo může spravovat tyto přístroje?';
+		$strings['ResourceAdministrator'] = 'Administrátorské přístroje';
+>>>>>>> old/master
 		$strings['Private'] = 'Rezervováno';
 		$strings['Accept'] = 'Potvrzeno';
 		$strings['Decline'] = 'Zamítnuté';
@@ -406,8 +522,13 @@ class cz extends en_us
 		$strings['SortOrder'] = 'Pořadí';
 		$strings['Title'] = 'Nadpis';
 		$strings['AdditionalAttributes'] = 'Další atributy';
+<<<<<<< HEAD
 		$strings['True'] = 'Ano';
 		$strings['False'] = 'Ne';
+=======
+		$strings['True'] = 'Správně';
+		$strings['False'] = 'Chybně';
+>>>>>>> old/master
 		$strings['ForgotPasswordEmailSent'] = 'Na zadaný e-mail byly odeslány instrukce pro obnovení hesla.';
 		$strings['ActivationEmailSent'] = 'Brzy obdržíte aktivační e-mail.';
 		$strings['AccountActivationError'] = 'Omlouváme se, Váš učet ještě není schválen.';
@@ -441,7 +562,11 @@ class cz extends en_us
 		$strings['Choose'] = 'Výběr';
 		$strings['All'] = 'Všechno';
 		$strings['ViewAsChart'] = 'Zobrazit jako tabulku';
+<<<<<<< HEAD
 		$strings['ReservedResources'] = 'Rezervované prostředky';
+=======
+		$strings['ReservedResources'] = 'Rezervované přístroje';
+>>>>>>> old/master
 		$strings['ReservedAccessories'] = 'Rezervované příslušenství';
 		$strings['ResourceUsageTimeBooked'] = 'Použití stroje - výběr času';
 		$strings['ResourceUsageReservationCount'] = 'Použití stroje - počet rezervací';
@@ -450,7 +575,11 @@ class cz extends en_us
 		$strings['ConfigurationUpdated'] = 'Konfigurační soubor byl upraven';
 		$strings['ConfigurationUiNotEnabled'] = 'Stránka není přístupná, protože $conf[\'settings\'][\'pages\'][\'enable.configuration\'] je chybový nebo chybí.';
 		$strings['ConfigurationFileNotWritable'] = 'Konfigurační soubor musí být zapisovatelný.';
+<<<<<<< HEAD
 		$strings['ConfigurationUpdateHelp'] = 'Pro vysvětlení nastavení níže navštivte <a target=_blank href=%s>dokumentaci</a>.';
+=======
+		$strings['ConfigurationUpdateHelp'] = 'Refer to the Configuration section of the <a target=_blank href=%s>Help File</a> for documentation on these settings.';
+>>>>>>> old/master
 		$strings['GeneralConfigSettings'] = 'Nastavení';
 		$strings['UseSameLayoutForAllDays'] = 'Použít stejný kalendář pro všechny dny';
 		$strings['LayoutVariesByDay'] = 'Kalendář pro každý den zvlášť';
@@ -481,7 +610,11 @@ class cz extends en_us
 		$strings['FlipSchedule'] = 'Změnit vzhled kalendáře';
 		$strings['Next'] = 'Další';
 		$strings['Success'] = 'Provedeno';
+<<<<<<< HEAD
 		$strings['Participant'] = 'Účastník';
+=======
+		$strings['Participant'] = 'Participant';
+>>>>>>> old/master
 		$strings['ResourceFilter'] = 'Filtr zdrojů';
 		$strings['ResourceGroups'] = 'Skupiny zdrojů';
 		$strings['AddNewGroup'] = 'Přidat novou skupinu';
@@ -514,13 +647,18 @@ class cz extends en_us
 		$strings['Unchanged'] = 'Nezměněné';
 		$strings['Common'] = 'příbuzné';
 		$strings['AdvancedFilter'] = 'Rozšířený filtr';
+<<<<<<< HEAD
 		$strings['AllParticipants'] = 'Všichni účastníci';
+=======
+		$strings['AllParticipants'] = 'Všichni participanti';
+>>>>>>> old/master
 		$strings['NoResources'] = 'Nebyl přidán zdroj.';
 		$strings['ReservationApprovalAdminSubject'] = 'Upozornění: Rezervace vyžaduje Vaše schválení';
 		$strings['ResourceAvailability'] = 'Dostupnost zdrojů';
 		$strings['UnavailableAllDay'] = 'Nedostupné celý den';
 		$strings['AvailableUntil'] = 'Dostupných časů k rezervaci';
 		$strings['AvailableBeginningAt'] = 'Dostupný začátek';
+<<<<<<< HEAD
 		$strings['ChangeLanguage'] = 'Změnit jazyk';
 		$strings['Reserve'] = 'Rezervovat';
 		$strings['Purge'] = 'Vyčistit';
@@ -670,6 +808,51 @@ class cz extends en_us
 		$strings['ConfigUpdateSuccess'] = 'Váš konfigurační soubor je aktuální!';
 		$strings['ConfigUpdateFailure'] = 'Nepodařilo se automaticky aktualizovat konfigurační soubor. Prosím přepište obsah souboru config.php následujícím:';
 		$strings['ScriptUrlWarning'] = 'Vaše nastavení <em>script.url</em> pravděpodobně není spávné. V současnosti je nastaveno na <strong>%s</strong>, ale nejspíše by mělo být <strong>%s</strong>';
+=======
+		// End Strings
+
+		// Install
+		$strings['InstallApplication'] = 'Install Booked Scheduler(MySQL only)';
+		$strings['IncorrectInstallPassword'] = 'Sorry, that password was incorrect . ';
+		$strings['SetInstallPassword'] = 'You must set an install password before the installation can be run . ';
+		$strings['InstallPasswordInstructions'] = 'In % s please set % s to a password which is random and difficult to guess, then return to this page .<br />You can use %s';
+		$strings['NoUpgradeNeeded'] = 'There is no upgrade needed . Running the installation process will delete all existing data and install a new copy of Booked Scheduler!';
+		$strings['ProvideInstallPassword'] = 'Please provide your installation password . ';
+		$strings['InstallPasswordLocation'] = 'This can be found at % s in % s . ';
+		$strings['VerifyInstallSettings'] = 'Verify the following default settings before continuing . Or you can change them in % s . ';
+		$strings['DatabaseName'] = 'Database Name';
+		$strings['DatabaseUser'] = 'Database User';
+		$strings['DatabaseHost'] = 'Database Host';
+		$strings['DatabaseCredentials'] = 'You must provide credentials of a MySQL user who has privileges to create databases . If you do
+	{
+		not} know, contact your database admin . In many cases, root will work . ';
+		$strings['MySQLUser'] = 'MySQL User';
+		$strings['InstallOptionsWarning'] = 'The following options will probably not work in a hosted environment . If you are installing in a hosted environment, use the MySQL wizard tools to complete these steps . ';
+		$strings['CreateDatabase'] = 'Create the database';
+		$strings['CreateDatabaseUser'] = 'Create the database user';
+		$strings['PopulateExampleData'] = 'Import sample data . Creates admin account: admin / password and user account: user / password';
+		$strings['DataWipeWarning'] = 'Warning: This will delete any existing data';
+		$strings['RunInstallation'] = 'Run Installation';
+		$strings['UpgradeNotice'] = 'You are upgrading from version < b>%s </b > to version < b>%s </b > ';
+		$strings['RunUpgrade'] = 'Run Upgrade';
+		$strings['Executing'] = 'Executing';
+		$strings['StatementFailed'] = 'Failed . Details:';
+		$strings['SQLStatement'] = 'SQL Statement:';
+		$strings['ErrorCode'] = 'Error Code:';
+		$strings['ErrorText'] = 'Error Text:';
+		$strings['InstallationSuccess'] = 'Installation completed successfully!';
+		$strings['RegisterAdminUser'] = 'Register your admin user . This is required if you
+	{
+		did} not import the sample data . Ensure that $conf[\'settings\'][\'allow.self.registration\'] = \'true\' in your %s file.';
+		$strings['LoginWithSampleAccounts'] = 'If you imported the sample data, you can log in with admin/password for admin user or user/password for basic user.';
+		$strings['InstalledVersion'] = 'You are now running version %s of Booked Scheduler';
+		$strings['InstallUpgradeConfig'] = 'It is recommended to upgrade your config file';
+		$strings['InstallationFailure'] = 'There were problems with the installation.  Please correct them and retry the installation.';
+		$strings['ConfigureApplication'] = 'Configure Booked Scheduler';
+		$strings['ConfigUpdateSuccess'] = 'Your config file is now up to date!';
+		$strings['ConfigUpdateFailure'] = 'We could not automatically update your config file. Please overwrite the contents of config.php with the following:';
+		$strings['SelectUser'] = 'Select User';
+>>>>>>> old/master
 		// End Install
 
 // Errors
@@ -680,7 +863,11 @@ $strings['MaxNoticeError'] = 'Tato rezervace nemůže být naplánována tak dal
 $strings['MinDurationError'] = 'Tato rezervace musí být delší než %s.';
 $strings['MaxDurationError'] = 'Tato rezervace nemůže trvat déle než %s.';
 $strings['ConflictingAccessoryDates'] = 'Překročili jste omezený počet kusů';
+<<<<<<< HEAD
 $strings['NoResourcePermission'] = 'Nemáte oprávnění pro vstup k jednomu nebo více požadovaným prostředkům';
+=======
+$strings['NoResourcePermission'] = 'Nemáte oprávnění pro vstup k jednomu nebo více požadovaným přístrojům';
+>>>>>>> old/master
 $strings['ConflictingReservationDates'] = 'Zde je výpis rezervací, které jsou v konfliktu s Vámi vytvořenou:';
 $strings['StartDateBeforeEndDateRule'] = 'Začátek rezervace musí začínat dříve než její konec.';
 $strings['StartIsInPast'] = 'Začátek rezervace nemůže být vytvořen v minulosti';
@@ -693,7 +880,11 @@ $strings['AttachmentLoadingError'] = 'Omlouváme se, došlo k chybě při načí
 $strings['InvalidAttachmentExtension'] = 'Můžete nahrát pouze soubory těchto typů: %s';
 $strings['InvalidStartSlot'] = 'Začátek a čas rezervace není je chybně zadán.';
 $strings['InvalidEndSlot'] = 'Konec a čas rezervace je chybně zadán.';
+<<<<<<< HEAD
 $strings['MaxParticipantsError'] = '%s můžete mít pouze %s účastníků.';
+=======
+$strings['MaxParticipantsError'] = '%s můžete mít pouze %s participantů.';
+>>>>>>> old/master
 $strings['ReservationCriticalError'] = 'Závažná chyba při rezervaci. Kontaktuje nás prosím.';
 $strings['InvalidStartReminderTime'] = 'Začátek upomínky je chybně zadán.';
 $strings['InvalidEndReminderTime'] = 'Konec upomínky je chybně zadán.';
@@ -713,7 +904,11 @@ $strings['ManageReservations'] = 'Rezervace';
 $strings['AwaitingActivation'] = 'Čeká na aktivaci';
 $strings['PendingApproval'] = 'Probíhá schválení';
 $strings['ManageSchedules'] = 'Plánování';
+<<<<<<< HEAD
 $strings['ManageResources'] = 'Prostředky';
+=======
+$strings['ManageResources'] = 'Přístroje';
+>>>>>>> old/master
 $strings['ManageAccessories'] = 'Příslušenství';
 $strings['ManageUsers'] = 'Uživatelé';
 $strings['ManageGroups'] = 'Skupiny';
@@ -733,19 +928,31 @@ $strings['EditProfile'] = 'Upravit vlastní profil';
 $strings['FindAnOpening'] = 'Najít otevření';
 $strings['OpenInvitations'] = 'Zobrazit pozvání';
 $strings['MyCalendar'] = 'Vlastní kalendář';
+<<<<<<< HEAD
 $strings['ResourceCalendar'] = 'Kalendáře prostředků';
+=======
+$strings['ResourceCalendar'] = 'Přístroje kalendáře';
+>>>>>>> old/master
 $strings['Reservation'] = 'Nová rezervace';
 $strings['Install'] = 'Instalace';
 $strings['ChangePassword'] = 'Změnit heslo';
 $strings['MyAccount'] = 'Můj účet';
 $strings['Profile'] = 'Nastavení profilu';
 $strings['ApplicationManagement'] = 'Správa systému';
+<<<<<<< HEAD
 $strings['ForgotPassword'] = 'Zapomenuté heslo';
+=======
+$strings['ForgotPassword'] = 'zapomenuté heslo';
+>>>>>>> old/master
 $strings['NotificationPreferences'] = 'Nastavení oznámení e-mailem'; 
 $strings['ManageAnnouncements'] = 'Úplné uzavření provozu'; 
 $strings['Responsibilities'] = 'Odpovědnost';
 $strings['GroupReservations'] = 'Skupinové rezervace';
+<<<<<<< HEAD
 $strings['ResourceReservations'] = 'Rezervace prostředků';
+=======
+$strings['ResourceReservations'] = 'Přístroje rezervací';
+>>>>>>> old/master
 $strings['Customization'] = 'Rozšířitelnost';
 $strings['Attributes'] = 'Atributy';
 $strings['AccountActivation'] = 'Aktivace účtů';
@@ -761,10 +968,13 @@ $strings['LookAndFeel'] = 'Nastavení vzhledu';
 $strings['ManageResourceGroups'] = 'Skupiny zdroje';
 $strings['ManageResourceTypes'] = 'Typy zdroje';
 $strings['ManageResourceStatus'] = 'Stavy zdroje';
+<<<<<<< HEAD
 $strings['ManageEmailTemplates'] = 'E-mailové šablony';
 $strings['DataCleanup'] = 'Čištění dat';
 $strings['SearchReservations'] = 'Vyhledat rezervace';
 $strings['RegisterANewAccount'] = 'Registrace nového účtu';
+=======
+>>>>>>> old/master
        // End Page Titles
 
 
@@ -794,15 +1004,23 @@ $strings['DaySaturdayAbbr'] = 'So';
         $strings['ReservationCreatedAdminSubject'] = 'Upozornění: rezervace vytvořena';
         $strings['ReservationUpdatedAdminSubject'] = 'Upozornění: rezervace upravena';
         $strings['ReservationDeleteAdminSubject'] = 'Upozornění: rezervace zrušena';
+<<<<<<< HEAD
         $strings['ParticipantAddedSubject'] = 'Upozornění: rezervace účastníků';
         $strings['ParticipantDeletedSubject'] = 'Rezervace zrušena';
         $strings['InviteeAddedSubject'] = 'Pozvánka do rezervace';
         $strings['ResetPasswordRequest'] = 'Požadavek na resetování hesla';
+=======
+        $strings['ParticipantAddedSubject'] = 'Upozornění: rezervace participantů';
+        $strings['ParticipantDeletedSubject'] = 'Rezervace zrušena';
+        $strings['InviteeAddedSubject'] = 'Pozvánka do rezervace';
+        $strings['ResetPassword'] = 'Požadavek na resetování hesla';
+>>>>>>> old/master
         $strings['ActivateYourAccount'] = 'Prosíme, aktivujte svůj účet';
         $strings['ReportSubject'] = 'Vaše požadovaná hlášení (%s)';
 		$strings['ReservationStartingSoonSubject'] = ' Vaše rezervace %s zanedlouho začne';
 		$strings['ReservationEndingSoonSubject'] = 'Vaše rezervace %s zanedlouho končí';
 		$strings['UserAdded'] = 'Byl přidán nový uživatel';
+<<<<<<< HEAD
 		$strings['UserDeleted'] = 'Uživatelský účet %s byl smazán uživatelem %s';
 		$strings['GuestAccountCreatedSubject'] = 'Podrobnosti vašeho účtu %s';
 		$strings['AccountCreatedSubject'] = 'Podrobnosti vašeho účtu %s';
@@ -825,6 +1043,8 @@ $strings['DaySaturdayAbbr'] = 'So';
 		$strings['ReservationParticipantAccept'] = '%s přijal vaše pozvání k rezervaci %s na %s';
 		$strings['ReservationParticipantDecline'] = '%s odmítl vaše pozvání k rezervaci %s na %s';
 		$strings['ReservationParticipantJoin'] = '%s se přidal k vašemu pozvání k rezervaci %s na %s';
+=======
+>>>>>>> old/master
 // End Email Subjects
 
 $this->Strings = $strings;

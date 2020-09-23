@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -19,15 +23,43 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 require_once('Language.php');
+<<<<<<< HEAD
 require_once('en_gb.php');
 
 class du_be extends en_gb
+=======
+require_once('en_us.php');
+
+class du_be extends en_us
+>>>>>>> old/master
 {
     public function __construct()
     {
         parent::__construct();
     }
 
+<<<<<<< HEAD
+=======
+    protected function _LoadDates()
+    {
+        $dates = parent::_LoadDates();
+
+        $dates['general_date'] = 'd/m/Y';
+        $dates['general_datetime'] = 'd/m/Y H:i:s';
+        $dates['schedule_daily'] = 'l, d/m/Y';
+        $dates['reservation_email'] = 'd/m/Y @ H:i (e)';
+        $dates['res_popup'] = 'd/m/Y H:i A';
+        $dates['dashboard'] = 'l, d/m/Y H:i';
+        $dates['period_time'] = "H:i";
+		$dates['general_date_js'] = "dd/mm/yy";
+		$dates['calendar_time'] = 'h:mmt';
+        $dates['calendar_dates'] = 'M/d';
+
+
+        $this->Dates = $dates;
+    }
+
+>>>>>>> old/master
     protected function _LoadStrings()
     {
         $strings = parent::_LoadStrings();

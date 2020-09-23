@@ -114,7 +114,11 @@ class Event_Notification
      * @param   string      Notification name
      * @param   array       Free information array
      */
+<<<<<<< HEAD
     function __construct(&$object, $name, $info = array())
+=======
+    function Event_Notification(&$object, $name, $info = array())
+>>>>>>> old/master
     {
         $this->_notificationObject =& $object;
         $this->_notificationName   = $name;

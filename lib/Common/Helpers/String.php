@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -14,8 +18,11 @@ You should have received a copy of the GNU General Public License
 along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+<<<<<<< HEAD
 require_once(ROOT_DIR . 'lib/external/random/random.php');
 
+=======
+>>>>>>> old/master
 class BookedStringHelper
 {
 	/**
@@ -57,6 +64,7 @@ class BookedStringHelper
 	{
 		return strpos($haystack, $needle) !== false;
 	}
+<<<<<<< HEAD
 
     /**
      * @return string
@@ -72,4 +80,6 @@ class BookedStringHelper
         }
         return $string;
     }
+=======
+>>>>>>> old/master
 }

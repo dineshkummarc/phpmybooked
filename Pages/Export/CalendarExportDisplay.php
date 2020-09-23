@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2017-2020 Nick Korbel
+=======
+Copyright 2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -47,7 +51,11 @@ class CalendarExportDisplay extends Page
 		$this->Set('UID', parse_url($url, PHP_URL_HOST));
 		$this->Set('Reservations', $reservations);
 
+<<<<<<< HEAD
 		return preg_replace('~\R~u',"\r\n", $this->smarty->fetch('Export/ical.tpl'));
+=======
+		return $this->smarty->fetch('Export/ical.tpl');
+>>>>>>> old/master
 	}
 
 	public function PageLoad()

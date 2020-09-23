@@ -11,14 +11,22 @@
 * @author    Benedikt Hallinger <beni@php.net>
 * @copyright 2009 Tarjej Huse, Benedikt Hallinger
 * @license   http://www.gnu.org/licenses/lgpl-3.0.txt LGPLv3
+<<<<<<< HEAD
 * @version   SVN: $Id$
+=======
+* @version   SVN: $Id: Search.php 315417 2011-08-24 12:11:39Z beni $
+>>>>>>> old/master
 * @link      http://pear.php.net/package/Net_LDAP2/
 */
 
 /**
 * Includes
 */
+<<<<<<< HEAD
 require_once 'PEAR.php';
+=======
+require_once ROOT_DIR . 'lib/external/pear/PEAR.php';
+>>>>>>> old/master
 
 /**
 * Result set of an LDAP search
@@ -106,7 +114,11 @@ class Net_LDAP2_Search extends PEAR implements Iterator
     /**
     * Cache variable for storing entries fetched internally
     *
+<<<<<<< HEAD
     * This currently is not used by all functions and need consolidation.
+=======
+    * This currently is only used by {@link pop_entry()}
+>>>>>>> old/master
     *
     * @access protected
     * @var array
@@ -125,20 +137,35 @@ class Net_LDAP2_Search extends PEAR implements Iterator
     /**
     * Constructor
     *
+<<<<<<< HEAD
     * @param resource           $search    Search result identifier
     * @param Net_LDAP2|resource $ldap      Net_LDAP2 object or just a LDAP-Link resource
+=======
+    * @param resource           &$search    Search result identifier
+    * @param Net_LDAP2|resource &$ldap      Net_LDAP2 object or just a LDAP-Link resource
+>>>>>>> old/master
     * @param array              $attributes (optional) Array with searched attribute names. (see {@link $_searchedAttrs})
     *
     * @access public
     */
+<<<<<<< HEAD
     public function __construct($search, $ldap, $attributes = array())
     {
         parent::__construct('Net_LDAP2_Error');
+=======
+    public function __construct(&$search, &$ldap, $attributes = array())
+    {
+        $this->PEAR('Net_LDAP2_Error');
+>>>>>>> old/master
 
         $this->setSearch($search);
 
         if ($ldap instanceof Net_LDAP2) {
+<<<<<<< HEAD
             $this->_ldap = $ldap;
+=======
+            $this->_ldap =& $ldap;
+>>>>>>> old/master
             $this->setLink($this->_ldap->getLink());
         } else {
             $this->setLink($ldap);
@@ -152,7 +179,11 @@ class Net_LDAP2_Search extends PEAR implements Iterator
     }
 
     /**
+<<<<<<< HEAD
     * Returns an array of entry objects.
+=======
+    * Returns an array of entry objects
+>>>>>>> old/master
     *
     * @return array Array of entry objects.
     */
@@ -160,6 +191,7 @@ class Net_LDAP2_Search extends PEAR implements Iterator
     {
         $entries = array();
 
+<<<<<<< HEAD
         if (false === $this->_entry_cache) {
             // cache is empty: fetch from LDAP
             while ($entry = $this->shiftEntry()) {
@@ -173,6 +205,17 @@ class Net_LDAP2_Search extends PEAR implements Iterator
 
     /**
     * Get the next entry in the searchresult from LDAP server.
+=======
+        while ($entry = $this->shiftEntry()) {
+            $entries[] = $entry;
+        }
+
+        return $entries;
+    }
+
+    /**
+    * Get the next entry in the searchresult.
+>>>>>>> old/master
     *
     * This will return a valid Net_LDAP2_Entry object or false, so
     * you can use this method to easily iterate over the entries inside
@@ -180,6 +223,7 @@ class Net_LDAP2_Search extends PEAR implements Iterator
     *
     * @return Net_LDAP2_Entry|false  Reference to Net_LDAP2_Entry object or false
     */
+<<<<<<< HEAD
     public function shiftEntry()
     {
         if (is_null($this->_entry)) {
@@ -189,13 +233,25 @@ class Net_LDAP2_Search extends PEAR implements Iterator
             }
             $entry = Net_LDAP2_Entry::createConnected($this->_ldap, $this->_entry);
             if ($entry instanceof PEAR_Error) $entry = false;
+=======
+    public function &shiftEntry()
+    {
+        if (is_null($this->_entry)) {
+            $this->_entry = @ldap_first_entry($this->_link, $this->_search);
+            $entry = Net_LDAP2_Entry::createConnected($this->_ldap, $this->_entry);
+            if ($entry instanceof Net_LDAP2_Error) $entry = false;
+>>>>>>> old/master
         } else {
             if (!$this->_entry = @ldap_next_entry($this->_link, $this->_entry)) {
                 $false = false;
                 return $false;
             }
             $entry = Net_LDAP2_Entry::createConnected($this->_ldap, $this->_entry);
+<<<<<<< HEAD
             if ($entry instanceof PEAR_Error) $entry = false;
+=======
+            if ($entry instanceof Net_LDAP2_Error) $entry = false;
+>>>>>>> old/master
         }
         return $entry;
     }
@@ -209,7 +265,11 @@ class Net_LDAP2_Search extends PEAR implements Iterator
     public function shift_entry()
     {
         $args = func_get_args();
+<<<<<<< HEAD
         return call_user_func_array(array( $this, 'shiftEntry' ), $args);
+=======
+        return call_user_func_array(array( &$this, 'shiftEntry' ), $args);
+>>>>>>> old/master
     }
 
     /**
@@ -240,7 +300,11 @@ class Net_LDAP2_Search extends PEAR implements Iterator
     public function pop_entry()
     {
         $args = func_get_args();
+<<<<<<< HEAD
         return call_user_func_array(array( $this, 'popEntry' ), $args);
+=======
+        return call_user_func_array(array( &$this, 'popEntry' ), $args);
+>>>>>>> old/master
     }
 
     /**
@@ -438,12 +502,20 @@ class Net_LDAP2_Search extends PEAR implements Iterator
     /**
     * Set the search objects resource link
     *
+<<<<<<< HEAD
     * @param resource $search Search result identifier
+=======
+    * @param resource &$search Search result identifier
+>>>>>>> old/master
     *
     * @access public
     * @return void
     */
+<<<<<<< HEAD
     public function setSearch($search)
+=======
+    public function setSearch(&$search)
+>>>>>>> old/master
     {
         $this->_search = $search;
     }
@@ -451,12 +523,20 @@ class Net_LDAP2_Search extends PEAR implements Iterator
     /**
     * Set the ldap ressource link
     *
+<<<<<<< HEAD
     * @param resource $link Link identifier
+=======
+    * @param resource &$link Link identifier
+>>>>>>> old/master
     *
     * @access public
     * @return void
     */
+<<<<<<< HEAD
     public function setLink($link)
+=======
+    public function setLink(&$link)
+>>>>>>> old/master
     {
         $this->_link = $link;
     }
@@ -628,4 +708,8 @@ class Net_LDAP2_Search extends PEAR implements Iterator
     }
 }
 
+<<<<<<< HEAD
 ?>
+=======
+?>
+>>>>>>> old/master

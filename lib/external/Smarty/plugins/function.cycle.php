@@ -2,12 +2,20 @@
 /**
  * Smarty plugin
  *
+<<<<<<< HEAD
  * @package    Smarty
+=======
+ * @package Smarty
+>>>>>>> old/master
  * @subpackage PluginsFunction
  */
 
 /**
  * Smarty {cycle} function plugin
+<<<<<<< HEAD
+=======
+ *
+>>>>>>> old/master
  * Type:     function<br>
  * Name:     cycle<br>
  * Date:     May 3, 2002<br>
@@ -30,6 +38,7 @@
  * {cycle name=row}
  * </pre>
  *
+<<<<<<< HEAD
  * @link     http://www.smarty.net/manual/en/language.function.cycle.php {cycle}
  *           (Smarty online manual)
  * @author   Monte Ohrt <monte at ohrt dot com>
@@ -41,6 +50,17 @@
  * @param array                    $params   parameters
  * @param Smarty_Internal_Template $template template object
  *
+=======
+ * @link http://www.smarty.net/manual/en/language.function.cycle.php {cycle}
+ *       (Smarty online manual)
+ * @author Monte Ohrt <monte at ohrt dot com>
+ * @author credit to Mark Priatel <mpriatel@rogers.com>
+ * @author credit to Gerard <gerard@interfold.com>
+ * @author credit to Jason Sweat <jsweat_php@yahoo.com>
+ * @version  1.3
+ * @param array                    $params   parameters
+ * @param Smarty_Internal_Template $template template object
+>>>>>>> old/master
  * @return string|null
  */
 
@@ -48,6 +68,7 @@ function smarty_function_cycle($params, $template)
 {
     static $cycle_vars;
 
+<<<<<<< HEAD
     $name = (empty($params[ 'name' ])) ? 'default' : $params[ 'name' ];
     $print = (isset($params[ 'print' ])) ? (bool) $params[ 'print' ] : true;
     $advance = (isset($params[ 'advance' ])) ? (bool) $params[ 'advance' ] : true;
@@ -55,11 +76,21 @@ function smarty_function_cycle($params, $template)
 
     if (!isset($params[ 'values' ])) {
         if (!isset($cycle_vars[ $name ][ 'values' ])) {
+=======
+    $name = (empty($params['name'])) ? 'default' : $params['name'];
+    $print = (isset($params['print'])) ? (bool) $params['print'] : true;
+    $advance = (isset($params['advance'])) ? (bool) $params['advance'] : true;
+    $reset = (isset($params['reset'])) ? (bool) $params['reset'] : false;
+
+    if (!isset($params['values'])) {
+        if (!isset($cycle_vars[$name]['values'])) {
+>>>>>>> old/master
             trigger_error("cycle: missing 'values' parameter");
 
             return;
         }
     } else {
+<<<<<<< HEAD
         if (isset($cycle_vars[ $name ][ 'values' ]) && $cycle_vars[ $name ][ 'values' ] != $params[ 'values' ]) {
             $cycle_vars[ $name ][ 'index' ] = 0;
         }
@@ -89,15 +120,54 @@ function smarty_function_cycle($params, $template)
 
     if ($print) {
         $retval = $cycle_array[ $cycle_vars[ $name ][ 'index' ] ];
+=======
+        if(isset($cycle_vars[$name]['values'])
+            && $cycle_vars[$name]['values'] != $params['values'] ) {
+            $cycle_vars[$name]['index'] = 0;
+        }
+        $cycle_vars[$name]['values'] = $params['values'];
+    }
+
+    if (isset($params['delimiter'])) {
+        $cycle_vars[$name]['delimiter'] = $params['delimiter'];
+    } elseif (!isset($cycle_vars[$name]['delimiter'])) {
+        $cycle_vars[$name]['delimiter'] = ',';
+    }
+
+    if (is_array($cycle_vars[$name]['values'])) {
+        $cycle_array = $cycle_vars[$name]['values'];
+    } else {
+        $cycle_array = explode($cycle_vars[$name]['delimiter'],$cycle_vars[$name]['values']);
+    }
+
+    if (!isset($cycle_vars[$name]['index']) || $reset ) {
+        $cycle_vars[$name]['index'] = 0;
+    }
+
+    if (isset($params['assign'])) {
+        $print = false;
+        $template->assign($params['assign'], $cycle_array[$cycle_vars[$name]['index']]);
+    }
+
+    if ($print) {
+        $retval = $cycle_array[$cycle_vars[$name]['index']];
+>>>>>>> old/master
     } else {
         $retval = null;
     }
 
     if ($advance) {
+<<<<<<< HEAD
         if ($cycle_vars[ $name ][ 'index' ] >= count($cycle_array) - 1) {
             $cycle_vars[ $name ][ 'index' ] = 0;
         } else {
             $cycle_vars[ $name ][ 'index' ] ++;
+=======
+        if ( $cycle_vars[$name]['index'] >= count($cycle_array) -1 ) {
+            $cycle_vars[$name]['index'] = 0;
+        } else {
+            $cycle_vars[$name]['index']++;
+>>>>>>> old/master
         }
     }
 

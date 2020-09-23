@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -40,13 +44,17 @@ class en_gb extends en_us
         $dates['res_popup'] = 'd/m/Y H:i';
         $dates['dashboard'] = 'l, d/m/Y H:i';
         $dates['period_time'] = "H:i";
+<<<<<<< HEAD
         $dates['timepicker'] = 'H:i';
+=======
+>>>>>>> old/master
         $dates['general_date_js'] = "dd/mm/yy";
 		$dates['short_datetime'] = 'j/n/y H:i';
 		$dates['schedule_daily'] = 'l, d/m/Y';
 		$dates['res_popup_time'] = 'D, d/n H:i';
 		$dates['short_reservation_date'] = 'j/n/y H:i';
 		$dates['mobile_reservation_date'] = 'j/n H:i';
+<<<<<<< HEAD
         $dates['general_time_js'] = 'H:mm';
         $dates['timepicker_js'] = 'H:i';
         $dates['momentjs_datetime'] = 'D/M/YY H:mm';
@@ -56,5 +64,34 @@ class en_gb extends en_us
 
         $this->Dates = $dates;
         return $this->Dates;
+=======
+		$dates['general_time_js'] = 'h:mm tt';
+		$dates['momentjs_datetime'] = 'D/M/YY h:mm A';
+		$dates['calendar_time'] = 'h:mmt';
+		$dates['calendar_dates'] = 'd M';
+
+        $this->Dates = $dates;
+    }
+
+    protected function _LoadStrings()
+    {
+        parent::_LoadStrings();
+
+        // change defaults here
+    }
+
+    protected function _LoadDays()
+    {
+        parent::_LoadDays();
+
+        // change defaults here
+    }
+
+    protected function _LoadMonths()
+    {
+        parent:: _LoadMonths();
+
+        // change defaults here
+>>>>>>> old/master
     }
 }

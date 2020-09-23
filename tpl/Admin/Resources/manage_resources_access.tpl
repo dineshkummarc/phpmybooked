@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2017-2020 Nick Korbel
+=======
+Copyright 2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of phpScheduleIt.
 
@@ -17,6 +21,7 @@ You should have received a copy of the GNU General Public License
 along with phpScheduleIt.  If not, see <http://www.gnu.org/licenses/>.
 *}
 
+<<<<<<< HEAD
 <div class="startNoticeAdd"
 	 data-value="{$resource->GetMinNoticeAdd()}"
 	 data-days="{$resource->GetMinNoticeAdd()->Days()}"
@@ -49,12 +54,25 @@ along with phpScheduleIt.  If not, see <http://www.gnu.org/licenses/>.
     {else}
         {translate key='ResourceMinNoticeNoneDelete'}
     {/if}
+=======
+<div class="startNotice"
+	 data-value="{$resource->GetMinNotice()}"
+	 data-days="{$resource->GetMinNotice()->Days()}"
+	 data-hours="{$resource->GetMinNotice()->Hours()}"
+	 data-minutes="{$resource->GetMinNotice()->Minutes()}">
+	{if $resource->HasMinNotice()}
+		{translate key='ResourceMinNotice' args=$resource->GetMinNotice()}
+	{else}
+		{translate key='ResourceMinNoticeNone'}
+	{/if}
+>>>>>>> old/master
 </div>
 <div class="endNotice"
 	 data-value="{$resource->GetMaxNotice()}"
 	 data-days="{$resource->GetMaxNotice()->Days()}"
 	 data-hours="{$resource->GetMaxNotice()->Hours()}"
 	 data-minutes="{$resource->GetMaxNotice()->Minutes()}">
+<<<<<<< HEAD
     {if $resource->HasMaxNotice()}
         {translate key='ResourceMaxNotice' args=$resource->GetMaxNotice()}
     {else}
@@ -99,4 +117,41 @@ along with phpScheduleIt.  If not, see <http://www.gnu.org/licenses/>.
     {else}
         {translate key=ResourceConcurrentReservationsNone}
     {/if}
+=======
+	{if $resource->HasMaxNotice()}
+		{translate key='ResourceMaxNotice' args=$resource->GetMaxNotice()}
+	{else}
+		{translate key='ResourceMaxNoticeNone'}
+	{/if}
+</div>
+<div class="requiresApproval"
+	 data-value="{$resource->GetRequiresApproval()}">
+	{if $resource->GetRequiresApproval()}
+		{translate key='ResourceRequiresApproval'}
+	{else}
+		{translate key='ResourceRequiresApprovalNone'}
+	{/if}
+</div>
+<div class="autoAssign"
+	 data-value="{$resource->GetAutoAssign()}">
+	{if $resource->GetAutoAssign()}
+		{translate key='ResourcePermissionAutoGranted'}
+	{else}
+		{translate key='ResourcePermissionNotAutoGranted'}
+	{/if}
+</div>
+<div class="enableCheckin"
+	 data-value="{$resource->IsCheckInEnabled()}">
+	{if $resource->IsCheckInEnabled()}
+		{translate key=RequiresCheckInNotification}
+	{else}
+		{translate key=NoCheckInRequiredNotification}
+	{/if}
+</div>
+<div class="autoRelease"
+	 data-value="{$resource->GetAutoReleaseMinutes()}">
+	{if $resource->IsAutoReleased()}
+		{translate key=AutoReleaseNotification args=$resource->GetAutoReleaseMinutes()}
+	{/if}
+>>>>>>> old/master
 </div>

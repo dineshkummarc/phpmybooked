@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with phpScheduleIt.  If not, see <http://www.gnu.org/licenses/>.
 *}
 
+<<<<<<< HEAD
 
 Administrátorom boli zmazané tieto rezervácie:
 <br/>
@@ -61,4 +62,41 @@ Koniec: {formatdate date=$EndDate key=reservation_email}<br/>
     {/foreach}
 {/if}
 <a href="{$ScriptUrl}">Prihlásiť sa do rezervačného systému</a>
+=======
+	
+	Administrátorom boli zmazané tieto rezervácie:
+	<br/>
+	<br/>
+	
+	Nadpis: {$Title}<br/>
+	Popis: {$Description|nl2br}<br/><br/>
+	Začiatok: {formatdate date=$StartDate key=reservation_email}<br/>
+	Koniec: {formatdate date=$EndDate key=reservation_email}<br/>
+	{if $ResourceNames|count > 1}
+	Ihriská:<br/>
+		{foreach from=$ResourceNames item=resourceName}
+			{$resourceName}<br/>
+		{/foreach}
+		{else}
+    Ihrisko: {$ResourceName}<br/>
+	{/if}
+	
+	{if count($RepeatDates) gt 0}
+		<br/>
+		Došlo k zmazaniu všetkých týchto rezervovaných termínov:
+		<br/>
+	{/if}
+	
+	{foreach from=$RepeatDates item=date name=dates}
+		{formatdate date=$date}<br/>
+	{/foreach}
+
+	{if $Accessories|count > 0}
+		<br/>Príslušenstvo:<br/>
+		{foreach from=$Accessories item=accessory}
+			({$accessory->QuantityReserved}) {$accessory->Name}<br/>
+		{/foreach}
+	{/if}
+	<a href="{$ScriptUrl}">Prihlásiť sa do rezervačného systému</a>
+>>>>>>> old/master
 	

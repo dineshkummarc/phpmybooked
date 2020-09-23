@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2012-2020 Nick Korbel
+=======
+ * Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -18,7 +22,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
+<<<<<<< HEAD
 
+=======
+>>>>>>> old/master
 class CustomAttributeTypes
 {
 	const SINGLE_LINE_TEXTBOX = 1;
@@ -289,7 +296,11 @@ class CustomAttribute
 	{
 		if ($this->UniquePerEntity())
 		{
+<<<<<<< HEAD
 			return in_array($entityId, $this->EntityIds());
+=======
+			return $this->EntityIds() == $entityId;
+>>>>>>> old/master
 		}
 		return true;
 	}
@@ -316,9 +327,13 @@ class CustomAttribute
 		$this->category = $category;
 		$this->SetRegex($regex);
 		$this->required = $required;
+<<<<<<< HEAD
 		if ($category != CustomAttributeCategory::RESERVATION) {
             $this->entityIds = is_array($entityIds) ? $entityIds : ($entityIds);
         }
+=======
+		$this->entityIds = is_array($entityIds) ? $entityIds : array($entityIds);
+>>>>>>> old/master
 		$this->adminOnly = $adminOnly;
 		$this->SetSortOrder($sortOrder);
 		$this->SetPossibleValues($possibleValues);
@@ -405,7 +420,11 @@ class CustomAttribute
 		}
 
 		$trimmed = trim($value);
+<<<<<<< HEAD
 		return !(empty($trimmed) && !is_numeric($trimmed));
+=======
+		return !empty($trimmed);
+>>>>>>> old/master
 	}
 
 	/**
@@ -448,6 +467,7 @@ class CustomAttribute
 		$this->SetRegex($regex);
 		$this->required = $required;
 
+<<<<<<< HEAD
 		if ($this->category != CustomAttributeCategory::RESERVATION) {
 
             $entityIds = is_array($entityIds) ? $entityIds : array($entityIds);
@@ -461,6 +481,19 @@ class CustomAttribute
 
             $this->entityIds = $entityIds;
         }
+=======
+		$entityIds = is_array($entityIds) ? $entityIds : array($entityIds);
+		$removed = array_diff($this->entityIds, $entityIds);
+		$added = array_diff($entityIds, $this->entityIds);
+
+		if (!empty($removed) || !empty($added))
+		{
+			$this->removedEntityIds = $removed;
+			$this->addedEntityIds = $added;
+		}
+
+		$this->entityIds = $entityIds;
+>>>>>>> old/master
 
 		$this->adminOnly = $adminOnly;
 		$this->SetPossibleValues($possibleValues);
@@ -501,11 +534,14 @@ class CustomAttribute
 	 */
 	public function WithSecondaryEntities($category, $entityIds, $entityDescriptions = null)
 	{
+<<<<<<< HEAD
 	    if ($this->category != CustomAttributeCategory::RESERVATION)
         {
             return;
         }
 
+=======
+>>>>>>> old/master
 		if (!empty($category) && !empty($entityIds))
 		{
 			$this->secondaryCategory = $category;

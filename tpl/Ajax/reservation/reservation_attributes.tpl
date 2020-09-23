@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2014-2020 Nick Korbel
+=======
+Copyright 2014-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of phpScheduleIt.
 
@@ -19,6 +23,10 @@ along with phpScheduleIt.  If not, see <http://www.gnu.org/licenses/>.
 
 {if $Attributes|count > 0}
     <div class="customAttributes">
+<<<<<<< HEAD
+=======
+        <span>{translate key=AdditionalAttributes}</span>
+>>>>>>> old/master
         <div class="row">
             {foreach from=$Attributes item=attribute name=attributes}
                 {if $smarty.foreach.attributes.index % 3 == 0}

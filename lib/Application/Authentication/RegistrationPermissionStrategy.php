@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2017-2020 Nick Korbel
+=======
+ * Copyright 2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -23,7 +27,11 @@ class RegistrationPermissionStrategy implements IRegistrationPermissionStrategy
 {
 	public function AddAccount(User $user)
 	{
+<<<<<<< HEAD
 	    $autoAssignCommand = new AutoAssignPermissionsCommand($user->Id());
+=======
+		$autoAssignCommand = new AutoAssignPermissionsCommand($user->Id());
+>>>>>>> old/master
 		ServiceLocator::GetDatabase()->Execute($autoAssignCommand);
 	}
 }

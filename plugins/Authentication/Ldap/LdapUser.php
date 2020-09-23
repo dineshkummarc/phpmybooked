@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2012-2020 Nick Korbel
+=======
+Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -28,6 +32,7 @@ class LdapUser
 	private $title;
 	private $dn;
 	private $mapping;
+<<<<<<< HEAD
     private $groups;
 
     /**
@@ -36,6 +41,14 @@ class LdapUser
      * @param $userGroups string[]
      */
 	public function __construct($entry, $mapping, $userGroups = array())
+=======
+
+	/**
+	 * @param $entry Net_LDAP2_Entry
+	 * @param $mapping string[]|array
+	 */
+	public function __construct($entry, $mapping)
+>>>>>>> old/master
 	{
 		$this->mapping = $mapping;
 		$this->fname = $this->Get($entry, 'givenname');
@@ -45,7 +58,10 @@ class LdapUser
 		$this->institution = $this->Get($entry, 'physicaldeliveryofficename');
 		$this->title = $this->Get($entry, 'title');
 		$this->dn = $entry->dn();
+<<<<<<< HEAD
 		$this->groups = $userGroups;
+=======
+>>>>>>> old/master
 	}
 
 	public function GetFirstName()
@@ -83,11 +99,14 @@ class LdapUser
 		return $this->dn;
 	}
 
+<<<<<<< HEAD
 	public function GetGroups()
     {
         return $this->groups;
     }
 
+=======
+>>>>>>> old/master
 	/**
 	 * @param Net_LDAP2_Entry $entry
 	 * @param string $field
@@ -109,4 +128,10 @@ class LdapUser
 
 		return $value;
 	}
+<<<<<<< HEAD
 }
+=======
+}
+
+?>
+>>>>>>> old/master

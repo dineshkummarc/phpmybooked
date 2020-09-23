@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2017-2020 Nick Korbel
+=======
+ * Copyright 2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -18,6 +22,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
+<<<<<<< HEAD
 
 interface IGuestUserService
 {
@@ -32,10 +37,20 @@ interface IGuestUserService
      * @return bool
      */
     public function EmailExists($email);
+=======
+interface IGuestUserService
+{
+	/**
+	 * @param string $email
+	 * @return UserSession
+	 */
+	public function CreateOrLoad($email);
+>>>>>>> old/master
 }
 
 class GuestUserService implements IGuestUserService
 {
+<<<<<<< HEAD
     /**
      * @var IAuthentication
      */
@@ -73,4 +88,39 @@ class GuestUserService implements IGuestUserService
         $user = $this->authentication->Login($email, new WebLoginContext(new LoginData()));
         return $user->IsLoggedIn();
     }
+=======
+
+	/**
+	 * @var IAuthentication
+	 */
+	private $authentication;
+
+	/**
+	 * @var IRegistration
+	 */
+	private $registration;
+
+	public function __construct(IAuthentication $authentication, IRegistration $registration)
+	{
+		$this->authentication = $authentication;
+		$this->registration = $registration;
+	}
+
+	public function CreateOrLoad($email)
+	{
+		$user = $this->authentication->Login($email, new WebLoginContext(new LoginData()));
+		if ($user->IsLoggedIn())
+		{
+			Log::Debug('User already has account, skipping guest creation %s', $email);
+
+			return $user;
+		}
+
+		Log::Debug('Email address was not found, creating guest account %s', $email);
+
+		$currentLanguage = Resources::GetInstance()->CurrentLanguage;
+		$this->registration->Register($email, $email, 'Guest', 'Guest', Password::GenerateRandom(), null, $currentLanguage, null);
+		return $this->authentication->Login($email, new WebLoginContext(new LoginData(false, $currentLanguage)));
+	}
+>>>>>>> old/master
 }

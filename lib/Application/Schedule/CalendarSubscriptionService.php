@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2012-2020 Nick Korbel
+=======
+ * Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -209,6 +213,7 @@ class CalendarSubscriptionService implements ICalendarSubscriptionService
 
         if (!empty($scheduleId)) {
             $schedule = $this->scheduleRepository->LoadById($scheduleId);
+<<<<<<< HEAD
             if ($schedule != null)
             {
                 $schedulePublicId = $schedule->GetPublicId();
@@ -219,6 +224,13 @@ class CalendarSubscriptionService implements ICalendarSubscriptionService
             if ($resource != null) {
                 $resourcePublicId = $resource->GetPublicId();
             }
+=======
+            $schedulePublicId = $schedule->GetPublicId();
+        }
+        if (!empty($resourceId)) {
+            $resource = $this->resourceRepository->LoadById($resourceId);
+            $resourcePublicId = $resource->GetPublicId();
+>>>>>>> old/master
         }
 
         return new CalendarSubscriptionDetails(
@@ -234,11 +246,14 @@ class CalendarSubscriptionService implements ICalendarSubscriptionService
     {
         $resource = $this->resourceRepository->LoadById($resourceId);
 
+<<<<<<< HEAD
         if ($resource == null)
         {
             return new CalendarSubscriptionDetails(false);
         }
 
+=======
+>>>>>>> old/master
         return new CalendarSubscriptionDetails(
             $resource->GetIsCalendarSubscriptionAllowed(),
             new CalendarSubscriptionUrl(null, null, $resource->GetPublicId()));
@@ -252,11 +267,14 @@ class CalendarSubscriptionService implements ICalendarSubscriptionService
     {
         $schedule = $this->scheduleRepository->LoadById($scheduleId);
 
+<<<<<<< HEAD
         if ($schedule == null)
         {
             return new CalendarSubscriptionDetails(false);
         }
 
+=======
+>>>>>>> old/master
         return new CalendarSubscriptionDetails(
             $schedule->GetIsCalendarSubscriptionAllowed(),
             new CalendarSubscriptionUrl(null, $schedule->GetPublicId(), null));

@@ -2,21 +2,35 @@
 /**
  * Smarty Resource Plugin
  *
+<<<<<<< HEAD
  * @package    Smarty
  * @subpackage TemplateResources
  * @author     Rodney Rehm
+=======
+ * @package Smarty
+ * @subpackage TemplateResources
+ * @author Rodney Rehm
+>>>>>>> old/master
  */
 
 /**
  * Smarty Resource Plugin
+<<<<<<< HEAD
  * Base implementation for resource plugins that don't compile cache
  *
  * @package    Smarty
+=======
+ *
+ * Base implementation for resource plugins that don't compile cache
+ *
+ * @package Smarty
+>>>>>>> old/master
  * @subpackage TemplateResources
  */
 abstract class Smarty_Resource_Recompiled extends Smarty_Resource
 {
     /**
+<<<<<<< HEAD
      * Flag that it's an recompiled resource
      *
      * @var bool
@@ -66,11 +80,16 @@ abstract class Smarty_Resource_Recompiled extends Smarty_Resource
     }
 
     /**
+=======
+>>>>>>> old/master
      * populate Compiled Object with compiled filepath
      *
      * @param  Smarty_Template_Compiled $compiled  compiled object
      * @param  Smarty_Internal_Template $_template template object
+<<<<<<< HEAD
      *
+=======
+>>>>>>> old/master
      * @return void
      */
     public function populateCompiledFilepath(Smarty_Template_Compiled $compiled, Smarty_Internal_Template $_template)
@@ -80,6 +99,7 @@ abstract class Smarty_Resource_Recompiled extends Smarty_Resource
         $compiled->exists = false;
     }
 
+<<<<<<< HEAD
     /*
        * Disable timestamp checks for recompiled resource.
        *
@@ -89,4 +109,6 @@ abstract class Smarty_Resource_Recompiled extends Smarty_Resource
     {
         return false;
     }
+=======
+>>>>>>> old/master
 }

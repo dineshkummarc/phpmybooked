@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -148,11 +152,14 @@ interface IReservationSavePage extends IReservationSaveResultsView, IRepeatOptio
 	 * @return string[]
 	 */
 	public function GetInvitedGuests();
+<<<<<<< HEAD
 
     /**
      * @return bool
      */
     public function GetTermsOfServiceAcknowledgement();
+=======
+>>>>>>> old/master
 }
 
 class ReservationSavePage extends SecurePage implements IReservationSavePage
@@ -186,7 +193,11 @@ class ReservationSavePage extends SecurePage implements IReservationSavePage
 			if ($this->_reservationSavedSuccessfully)
 			{
 				$this->Set('Resources', $reservation->AllResources());
+<<<<<<< HEAD
 				$this->Set('Instances', $reservation->SortedInstances());
+=======
+				$this->Set('Instances', $reservation->Instances());
+>>>>>>> old/master
 				$this->Set('Timezone', ServiceLocator::GetServer()->GetUserSession()->Timezone);
 				$this->Display('Ajax/reservation/save_successful.tpl');
 			}
@@ -294,7 +305,10 @@ class ReservationSavePage extends SecurePage implements IReservationSavePage
 
 	public function GetRepeatOptions()
 	{
+<<<<<<< HEAD
 	    //TODO: Needed?
+=======
+>>>>>>> old/master
 		return $this->_presenter->GetRepeatOptions();
 	}
 
@@ -367,6 +381,7 @@ class ReservationSavePage extends SecurePage implements IReservationSavePage
 		return $this->GetForm(FormKeys::END_REPEAT_DATE);
 	}
 
+<<<<<<< HEAD
     public function GetRepeatCustomDates()
     {
         $dates = $this->GetForm(FormKeys::REPEAT_CUSTOM_DATES);
@@ -377,11 +392,19 @@ class ReservationSavePage extends SecurePage implements IReservationSavePage
         return $dates;
     }
 
+=======
+>>>>>>> old/master
 	public function GetSeriesUpdateScope()
 	{
 		return $this->GetForm(FormKeys::SERIES_UPDATE_SCOPE);
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * @return int[]
+	 */
+>>>>>>> old/master
 	public function GetParticipants()
 	{
 		$participants = $this->GetForm(FormKeys::PARTICIPANT_LIST);
@@ -393,6 +416,12 @@ class ReservationSavePage extends SecurePage implements IReservationSavePage
 		return array();
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * @return int[]
+	 */
+>>>>>>> old/master
 	public function GetInvitees()
 	{
 		$invitees = $this->GetForm(FormKeys::INVITATION_LIST);
@@ -535,23 +564,33 @@ class ReservationSavePage extends SecurePage implements IReservationSavePage
     {
         $this->Set('CanJoinWaitList', $canJoinWaitlist);
     }
+<<<<<<< HEAD
 
     public function GetTermsOfServiceAcknowledgement()
     {
         return $this->GetCheckbox(FormKeys::TOS_ACKNOWLEDGEMENT);
     }
+=======
+>>>>>>> old/master
 }
 
 class AccessoryFormElement
 {
 	public $Id;
 	public $Quantity;
+<<<<<<< HEAD
 	public $Name;
+=======
+>>>>>>> old/master
 
 	public function __construct($formValue)
 	{
 		$idAndQuantity = $formValue;
+<<<<<<< HEAD
 		$y = explode('!-!', $idAndQuantity);
+=======
+		$y = explode('-', $idAndQuantity);
+>>>>>>> old/master
 		$params = explode(',', $y[1]);
 		$id = explode('=', $params[0]);
 		$quantity = explode('=', $params[1]);
@@ -564,7 +603,11 @@ class AccessoryFormElement
 
 	public static function Create($id, $quantity)
 	{
+<<<<<<< HEAD
 		$element = new AccessoryFormElement("accessory!-!id=$id,quantity=$quantity,name=");
+=======
+		$element = new AccessoryFormElement("accessory-id=$id,quantity=$quantity,name=");
+>>>>>>> old/master
 		return $element;
 	}
 }

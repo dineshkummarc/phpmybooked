@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2012-2020 Nick Korbel
+=======
+Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -32,9 +36,13 @@ class ResourceResponse extends RestResponse
 	public $requiresApproval;
 	public $allowMultiday;
 	public $maxParticipants;
+<<<<<<< HEAD
 	public $minNoticeAdd;
 	public $minNoticeUpdate;
 	public $minNoticeDelete;
+=======
+	public $minNotice;
+>>>>>>> old/master
 	public $maxNotice;
 	public $description;
 	public $scheduleId;
@@ -50,7 +58,10 @@ class ResourceResponse extends RestResponse
     public $color;
     public $creditsPerSlot;
     public $peakCreditsPerSlot;
+<<<<<<< HEAD
     public $maxConcurrentReservations;
+=======
+>>>>>>> old/master
 
     /**
 	 * @param IRestServer $server
@@ -68,9 +79,13 @@ class ResourceResponse extends RestResponse
 		$this->maxLength = $resource->GetMaxLength()->__toString();
 		$this->minLength = $resource->GetMinLength()->__toString();
 		$this->maxNotice = $resource->GetMaxNotice()->__toString();
+<<<<<<< HEAD
 		$this->minNoticeAdd = $resource->GetMinNoticeAdd()->__toString();
 		$this->minNoticeUpdate = $resource->GetMinNoticeUpdate()->__toString();
 		$this->minNoticeDelete = $resource->GetMinNoticeDelete()->__toString();
+=======
+		$this->minNotice = $resource->GetMinNotice()->__toString();
+>>>>>>> old/master
 		$this->requiresApproval = $resource->GetRequiresApproval();
 		$this->allowMultiday = $resource->GetAllowMultiday();
 		$this->maxParticipants = $resource->GetMaxParticipants();
@@ -86,7 +101,10 @@ class ResourceResponse extends RestResponse
         $this->color = $resource->GetColor();
         $this->creditsPerSlot = $resource->GetCreditsPerSlot();
         $this->peakCreditsPerSlot = $resource->GetPeakCreditsPerSlot();
+<<<<<<< HEAD
         $this->maxConcurrentReservations = $resource->GetMaxConcurrentReservations();
+=======
+>>>>>>> old/master
 
 		$attributeValues = $attributes->GetAttributes($resourceId);
 
@@ -126,9 +144,13 @@ class ExampleResourceResponse extends ResourceResponse
 		$this->maxLength = $length;
 		$this->minLength = $length;
 		$this->maxNotice = $length;
+<<<<<<< HEAD
 		$this->minNoticeAdd= $length;
 		$this->minNoticeUpdate = $length;
 		$this->minNoticeDelete = $length;
+=======
+		$this->minNotice = $length;
+>>>>>>> old/master
 		$this->requiresApproval = true;
 		$this->allowMultiday = true;
 		$this->maxParticipants = 10;
@@ -143,7 +165,10 @@ class ExampleResourceResponse extends ResourceResponse
         $this->color = '#ffffff';
         $this->creditsPerSlot = 3;
         $this->peakCreditsPerSlot = 6;
+<<<<<<< HEAD
         $this->maxConcurrentReservations = 1;
+=======
+>>>>>>> old/master
 
 		$this->customAttributes = array(CustomAttributeResponse::Example());
 	}

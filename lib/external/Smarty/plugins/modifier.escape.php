@@ -2,24 +2,40 @@
 /**
  * Smarty plugin
  *
+<<<<<<< HEAD
  * @package    Smarty
+=======
+ * @package Smarty
+>>>>>>> old/master
  * @subpackage PluginsModifier
  */
 
 /**
  * Smarty escape modifier plugin
+<<<<<<< HEAD
+=======
+ *
+>>>>>>> old/master
  * Type:     modifier<br>
  * Name:     escape<br>
  * Purpose:  escape string for output
  *
+<<<<<<< HEAD
  * @link   http://www.smarty.net/docs/en/language.modifier.escape
  * @author Monte Ohrt <monte at ohrt dot com>
  *
+=======
+ * @link http://www.smarty.net/manual/en/language.modifier.count.characters.php count_characters (Smarty online manual)
+ * @author Monte Ohrt <monte at ohrt dot com>
+>>>>>>> old/master
  * @param string  $string        input string
  * @param string  $esc_type      escape type
  * @param string  $char_set      character set, used for htmlspecialchars() or htmlentities()
  * @param boolean $double_encode encode already encoded entitites again, used for htmlspecialchars() or htmlentities()
+<<<<<<< HEAD
  *
+=======
+>>>>>>> old/master
  * @return string escaped input string
  */
 function smarty_modifier_escape($string, $esc_type = 'html', $char_set = null, $double_encode = true)
@@ -66,8 +82,12 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = null, $
                         // php <5.2.3 - prevent double encoding
                         $string = preg_replace('!&(#?\w+);!', '%%%SMARTY_START%%%\\1%%%SMARTY_END%%%', $string);
                         $string = htmlspecialchars($string, ENT_QUOTES, $char_set);
+<<<<<<< HEAD
                         $string =
                             str_replace(array('%%%SMARTY_START%%%', '%%%SMARTY_END%%%'), array('&', ';'), $string);
+=======
+                        $string = str_replace(array('%%%SMARTY_START%%%', '%%%SMARTY_END%%%'), array('&', ';'), $string);
+>>>>>>> old/master
 
                         return $string;
                     }
@@ -107,8 +127,13 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = null, $
             // Note that the UTF-8 encoded character ä will be represented as %c3%a4
             $return = '';
             $_length = strlen($string);
+<<<<<<< HEAD
             for ($x = 0; $x < $_length; $x ++) {
                 $return .= '%' . bin2hex($string[ $x ]);
+=======
+            for ($x = 0; $x < $_length; $x++) {
+                $return .= '%' . bin2hex($string[$x]);
+>>>>>>> old/master
             }
 
             return $return;
@@ -126,8 +151,13 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = null, $
             }
             // no MBString fallback
             $_length = strlen($string);
+<<<<<<< HEAD
             for ($x = 0; $x < $_length; $x ++) {
                 $return .= '&#x' . bin2hex($string[ $x ]) . ';';
+=======
+            for ($x = 0; $x < $_length; $x++) {
+                $return .= '&#x' . bin2hex($string[$x]) . ';';
+>>>>>>> old/master
             }
 
             return $return;
@@ -145,16 +175,25 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = null, $
             }
             // no MBString fallback
             $_length = strlen($string);
+<<<<<<< HEAD
             for ($x = 0; $x < $_length; $x ++) {
                 $return .= '&#' . ord($string[ $x ]) . ';';
+=======
+            for ($x = 0; $x < $_length; $x++) {
+                $return .= '&#' . ord($string[$x]) . ';';
+>>>>>>> old/master
             }
 
             return $return;
 
         case 'javascript':
             // escape quotes and backslashes, newlines, etc.
+<<<<<<< HEAD
             return strtr($string, array('\\' => '\\\\', "'" => "\\'", '"' => '\\"', "\r" => '\\r', "\n" => '\\n',
                                         '</' => '<\/'));
+=======
+            return strtr($string, array('\\' => '\\\\', "'" => "\\'", '"' => '\\"', "\r" => '\\r', "\n" => '\\n', '</' => '<\/'));
+>>>>>>> old/master
 
         case 'mail':
             if (Smarty::$_MBSTRING) {
@@ -182,7 +221,11 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = null, $
             }
 
             $_length = strlen($string);
+<<<<<<< HEAD
             for ($_i = 0; $_i < $_length; $_i ++) {
+=======
+            for ($_i = 0; $_i < $_length; $_i++) {
+>>>>>>> old/master
                 $_ord = ord(substr($string, $_i, 1));
                 // non-standard char, escape it
                 if ($_ord >= 126) {

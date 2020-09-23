@@ -1,3 +1,24 @@
+<<<<<<< HEAD
+=======
+{*
+Copyright 2011-2016 Nick Korbel
+
+This file is part of Booked Scheduler.
+
+Booked Scheduler is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Booked Scheduler is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
+*}
+>>>>>>> old/master
 BEGIN:VCALENDAR
 VERSION:2.0
 METHOD:REQUEST
@@ -10,11 +31,16 @@ DESCRIPTION:{$reservation->Description|regex_replace:"/\r\n|\n|\r/m":"\n "}
 DTSTAMP:{formatdate date=$reservation->DateCreated key=ical}
 DTSTART:{formatdate date=$reservation->DateStart key=ical}
 DTEND:{formatdate date=$reservation->DateEnd key=ical}
+<<<<<<< HEAD
 LAST-MODIFIED:{formatdate date=$reservation->LastModified key=ical}
 LOCATION:{$reservation->Location}
 ORGANIZER;CN={$reservation->Organizer}:MAILTO:{$reservation->OrganizerEmail}
 STATUS:{if $reservation->IsPending}TENTATIVE{else}CONFIRMED
 {/if}
+=======
+LOCATION:{$reservation->Location}
+ORGANIZER;CN={$reservation->Organizer}:MAILTO:{$reservation->OrganizerEmail}
+>>>>>>> old/master
 {if $reservation->RecurRule neq ''}
 RRULE:{$reservation->RecurRule}
 {/if}
@@ -23,11 +49,20 @@ UID:{$reservation->ReferenceNumber}&{$UID}
 SEQUENCE:0
 URL:{$reservation->ReservationUrl}
 X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+<<<<<<< HEAD
+=======
+END:VEVENT
+{/foreach}
+>>>>>>> old/master
 {if $reservation->StartReminder != null}
 BEGIN:VALARM
 TRIGGER;RELATED=START:-PT{$reservation->StartReminder->MinutesPrior()}M
 ACTION:DISPLAY
+<<<<<<< HEAD
 DESCRIPTION:{$reservation->Description}
+=======
+DESCRIPTION:{$reservation->Summary}
+>>>>>>> old/master
 END:VALARM
 {/if}
 {if $reservation->EndReminder != null}
@@ -37,6 +72,9 @@ ACTION:DISPLAY
 DESCRIPTION:{$reservation->Summary}
 END:VALARM
 {/if}
+<<<<<<< HEAD
 END:VEVENT
 {/foreach}
+=======
+>>>>>>> old/master
 END:VCALENDAR

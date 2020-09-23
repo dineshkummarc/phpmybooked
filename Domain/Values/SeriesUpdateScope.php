@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -265,11 +269,14 @@ class SeriesUpdateScope_Full extends SeriesUpdateScopeBase
 
 	public function ShouldInstanceBeRemoved($series, $instance)
 	{
+<<<<<<< HEAD
 	    if ($series->CurrentInstance()->ReferenceNumber() == $instance->ReferenceNumber())
         {
             return false;
         }
 
+=======
+>>>>>>> old/master
 		if ($this->hasSameConfiguration)
 		{
 			$newEndDate = $series->RepeatOptions()->TerminationDate();

@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -46,6 +50,7 @@ Ending: {formatdate date=$EndDate key=reservation_email}<br/>
 Title: {$Title}<br/>
 Description: {$Description|nl2br}
 
+<<<<<<< HEAD
 {if count($RepeatRanges) gt 0}
     <br/>
     The reservation occurs on the following dates:
@@ -90,6 +95,19 @@ Description: {$Description|nl2br}
     {/foreach}
 {/if}
 
+=======
+{if count($RepeatDates) gt 0}
+	<br/>
+	The reservation occurs on the following dates:
+	<br/>
+{/if}
+
+{foreach from=$RepeatDates item=date name=dates}
+	{formatdate date=$date}
+	<br/>
+{/foreach}
+
+>>>>>>> old/master
 {if $Accessories|count > 0}
 	<br/>
 	Accessories:
@@ -121,8 +139,13 @@ Description: {$Description|nl2br}
 {/if}
 
 <br/>
+<<<<<<< HEAD
 Reference Number: {$ReferenceNumber}
 
 <br/>
 <br/>
 <a href="{$ScriptUrl}/{$ReservationUrl}">View this reservation</a> | <a href="{$ScriptUrl}">Log in to {$AppTitle}</a>
+=======
+<br/>
+<a href="{$ScriptUrl}/{$ReservationUrl}">View this reservation</a> | <a href="{$ScriptUrl}">Log in to Booked Scheduler</a>
+>>>>>>> old/master

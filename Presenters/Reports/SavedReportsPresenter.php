@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2012-2020 Nick Korbel
+=======
+Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -37,26 +41,37 @@ class SavedReportsPresenter extends ActionPresenter
 	 * @var ISavedReportsPage
 	 */
 	private $page;
+<<<<<<< HEAD
 	/**
 	 * @var IUserRepository
 	 */
 	private $userRepository;
 
 	public function __construct(ISavedReportsPage $page, UserSession $user, IReportingService $service, IUserRepository $userRepository)
+=======
+
+	public function __construct(ISavedReportsPage $page, UserSession $user, IReportingService $service)
+>>>>>>> old/master
 	{
 		parent::__construct($page);
 
 		$this->service = $service;
 		$this->user = $user;
 		$this->page = $page;
+<<<<<<< HEAD
 		$this->userRepository = $userRepository;
+=======
+>>>>>>> old/master
 
 		$this->AddAction(ReportActions::Generate, 'GenerateReport');
 		$this->AddAction(ReportActions::Email, 'EmailReport');
 		$this->AddAction(ReportActions::Csv, 'CreateCsv');
 		$this->AddAction(ReportActions::PrintReport, 'PrintReport');
 		$this->AddAction(ReportActions::Delete, 'DeleteReport');
+<<<<<<< HEAD
 		$this->AddAction(ReportActions::SaveColumns, 'SaveColumns');
+=======
+>>>>>>> old/master
 	}
 
 	public function PageLoad()
@@ -82,14 +97,23 @@ class SavedReportsPresenter extends ActionPresenter
 	{
 		$reportId = $this->page->GetReportId();
 		$userId = $this->user->UserId;
+<<<<<<< HEAD
 		$report = $this->service->GenerateSavedReport($reportId, $userId, $this->user->Timezone);
+=======
+		$report = $this->service->GenerateSavedReport($reportId, $userId);
+>>>>>>> old/master
 
 		if ($report != null)
 		{
 			Log::Debug('Loading saved report for userId: %s, reportId %s', $userId, $reportId);
+<<<<<<< HEAD
 			$user = $this->userRepository->LoadById($userId);
 
 			$this->page->BindReport($report, new ReportDefinition($report, $this->user->Timezone), $user->GetPreference(UserPreferences::REPORT_COLUMNS));
+=======
+
+			$this->page->BindReport($report, new ReportDefinition($report, $this->user->Timezone));
+>>>>>>> old/master
 			call_user_func($callback);
 		}
 		else
@@ -118,14 +142,23 @@ class SavedReportsPresenter extends ActionPresenter
 	{
 		$reportId = $this->page->GetReportId();
 		$userId = $this->user->UserId;
+<<<<<<< HEAD
 		$report = $this->service->GenerateSavedReport($reportId, $userId, $this->user->Timezone);
+=======
+		$report = $this->service->GenerateSavedReport($reportId, $userId);
+>>>>>>> old/master
 
 		if ($report != null)
 		{
 			Log::Debug('Loading saved report for userId: %s, reportId %s', $userId, $reportId);
+<<<<<<< HEAD
 			$user = $this->userRepository->LoadById($userId);
 
 			$this->service->SendReport($report, new ReportDefinition($report, $this->user->Timezone), $this->page->GetEmailAddress(), $this->user, $user->GetPreference(UserPreferences::REPORT_COLUMNS));
+=======
+
+			$this->service->SendReport($report, new ReportDefinition($report, $this->user->Timezone), $this->page->GetEmailAddress(), $this->user);
+>>>>>>> old/master
 		}
 	}
 
@@ -137,6 +170,7 @@ class SavedReportsPresenter extends ActionPresenter
 		Log::Debug('Deleting saved report. reportId: %s, userId: %s', $reportId, $userId);
 		$this->service->DeleteSavedReport($reportId, $userId);
 	}
+<<<<<<< HEAD
 
 	public function SaveColumns()
 		{
@@ -144,5 +178,7 @@ class SavedReportsPresenter extends ActionPresenter
 			$user->ChangePreference(UserPreferences::REPORT_COLUMNS, $this->page->GetSelectedColumns());
 			$this->userRepository->Update($user);
 		}
+=======
+>>>>>>> old/master
 }
 

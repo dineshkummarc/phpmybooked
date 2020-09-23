@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 Ce fichier fait parti de Booked Scheduler.
 

@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2013-2020 Nick Korbel
+=======
+Copyright 2013-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -18,8 +22,13 @@ You should have received a copy of the GNU General Public License
 along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+<<<<<<< HEAD
 require_once(ROOT_DIR . 'WebServices/Requests/User/CreateUserRequest.php');
 require_once(ROOT_DIR . 'WebServices/Requests/User/UpdateUserRequest.php');
+=======
+require_once(ROOT_DIR . 'WebServices/Requests/CreateUserRequest.php');
+require_once(ROOT_DIR . 'WebServices/Requests/UpdateUserRequest.php');
+>>>>>>> old/master
 require_once(ROOT_DIR . 'WebServices/Validators/UserRequestValidator.php');
 require_once(ROOT_DIR . 'lib/Application/User/namespace.php');
 
@@ -33,7 +42,11 @@ interface IUserSaveController
 	public function Create($request, $session);
 
 	/**
+<<<<<<< HEAD
 	 * @param int $userId
+=======
+	 * @param $userId
+>>>>>>> old/master
 	 * @param UpdateUserRequest $request
 	 * @param WebServiceUserSession $session
 	 * @return UserControllerResult
@@ -41,11 +54,16 @@ interface IUserSaveController
 	public function Update($userId, $request, $session);
 
 	/**
+<<<<<<< HEAD
 	 * @param int $userId
+=======
+	 * @param $userId
+>>>>>>> old/master
 	 * @param WebServiceUserSession $session
 	 * @return UserControllerResult
 	 */
 	public function Delete($userId, $session);
+<<<<<<< HEAD
 
     /**
      * @param int $userId
@@ -54,6 +72,8 @@ interface IUserSaveController
      * @return UserControllerResult
      */
     public function UpdatePassword($userId, $password, $session);
+=======
+>>>>>>> old/master
 }
 
 class UserSaveController implements IUserSaveController
@@ -74,6 +94,14 @@ class UserSaveController implements IUserSaveController
 		$this->requestValidator = $requestValidator;
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * @param CreateUserRequest $request
+	 * @param WebServiceUserSession $session
+	 * @return UserControllerResult
+	 */
+>>>>>>> old/master
 	public function Create($request, $session)
 	{
 		$errors = $this->requestValidator->ValidateCreateRequest($request);
@@ -101,6 +129,15 @@ class UserSaveController implements IUserSaveController
 		return new UserControllerResult($user->Id());
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * @param int $userId
+	 * @param UpdateUserRequest $request
+	 * @param WebServiceUserSession $session
+	 * @return UserControllerResult
+	 */
+>>>>>>> old/master
 	public function Update($userId, $request, $session)
 	{
 		$errors = $this->requestValidator->ValidateUpdateRequest($userId, $request);
@@ -120,15 +157,29 @@ class UserSaveController implements IUserSaveController
 		}
 
 		$user = $userService->UpdateUser($userId, $request->userName, $request->emailAddress, $request->firstName,
+<<<<<<< HEAD
 								 $request->lastName, $request->timezone, $extraAttributes, $customAttributes);
 
 //		$userService->ChangeAttributes($userId, $customAttributes);
+=======
+								 $request->lastName, $request->timezone, $extraAttributes);
+
+		$userService->ChangeAttributes($userId, $customAttributes);
+>>>>>>> old/master
 
 		$userService->ChangeGroups($user, $request->groups);
 
 		return new UserControllerResult($userId);
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * @param $userId
+	 * @param WebServiceUserSession $session
+	 * @return UserControllerResult
+	 */
+>>>>>>> old/master
 	public function Delete($userId, $session)
 	{
 		$userService = $this->serviceFactory->CreateAdmin();
@@ -136,6 +187,7 @@ class UserSaveController implements IUserSaveController
 
 		return new UserControllerResult($userId);
 	}
+<<<<<<< HEAD
 
     public function UpdatePassword($userId, $password, $session)
     {
@@ -151,6 +203,8 @@ class UserSaveController implements IUserSaveController
 
         return new UserControllerResult($userId);
     }
+=======
+>>>>>>> old/master
 }
 
 class UserControllerResult

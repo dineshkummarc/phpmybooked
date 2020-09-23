@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2012-2020 Nick Korbel
+=======
+Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -18,6 +22,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 *}
 <div id="reservationParticipation">
 	<div class="row">
+<<<<<<< HEAD
 		<label for="participantAutocomplete">{translate key="ParticipantList"}</label>
         <span class="badge" id="participantBadge">0</span>
         <br/>
@@ -66,6 +71,78 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 			{/if}
 		</div>
 
+=======
+		<div>
+			<label>{translate key="ParticipantList"}<br/>
+				{translate key=Add} <input type="text" id="participantAutocomplete" class="form-control inline-block user-search"/>
+				|
+				<button id="promptForParticipants" type="button" class="btn inline">
+					<i class="fa fa-user"></i>
+					{translate key='Users'}
+				</button>
+				<button id="promptForGroupParticipants" type="button" class="btn inline">
+					<i class="fa fa-users"></i>
+					{translate key='Groups'}
+				</button>
+			</label>
+		</div>
+		<div id="participantList">
+		</div>
+
+		<div class="modal fade" id="participantDialog" tabindex="-1" role="dialog" aria-labelledby="participantModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="participantModalLabel">{translate key=AddParticipants}</h4>
+					</div>
+					<div class="modal-body">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">{translate key='Done'}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="participantGroupDialog" tabindex="-1" role="dialog" aria-labelledby="participantGroupModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="participantGroupModalLabel">{translate key=AddParticipants}</h4>
+					</div>
+					<div class="modal-body">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">{translate key='Done'}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div>
+			<label>{translate key="InvitationList"}<br/>
+				{translate key=Add} <input type="text" id="inviteeAutocomplete" class="form-control inline-block user-search"/>
+				|
+				<button id="promptForInvitees" type="button" class="btn inline">
+					<i class="fa fa-user"></i>
+					{translate key='Users'}
+				</button>
+				<button id="promptForGroupInvitees" type="button" class="btn inline">
+					<i class="fa fa-users"></i>
+					{translate key='Groups'}
+				</button>
+				{if $AllowGuestParticipation}
+					<button id="promptForGuests" type="button" class="btn inline">
+						<i class="fa fa-user-plus"></i>
+						{translate key='Guest'}
+					</button>
+				{/if}
+			</label>
+		</div>
+>>>>>>> old/master
 		<div id="inviteeList">
 		</div>
 
@@ -83,7 +160,11 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 						<h4 class="modal-title" id="inviteeModalLabel">{translate key=InviteOthers}</h4>
 					</div>
+<<<<<<< HEAD
 					<div class="modal-body scrollable-modal-content">
+=======
+					<div class="modal-body">
+>>>>>>> old/master
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-primary" data-dismiss="modal">{translate key='Done'}</button>
@@ -94,6 +175,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
 		<div class="modal fade" id="inviteeGuestDialog" tabindex="-1" role="dialog" aria-labelledby="inviteeGuestModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
+<<<<<<< HEAD
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -114,6 +196,28 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 						<button type="button" class="btn btn-primary" data-dismiss="modal">{translate key='Done'}</button>
 					</div>
 				</div>
+=======
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h4 class="modal-title" id="inviteeGuestModalLabel">{translate key=InviteOthers}</h4>
+						</div>
+						<div class="modal-body">
+							<div class="form-group row">
+								<label for="txtGuestEmail" class="col-xs-2 form-control-label">{translate key=Email}</label>
+								<div class="col-xs-8">
+									<input id="txtGuestEmail" type="email" class="form-control"/>
+								</div>
+								<div class="col-xs-2">
+									<button id="btnAddGuest" class="btn btn-link" type="button"><i class="fa fa-user-plus icon add"></i></button>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">{translate key='Done'}</button>
+						</div>
+					</div>
+>>>>>>> old/master
 			</div>
 		</div>
 
@@ -124,7 +228,11 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 						<h4 class="modal-title" id="inviteeGroupModalLabel">{translate key=InviteOthers}</h4>
 					</div>
+<<<<<<< HEAD
 					<div class="modal-body scrollable-modal-content">
+=======
+					<div class="modal-body">
+>>>>>>> old/master
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-primary" data-dismiss="modal">{translate key='Done'}</button>
@@ -134,6 +242,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 		</div>
 
 	</div>
+<<<<<<< HEAD
 
 	<div class="modal fade" id="participantDialog" tabindex="-1" role="dialog" aria-labelledby="participantModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -166,4 +275,6 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 			</div>
 		</div>
 	</div>
+=======
+>>>>>>> old/master
 </div>

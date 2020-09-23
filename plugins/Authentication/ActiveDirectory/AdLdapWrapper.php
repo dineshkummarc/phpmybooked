@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -67,7 +71,11 @@ class AdLdapWrapper implements IActiveDirectory
 					Log::Debug('ActiveDirectory - Connection failed to host %s. Reason %s', $host,
 							   $this->ldap->getLastError());
 				}
+<<<<<<< HEAD
 			} catch (Exception $ex)
+=======
+			} catch (adLDAPException $ex)
+>>>>>>> old/master
 			{
 				Log::Error($ex);
 				throw($ex);
@@ -88,8 +96,11 @@ class AdLdapWrapper implements IActiveDirectory
 
 		if ($authenticated)
 		{
+<<<<<<< HEAD
 			Log::Debug('ActiveDirectory - Authenticate for user %s was successful', $username);
 
+=======
+>>>>>>> old/master
 			if ($this->options->HasRequiredGroups())
 			{
 				$groups = $this->ldap->user()->groups($username);
@@ -113,8 +124,11 @@ class AdLdapWrapper implements IActiveDirectory
 						return true;
 					}
 				}
+<<<<<<< HEAD
 				
 				Log::Debug('ActiveDirectory - Authenticate for user %s failed because user was not in the required groups', $username);
+=======
+>>>>>>> old/master
 			}
 		}
 		
@@ -128,7 +142,11 @@ class AdLdapWrapper implements IActiveDirectory
 		$entries = $this->ldap->user()->infoCollection($username, $attributes);
 
 		/** @var adLDAPUserCollection $entries */
+<<<<<<< HEAD
 		if ($entries && is_a($entries, 'adLDAPUserCollection'))
+=======
+		if ($entries && count($entries) > 0)
+>>>>>>> old/master
 		{
 			$groups = null;
 			if ($this->options->SyncGroups())

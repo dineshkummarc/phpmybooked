@@ -1,5 +1,6 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2012-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
@@ -16,11 +17,30 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
+=======
+Copyright 2012-2016 Nick Korbel
+
+This file is part of Booked Scheduler.
+
+Booked Scheduler is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Booked Scheduler is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
+>>>>>>> old/master
  */
 
 require_once(ROOT_DIR . 'Pages/SecurePage.php');
 require_once(ROOT_DIR . 'Pages/Reports/IDisplayableReportPage.php');
 require_once(ROOT_DIR . 'Presenters/Reports/CommonReportsPresenter.php');
+<<<<<<< HEAD
 require_once(ROOT_DIR . 'Presenters/Reports/ReportCsvColumnView.php');
 
 interface ICommonReportsPage extends IDisplayableReportPage, IActionPage
@@ -44,6 +64,12 @@ interface ICommonReportsPage extends IDisplayableReportPage, IActionPage
 	 * @return string
 	 */
 	public function GetSelectedColumns();
+=======
+
+interface ICommonReportsPage extends IDisplayableReportPage, IActionPage
+{
+
+>>>>>>> old/master
 }
 
 class CommonReportsPage extends ActionPage implements ICommonReportsPage
@@ -57,10 +83,14 @@ class CommonReportsPage extends ActionPage implements ICommonReportsPage
 	{
 		parent::__construct('CommonReports', 1);
 
+<<<<<<< HEAD
 		$this->presenter = new CommonReportsPresenter($this,
 													  ServiceLocator::GetServer()->GetUserSession(),
 													  new ReportingService(new ReportingRepository()),
 													  new UserRepository());
+=======
+		$this->presenter = new CommonReportsPresenter($this, ServiceLocator::GetServer()->GetUserSession(), new ReportingService(new ReportingRepository()));
+>>>>>>> old/master
 	}
 
 	/**
@@ -85,21 +115,34 @@ class CommonReportsPage extends ActionPage implements ICommonReportsPage
 	 */
 	public function ProcessPageLoad()
 	{
+<<<<<<< HEAD
         $this->Set('DateAxisFormat', Resources::GetInstance()->GetDateFormat('report_date'));
         $this->Display('Reports/common-reports.tpl');
 	}
 
 	public function BindReport(IReport $report, IReportDefinition $definition, $selectedColumns)
+=======
+		$this->Display('Reports/common-reports.tpl');
+	}
+
+	public function BindReport(IReport $report, IReportDefinition $definition)
+>>>>>>> old/master
 	{
 		$this->Set('HideSave', true);
 		$this->Set('Definition', $definition);
 		$this->Set('Report', $report);
+<<<<<<< HEAD
 		$this->Set('SelectedColumns', $selectedColumns);
+=======
+>>>>>>> old/master
 	}
 
 	public function ShowCsv()
 	{
+<<<<<<< HEAD
 		$this->Set('ReportCsvColumnView', new ReportCsvColumnView($this->GetVar('SelectedColumns')));
+=======
+>>>>>>> old/master
 		$this->DisplayCsv('Reports/custom-csv.tpl', 'report.csv');
 	}
 
@@ -115,8 +158,12 @@ class CommonReportsPage extends ActionPage implements ICommonReportsPage
 
 	public function PrintReport()
 	{
+<<<<<<< HEAD
         $this->Set('ReportCsvColumnView', new ReportCsvColumnView($this->GetVar('SelectedColumns')));
         $this->Display('Reports/print-custom-report.tpl');
+=======
+		$this->Display('Reports/print-custom-report.tpl');
+>>>>>>> old/master
 	}
 
 	/**
@@ -142,11 +189,14 @@ class CommonReportsPage extends ActionPage implements ICommonReportsPage
 	{
 		return $this->GetForm(FormKeys::EMAIL);
 	}
+<<<<<<< HEAD
 
 	public function GetSelectedColumns()
 	{
 		return $this->GetForm(FormKeys::SELECTED_COLUMNS);
 	}
 
+=======
+>>>>>>> old/master
 }
 

@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,12 +21,20 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 interface IReservationAuthorization
 {
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param UserSession $currentUser
 	 * @return bool
 	 */
 	function CanChangeUsers(UserSession $currentUser);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param ReservationView $reservationView
 	 * @param UserSession $currentUser
 	 * @return bool
@@ -30,6 +42,10 @@ interface IReservationAuthorization
 	function CanEdit(ReservationView $reservationView, UserSession $currentUser);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param ReservationView $reservationView
 	 * @param UserSession $currentUser
 	 * @return bool
@@ -37,6 +53,10 @@ interface IReservationAuthorization
 	function CanApprove(ReservationView $reservationView, UserSession $currentUser);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param ReservationView $reservationView
 	 * @param UserSession $currentUser
 	 * @return bool
@@ -58,6 +78,7 @@ class ReservationAuthorization implements IReservationAuthorization
 
 	public function CanEdit(ReservationView $reservationView, UserSession $currentUser)
 	{
+<<<<<<< HEAD
 //		$isGroupAdmin = $this->authorizationService->IsAdminFor($currentUser, $reservationView->OwnerId);
 //		$isResourceAdmin = $this->authorizationService->CanEditForResource($currentUser, $resource)
 		if ($currentUser->IsAdmin)
@@ -65,6 +86,8 @@ class ReservationAuthorization implements IReservationAuthorization
 			return true;
 		}
 
+=======
+>>>>>>> old/master
 		$ongoingReservation = true;
 		$startTimeConstraint = Configuration::Instance()->GetSectionKey(ConfigSection::RESERVATION, ConfigKeys::RESERVATION_START_TIME_CONSTRAINT);
 

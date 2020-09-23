@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -102,7 +106,11 @@ class ProfilePresenter extends ActionPresenter
 		$user->ChangeDefaultHomePage($this->page->GetHomepage());
 		$user->ChangeTimezone($this->page->GetTimezone());
 		$user->ChangeAttributes($this->page->GetPhone(), $this->page->GetOrganization(), $this->page->GetPosition());
+<<<<<<< HEAD
 		$user->ChangeCustomAttributes($this->GetAttributeValues(),false);
+=======
+		$user->ChangeCustomAttributes($this->GetAttributeValues());
+>>>>>>> old/master
 
 		$userSession->Email = $this->page->GetEmail();
 		$userSession->FirstName = $this->page->GetFirstName();

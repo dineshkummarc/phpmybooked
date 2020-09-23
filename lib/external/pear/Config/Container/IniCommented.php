@@ -15,7 +15,11 @@
 // | Author: Bertrand Mansion <bmansion@mamasam.com>                      |
 // +----------------------------------------------------------------------+
 //
+<<<<<<< HEAD
 // $Id: IniCommented.php 306554 2010-12-21 20:04:20Z cweiske $
+=======
+// $Id: IniCommented.php,v 1.26 2006/05/30 06:51:05 aashley Exp $
+>>>>>>> old/master
 
 /**
 * Config parser for PHP .ini files with comments
@@ -26,6 +30,7 @@
 class Config_Container_IniCommented {
 
     /**
+<<<<<<< HEAD
      * Options for this class:
      * - linebreak - Character to use as new line break when serializing
      *
@@ -34,6 +39,14 @@ class Config_Container_IniCommented {
     var $options = array(
         'linebreak' => "\n"
     );
+=======
+    * This class options
+    * Not used at the moment
+    *
+    * @var  array
+    */
+    var $options = array();
+>>>>>>> old/master
 
     /**
     * Constructor
@@ -41,9 +54,15 @@ class Config_Container_IniCommented {
     * @access public
     * @param    string  $options    (optional)Options to be used by renderer
     */
+<<<<<<< HEAD
     function __construct($options = array())
     {
         $this->options = array_merge($this->options, $options);
+=======
+    function Config_Container_IniCommented($options = array())
+    {
+        $this->options = $options;
+>>>>>>> old/master
     } // end constructor
 
     /**
@@ -58,6 +77,7 @@ class Config_Container_IniCommented {
     {
         $return = true;
         if (!file_exists($datasrc)) {
+<<<<<<< HEAD
             return PEAR::raiseError(
                 'Datasource file does not exist.',
                 null, PEAR_ERROR_RETURN
@@ -71,6 +91,11 @@ class Config_Container_IniCommented {
             );
         }
 
+=======
+            return PEAR::raiseError("Datasource file does not exist.", null, PEAR_ERROR_RETURN);
+        }
+        $lines = file($datasrc);
+>>>>>>> old/master
         $n = 0;
         $lastline = '';
         $currentSection =& $obj->container;
@@ -174,11 +199,16 @@ class Config_Container_IniCommented {
                             if ($state == 'normal' &&
                                 isset($return[$returnpos]) &&
                                 !empty($return[$returnpos][1])) {
+<<<<<<< HEAD
                                 return PEAR::raiseError(
                                     'invalid ini syntax, quotes cannot follow'
                                     . " text '$text'",
                                     null, PEAR_ERROR_RETURN
                                 );
+=======
+                                return PEAR::raiseError("invalid ini syntax, quotes cannot follow text '$text'",
+                                                        null, PEAR_ERROR_RETURN);
+>>>>>>> old/master
                             }
                             if ($returnpos >= 0 && isset($return[$returnpos])) {
                                 // trim any unnecessary whitespace in earlier entries
@@ -217,10 +247,14 @@ class Config_Container_IniCommented {
                             }
                         break;
                         default :
+<<<<<<< HEAD
                             PEAR::raiseError(
                                 "::_quoteAndCommaParser oops, state missing",
                                 null, PEAR_ERROR_DIE
                             );
+=======
+                            PEAR::raiseError("::_quoteAndCommaParser oops, state missing", null, PEAR_ERROR_DIE);
+>>>>>>> old/master
                         break;
                     }
                 } else {
@@ -228,8 +262,12 @@ class Config_Container_IniCommented {
                         if (!isset($return[$returnpos])) {
                             $return[$returnpos] = array('normal', '');
                         }
+<<<<<<< HEAD
                         // add this character to the current ini segment if
                         // non-empty, or if in a quote
+=======
+                        // add this character to the current ini segment if non-empty, or if in a quote
+>>>>>>> old/master
                         if ($state == 'quote') {
                             $return[$returnpos][1] .= $char;
                         } elseif (!empty($return[$returnpos][1]) ||
@@ -246,11 +284,16 @@ class Config_Container_IniCommented {
                         }
                     } else {
                         if (trim($char) != '') {
+<<<<<<< HEAD
                             return PEAR::raiseError(
                                 'invalid ini syntax, text after a quote'
                                 . " not allowed '$text'",
                                 null, PEAR_ERROR_RETURN
                             );
+=======
+                            return PEAR::raiseError("invalid ini syntax, text after a quote not allowed '$text'",
+                                                    null, PEAR_ERROR_RETURN);
+>>>>>>> old/master
                         }
                     }
                 }
@@ -289,10 +332,17 @@ class Config_Container_IniCommented {
         }
         switch ($obj->type) {
             case 'blank':
+<<<<<<< HEAD
                 $string = $this->options['linebreak'];
                 break;
             case 'comment':
                 $string = ';'.$obj->content . $this->options['linebreak'];
+=======
+                $string = "\n";
+                break;
+            case 'comment':
+                $string = ';'.$obj->content."\n";
+>>>>>>> old/master
                 break;
             case 'directive':
                 $count = $obj->parent->countChildren('directive', $obj->name);
@@ -307,6 +357,7 @@ class Config_Container_IniCommented {
                           strpos($content, '=') !== false ||
                           strpos($content, '"') !== false ||
                           strpos($content, '%') !== false ||
+<<<<<<< HEAD
                           strpos($content, '~') !== false ||
 													strpos($content, '!') !== false ||
 													strpos($content, '|') !== false ||
@@ -314,6 +365,9 @@ class Config_Container_IniCommented {
 													strpos($content, '(') !== false ||
 													strpos($content, ')') !== false ||
 													$content === 'none') {
+=======
+                          strpos($content, '~') !== false) {
+>>>>>>> old/master
                     $content = '"'.addslashes($content).'"';          
                 }
                 if ($count > 1) {
@@ -326,20 +380,32 @@ class Config_Container_IniCommented {
                     }
                     if ($childrenCount[$obj->name] == $count-1) {
                         // Clean the static for future calls to toString
+<<<<<<< HEAD
                         $string .= $commaString[$obj->name] . $content
                             . $this->options['linebreak'];
+=======
+                        $string .= $commaString[$obj->name].$content."\n";
+>>>>>>> old/master
                         unset($childrenCount[$obj->name]);
                         unset($commaString[$obj->name]);
                     } else {
                         $commaString[$obj->name] .= $content.', ';
                     }
                 } else {
+<<<<<<< HEAD
                     $string = $obj->name.' = '.$content . $this->options['linebreak'];
+=======
+                    $string = $obj->name.' = '.$content."\n";
+>>>>>>> old/master
                 }
                 break;
             case 'section':
                 if (!$obj->isRoot()) {
+<<<<<<< HEAD
                     $string = '[' . $obj->name . ']' . $this->options['linebreak'];
+=======
+                    $string = '['.$obj->name."]\n";
+>>>>>>> old/master
                 }
                 if (count($obj->children) > 0) {
                     for ($i = 0; $i < count($obj->children); $i++) {
@@ -353,4 +419,8 @@ class Config_Container_IniCommented {
         return $string;
     } // end func toString
 } // end class Config_Container_IniCommented
+<<<<<<< HEAD
 ?>
+=======
+?>
+>>>>>>> old/master

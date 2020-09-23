@@ -28,7 +28,11 @@ $conf['settings']['email.suffix'] = '@yourdomain.com';		// Email suffix to use w
 $conf['settings']['cas_logout_servers'] = '';				// Comma separated list of servers to use for logout. Leave blank to not use cas logout servers
 
 $conf['settings']['cas.certificates'] = '';	// Path to certificate to use for CAS. Leave blank if no certificate should be used
+<<<<<<< HEAD
 $conf['settings']['cas.attribute.mapping'] = 'givenName=givenName,surName=surname,email=mail,groups=Role';  //bookedAttribute=CASAttribute
+=======
+
+>>>>>>> old/master
 $conf['settings']['cas.debug.enabled'] = 'false';
 $conf['settings']['cas.debug.file'] = '/tmp/phpcas.log';
 ?>

@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -93,11 +97,15 @@ class AuthenticationWebService
 		Log::Debug('WebService SignOut for userId %s and sessionToken %s', $userId, $sessionToken);
 
 		$this->authentication->Logout($userId, $sessionToken);
+<<<<<<< HEAD
 		$r = new RestResponse();
 		$r->signedOut = true;
 		$this->server->WriteResponse($r);
 	}
 
 
+=======
+	}
+>>>>>>> old/master
 }
 

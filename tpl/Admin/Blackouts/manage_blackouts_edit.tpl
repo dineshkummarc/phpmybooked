@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2013-2020 Nick Korbel
+=======
+Copyright 2013-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -34,7 +38,11 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 			<label for="updateEndDate">{translate key=EndDate}</label>
 			<input type="text" id="updateEndDate" class="form-control dateinput inline-block " size="10"
 				   value="{formatdate date=$BlackoutEndDate}"/>
+<<<<<<< HEAD
 			<input {formname key=END_DATE} type="hidden" id="formattedUpdateEndDate"
+=======
+			<input {formname key=END_DATE} type="hidden" id="formattedAddEndDate"
+>>>>>>> old/master
 										   value="{formatdate date=$BlackoutEndDate key=system}"/>
 			<input {formname key=END_TIME} type="text" id="updateEndTime"
 										   class="form-control dateinput inline-block timepicker"
@@ -132,19 +140,30 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 			repeatType: '{$RepeatType}',
 			repeatInterval: '{$RepeatInterval}',
 			repeatMonthlyType: '{$RepeatMonthlyType}',
+<<<<<<< HEAD
 			repeatWeekdays: [{foreach from=$RepeatWeekdays item=day}{$day}, {/foreach}],
             customRepeatExclusions: ['{formatdate date=$BlackoutStartDate key=system}']
+=======
+			repeatWeekdays: [{foreach from=$RepeatWeekdays item=day}{$day}, {/foreach}]
+>>>>>>> old/master
 		};
 
 		var recurrence = new Recurrence(recurOpts, {}, 'edit');
 		recurrence.init();
+<<<<<<< HEAD
         {foreach from=$CustomRepeatDates item=date}
         recurrence.addCustomDate('{format_date date=$date key=system timezone=$Timezone}', '{format_date date=$date timezone=$Timezone}');
         {/foreach}
+=======
+>>>>>>> old/master
 	});
 </script>
 
 {control type="DatePickerSetupControl" ControlId="updateStartDate" AltId="formattedUpdateStartDate"}
 {control type="DatePickerSetupControl" ControlId="updateEndDate" AltId="formattedUpdateEndDate"}
+<<<<<<< HEAD
 {control type="DatePickerSetupControl" ControlId="editEndRepeat" AltId="editformattedEndRepeat"}
 {control type="DatePickerSetupControl" ControlId="editRepeatDate" AltId="editformattedRepeatDate"}
+=======
+{control type="DatePickerSetupControl" ControlId="editEndRepeat" AltId="editformattedEndRepeat"}
+>>>>>>> old/master

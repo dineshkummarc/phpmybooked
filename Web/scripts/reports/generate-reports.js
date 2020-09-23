@@ -13,11 +13,18 @@ function GenerateReports(reportOptions) {
         $('#selectDiv input').click(function () {
             $('div.select-toggle').hide();
 
+<<<<<<< HEAD
             var selectedItem = $(this).attr('id');
             if (selectedItem == 'results_list') {
                 $('#listOfDiv').show();
             }
             else if (selectedItem != 'results_utilization'){
+=======
+            if ($(this).attr('id') == 'results_list') {
+                $('#listOfDiv').show();
+            }
+            else {
+>>>>>>> old/master
                 $('#aggregateDiv').show();
             }
         });
@@ -63,6 +70,7 @@ function GenerateReports(reportOptions) {
             window.open(url);
         });
 
+<<<<<<< HEAD
         elements.saveDialog.on('shown.bs.modal', function () {
             $('#saveReportName').focus();
         });
@@ -73,6 +81,21 @@ function GenerateReports(reportOptions) {
             elements.saveDialog.find(':text').val('');
             elements.saveDialog.modal('show');
 
+=======
+        $(document).on('click', '#btnSaveReportPrompt', function (e) {
+            e.preventDefault();
+
+            elements.saveDialog.find(':text').val('');
+            elements.saveDialog.modal('show');
+        });
+
+        $(document).on('click', '#btnChart', function (e) {
+            e.preventDefault();
+
+            var chart = new Chart();
+            chart.generate();
+            $('#report-results').hide();
+>>>>>>> old/master
         });
 
         $('.save').on('click', function () {

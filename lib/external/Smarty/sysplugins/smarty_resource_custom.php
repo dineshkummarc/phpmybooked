@@ -2,16 +2,29 @@
 /**
  * Smarty Resource Plugin
  *
+<<<<<<< HEAD
  * @package    Smarty
  * @subpackage TemplateResources
  * @author     Rodney Rehm
+=======
+ * @package Smarty
+ * @subpackage TemplateResources
+ * @author Rodney Rehm
+>>>>>>> old/master
  */
 
 /**
  * Smarty Resource Plugin
+<<<<<<< HEAD
  * Wrapper Implementation for custom resource plugins
  *
  * @package    Smarty
+=======
+ *
+ * Wrapper Implementation for custom resource plugins
+ *
+ * @package Smarty
+>>>>>>> old/master
  * @subpackage TemplateResources
  */
 abstract class Smarty_Resource_Custom extends Smarty_Resource
@@ -27,11 +40,19 @@ abstract class Smarty_Resource_Custom extends Smarty_Resource
 
     /**
      * Fetch template's modification timestamp from data source
+<<<<<<< HEAD
      * {@internal implementing this method is optional.
      *  Only implement it if modification times can be accessed faster than loading the complete template source.}}
      *
      * @param  string $name template name
      *
+=======
+     *
+     * {@internal implementing this method is optional.
+     *  Only implement it if modification times can be accessed faster than loading the complete template source.}}
+     *
+     * @param  string          $name template name
+>>>>>>> old/master
      * @return integer|boolean timestamp (epoch) the template was modified, or false if not found
      */
     protected function fetchTimestamp($name)
@@ -45,9 +66,15 @@ abstract class Smarty_Resource_Custom extends Smarty_Resource
      * @param Smarty_Template_Source   $source    source object
      * @param Smarty_Internal_Template $_template template object
      */
+<<<<<<< HEAD
     public function populate(Smarty_Template_Source $source, Smarty_Internal_Template $_template = null)
     {
         $source->filepath = $source->type . ':' . $source->name;
+=======
+    public function populate(Smarty_Template_Source $source, Smarty_Internal_Template $_template=null)
+    {
+        $source->filepath = strtolower($source->type . ':' . $source->name);
+>>>>>>> old/master
         $source->uid = sha1($source->type . ':' . $source->name);
 
         $mtime = $this->fetchTimestamp($source->name);
@@ -56,9 +83,14 @@ abstract class Smarty_Resource_Custom extends Smarty_Resource
         } else {
             $this->fetch($source->name, $content, $timestamp);
             $source->timestamp = isset($timestamp) ? $timestamp : false;
+<<<<<<< HEAD
             if (isset($content)) {
                 $source->content = $content;
             }
+=======
+            if( isset($content) )
+                $source->content = $content;
+>>>>>>> old/master
         }
         $source->exists = !!$source->timestamp;
     }
@@ -67,7 +99,10 @@ abstract class Smarty_Resource_Custom extends Smarty_Resource
      * Load template's source into current template object
      *
      * @param  Smarty_Template_Source $source source object
+<<<<<<< HEAD
      *
+=======
+>>>>>>> old/master
      * @return string                 template source
      * @throws SmartyException        if source cannot be loaded
      */
@@ -85,6 +120,7 @@ abstract class Smarty_Resource_Custom extends Smarty_Resource
      * Determine basename for compiled filename
      *
      * @param  Smarty_Template_Source $source source object
+<<<<<<< HEAD
      *
      * @return string                 resource's basename
      */
@@ -92,4 +128,13 @@ abstract class Smarty_Resource_Custom extends Smarty_Resource
     {
         return basename($source->name);
     }
+=======
+     * @return string                 resource's basename
+     */
+    protected function getBasename(Smarty_Template_Source $source)
+    {
+        return basename($source->name);
+    }
+
+>>>>>>> old/master
 }

@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2017-2020 Nick Korbel
+=======
+ * Copyright 2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -25,7 +29,11 @@ require_once(ROOT_DIR . 'Pages/ActionPage.php');
 require_once(ROOT_DIR . 'lib/Application/Schedule/namespace.php');
 require_once(ROOT_DIR . 'Domain/Access/namespace.php');
 
+<<<<<<< HEAD
 interface ISearchAvailabilityPage extends IActionPage, IRepeatOptionsComposite
+=======
+interface ISearchAvailabilityPage extends IActionPage
+>>>>>>> old/master
 {
     /**
      * @param ResourceDto[] $resources
@@ -101,6 +109,7 @@ interface ISearchAvailabilityPage extends IActionPage, IRepeatOptionsComposite
      * @param Attribute[] $attributes
      */
     public function SetResourceTypeAttributes($attributes);
+<<<<<<< HEAD
 
     /**
      * @return string|null
@@ -116,6 +125,8 @@ interface ISearchAvailabilityPage extends IActionPage, IRepeatOptionsComposite
      * @return bool
      */
     public function SearchingSpecificTime();
+=======
+>>>>>>> old/master
 }
 
 class SearchAvailabilityPage extends ActionPage implements ISearchAvailabilityPage
@@ -139,7 +150,10 @@ class SearchAvailabilityPage extends ActionPage implements ISearchAvailabilityPa
 
         $this->Set('Today', Date::Now()->ToTimezone($user->Timezone));
         $this->Set('Tomorrow', Date::Now()->AddDays(1)->ToTimezone($user->Timezone));
+<<<<<<< HEAD
         $this->Set('TimeFormat', Resources::GetInstance()->GetDateFormat('timepicker'));
+=======
+>>>>>>> old/master
     }
 
     public function ProcessAction()
@@ -239,6 +253,7 @@ class SearchAvailabilityPage extends ActionPage implements ISearchAvailabilityPa
     {
         $this->Set('ResourceTypeAttributes', $attributes);
     }
+<<<<<<< HEAD
 
     public function GetRepeatType()
     {
@@ -333,4 +348,6 @@ class SearchAvailabilityPage extends ActionPage implements ISearchAvailabilityPa
     {
        return $this->GetCheckbox(FormKeys::SPECIFIC_TIME);
     }
+=======
+>>>>>>> old/master
 }

@@ -1,4 +1,12 @@
+<<<<<<< HEAD
 #schedule-actions, #calendar_toggle, #reservations-left, .change-date, #restore-sidebar, .schedule-legend {
+=======
+table.reservations {
+	font-size:14px;
+}
+
+#schedule-actions, #calendar_toggle, #reservations-left, .change-date  {
+>>>>>>> old/master
 	display:none;
 }
 
@@ -6,6 +14,7 @@
 	a[href]:after {
 		content: "" !important;
 	}
+<<<<<<< HEAD
 }
 
 .past {
@@ -39,4 +48,6 @@ td.resdate {
 .unreservable {
   background-color: #CF9D9B !important;
   color: #fff !important;
+=======
+>>>>>>> old/master
 }

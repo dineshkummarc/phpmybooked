@@ -2,7 +2,11 @@
 Modified by Alenka Kavčič (alenka.kavcic@fri.uni-lj.si), UL FRI, July 2015
 Translated and adapted for Slovenian language
 
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel, Paul Menchini
+=======
+Copyright 2011-2016 Nick Korbel, Paul Menchini
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 

@@ -15,7 +15,11 @@
 // | Authors: Bertrand Mansion <bmansion@mamasam.com>                     |
 // +----------------------------------------------------------------------+
 //
+<<<<<<< HEAD
 // $Id: PHPArray.php 306488 2010-12-20 08:45:09Z cweiske $
+=======
+// $Id: PHPArray.php,v 1.32 2007/06/12 05:24:19 aashley Exp $
+>>>>>>> old/master
 
 /**
 * Config parser for common PHP configuration array
@@ -55,7 +59,11 @@ class Config_Container_PHPArray {
     * @access public
     * @param    string  $options    Options to be used by renderer
     */
+<<<<<<< HEAD
     function __construct($options = array())
+=======
+    function Config_Container_PHPArray($options = array())
+>>>>>>> old/master
     {
         foreach ($options as $key => $value) {
             $this->options[$key] = $value;
@@ -112,12 +120,16 @@ class Config_Container_PHPArray {
                     break;
                 default:
                     if (is_array($value)) {
+<<<<<<< HEAD
                         if ($this->options['duplicateDirectives'] == true
                             //speed (first/one key is numeric)
                             && is_integer(key($value))
                             //accuracy (all keys are numeric)
                             && 1 == count(array_unique(array_map('is_numeric', array_keys($value))))
                         ) {
+=======
+                        if ($this->options['duplicateDirectives'] == true && is_integer(key($value))) {
+>>>>>>> old/master
                             foreach ($value as $nestedValue) {
                                 if (is_array($nestedValue)) {
                                     $section =& $container->createSection($key);
@@ -176,8 +188,11 @@ class Config_Container_PHPArray {
                     $string .= $obj->content;
                 } elseif (is_bool($obj->content)) {
                     $string .= ($obj->content) ? 'true' : 'false';
+<<<<<<< HEAD
                 } elseif ($obj->content === null) {
                     $string .= 'null';
+=======
+>>>>>>> old/master
                 }
                 $string .= ";\n";
                 $string .= $attrString;
@@ -255,4 +270,8 @@ class Config_Container_PHPArray {
         }
     } // end func writeDatasrc
 } // end class Config_Container_PHPArray
+<<<<<<< HEAD
 ?>
+=======
+?>
+>>>>>>> old/master

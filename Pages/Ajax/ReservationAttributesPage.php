@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2014-2020 Nick Korbel
+=======
+ * Copyright 2014-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -65,8 +69,12 @@ class ReservationAttributesPage extends Page implements IReservationAttributesPa
 
 	public function PageLoad()
 	{
+<<<<<<< HEAD
 		$userSession = ServiceLocator::GetServer()->GetUserSession();
 		$this->presenter->PageLoad($userSession);
+=======
+		$this->presenter->PageLoad(ServiceLocator::GetServer()->GetUserSession());
+>>>>>>> old/master
 		$this->Set('ReadOnly', BooleanConverter::ConvertValue($this->GetIsReadOnly()));
 		$this->Display('Ajax/reservation/reservation_attributes.tpl');
 	}

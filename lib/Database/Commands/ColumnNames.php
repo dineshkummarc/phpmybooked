@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2012-2020 Nick Korbel
+=======
+ * Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -18,10 +22,16 @@
  * You should have received a copy of the GNU General Public License
  * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
+<<<<<<< HEAD
 
 class ColumnNames
 {
     private function __construct()
+=======
+class ColumnNames
+{
+	private function __construct()
+>>>>>>> old/master
 	{
 	}
 
@@ -66,14 +76,20 @@ class ColumnNames
 	const ANNOUNCEMENT_START = 'start_date';
 	const ANNOUNCEMENT_END = 'end_date';
 	const ANNOUNCEMENT_TEXT = 'announcement_text';
+<<<<<<< HEAD
 	const ANNOUNCEMENT_DISPLAY_PAGE = 'display_page';
+=======
+>>>>>>> old/master
 
 	// GROUPS //
 	const GROUP_ID = 'group_id';
 	const GROUP_NAME = 'name';
 	const GROUP_ADMIN_GROUP_ID = 'admin_group_id';
 	const GROUP_ADMIN_GROUP_NAME = 'admin_group_name';
+<<<<<<< HEAD
 	const GROUP_ISDEFAULT = 'isdefault';
+=======
+>>>>>>> old/master
 
 	// RESOURCE_GROUPS //
 	const RESOURCE_GROUP_ID = 'resource_group_id';
@@ -86,7 +102,10 @@ class ColumnNames
 	const BLOCK_LABEL_END = 'end_label';
 	const BLOCK_CODE = 'availability_code';
 	const BLOCK_TIMEZONE = 'timezone';
+<<<<<<< HEAD
 	const LAYOUT_TYPE = 'layout_type';
+=======
+>>>>>>> old/master
 
 	// TIME BLOCK USES //
 	const BLOCK_START = 'start_time';
@@ -111,8 +130,11 @@ class ColumnNames
 	const SERIES_ID = 'series_id';
 	const RESERVATION_OWNER = 'owner_id';
 	const RESERVATION_ALLOW_PARTICIPATION = 'allow_participation';
+<<<<<<< HEAD
 	const RESERVATION_TERMS_ACCEPTANCE_DATE = 'terms_date_accepted';
 	const RESERVATION_SERIES_ID = 'series_id';
+=======
+>>>>>>> old/master
 
 	// RESERVATION_INSTANCE //
 	const RESERVATION_INSTANCE_ID = 'reservation_instance_id';
@@ -141,9 +163,13 @@ class ColumnNames
 	const RESOURCE_REQUIRES_APPROVAL = 'requires_approval';
 	const RESOURCE_ALLOW_MULTIDAY = 'allow_multiday_reservations';
 	const RESOURCE_MAX_PARTICIPANTS = 'max_participants';
+<<<<<<< HEAD
 	const RESOURCE_MINNOTICE_ADD = 'min_notice_time_add';
 	const RESOURCE_MINNOTICE_UPDATE = 'min_notice_time_update';
 	const RESOURCE_MINNOTICE_DELETE = 'min_notice_time_delete';
+=======
+	const RESOURCE_MINNOTICE = 'min_notice_time';
+>>>>>>> old/master
 	const RESOURCE_MAXNOTICE = 'max_notice_time';
 	const RESOURCE_IMAGE_NAME = 'image_name';
 	const RESOURCE_STATUS_ID = 'status_id';
@@ -156,9 +182,12 @@ class ColumnNames
 	const ENABLE_CHECK_IN = 'enable_check_in';
 	const AUTO_RELEASE_MINUTES = 'auto_release_minutes';
 	const RESOURCE_ALLOW_DISPLAY = 'allow_display';
+<<<<<<< HEAD
 	const RESOURCE_IMAGE_LIST = 'image_list';
     const PERMISSION_TYPE = 'permission_type';
     const RESOURCE_ADDITIONAL_PROPERTIES = 'additional_properties';
+=======
+>>>>>>> old/master
 
 	// RESERVATION RESOURCES
 	const RESOURCE_LEVEL_ID = 'resource_level_id';
@@ -172,12 +201,15 @@ class ColumnNames
 	const LAYOUT_ID = 'layout_id';
 	const SCHEDULE_ADMIN_GROUP_ID = 'admin_group_id';
 	const SCHEDULE_ADMIN_GROUP_ID_ALIAS = 's_admin_group_id';
+<<<<<<< HEAD
 	const SCHEDULE_AVAILABLE_START_DATE = 'start_date';
 	const SCHEDULE_AVAILABLE_END_DATE = 'end_date';
 	const SCHEDULE_ALLOW_CONCURRENT_RESERVATIONS = 'allow_concurrent_bookings';
 	const SCHEDULE_DEFAULT_STYLE = 'default_layout';
 	const TOTAL_CONCURRENT_RESERVATIONS = 'total_concurrent_reservations';
 	const MAX_RESOURCES_PER_RESERVATION = 'max_resources_per_reservation';
+=======
+>>>>>>> old/master
 
 	// EMAIL PREFERENCES //
 	const EVENT_CATEGORY = 'event_category';
@@ -281,8 +313,11 @@ class ColumnNames
 	// CURRENT_CREDITS //
 	const CREDIT_COUNT = 'credit_count';
 	const PEAK_CREDIT_COUNT = 'peak_credit_count';
+<<<<<<< HEAD
 	const CREDIT_NOTE = 'credit_note';
 	const ORIGINAL_CREDIT_COUNT = 'original_credit_count';
+=======
+>>>>>>> old/master
 
 	// PEAK TIMES //
 	const PEAK_TIMES_ID = 'peak_times_id';
@@ -300,6 +335,7 @@ class ColumnNames
     // RESERVATION_WAITLIST_REQUEST_ID //
     const RESERVATION_WAITLIST_REQUEST_ID = 'reservation_waitlist_request_id';
 
+<<<<<<< HEAD
     // PAYMENT CONFIGURATION //
     const CREDIT_COST = 'credit_cost';
     const CREDIT_CURRENCY = 'credit_currency';
@@ -330,6 +366,8 @@ class ColumnNames
     const TERMS_FILE = 'terms_file';
     const TERMS_APPLICABILITY = 'applicability';
 
+=======
+>>>>>>> old/master
 	// dynamic
 	const TOTAL = 'total';
 	const TOTAL_TIME = 'totalTime';
@@ -342,7 +380,10 @@ class ColumnNames
 	const OWNER_POSITION = 'owner_position';
 	const GROUP_NAME_ALIAS = 'group_name';
 	const RESOURCE_NAME_ALIAS = 'resource_name';
+<<<<<<< HEAD
 	const RESOURCE_NAMES = 'resource_names';
+=======
+>>>>>>> old/master
 	const SCHEDULE_NAME_ALIAS = 'schedule_name';
 	const PARTICIPANT_LIST = 'participant_list';
 	const INVITEE_LIST = 'invitee_list';
@@ -360,6 +401,7 @@ class ColumnNames
 	const GROUP_IDS = 'group_ids';
 	const RESOURCE_IDS = 'resource_ids';
 	const GUEST_LIST = 'guest_list';
+<<<<<<< HEAD
     const USER_GROUP_LIST = 'user_group_list';
     const GROUP_ROLE_LIST = 'group_role_list';
     const UTILIZATION_TYPE = 'utilization_type';
@@ -371,5 +413,11 @@ class ColumnNames
 	const PUBLIC_ID = 'public_id';
 	const RESOURCE_ADMIN_GROUP_ID_RESERVATIONS = 'resource_admin_group_id';
 	const SCHEDULE_ADMIN_GROUP_ID_RESERVATIONS = 'schedule_admin_group_id';
+=======
+
+	// shared
+	const ALLOW_CALENDAR_SUBSCRIPTION = 'allow_calendar_subscription';
+	const PUBLIC_ID = 'public_id';
+>>>>>>> old/master
 
 }

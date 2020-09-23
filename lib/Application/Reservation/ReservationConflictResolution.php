@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,7 +48,11 @@ abstract class ReservationConflictResolution implements IReservationConflictReso
 	{
 		if ($resolutionType == self::Delete)
 		{
+<<<<<<< HEAD
 			return new ReservationConflictDelete(new ReservationRepository(), new DeleteReservationNotificationService(new UserRepository(), new AttributeRepository()));
+=======
+			return new ReservationConflictDelete(new ReservationRepository());
+>>>>>>> old/master
 		}
 		if ($resolutionType == self::BookAround)
 		{
@@ -68,6 +76,7 @@ class ReservationConflictDelete extends ReservationConflictResolution
 	 * @var IReservationRepository
 	 */
 	private $repository;
+<<<<<<< HEAD
     /**
      * @var IReservationNotificationService
      */
@@ -78,14 +87,26 @@ class ReservationConflictDelete extends ReservationConflictResolution
 		$this->repository = $repository;
         $this->notificationService = $notificationService;
     }
+=======
+
+	public function __construct(IReservationRepository $repository)
+	{
+		$this->repository = $repository;
+	}
+>>>>>>> old/master
 
 	public function Handle(ReservationItemView $existingReservation, Blackout $blackout)
 	{
 		$reservation = $this->repository->LoadById($existingReservation->GetId());
 		$reservation->ApplyChangesTo(SeriesUpdateScope::ThisInstance);
+<<<<<<< HEAD
 		$reservation->Delete(ServiceLocator::GetServer()->GetUserSession(), 'Deleting conflicting reservation');
 		$this->repository->Delete($reservation);
         $this->notificationService->Notify($reservation);
+=======
+		$reservation->Delete(ServiceLocator::GetServer()->GetUserSession());
+		$this->repository->Delete($reservation);
+>>>>>>> old/master
 
 		return true;
 	}

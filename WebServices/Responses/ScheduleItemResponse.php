@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2012-2020 Nick Korbel
+=======
+Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -26,10 +30,13 @@ class ScheduleItemResponse extends RestResponse
 	public $name;
 	public $timezone;
 	public $weekdayStart;
+<<<<<<< HEAD
 	public $availabilityBegin;
 	public $availabilityEnd;
 	public $maxResourcesPerReservation;
 	public $totalConcurrentReservationsAllowed;
+=======
+>>>>>>> old/master
 
 	public function __construct(IRestServer $server, Schedule $schedule)
 	{
@@ -39,10 +46,13 @@ class ScheduleItemResponse extends RestResponse
 		$this->name = $schedule->GetName();
 		$this->timezone = $schedule->GetTimezone();
 		$this->weekdayStart = $schedule->GetWeekdayStart();
+<<<<<<< HEAD
 		$this->availabilityBegin = $schedule->GetAvailabilityBegin()->ToIso();
 		$this->availabilityEnd = $schedule->GetAvailabilityBegin()->ToIso();
 		$this->maxResourcesPerReservation = $schedule->GetMaxResourcesPerReservation();
 		$this->totalConcurrentReservationsAllowed = $schedule->GetTotalConcurrentReservations();
+=======
+>>>>>>> old/master
 
 		$this->AddService($server, WebServices::GetSchedule, array(WebServiceParams::ScheduleId => $schedule->GetId()));
 	}
@@ -63,10 +73,13 @@ class ExampleScheduleItemResponse extends ScheduleItemResponse
 		$this->name = 'schedule name';
 		$this->timezone = 'timezone_name';
 		$this->weekdayStart = 0;
+<<<<<<< HEAD
 		$this->availabilityBegin = Date::Now()->ToIso();
 		$this->availabilityEnd = Date::Now()->AddDays(20)->ToIso();
 		$this->maxResourcesPerReservation = 10;
 		$this->totalConcurrentReservationsAllowed = 0;
+=======
+>>>>>>> old/master
 	}
 }
 

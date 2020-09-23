@@ -1,5 +1,6 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2012-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
@@ -16,6 +17,24 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
+=======
+Copyright 2012-2016 Nick Korbel
+
+This file is part of Booked Scheduler.
+
+Booked Scheduler is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Booked Scheduler is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
+>>>>>>> old/master
  */
 
 require_once(ROOT_DIR . 'Domain/Access/namespace.php');
@@ -25,23 +44,39 @@ require_once(ROOT_DIR . 'Domain/SavedReport.php');
 interface IReportingRepository
 {
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param ReportCommandBuilder $commandBuilder
 	 * @return array
 	 */
 	public function GetCustomReport(ReportCommandBuilder $commandBuilder);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param SavedReport $savedReport
 	 */
 	public function SaveCustomReport(SavedReport $savedReport);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param int $userId
 	 * @return array|SavedReport[]
 	 */
 	public function LoadSavedReportsForUser($userId);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param int $reportId
 	 * @param int $userId
 	 * @return SavedReport
@@ -49,6 +84,10 @@ interface IReportingRepository
 	public function LoadSavedReportForUser($reportId, $userId);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param int $reportId
 	 * @param int $userId
 	 */
@@ -68,7 +107,11 @@ class ReportingRepository implements IReportingRepository
 		$rows = array();
 		while ($row = $reader->GetRow())
 		{
+<<<<<<< HEAD
 			$row[ColumnNames::DURATION_HOURS] = round($row[ColumnNames::DURATION_ALIAS] / 3600, 2);
+=======
+			$row[ColumnNames::DURATION_HOURS] = round($row[ColumnNames::DURATION_ALIAS]/3600, 2);
+>>>>>>> old/master
 			$rows[] = $row;
 		}
 		$reader->Free();
@@ -93,11 +136,19 @@ class ReportingRepository implements IReportingRepository
 		while ($row = $reader->GetRow())
 		{
 			$reports[] = SavedReport::FromDatabase(
+<<<<<<< HEAD
 					$row[ColumnNames::REPORT_NAME],
 					$row[ColumnNames::USER_ID],
 					Date::FromDatabase($row[ColumnNames::DATE_CREATED]),
 					$row[ColumnNames::REPORT_DETAILS],
 					$row[ColumnNames::REPORT_ID]
+=======
+				$row[ColumnNames::REPORT_NAME],
+				$row[ColumnNames::USER_ID],
+				Date::FromDatabase($row[ColumnNames::DATE_CREATED]),
+				$row[ColumnNames::REPORT_DETAILS],
+				$row[ColumnNames::REPORT_ID]
+>>>>>>> old/master
 			);
 		}
 		$reader->Free();
@@ -116,6 +167,7 @@ class ReportingRepository implements IReportingRepository
 
 		if ($row = $reader->GetRow())
 		{
+<<<<<<< HEAD
 			$reader->Free();
 			return SavedReport::FromDatabase(
 					$row[ColumnNames::REPORT_NAME],
@@ -127,6 +179,20 @@ class ReportingRepository implements IReportingRepository
 		}
 		$reader->Free();
 		return null;
+=======
+			return SavedReport::FromDatabase(
+				$row[ColumnNames::REPORT_NAME],
+				$row[ColumnNames::USER_ID],
+				Date::FromDatabase($row[ColumnNames::DATE_CREATED]),
+				$row[ColumnNames::REPORT_DETAILS],
+				$row[ColumnNames::REPORT_ID]
+			);
+		}
+		else
+		{
+			return null;
+		}
+>>>>>>> old/master
 	}
 
 	public function DeleteSavedReport($reportId, $userId)

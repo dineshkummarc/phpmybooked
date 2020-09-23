@@ -52,7 +52,10 @@ class ShibbolethOptions {
         $this->SetOption(ShibbolethConfig::LASTNAME, $this->GetConfig(ShibbolethConfig::LASTNAME));
         $this->SetOption(ShibbolethConfig::EMAIL, $this->GetConfig(ShibbolethConfig::EMAIL));
         $this->SetOption(ShibbolethConfig::PHONE, $this->GetConfig(ShibbolethConfig::PHONE));
+<<<<<<< HEAD
         $this->SetOption(ShibbolethConfig::ORGANIZATION, $this->GetConfig(ShibbolethConfig::ORGANIZATION));
+=======
+>>>>>>> old/master
     }
 
     /**

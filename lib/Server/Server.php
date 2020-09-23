@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -28,7 +32,11 @@ class Server
 
 	public function SetCookie(Cookie $cookie)
 	{
+<<<<<<< HEAD
 		setcookie($cookie->Name, $cookie->Value, $cookie->Expiration, $cookie->Path, null, null, false);
+=======
+		setcookie($cookie->Name, $cookie->Value, $cookie->Expiration, $cookie->Path);
+>>>>>>> old/master
 	}
 
 	public function DeleteCookie(Cookie $cookie)
@@ -53,12 +61,17 @@ class Server
 		{
 			$parts = parse_url(Configuration::Instance()->GetScriptUrl());
 			$path = isset($parts['path']) ? $parts['path'] : '';
+<<<<<<< HEAD
             $seconds = Configuration::Instance()->GetKey(ConfigKeys::INACTIVITY_TIMEOUT) * 60;
 			ini_set('session.gc_maxlifetime', $seconds);
 			session_set_cookie_params(0, $path);
             @session_unset();
             @session_destroy();
             @session_start();
+=======
+			session_set_cookie_params(0, $path);
+			@session_start();
+>>>>>>> old/master
 		}
 
 		$_SESSION[self::sessionId][$name] = $value;
@@ -70,11 +83,15 @@ class Server
 		{
 			$parts = parse_url(Configuration::Instance()->GetScriptUrl());
 			$path = isset($parts['path']) ? $parts['path'] : '';
+<<<<<<< HEAD
             $seconds = Configuration::Instance()->GetKey(ConfigKeys::INACTIVITY_TIMEOUT, new IntConverter()) * 60;
             ini_set('session.gc_maxlifetime', $seconds);
             session_set_cookie_params(0, $path);
             @session_unset();
             @session_destroy();
+=======
+			session_set_cookie_params(0, $path);
+>>>>>>> old/master
 			@session_start();
 		}
 		if (isset($_SESSION[self::sessionId][$name]))
@@ -120,7 +137,11 @@ class Server
 		{
 			$value = $_GET[$name];
 
+<<<<<<< HEAD
 			if ($value != '' && $value != null && !is_array($value))
+=======
+			if (!empty($value) && !is_array($value))
+>>>>>>> old/master
 			{
 				return htmlspecialchars(trim($value));
 			}
@@ -234,12 +255,20 @@ class Server
 
 	public function GetUrl()
 	{
+<<<<<<< HEAD
 		$url = $_SERVER['SCRIPT_NAME'];
 
 		if (isset($_SERVER['QUERY_STRING']))
 		{
             $qs = http_build_query($_GET);
 			$url .= '?' . $qs;
+=======
+		$url = $_SERVER['PHP_SELF'];
+
+		if (isset($_SERVER['QUERY_STRING']))
+		{
+			$url .= '?' . $_SERVER['QUERY_STRING'];
+>>>>>>> old/master
 		}
 
 		return $url;
@@ -321,7 +350,11 @@ class Server
      */
     public function GetRequestUri()
     {
+<<<<<<< HEAD
         return $this->GetUrl();
         //return $this->GetHeader('REQUEST_URI');
+=======
+        return $this->GetHeader('REQUEST_URI');
+>>>>>>> old/master
     }
 }

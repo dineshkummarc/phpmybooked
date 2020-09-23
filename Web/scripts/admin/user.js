@@ -45,6 +45,7 @@ function UserManagement(opts) {
 		invitationForm: $('#invitationForm'),
 		inviteEmails: $('#inviteEmails'),
 
+<<<<<<< HEAD
         checkAllResourcesFull: $('#checkAllResourcesFull'),
         checkAllResourcesView: $('#checkAllResourcesView'),
         checkNoResources: $('#checkNoResources'),
@@ -56,6 +57,10 @@ function UserManagement(opts) {
 		deleteMultipleSelectAll: $('#delete-all'),
 		deleteMultipleCount: $('#deleteMultipleCount'),
 		deleteMultiplePlaceHolder: $('#deleteMultiplePlaceHolder')
+=======
+        checkAllResources: $('#checkAllResources'),
+        checkNoResources: $('#checkNoResources')
+>>>>>>> old/master
 	};
 
 	var users = {};
@@ -105,6 +110,10 @@ function UserManagement(opts) {
 		});
 
 		elements.userList.delegate('.changeAttribute', 'click', function (e) {
+<<<<<<< HEAD
+=======
+			//e.preventDefault();
+>>>>>>> old/master
 			e.stopPropagation();
 			$(e.target).closest('.updateCustomAttribute').find('.inlineAttribute').editable('toggle');
 		});
@@ -148,6 +157,7 @@ function UserManagement(opts) {
 			$(this).appendTo(elements.addedGroups);
 		});
 
+<<<<<<< HEAD
         elements.checkAllResourcesFull.click(function(e){
             e.preventDefault();
             elements.permissionsDialog.find('.full').prop('selected', true)
@@ -156,11 +166,20 @@ function UserManagement(opts) {
         elements.checkAllResourcesView.click(function(e){
             e.preventDefault();
             elements.permissionsDialog.find('.view').prop('selected', true)
+=======
+        elements.checkAllResources.click(function(e){
+            e.preventDefault();
+            elements.permissionsDialog.find('input:checkbox').prop('checked', true);
+>>>>>>> old/master
         });
 
         elements.checkNoResources.click(function(e){
             e.preventDefault();
+<<<<<<< HEAD
             elements.permissionsDialog.find('.none').prop('selected', true)
+=======
+            elements.permissionsDialog.find('input:checkbox').prop('checked', false);
+>>>>>>> old/master
         });
 
 		$(".save").click(function () {
@@ -188,6 +207,7 @@ function UserManagement(opts) {
 		$('#import-users').click(function (e) {
 			e.preventDefault();
             $('#importErrors').empty().addClass('no-show');
+<<<<<<< HEAD
 			$('#importResults').addClass('no-show');
 			elements.importUsersDialog.modal('show');
 		});
@@ -216,6 +236,11 @@ function UserManagement(opts) {
 			elements.deleteMultiplePrompt.toggleClass('no-show', numberChecked == 0);
 		});
 
+=======
+			elements.importUsersDialog.modal('show');
+		});
+
+>>>>>>> old/master
 		var hidePermissionsDialog = function () {
 			hideDialog(elements.permissionsDialog);
 		};
@@ -263,9 +288,12 @@ function UserManagement(opts) {
 			elements.invitationDialog.modal('hide');
 		};
 
+<<<<<<< HEAD
 		$('#addOrganization').orgAutoComplete(options.orgAutoCompleteUrl);
 		$('#organization').orgAutoComplete(options.orgAutoCompleteUrl);
 
+=======
+>>>>>>> old/master
 		ConfigureAsyncForm(elements.permissionsForm, defaultSubmitCallback(elements.permissionsForm), hidePermissionsDialog, error);
 		ConfigureAsyncForm(elements.passwordForm, defaultSubmitCallback(elements.passwordForm), hidePasswordDialog, error);
 		ConfigureAsyncForm(elements.userForm, defaultSubmitCallback(elements.userForm), hideDialogCallback(elements.userDialog));
@@ -276,7 +304,10 @@ function UserManagement(opts) {
 		ConfigureAsyncForm(elements.addGroupForm, changeGroupUrlCallback(elements.addGroupForm), function(){});
 		ConfigureAsyncForm(elements.removeGroupForm, changeGroupUrlCallback(elements.removeGroupForm), function(){});
 		ConfigureAsyncForm(elements.invitationForm, defaultSubmitCallback(elements.invitationForm), inviteHandler);
+<<<<<<< HEAD
 		ConfigureAsyncForm(elements.deleteMultipleUserForm, defaultSubmitCallback(elements.deleteMultipleUserForm));
+=======
+>>>>>>> old/master
 	};
 
 	UserManagement.prototype.addUser = function (user) {
@@ -369,6 +400,7 @@ function UserManagement(opts) {
 	var changePermissions = function () {
 		var user = getActiveUser();
 		var data = {dr: 'permissions', uid: user.id};
+<<<<<<< HEAD
         $.get(opts.permissionsUrl, data, function(permissions) {
             elements.permissionsForm.find('.none').prop('selected', true);
 
@@ -382,6 +414,16 @@ function UserManagement(opts) {
 
             elements.permissionsDialog.modal('show');
         });
+=======
+		$.get(opts.permissionsUrl, data, function (resourceIds) {
+			elements.permissionsForm.find(':checkbox').prop('checked', false);
+			$.each(resourceIds, function (index, value) {
+				elements.permissionsForm.find(':checkbox[value="' + value + '"]').prop('checked', true);
+			});
+
+			elements.permissionsDialog.modal('show');
+		});
+>>>>>>> old/master
 	};
 
 	var changeColor = function () {
@@ -394,6 +436,7 @@ function UserManagement(opts) {
 
 	var changeUserInfo = function () {
 		var user = getActiveUser();
+<<<<<<< HEAD
 		var data = {dr: 'update', uid: user.id};
 		$.get(opts.submitUrl, data, (response) => {
 			$('#update-user-placeholder').html(response);
@@ -411,6 +454,20 @@ function UserManagement(opts) {
 		// $('#phone').val(user.phone);
 		// $('#organization').val(user.organization);
 		// $('#position').val(user.position);
+=======
+
+		ClearAsyncErrors(elements.userDialog);
+
+		$('#username').val(user.username);
+		$('#fname').val(user.first);
+		$('#lname').val(user.last);
+		$('#email').val(user.email);
+		$('#timezone').val(user.timezone);
+
+		$('#phone').val(user.phone);
+		$('#organization').val(user.organization);
+		$('#position').val(user.position);
+>>>>>>> old/master
 
 		elements.userDialog.modal('show');
 	};

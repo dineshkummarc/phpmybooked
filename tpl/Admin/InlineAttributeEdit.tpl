@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2017-2020 Nick Korbel
+=======
+Copyright 2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of phpScheduleIt.
 
@@ -19,7 +23,11 @@ along with phpScheduleIt.  If not, see <http://www.gnu.org/licenses/>.
 
 {if $attribute->AppliesToEntity($id)}
 	{assign var=attributeId value="inline{$attribute->Id()}{$id}"}
+<<<<<<< HEAD
 	<div class="updateCustomAttribute" style="margin-bottom:0px">
+=======
+	<div class="updateCustomAttribute">
+>>>>>>> old/master
 		{assign var=datatype value='text'}
 		{if $attribute->Type() == CustomAttributeTypes::CHECKBOX}
 			{assign var=datatype value='checklist'}
@@ -31,8 +39,12 @@ along with phpScheduleIt.  If not, see <http://www.gnu.org/licenses/>.
 			{assign var=datatype value='combodate'}
 			{assign var=value value={formatdate date=$value key=fullcalendar}}
 		{/if}
+<<<<<<< HEAD
 		<h5 class="inline">{$attribute->Label()}</h5>
         <a class="update changeAttribute" href="#"><span class="fa fa-pencil-square-o"></span><span class="no-show">{translate key=Edit}</span></a>
+=======
+		<label>{$attribute->Label()}</label>
+>>>>>>> old/master
 		<span class="inlineAttribute"
 			  id="inline{$attributeId}"
 			  data-type="{$datatype}"
@@ -74,5 +86,9 @@ along with phpScheduleIt.  If not, see <http://www.gnu.org/licenses/>.
 				});
 			</script>
 		{/if}
+<<<<<<< HEAD
+=======
+		<a class="update changeAttribute" href="#"><span class="fa fa-pencil-square-o"></span></a>
+>>>>>>> old/master
 	</div>
 {/if}

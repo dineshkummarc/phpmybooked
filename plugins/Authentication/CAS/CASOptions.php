@@ -110,6 +110,7 @@ class CASOptions
 	{
 		return $this->GetConfig(CASConfig::EMAIL_SUFFIX);
 	}
+<<<<<<< HEAD
     public function AttributeMapping()
     {
         $attributes = array(
@@ -132,3 +133,10 @@ class CASOptions
         return $attributes;
     }
 }
+=======
+
+
+}
+
+?>
+>>>>>>> old/master

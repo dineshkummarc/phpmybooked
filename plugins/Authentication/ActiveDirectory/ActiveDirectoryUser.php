@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -89,7 +93,11 @@ class ActiveDirectoryUser
 	}
 
 	/**
+<<<<<<< HEAD
 	 * @return string[]|null
+=======
+	 * @return array|null
+>>>>>>> old/master
 	 */
 	public function GetGroups()
 	{
@@ -123,4 +131,11 @@ class ActiveDirectoryUser
 
 		return $value;
 	}
+<<<<<<< HEAD
 }
+=======
+
+}
+
+?>
+>>>>>>> old/master

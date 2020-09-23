@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -24,32 +28,59 @@ require_once(ROOT_DIR . 'lib/Application/Admin/namespace.php');
 
 interface IInstallPage
 {
+<<<<<<< HEAD
 	/**
      * @param bool $isMissing
+=======
+
+	/**
+	 * @abstract
+	 * @param bool $isMissing
+>>>>>>> old/master
 	 */
 	public function SetInstallPasswordMissing($isMissing);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @return string
 	 */
 	public function GetInstallPassword();
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param bool $showPasswordPrompt
 	 */
 	public function SetShowPasswordPrompt($showPasswordPrompt);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param bool $showInvalidPassword
 	 */
 	public function SetShowInvalidPassword($showInvalidPassword);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param bool $showDatabasePrompt
 	 */
 	public function SetShowDatabasePrompt($showDatabasePrompt);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param string $dbname
 	 * @param string $dbuser
 	 * @param string $dbhost
@@ -57,47 +88,83 @@ interface IInstallPage
 	public function SetDatabaseConfig($dbname, $dbuser, $dbhost);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @return bool
 	 */
 	public function RunningInstall();
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @return bool
 	 */
 	public function RunningUpgrade();
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @return string
 	 */
 	public function GetInstallUser();
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @return string
 	 */
 	public function GetInstallUserPassword();
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @return bool
 	 */
 	public function GetShouldCreateDatabase();
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @return bool
 	 */
 	public function GetShouldCreateUser();
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @return bool
 	 */
 	public function GetShouldCreateSampleData();
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param $results array|InstallationResult[]
 	 * @return void
 	 */
 	public function SetInstallResults($results);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param $results array|InstallationResult[]
 	 * @param $currentVersion string
 	 * @return void
@@ -105,26 +172,43 @@ interface IInstallPage
 	public function SetUpgradeResults($results, $currentVersion);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param string $currentVersion
 	 */
 	public function SetCurrentVersion($currentVersion);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param string $targetVersion
 	 */
 	public function SetTargetVersion($targetVersion);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param bool $showUpgradeOptions
 	 */
 	public function ShowUpgradeOptions($showUpgradeOptions);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param bool $showInstallOptions
 	 */
 	public function ShowInstallOptions($showInstallOptions);
 
 	/**
+<<<<<<< HEAD
 	 * @param $showUpToDateMessage
 	 */
 	public function ShowUpToDate($showUpToDateMessage);
@@ -136,6 +220,17 @@ interface IInstallPage
     public function ShowScriptUrlWarning($currentScriptUrl, $suggestedScriptUrl);
 }
 
+=======
+	 * @abstract
+	 * @param $showUpToDateMessage
+	 */
+	public function ShowUpToDate($showUpToDateMessage);
+}
+
+/**
+ * This class supports auto installation pages
+ */
+>>>>>>> old/master
 class InstallPage extends Page implements IInstallPage
 {
 	/**
@@ -150,12 +245,22 @@ class InstallPage extends Page implements IInstallPage
 		$this->presenter = new InstallPresenter($this, new InstallSecurityGuard());
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * Load data for page then display
+	 */
+>>>>>>> old/master
 	public function PageLoad()
 	{
 		$cacheDirectory = new TemplateCacheDirectory();
 		$cacheDirectory->Flush();
 
+<<<<<<< HEAD
 		$this->Set('SuggestedInstallPassword', BookedStringHelper::Random());
+=======
+		$this->Set('SuggestedInstallPassword', uniqid());
+>>>>>>> old/master
 		$this->Set('ConfigSetting', '$conf[\'settings\'][\'install.password\']');
 		$this->Set('ConfigPath', '/config/config.php');
 		$this->presenter->PageLoad();
@@ -167,6 +272,7 @@ class InstallPage extends Page implements IInstallPage
 		$this->Set('InstallPasswordMissing', $isMissing);
 	}
 
+<<<<<<< HEAD
 	public function ShowScriptUrlWarning($currentScriptUrl, $suggestedScriptUrl)
     {
         $this->Set('CurrentScriptUrl', $currentScriptUrl);
@@ -174,6 +280,8 @@ class InstallPage extends Page implements IInstallPage
         $this->Set('ShowScriptUrlWarning', true);
     }
 
+=======
+>>>>>>> old/master
 	public function GetInstallPassword()
 	{
 		return $this->GetForm(FormKeys::INSTALL_PASSWORD);

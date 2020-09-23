@@ -25,6 +25,7 @@ function Approval(opts)
 			data: {rn: referenceNumber, rs: options.responseType},
 			success: function (data)
 			{
+<<<<<<< HEAD
 				if (options.returnUrl)
 				{
 					window.location = options.returnUrl;
@@ -33,6 +34,9 @@ function Approval(opts)
 				{
 					window.location.reload();
 				}
+=======
+				window.location.reload();
+>>>>>>> old/master
 			}
 		});
 	}

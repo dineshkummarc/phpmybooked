@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -23,7 +27,10 @@ class Group
 	private $id;
 	private $name;
 	private $adminGroupId;
+<<<<<<< HEAD
 	private $isDefault = 0;
+=======
+>>>>>>> old/master
 
 	private $addedUsers = array();
 	private $removedUsers = array();
@@ -33,9 +40,12 @@ class Group
 	private $removedPermissions = array();
 	private $addedPermissions = array();
 	private $allowedResourceIds = array();
+<<<<<<< HEAD
     private $viewableResourceIds = array();
     private $removedViewPermissions = array();
     private $addedViewPermissions = array();
+=======
+>>>>>>> old/master
 
 	private $rolesChanged = false;
 
@@ -57,6 +67,7 @@ class Group
 	/**
 	 * @param $id int
 	 * @param $name string
+<<<<<<< HEAD
      * @param $isDefault int
 	 */
 	public function __construct($id, $name, $isDefault = 0)
@@ -64,6 +75,13 @@ class Group
 		$this->id = $id;
 		$this->name = $name;
 		$this->isDefault = intval($isDefault);
+=======
+	 */
+	public function __construct($id, $name)
+	{
+		$this->id = $id;
+		$this->name = $name;
+>>>>>>> old/master
 	}
 
 	/**
@@ -90,6 +108,7 @@ class Group
 		return $this->adminGroupId;
 	}
 
+<<<<<<< HEAD
     /**
      * @return int
      */
@@ -98,6 +117,8 @@ class Group
         return intval($this->isDefault);
     }
 
+=======
+>>>>>>> old/master
 	/**
 	 * @param $groupName string
 	 * @return void
@@ -107,6 +128,7 @@ class Group
 		$this->name = $groupName;
 	}
 
+<<<<<<< HEAD
     /**
      * @param int $isDefault
      */
@@ -115,6 +137,8 @@ class Group
         $this->isDefault = $isDefault;
     }
 
+=======
+>>>>>>> old/master
 	/**
 	 * @param $userId int
 	 * @return void
@@ -139,6 +163,7 @@ class Group
 		}
 	}
 
+<<<<<<< HEAD
     /**
      * @param $userIds int[]|array
      * @return void
@@ -159,6 +184,9 @@ class Group
     }
 
     /**
+=======
+	/**
+>>>>>>> old/master
 	 * @internal
 	 * @return int[] array of userIds
 	 */
@@ -245,12 +273,17 @@ class Group
 	 * @param int $allowedResourceId
 	 * @return void
 	 */
+<<<<<<< HEAD
 	public function WithFullPermission($allowedResourceId)
+=======
+	public function WithPermission($allowedResourceId)
+>>>>>>> old/master
 	{
 		$this->permissionsChanged = false;
 		$this->allowedResourceIds[] = $allowedResourceId;
 	}
 
+<<<<<<< HEAD
     /**
      * @param int $viewableResourceId
      * @return void
@@ -261,6 +294,8 @@ class Group
         $this->viewableResourceIds[] = $viewableResourceId;
     }
 
+=======
+>>>>>>> old/master
 	/**
 	 * @param $role int
 	 * @return void
@@ -271,6 +306,7 @@ class Group
 		$this->roleIds[] = $role;
 	}
 
+<<<<<<< HEAD
     /**
      * @param int[] $viewableResourceIds
      * @return void
@@ -291,11 +327,17 @@ class Group
         }
     }
 
+=======
+>>>>>>> old/master
 	/**
 	 * @param int[] $allowedResourceIds
 	 * @return void
 	 */
+<<<<<<< HEAD
 	public function ChangeAllowedPermissions($allowedResourceIds = array())
+=======
+	public function ChangePermissions($allowedResourceIds = array())
+>>>>>>> old/master
 	{
 		$diff = new ArrayDiff($this->allowedResourceIds, $allowedResourceIds);
 		$removed = $diff->GetRemovedFromArray1();
@@ -317,7 +359,11 @@ class Group
 	 */
 	public function RemovedPermissions()
 	{
+<<<<<<< HEAD
         return array_merge($this->removedPermissions, $this->removedViewPermissions);
+=======
+		return $this->removedPermissions;
+>>>>>>> old/master
 	}
 
 	/**
@@ -337,6 +383,7 @@ class Group
 		return $this->allowedResourceIds;
 	}
 
+<<<<<<< HEAD
     /**
      * @internal
      * @return int[]|array of resourceIds
@@ -354,6 +401,8 @@ class Group
         return $this->viewableResourceIds;
     }
 
+=======
+>>>>>>> old/master
 	/**
 	 * @return array|int[]
 	 */

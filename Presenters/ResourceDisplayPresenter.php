@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2017-2020 Nick Korbel
+=======
+ * Copyright 2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -37,8 +41,14 @@ class ResourceDisplayPresenter extends ActionPresenter
      * @var IResourceRepository
      */
     private $resourceRepository;
+<<<<<<< HEAD
     /**
      * @var IReservationService
+=======
+
+    /**
+     * @var IReservationViewRepository
+>>>>>>> old/master
      */
     private $reservationService;
     /**
@@ -66,18 +76,23 @@ class ResourceDisplayPresenter extends ActionPresenter
     /**
      * @var IReservationHandler
      */
+<<<<<<< HEAD
     public $reservationCreateHandler;
 
     /**
      * @var IReservationHandler
      */
     public $reservationCheckinHandler;
+=======
+    public $reservationHandler;
+>>>>>>> old/master
 
     /**
      * @var IAttributeService
      */
     private $attributeService;
 
+<<<<<<< HEAD
     /**
      * @var IReservationRepository
      */
@@ -88,6 +103,8 @@ class ResourceDisplayPresenter extends ActionPresenter
      */
     private $termsOfServiceRepository;
 
+=======
+>>>>>>> old/master
     public function __construct(IResourceDisplayPage $page,
                                 IResourceRepository $resourceRepository,
                                 IReservationService $reservationService,
@@ -96,9 +113,13 @@ class ResourceDisplayPresenter extends ActionPresenter
                                 IScheduleRepository $scheduleRepository,
                                 IDailyLayoutFactory $dailyLayoutFactory,
                                 IGuestUserService $guestUserService,
+<<<<<<< HEAD
                                 IAttributeService $attributeService,
                                 IReservationRepository $reservationRepository,
                                 ITermsOfServiceRepository $termsOfServiceRepository)
+=======
+                                IAttributeService $attributeService)
+>>>>>>> old/master
     {
         parent::__construct($page);
         $this->page = $page;
@@ -110,24 +131,41 @@ class ResourceDisplayPresenter extends ActionPresenter
         $this->dailyLayoutFactory = $dailyLayoutFactory;
         $this->guestUserService = $guestUserService;
         $this->attributeService = $attributeService;
+<<<<<<< HEAD
         $this->reservationRepository = $reservationRepository;
         $this->termsOfServiceRepository = $termsOfServiceRepository;
+=======
+>>>>>>> old/master
 
         parent::AddAction('login', 'Login');
         parent::AddAction('activate', 'Activate');
         parent::AddAction('reserve', 'Reserve');
+<<<<<<< HEAD
         parent::AddAction('checkin', 'Checkin');
+=======
+>>>>>>> old/master
     }
 
     public function PageLoad()
     {
         $resourceId = $this->page->GetPublicResourceId();
+<<<<<<< HEAD
         if (!empty($resourceId)) {
             $this->page->DisplayResourceShell();
         }
         else {
         	$this->page->DisplayInstructions();
 		}
+=======
+        $loggedIn = ServiceLocator::GetServer()->GetUserSession()->IsLoggedIn();
+
+        if (empty($resourceId) || !$loggedIn) {
+            $this->page->DisplayLogin();
+        }
+        if (!empty($resourceId)) {
+            $this->page->DisplayResourceShell();
+        }
+>>>>>>> old/master
     }
 
     public function Login()
@@ -169,7 +207,11 @@ class ResourceDisplayPresenter extends ActionPresenter
     {
         $resource = $this->resourceRepository->LoadByPublicId($resourcePublicId);
 
+<<<<<<< HEAD
         if (!$resource->GetIsCalendarSubscriptionAllowed()) {
+=======
+        if (!$resource->GetIsDisplayEnabled()) {
+>>>>>>> old/master
 
             $this->page->DisplayNotEnabled();
             return;
@@ -179,6 +221,7 @@ class ResourceDisplayPresenter extends ActionPresenter
         $schedule = $this->scheduleRepository->LoadById($scheduleId);
         $timezone = $schedule->GetTimezone();
 
+<<<<<<< HEAD
         $now = Date::Now()->ToTimezone($timezone);
 
         $layout = $this->scheduleRepository->GetLayout($scheduleId, new ScheduleLayoutFactory($timezone));
@@ -189,14 +232,28 @@ class ResourceDisplayPresenter extends ActionPresenter
 
         $reservationSearchRange = new DateRange($now->GetDate()->ToUtc(), $now->AddDays(1)->GetDate()->ToUtc());
         $reservations = $this->reservationService->GetReservations($reservationSearchRange, null, $timezone, $resource->GetResourceId());
+=======
+        $now = Date::Now();
+        $today = new DateRange($now->GetDate()->ToUtc(), $now->AddDays(1)->GetDate()->ToUtc());
+
+        $layout = $this->scheduleRepository->GetLayout($scheduleId, new ScheduleLayoutFactory($timezone));
+        $reservations = $this->reservationService->GetReservations($today, null, $timezone, $resource->GetResourceId());
+>>>>>>> old/master
 
         $attributes = $this->attributeService->GetReservationAttributes(ServiceLocator::GetServer()->GetUserSession(),
             new ReservationView(), 0, array($resource->GetResourceId()));
 
         $requiredAttributes = array();
         /** @var Attribute $attribute */
+<<<<<<< HEAD
         foreach ($attributes as $attribute) {
             if ($attribute->Required()) {
+=======
+        foreach ($attributes as $attribute)
+        {
+            if ($attribute->Required())
+            {
+>>>>>>> old/master
                 $requiredAttributes[] = $attribute;
             }
         }
@@ -206,6 +263,7 @@ class ResourceDisplayPresenter extends ActionPresenter
 
         $dailyLayout = $this->dailyLayoutFactory->Create($reservations, $layout);
 
+<<<<<<< HEAD
         $reservationList = $reservations->OnDateForResource($now, $resource->GetId());
 
         /** @var ReservationListItem $next */
@@ -241,6 +299,9 @@ class ResourceDisplayPresenter extends ActionPresenter
         $this->SetTermsOfService();
         $this->page->SetIsAvailableNow($current == null);
         $this->page->DisplayAvailability($dailyLayout, $now, $current, $next, $upcoming, $requiresCheckin, $checkinReferenceNumber);
+=======
+        $this->page->DisplayAvailability($dailyLayout, $now->ToTimezone($timezone));
+>>>>>>> old/master
     }
 
     public function Reserve()
@@ -257,12 +318,20 @@ class ResourceDisplayPresenter extends ActionPresenter
         $resource = $this->resourceRepository->LoadById($resourceId);
 
         $resultCollector = new ReservationResultCollector();
+<<<<<<< HEAD
         $series = ReservationSeries::Create($userSession->UserId, $resource, Resources::GetInstance()->GetString('AdHocMeeting'), Resources::GetInstance()->GetString('AdHocMeeting'), $date, new RepeatNone(), $userSession);
 
         $series->AcceptTerms($this->page->GetTermsOfServiceAcknowledgement());
 
         $attributes = $this->page->GetAttributes();
         foreach ($attributes as $attribute) {
+=======
+        $series = ReservationSeries::Create($userSession->UserId, $resource, '', '', $date, new RepeatNone(), $userSession);
+
+        $attributes = $this->page->GetAttributes();
+        foreach ($attributes as $attribute)
+        {
+>>>>>>> old/master
             $series->AddAttributeValue(new AttributeValue($attribute->Id, $attribute->Value));
         }
 
@@ -271,6 +340,7 @@ class ResourceDisplayPresenter extends ActionPresenter
         $this->page->SetReservationSaveResults($success, $resultCollector);
     }
 
+<<<<<<< HEAD
     public function Checkin()
     {
         $resultCollector = new ReservationResultCollector();
@@ -285,6 +355,8 @@ class ResourceDisplayPresenter extends ActionPresenter
         $this->page->SetReservationCheckinResults($success, $resultCollector);
     }
 
+=======
+>>>>>>> old/master
     public function ProcessDataRequest($dataRequest)
     {
         if ($dataRequest == 'display') {
@@ -298,15 +370,19 @@ class ResourceDisplayPresenter extends ActionPresenter
     {
         if ($action == 'reserve') {
             $this->page->RegisterValidator('emailformat', new EmailValidator($this->page->GetEmail()));
+<<<<<<< HEAD
             if (!Configuration::Instance()->GetSectionKey(ConfigSection::TABLET_VIEW, ConfigKeys::TABLET_VIEW_ALLOW_GUESTS, new BooleanConverter()))
             {
                 $this->page->RegisterValidator('guestdenied', new RestrictedGuestValidator($this->page->GetEmail(), $this->guestUserService));
             }
+=======
+>>>>>>> old/master
         }
     }
 
     private function GetHandler($userSession)
     {
+<<<<<<< HEAD
         if ($this->reservationCreateHandler == null) {
             return ReservationHandler::Create(ReservationAction::Create,
                 new AddReservationPersistenceService($this->reservationRepository),
@@ -332,6 +408,17 @@ class ResourceDisplayPresenter extends ActionPresenter
             $this->page->SetTerms($termsOfService);
         }
     }
+=======
+        if ($this->reservationHandler == null) {
+            return ReservationHandler::Create(ReservationAction::Create,
+                new AddReservationPersistenceService(new ReservationRepository()),
+                $userSession);
+        }
+
+        return $this->reservationHandler;
+    }
+
+>>>>>>> old/master
 }
 
 class ReservationResultCollector implements IReservationSaveResultsView

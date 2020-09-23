@@ -10,14 +10,22 @@
 * @author    Benedikt Hallinger <beni@php.net>
 * @copyright 2009 Benedikt Hallinger
 * @license   http://www.gnu.org/licenses/lgpl-3.0.txt LGPLv3
+<<<<<<< HEAD
 * @version   SVN: $Id$
+=======
+* @version   SVN: $Id: Util.php 286718 2009-08-03 07:30:49Z beni $
+>>>>>>> old/master
 * @link      http://pear.php.net/package/Net_LDAP2/
 */
 
 /**
 * Includes
 */
+<<<<<<< HEAD
 require_once 'PEAR.php';
+=======
+require_once ROOT_DIR . 'lib/external/pear/PEAR.php';
+>>>>>>> old/master
 
 /**
 * Utility Class for Net_LDAP2
@@ -113,6 +121,7 @@ class Net_LDAP2_Util extends PEAR
                 // MV RDN!
                 foreach ($rdns as $subrdn_k => $subrdn_v) {
                     // Casefolding
+<<<<<<< HEAD
                     if ($options['casefold'] == 'upper') {
                         $subrdn_v = preg_replace_callback(
                             "/^\w+=/",
@@ -130,6 +139,10 @@ class Net_LDAP2_Util extends PEAR
                             $subrdn_v
                         );
                     }
+=======
+                    if ($options['casefold'] == 'upper') $subrdn_v = preg_replace("/^(\w+=)/e", "''.strtoupper('\\1').''", $subrdn_v);
+                    if ($options['casefold'] == 'lower') $subrdn_v = preg_replace("/^(\w+=)/e", "''.strtolower('\\1').''", $subrdn_v);
+>>>>>>> old/master
 
                     if ($options['onlyvalues']) {
                         preg_match('/(.+?)(?<!\\\\)=(.+)/', $subrdn_v, $matches);
@@ -148,6 +161,7 @@ class Net_LDAP2_Util extends PEAR
                 // normal RDN
 
                 // Casefolding
+<<<<<<< HEAD
                 if ($options['casefold'] == 'upper') {
                     $value = preg_replace_callback(
                         "/^\w+=/",
@@ -165,6 +179,10 @@ class Net_LDAP2_Util extends PEAR
                         $value
                     );
                 }
+=======
+                if ($options['casefold'] == 'upper') $value = preg_replace("/^(\w+=)/e", "''.strtoupper('\\1').''", $value);
+                if ($options['casefold'] == 'lower') $value = preg_replace("/^(\w+=)/e", "''.strtolower('\\1').''", $value);
+>>>>>>> old/master
 
                 if ($options['onlyvalues']) {
                     preg_match('/(.+?)(?<!\\\\)=(.+)/', $value, $matches);
@@ -514,6 +532,7 @@ class Net_LDAP2_Util extends PEAR
     */
     public static function hex2asc($string)
     {
+<<<<<<< HEAD
         $string = preg_replace_callback(
             "/\\\[0-9A-Fa-f]{2}/",
             function ($matches) {
@@ -521,6 +540,9 @@ class Net_LDAP2_Util extends PEAR
             },
             $string
         );
+=======
+        $string = preg_replace("/\\\([0-9A-Fa-f]{2})/e", "''.chr(hexdec('\\1')).''", $string);
+>>>>>>> old/master
         return $string;
     }
 
@@ -561,6 +583,7 @@ class Net_LDAP2_Util extends PEAR
     }
 
     /**
+<<<<<<< HEAD
     * Splits an attribute=value syntax into an array
     *
     * If escaped delimeters are used, they are returned escaped as well.
@@ -584,6 +607,19 @@ class Net_LDAP2_Util extends PEAR
         } else {
             return preg_split('/(?<!\\\\)(>=|<=|>|<|~=|=)/', $attr, 2, $withDelim);
         }
+=======
+    * Splits a attribute=value syntax into an array
+    *
+    * The split will occur at the first unescaped '=' character.
+    *
+    * @param string $attr Attribute and Value Syntax
+    *
+    * @return array Indexed array: 0=attribute name, 1=attribute value
+    */
+    public static function split_attribute_string($attr)
+    {
+        return preg_split('/(?<!\\\\)=/', $attr, 2);
+>>>>>>> old/master
     }
 
     /**
@@ -617,4 +653,8 @@ class Net_LDAP2_Util extends PEAR
     }
 }
 
+<<<<<<< HEAD
 ?>
+=======
+?>
+>>>>>>> old/master

@@ -2,12 +2,20 @@
 /**
  * Smarty plugin
  *
+<<<<<<< HEAD
  * @package    Smarty
+=======
+ * @package Smarty
+>>>>>>> old/master
  * @subpackage PluginsFunction
  */
 
 /**
  * Smarty {html_image} function plugin
+<<<<<<< HEAD
+=======
+ *
+>>>>>>> old/master
  * Type:     function<br>
  * Name:     html_image<br>
  * Date:     Feb 24, 2003<br>
@@ -23,6 +31,7 @@
  * - path_prefix - prefix for path output (optional, default empty)
  * </pre>
  *
+<<<<<<< HEAD
  * @link    http://www.smarty.net/manual/en/language.function.html.image.php {html_image}
  *          (Smarty online manual)
  * @author  Monte Ohrt <monte at ohrt dot com>
@@ -35,6 +44,17 @@
  * @throws SmartyException
  * @return string
  * @uses    smarty_function_escape_special_chars()
+=======
+ * @link http://www.smarty.net/manual/en/language.function.html.image.php {html_image}
+ *      (Smarty online manual)
+ * @author Monte Ohrt <monte at ohrt dot com>
+ * @author credits to Duda <duda@big.hu>
+ * @version 1.0
+ * @param array                    $params   parameters
+ * @param Smarty_Internal_Template $template template object
+ * @return string
+ * @uses smarty_function_escape_special_chars()
+>>>>>>> old/master
  */
 function smarty_function_html_image($params, $template)
 {
@@ -48,7 +68,11 @@ function smarty_function_html_image($params, $template)
     $prefix = '';
     $suffix = '';
     $path_prefix = '';
+<<<<<<< HEAD
     $basedir = isset($_SERVER[ 'DOCUMENT_ROOT' ]) ? $_SERVER[ 'DOCUMENT_ROOT' ] : '';
+=======
+    $basedir = isset($_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] : '';
+>>>>>>> old/master
     foreach ($params as $_key => $_val) {
         switch ($_key) {
             case 'file':
@@ -90,13 +114,18 @@ function smarty_function_html_image($params, $template)
         return;
     }
 
+<<<<<<< HEAD
     if ($file[ 0 ] == '/') {
+=======
+    if ($file[0] == '/') {
+>>>>>>> old/master
         $_image_path = $basedir . $file;
     } else {
         $_image_path = $file;
     }
 
     // strip file protocol
+<<<<<<< HEAD
     if (stripos($params[ 'file' ], 'file://') === 0) {
         $params[ 'file' ] = substr($params[ 'file' ], 7);
     }
@@ -104,23 +133,44 @@ function smarty_function_html_image($params, $template)
     $protocol = strpos($params[ 'file' ], '://');
     if ($protocol !== false) {
         $protocol = strtolower(substr($params[ 'file' ], 0, $protocol));
+=======
+    if (stripos($params['file'], 'file://') === 0) {
+        $params['file'] = substr($params['file'], 7);
+    }
+
+    $protocol = strpos($params['file'], '://');
+    if ($protocol !== false) {
+        $protocol = strtolower(substr($params['file'], 0, $protocol));
+>>>>>>> old/master
     }
 
     if (isset($template->smarty->security_policy)) {
         if ($protocol) {
             // remote resource (or php stream, …)
+<<<<<<< HEAD
             if (!$template->smarty->security_policy->isTrustedUri($params[ 'file' ])) {
+=======
+            if (!$template->smarty->security_policy->isTrustedUri($params['file'])) {
+>>>>>>> old/master
                 return;
             }
         } else {
             // local file
+<<<<<<< HEAD
             if (!$template->smarty->security_policy->isTrustedResourceDir($_image_path)) {
+=======
+            if (!$template->smarty->security_policy->isTrustedResourceDir($params['file'])) {
+>>>>>>> old/master
                 return;
             }
         }
     }
 
+<<<<<<< HEAD
     if (!isset($params[ 'width' ]) || !isset($params[ 'height' ])) {
+=======
+    if (!isset($params['width']) || !isset($params['height'])) {
+>>>>>>> old/master
         // FIXME: (rodneyrehm) getimagesize() loads the complete file off a remote resource, use custom [jpg,png,gif]header reader!
         if (!$_image_data = @getimagesize($_image_path)) {
             if (!file_exists($_image_path)) {
@@ -138,6 +188,7 @@ function smarty_function_html_image($params, $template)
             }
         }
 
+<<<<<<< HEAD
         if (!isset($params[ 'width' ])) {
             $width = $_image_data[ 0 ];
         }
@@ -148,17 +199,37 @@ function smarty_function_html_image($params, $template)
 
     if (isset($params[ 'dpi' ])) {
         if (strstr($_SERVER[ 'HTTP_USER_AGENT' ], 'Mac')) {
+=======
+        if (!isset($params['width'])) {
+            $width = $_image_data[0];
+        }
+        if (!isset($params['height'])) {
+            $height = $_image_data[1];
+        }
+    }
+
+    if (isset($params['dpi'])) {
+        if (strstr($_SERVER['HTTP_USER_AGENT'], 'Mac')) {
+>>>>>>> old/master
             // FIXME: (rodneyrehm) wrong dpi assumption
             // don't know who thought this up… even if it was true in 1998, it's definitely wrong in 2011.
             $dpi_default = 72;
         } else {
             $dpi_default = 96;
         }
+<<<<<<< HEAD
         $_resize = $dpi_default / $params[ 'dpi' ];
+=======
+        $_resize = $dpi_default / $params['dpi'];
+>>>>>>> old/master
         $width = round($width * $_resize);
         $height = round($height * $_resize);
     }
 
+<<<<<<< HEAD
     return $prefix . '<img src="' . $path_prefix . $file . '" alt="' . $alt . '" width="' . $width . '" height="' .
            $height . '"' . $extra . ' />' . $suffix;
+=======
+    return $prefix . '<img src="' . $path_prefix . $file . '" alt="' . $alt . '" width="' . $width . '" height="' . $height . '"' . $extra . ' />' . $suffix;
+>>>>>>> old/master
 }

@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -64,7 +68,11 @@ class UpcomingReservationsPresenter
 		$dayOfWeek = $today->Weekday();
 
 		$lastDate = $now->AddDays(13-$dayOfWeek-1);
+<<<<<<< HEAD
         $consolidated = $this->repository->GetReservations($now, $lastDate, $this->searchUserId, $this->searchUserLevel, null, null, true);
+=======
+		$reservations = $this->repository->GetReservations($now, $lastDate, $this->searchUserId, $this->searchUserLevel);
+>>>>>>> old/master
 		$tomorrow = $today->AddDays(1);
 
 		$startOfNextWeek = $today->AddDays(7-$dayOfWeek);
@@ -75,7 +83,11 @@ class UpcomingReservationsPresenter
 		$nextWeeks = array();
 
 		/* @var $reservation ReservationItemView */
+<<<<<<< HEAD
 		foreach ($consolidated as $reservation)
+=======
+		foreach ($reservations as $reservation)
+>>>>>>> old/master
 		{
 			$start = $reservation->StartDate->ToTimezone($timezone);
 
@@ -97,7 +109,11 @@ class UpcomingReservationsPresenter
 			}
 		}
 
+<<<<<<< HEAD
 		$this->control->SetTotal(count($consolidated));
+=======
+		$this->control->SetTotal(count($reservations));
+>>>>>>> old/master
 		$this->control->SetTimezone($timezone);
 		$this->control->SetUserId($user->UserId);
 

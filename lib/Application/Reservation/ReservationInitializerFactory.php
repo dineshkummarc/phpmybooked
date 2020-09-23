@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +21,7 @@
 
 class ReservationInitializerFactory implements IReservationInitializerFactory
 {
+<<<<<<< HEAD
     /**
      * @var ReservationUserBinder
      */
@@ -82,4 +87,67 @@ class ReservationInitializerFactory implements IReservationInitializerFactory
             new TermsOfServiceRepository()
         );
     }
+=======
+	/**
+	 * @var ReservationUserBinder
+	 */
+	private $userBinder;
+
+	/**
+	 * @var ReservationDateBinder
+	 */
+	private $dateBinder;
+
+	/**
+	 * @var ReservationResourceBinder
+	 */
+	private $resourceBinder;
+
+	/**
+	 * @var IReservationAuthorization
+	 */
+	private $reservationAuthorization;
+
+	/**
+	 * @var IUserRepository
+	 */
+	private $userRepository;
+
+	public function __construct(
+			IScheduleRepository $scheduleRepository, IUserRepository $userRepository, IResourceService $resourceService,
+			IReservationAuthorization $reservationAuthorization
+	)
+	{
+		$this->reservationAuthorization = $reservationAuthorization;
+		$this->userRepository = $userRepository;
+
+		$this->userBinder = new ReservationUserBinder($userRepository, $reservationAuthorization);
+		$this->dateBinder = new ReservationDateBinder($scheduleRepository);
+		$this->resourceBinder = new ReservationResourceBinder($resourceService, $userRepository);
+	}
+
+	public function GetNewInitializer(INewReservationPage $page)
+	{
+		return new NewReservationInitializer($page,
+											 $this->userBinder,
+											 $this->dateBinder,
+											 $this->resourceBinder,
+											 ServiceLocator::GetServer()->GetUserSession(),
+											 new ScheduleRepository(),
+											 new ResourceRepository());
+	}
+
+	public function GetExistingInitializer(IExistingReservationPage $page, ReservationView $reservationView)
+	{
+		return new ExistingReservationInitializer($page,
+												  $this->userBinder,
+												  $this->dateBinder,
+												  $this->resourceBinder,
+												  new ReservationDetailsBinder($this->reservationAuthorization, $page, $reservationView,
+																			   new PrivacyFilter($this->reservationAuthorization)),
+												  $reservationView,
+												  ServiceLocator::GetServer()->GetUserSession()
+		);
+	}
+>>>>>>> old/master
 }

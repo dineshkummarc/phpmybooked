@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,7 +18,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
+<<<<<<< HEAD
 
+=======
+>>>>>>> old/master
 interface ICaptchaService
 {
 	/**
@@ -79,6 +86,7 @@ class CaptchaService implements ICaptchaService
 
 	/**
 	 * @static
+<<<<<<< HEAD
 	 * @return ICaptchaService
 	 */
 	public static function Create()
@@ -86,6 +94,13 @@ class CaptchaService implements ICaptchaService
 		if (Configuration::Instance()->GetKey(ConfigKeys::REGISTRATION_ENABLE_CAPTCHA, new BooleanConverter()) ||
             (Configuration::Instance()->GetSectionKey(ConfigSection::AUTHENTICATION, ConfigKeys::AUTHENTICATION_CAPTCHA_ON_LOGIN, new BooleanConverter()))
         )
+=======
+	 * @return CaptchaService|NullCaptchaService
+	 */
+	public static function Create()
+	{
+		if (Configuration::Instance()->GetKey(ConfigKeys::REGISTRATION_ENABLE_CAPTCHA, new BooleanConverter()))
+>>>>>>> old/master
 		{
 			if (Configuration::Instance()->GetSectionKey(ConfigSection::RECAPTCHA, ConfigKeys::RECAPTCHA_ENABLED,
 														 new BooleanConverter())
@@ -119,15 +134,30 @@ class ReCaptchaService implements ICaptchaService
 	public function IsCorrect($captchaValue)
 	{
 		$server = ServiceLocator::GetServer();
+<<<<<<< HEAD
+=======
+		Log::Debug('Checking ReCaptcha. Value entered=%s', $server->GetForm('recaptcha_response_field'));
+>>>>>>> old/master
 
 		require_once(ROOT_DIR . 'lib/external/recaptcha/recaptchalib.php');
 		$privatekey = Configuration::Instance()->GetSectionKey(ConfigSection::RECAPTCHA, ConfigKeys::RECAPTCHA_PRIVATE_KEY);
 
+<<<<<<< HEAD
 		$recap = new ReCaptcha($privatekey);
 		$resp = $recap->verifyResponse($server->GetRemoteAddress(), $server->GetForm('g-recaptcha-response'));
 
 		Log::Debug('ReCaptcha IsValid: %s', $resp->success);
 
 		return $resp->success;
+=======
+		$resp = recaptcha_check_answer($privatekey,
+									   $server->GetRemoteAddress(),
+									   $server->GetForm('recaptcha_challenge_field'),
+									   $server->GetForm('recaptcha_response_field'));
+
+		Log::Debug('ReCaptcha IsValid: %s', $resp->is_valid);
+
+		return $resp->is_valid;
+>>>>>>> old/master
 	}
 }

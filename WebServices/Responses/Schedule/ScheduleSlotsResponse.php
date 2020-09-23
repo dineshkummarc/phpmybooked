@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2014-2020 Nick Korbel
+=======
+ * Copyright 2014-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -18,7 +22,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
+<<<<<<< HEAD
 
+=======
+>>>>>>> old/master
 class ScheduleSlotResponse extends RestResponse
 {
 	/**
@@ -87,10 +94,18 @@ class ScheduleSlotDetailsResponse extends RestResponse
 	public function __construct(IRestServer $server, IReservationSlot $slot, IPrivacyFilter $privacyFilter)
 	{
 		$user = $server->GetSession();
+<<<<<<< HEAD
 
 		$this->slotSpan = $slot->PeriodSpan();
 		$this->isReserved = $slot->IsReserved();
 		$this->label = $slot->Label();
+=======
+		$slotLabelFactory = $user->IsAdmin ? new AdminSlotLabelFactory() : new SlotLabelFactory($user);
+
+		$this->slotSpan = $slot->PeriodSpan();
+		$this->isReserved = $slot->IsReserved();
+		$this->label = $slot->Label($slotLabelFactory);
+>>>>>>> old/master
 		$this->isReservable = $slot->IsReservable();
 		$this->color = $slot->Color();
 		$this->startDateTime = $slot->BeginDate()->ToIso();
@@ -120,6 +135,7 @@ class ScheduleSlotResourceResponse extends RestResponse
 	 * @var IPrivacyFilter
 	 */
 	private $privacyFilter;
+<<<<<<< HEAD
 	/**
 	 * @var int
 	 */
@@ -128,6 +144,8 @@ class ScheduleSlotResourceResponse extends RestResponse
 	 * @var string
 	 */
 	public $resourceName;
+=======
+>>>>>>> old/master
 
 	public function __construct(IRestServer $server, ResourceDto $resource, IPrivacyFilter $privacyFilter)
 	{
@@ -149,10 +167,13 @@ class ScheduleSlotResourceResponse extends RestResponse
 class ScheduleSlotsResponse extends RestResponse
 {
 	public $dates = array();
+<<<<<<< HEAD
 	/**
 	 * @var int
 	 */
 	private $scheduleId;
+=======
+>>>>>>> old/master
 
 	/**
 	 * @param IRestServer $server

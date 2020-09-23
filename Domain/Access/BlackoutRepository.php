@@ -1,5 +1,6 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
@@ -17,6 +18,25 @@
  * You should have received a copy of the GNU General Public License
  * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
+=======
+Copyright 2011-2016 Nick Korbel
+
+This file is part of Booked Scheduler.
+
+Booked Scheduler is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Booked Scheduler is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
+*/
+>>>>>>> old/master
 
 require_once(ROOT_DIR . 'Domain/Blackout.php');
 
@@ -33,6 +53,7 @@ interface IBlackoutRepository
 	 */
 	public function Update(BlackoutSeries $blackoutSeries);
 
+<<<<<<< HEAD
 	/**
 	 * @param int $blackoutId
 	 */
@@ -42,6 +63,17 @@ interface IBlackoutRepository
 	 * @param int $blackoutId
 	 */
 	public function DeleteSeries($blackoutId);
+=======
+    /**
+     * @param int $blackoutId
+     */
+    public function Delete($blackoutId);
+
+	/**
+     * @param int $blackoutId
+     */
+    public function DeleteSeries($blackoutId);
+>>>>>>> old/master
 
 	/**
 	 * @param int $blackoutId
@@ -67,11 +99,18 @@ class BlackoutRepository implements IBlackoutRepository
 		return $seriesId;
 	}
 
+<<<<<<< HEAD
 	private function AddSeries(BlackoutSeries $blackoutSeries)
 	{
 		$db = ServiceLocator::GetDatabase();
 		$seriesId = $db->ExecuteInsert(new AddBlackoutCommand($blackoutSeries->OwnerId(), $blackoutSeries->Title(), $blackoutSeries->RepeatType(),
 															  $blackoutSeries->RepeatConfigurationString()));
+=======
+	private function AddSeries (BlackoutSeries $blackoutSeries)
+	{
+		$db = ServiceLocator::GetDatabase();
+		$seriesId = $db->ExecuteInsert(new AddBlackoutCommand($blackoutSeries->OwnerId(), $blackoutSeries->Title(), $blackoutSeries->RepeatType(), $blackoutSeries->RepeatConfigurationString()));
+>>>>>>> old/master
 
 		foreach ($blackoutSeries->ResourceIds() as $resourceId)
 		{
@@ -81,6 +120,7 @@ class BlackoutRepository implements IBlackoutRepository
 		return $seriesId;
 	}
 
+<<<<<<< HEAD
 	/**
 	 * @param int $blackoutId
 	 */
@@ -96,6 +136,23 @@ class BlackoutRepository implements IBlackoutRepository
 	{
 		ServiceLocator::GetDatabase()->Execute(new DeleteBlackoutSeriesCommand($blackoutId));
 	}
+=======
+    /**
+     * @param int $blackoutId
+     */
+    public function Delete($blackoutId)
+    {
+        ServiceLocator::GetDatabase()->Execute(new DeleteBlackoutInstanceCommand($blackoutId));
+    }
+
+	/**
+     * @param int $blackoutId
+     */
+    public function DeleteSeries($blackoutId)
+    {
+        ServiceLocator::GetDatabase()->Execute(new DeleteBlackoutSeriesCommand($blackoutId));
+    }
+>>>>>>> old/master
 
 	/**
 	 * @param int $blackoutId
@@ -104,9 +161,15 @@ class BlackoutRepository implements IBlackoutRepository
 	public function LoadByBlackoutId($blackoutId)
 	{
 		$db = ServiceLocator::GetDatabase();
+<<<<<<< HEAD
 		$reader = $db->Query(new GetBlackoutSeriesByBlackoutIdCommand($blackoutId));
 
 		if ($row = $reader->GetRow())
+=======
+		$result = $db->Query(new GetBlackoutSeriesByBlackoutIdCommand($blackoutId));
+
+		if ($row = $result->GetRow())
+>>>>>>> old/master
 		{
 			$series = BlackoutSeries::FromRow($row);
 
@@ -114,18 +177,26 @@ class BlackoutRepository implements IBlackoutRepository
 
 			while ($row = $result->GetRow())
 			{
+<<<<<<< HEAD
 				$instance = new Blackout(new DateRange(Date::FromDatabase($row[ColumnNames::BLACKOUT_START]),
 													   Date::FromDatabase($row[ColumnNames::BLACKOUT_END])));
 				$instance->WithId($row[ColumnNames::BLACKOUT_INSTANCE_ID]);
 				$series->AddBlackout($instance);
 			}
 			$result->Free();
+=======
+				$instance = new Blackout(new DateRange(Date::FromDatabase($row[ColumnNames::BLACKOUT_START]), Date::FromDatabase($row[ColumnNames::BLACKOUT_END])));
+				$instance->WithId($row[ColumnNames::BLACKOUT_INSTANCE_ID]);
+				$series->AddBlackout($instance);
+			}
+>>>>>>> old/master
 
 			$result = $db->Query(new GetBlackoutResourcesCommand($series->Id()));
 
 			while ($row = $result->GetRow())
 			{
 				$series->AddResource(new BlackoutResource(
+<<<<<<< HEAD
 											 $row[ColumnNames::RESOURCE_ID],
 											 $row[ColumnNames::RESOURCE_NAME],
 											 $row[ColumnNames::SCHEDULE_ID],
@@ -141,6 +212,22 @@ class BlackoutRepository implements IBlackoutRepository
 
 		$reader->Free();
 		return null;
+=======
+										 $row[ColumnNames::RESOURCE_ID],
+										 $row[ColumnNames::RESOURCE_NAME],
+										 $row[ColumnNames::SCHEDULE_ID],
+										 $row[ColumnNames::RESOURCE_ADMIN_GROUP_ID],
+										 $row[ColumnNames::SCHEDULE_ADMIN_GROUP_ID_ALIAS],
+									 	 $row[ColumnNames::RESOURCE_STATUS_ID]));
+			}
+
+			return $series;
+		}
+		else
+		{
+			return null;
+		}
+>>>>>>> old/master
 	}
 
 	/**

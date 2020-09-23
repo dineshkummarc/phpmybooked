@@ -2,7 +2,11 @@
 /**
  * Smarty shared plugin
  *
+<<<<<<< HEAD
  * @package    Smarty
+=======
+ * @package Smarty
+>>>>>>> old/master
  * @subpackage PluginsShared
  */
 
@@ -11,12 +15,17 @@ if (!function_exists('smarty_mb_wordwrap')) {
     /**
      * Wrap a string to a given number of characters
      *
+<<<<<<< HEAD
      * @link   http://php.net/manual/en/function.wordwrap.php for similarity
      *
+=======
+     * @link http://php.net/manual/en/function.wordwrap.php for similarity
+>>>>>>> old/master
      * @param  string  $str   the string to wrap
      * @param  int     $width the width of the output
      * @param  string  $break the character used to break the line
      * @param  boolean $cut   ignored parameter, just for the sake of
+<<<<<<< HEAD
      *
      * @return string  wrapped string
      * @author Rodney Rehm
@@ -30,14 +39,38 @@ if (!function_exists('smarty_mb_wordwrap')) {
         $t = '';
         $_previous = false;
         $_space = false;
+=======
+     * @return string  wrapped string
+     * @author Rodney Rehm
+     */
+    function smarty_mb_wordwrap($str, $width=75, $break="\n", $cut=false)
+    {
+        // break words into tokens using white space as a delimiter
+        $tokens = preg_split('!(\s)!S' . Smarty::$_UTF8_MODIFIER, $str, -1, PREG_SPLIT_NO_EMPTY + PREG_SPLIT_DELIM_CAPTURE);
+        $length = 0;
+        $t = '';
+        $_previous = false;
+>>>>>>> old/master
 
         foreach ($tokens as $_token) {
             $token_length = mb_strlen($_token, Smarty::$_CHARSET);
             $_tokens = array($_token);
             if ($token_length > $width) {
+<<<<<<< HEAD
                 if ($cut) {
                     $_tokens = preg_split('!(.{' . $width . '})!S' . Smarty::$_UTF8_MODIFIER, $_token, - 1,
                                           PREG_SPLIT_NO_EMPTY + PREG_SPLIT_DELIM_CAPTURE);
+=======
+                // remove last space
+                $t = mb_substr($t, 0, -1, Smarty::$_CHARSET);
+                $_previous = false;
+                $length = 0;
+
+                if ($cut) {
+                    $_tokens = preg_split('!(.{' . $width . '})!S' . Smarty::$_UTF8_MODIFIER, $_token, -1, PREG_SPLIT_NO_EMPTY + PREG_SPLIT_DELIM_CAPTURE);
+                    // broken words go on a new line
+                    $t .= $break;
+>>>>>>> old/master
                 }
             }
 
@@ -48,6 +81,7 @@ if (!function_exists('smarty_mb_wordwrap')) {
 
                 if ($length > $width) {
                     // remove space before inserted break
+<<<<<<< HEAD
                     if ($_previous) {
                         $t = mb_substr($t, 0, - 1, Smarty::$_CHARSET);
                     }
@@ -58,13 +92,34 @@ if (!function_exists('smarty_mb_wordwrap')) {
                             $t .= $break;
                         }
                         $length = $token_length;
+=======
+                    if ($_previous && $token_length < $width) {
+                        $t = mb_substr($t, 0, -1, Smarty::$_CHARSET);
+                    }
+
+                    // add the break before the token
+                    $t .= $break;
+                    $length = $token_length;
+
+                    // skip space after inserting a break
+                    if ($_space) {
+                        $length = 0;
+                        continue;
+>>>>>>> old/master
                     }
                 } elseif ($token == "\n") {
                     // hard break must reset counters
                     $_previous = 0;
                     $length = 0;
+<<<<<<< HEAD
                 }
                 $_previous = $_space;
+=======
+                } else {
+                    // remember if we had a space or not
+                    $_previous = $_space;
+                }
+>>>>>>> old/master
                 // add the token
                 $t .= $token;
             }
@@ -72,4 +127,8 @@ if (!function_exists('smarty_mb_wordwrap')) {
 
         return $t;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> old/master
 }

@@ -150,7 +150,11 @@ class Saml extends Authentication implements IAuthentication
 	public function Login($username, $loginContext)
 	{
 		$this->username = $username;
+<<<<<<< HEAD
 		if (empty($this->username))
+=======
+		if ($this->username == null)
+>>>>>>> old/master
 		{
 			$this->username = $this->user->GetUserName();
 		}
@@ -164,13 +168,21 @@ class Saml extends Authentication implements IAuthentication
 
 	public function Logout(UserSession $user)
 	{
+<<<<<<< HEAD
         $this->authToDecorate->Logout($user);
 	    $this->saml->Logout();
+=======
+		$this->authToDecorate->Logout($user);
+>>>>>>> old/master
 	}
 
 	public function AreCredentialsKnown()
 	{
+<<<<<<< HEAD
 		return true;
+=======
+		return false;
+>>>>>>> old/master
 	}
 
 	private function SamlUserExists()
@@ -192,8 +204,12 @@ class Saml extends Authentication implements IAuthentication
 				Configuration::Instance()->GetKey(ConfigKeys::LANGUAGE),
 				Configuration::Instance()->GetDefaultTimezone(),
 				$this->user->GetPhone(), $this->user->GetInstitution(),
+<<<<<<< HEAD
 				$this->user->GetTitle(),
                 $this->user->GetGroups())
+=======
+				$this->user->GetTitle())
+>>>>>>> old/master
 		);
 	}
 
@@ -216,6 +232,7 @@ class Saml extends Authentication implements IAuthentication
 	{
 		return true;
 	}
+<<<<<<< HEAD
 
 
     public function AllowUsernameChange()
@@ -253,3 +270,8 @@ class Saml extends Authentication implements IAuthentication
         return false;
     }
 }
+=======
+}
+
+?>
+>>>>>>> old/master

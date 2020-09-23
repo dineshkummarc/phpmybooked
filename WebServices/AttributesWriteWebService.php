@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2017-2020 Nick Korbel
+=======
+ * Copyright 2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -45,11 +49,15 @@ class AttributesWriteWebService
 
 	/**
 	 * @name CreateCustomAttribute
+<<<<<<< HEAD
 	 * @description Creates a new custom attribute.
      * Allowed values for type: 1 (single line),  2 (multi line), 3 (select list), 4 (checkbox), 5 (datetime)
      * Allowed values for categoryId: 1 (reservation), 2 (user), 4 (resource), 5 (resource type)
      * appliesToIds only allowed for category 2, 4, 5 and must match the id of corresponding entities
      * secondaryCategoryId and secondaryEntityIds only applies to category 1 and must match the id of the corresponding entities
+=======
+	 * @description Creates a new custom attribute
+>>>>>>> old/master
 	 * @request CustomAttributeRequest
 	 * @response CustomAttributeCreatedResponse
 	 * @return void
@@ -80,10 +88,13 @@ class AttributesWriteWebService
 	/**
 	 * @name UpdateCustomAttribute
 	 * @description Updates and existing custom attribute
+<<<<<<< HEAD
      * Allowed values for type: 1 (single line),  2 (multi line), 3 (select list), 4 (checkbox), 5 (datetime)
      * Allowed values for categoryId: 1 (reservation), 2 (user), 4 (resource), 5 (resource type)
      * appliesToIds only allowed for category 2, 4, 5 and must match the id of corresponding entities
      * secondaryCategoryId and secondaryEntityIds only applies to category 1 and must match the id of the corresponding entities
+=======
+>>>>>>> old/master
 	 * @request CustomAttributeRequest
 	 * @response CustomAttributeUpdatedResponse
 	 * @param $attributeId

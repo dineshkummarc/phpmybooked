@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2012-2020 Nick Korbel
+=======
+Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -43,6 +47,13 @@ class PreReservationExampleValidation implements IReservationValidationService
 		return $this->EvaluateCustomRule($series);
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * @param ReservationSeries $series
+	 * @return bool
+	 */
+>>>>>>> old/master
 	private function EvaluateCustomRule($series)
 	{
 		Log::Debug('Evaluating custom pre reservation rule');

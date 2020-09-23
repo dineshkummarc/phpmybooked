@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -31,11 +35,19 @@ require_once(ROOT_DIR . 'lib/Application/Reservation/Notification/namespace.php'
 interface IReservationHandler
 {
 	/**
+<<<<<<< HEAD
 	 * @param ReservationSeries|ExistingReservationSeries $reservationSeries
 	 * @param IReservationSaveResultsView $view
 	 * @return bool if the reservation was handled or not
 	 */
 	public function Handle($reservationSeries, IReservationSaveResultsView $view);
+=======
+	 * @param ReservationSeries $reservationSeries
+	 * @param IReservationSaveResultsView $view
+	 * @return bool if the reservation was handled or not
+	 */
+	public function Handle(ReservationSeries $reservationSeries, IReservationSaveResultsView $view);
+>>>>>>> old/master
 }
 
 class ReservationHandler implements IReservationHandler
@@ -55,6 +67,7 @@ class ReservationHandler implements IReservationHandler
 	 */
 	private $notificationService;
 
+<<<<<<< HEAD
 	/**
 	 * @var IReservationRetryOptions
 	 */
@@ -64,11 +77,19 @@ class ReservationHandler implements IReservationHandler
 								IReservationValidationService $validationService,
 								IReservationNotificationService $notificationService,
 								IReservationRetryOptions $retryOptions)
+=======
+	public function __construct(IReservationPersistenceService $persistenceService,
+								IReservationValidationService $validationService,
+								IReservationNotificationService $notificationService)
+>>>>>>> old/master
 	{
 		$this->persistenceService = $persistenceService;
 		$this->validationService = $validationService;
 		$this->notificationService = $notificationService;
+<<<<<<< HEAD
 		$this->retryOptions = $retryOptions;
+=======
+>>>>>>> old/master
 	}
 
 	/**
@@ -92,6 +113,7 @@ class ReservationHandler implements IReservationHandler
 		$notificationFactory = new ReservationNotificationFactory();
 		$notificationService = $notificationFactory->Create($reservationAction, $session);
 
+<<<<<<< HEAD
 		$scheduleRepository = new ScheduleRepository();
 		$retryOptions = new ReservationRetryOptions(new ReservationConflictIdentifier(new ResourceAvailability(new ReservationViewRepository())), $scheduleRepository);
 
@@ -100,13 +122,30 @@ class ReservationHandler implements IReservationHandler
 
 	/**
 	 * @param ReservationSeries|ExistingReservationSeries $reservationSeries
+=======
+		return new ReservationHandler($persistenceService, $validationService, $notificationService);
+	}
+
+	/**
+	 * @param ReservationSeries $reservationSeries
+>>>>>>> old/master
 	 * @param IReservationSaveResultsView $view
 	 * @return bool if the reservation was handled or not
 	 * @throws Exception
 	 */
+<<<<<<< HEAD
 	public function Handle($reservationSeries, IReservationSaveResultsView $view)
 	{
 		$this->retryOptions->AdjustReservation($reservationSeries, $view->GetRetryParameters());
+=======
+	public function Handle(ReservationSeries $reservationSeries, IReservationSaveResultsView $view)
+	{
+		if (Log::DebugEnabled())
+		{
+			Log::Debug('submitted retry params %s', var_export($view->GetRetryParameters(), true));
+		}
+
+>>>>>>> old/master
 		$validationResult = $this->validationService->Validate($reservationSeries, $view->GetRetryParameters());
 		$result = $validationResult->CanBeSaved();
 
@@ -131,12 +170,24 @@ class ReservationHandler implements IReservationHandler
 			$view->SetErrors($validationResult->GetErrors());
 
 			$view->SetCanBeRetried($validationResult->CanBeRetried());
+<<<<<<< HEAD
 			$view->SetRetryParameters($validationResult->GetRetryParameters());
 			$view->SetRetryMessages($validationResult->GetRetryMessages());
 			$view->SetCanJoinWaitList($validationResult->CanJoinWaitList() && Configuration::Instance()->GetSectionKey(ConfigSection::RESERVATION,
 																													   ConfigKeys::RESERVATION_ALLOW_WAITLIST,
 																													   new BooleanConverter()));
 		}
+=======
+			if (Log::DebugEnabled())
+			{
+				Log::Debug('retry params %s', var_export($validationResult->GetRetryParameters(), true));
+				Log::Debug('retry messages %s', var_export($validationResult->GetRetryMessages(), true));
+			}
+			$view->SetRetryParameters($validationResult->GetRetryParameters());
+			$view->SetRetryMessages($validationResult->GetRetryMessages());
+            $view->SetCanJoinWaitList($validationResult->CanJoinWaitList() && Configuration::Instance()->GetSectionKey(ConfigSection::RESERVATION, ConfigKeys::RESERVATION_ALLOW_WAITLIST, new BooleanConverter()));
+        }
+>>>>>>> old/master
 
 		$view->SetWarnings($validationResult->GetWarnings());
 

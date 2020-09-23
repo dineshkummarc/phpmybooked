@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -41,7 +45,11 @@ require_once(ROOT_DIR . 'Domain/Access/UserSessionRepository.php');
 require_once(ROOT_DIR . 'Domain/Access/ReminderRepository.php');
 require_once(ROOT_DIR . 'Domain/Access/UserPreferenceRepository.php');
 require_once(ROOT_DIR . 'Domain/Access/AttributeFilter.php');
+<<<<<<< HEAD
 require_once(ROOT_DIR . 'Domain/Access/ReservationWaitlistRepository.php');
 require_once(ROOT_DIR . 'Domain/Access/PaymentRepository.php');
 require_once(ROOT_DIR . 'Domain/Access/CreditRepository.php');
 require_once(ROOT_DIR . 'Domain/Access/TermsOfServiceRepository.php');
+=======
+require_once(ROOT_DIR . 'Domain/Access/ReservationWaitlistRepository.php');
+>>>>>>> old/master

@@ -10,17 +10,28 @@
 * @author    Benedikt Hallinger <beni@php.net>
 * @copyright 2009 Benedikt Hallinger
 * @license   http://www.gnu.org/licenses/lgpl-3.0.txt LGPLv3
+<<<<<<< HEAD
 * @version   SVN: $Id$
+=======
+* @version   SVN: $Id: LDIF.php 302696 2010-08-23 12:48:07Z beni $
+>>>>>>> old/master
 * @link      http://pear.php.net/package/Net_LDAP2/
 */
 
 /**
 * Includes
 */
+<<<<<<< HEAD
 require_once 'PEAR.php';
 require_once ROOT_DIR . 'plugins/Authentication/Ldap/LDAP2.php';
 require_once 'Entry.php';
 require_once 'Util.php';
+=======
+require_once ROOT_DIR . 'lib/external/pear/PEAR.php';
+require_once ROOT_DIR . 'plugins/Authentication/Ldap/LDAP2.php';
+require_once ROOT_DIR . 'plugins/Authentication/Ldap/LDAP2/Entry.php';
+require_once ROOT_DIR . 'plugins/Authentication/Ldap/LDAP2/Util.php';
+>>>>>>> old/master
 
 /**
 * LDIF capabilitys for Net_LDAP2, closely taken from PERLs Net::LDAP
@@ -218,7 +229,11 @@ class Net_LDAP2_LDIF extends PEAR
     */
     public function __construct($file, $mode = 'r', $options = array())
     {
+<<<<<<< HEAD
         parent::__construct('Net_LDAP2_Error'); // default error class
+=======
+        $this->PEAR('Net_LDAP2_Error'); // default error class
+>>>>>>> old/master
 
         // First, parse options
         // todo: maybe implement further checks on possible values
@@ -340,7 +355,10 @@ class Net_LDAP2_LDIF extends PEAR
                                            + count($entry_attrs_changes['replace'])
                                            + count($entry_attrs_changes['delete']);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> old/master
                     $is_changed = ($num_of_changes > 0 || $entry->willBeDeleted() || $entry->willBeMoved());
 
                     // write version if not done yet
@@ -922,4 +940,8 @@ class Net_LDAP2_LDIF extends PEAR
         }
     }
 }
+<<<<<<< HEAD
 ?>
+=======
+?>
+>>>>>>> old/master

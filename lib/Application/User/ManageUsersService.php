@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2013-2020 Nick Korbel
+=======
+ * Copyright 2013-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,10 +57,16 @@ interface IManageUsersService
 	 * @param $lastName string
 	 * @param $timezone string
 	 * @param $extraAttributes string[]|array
+<<<<<<< HEAD
 	 * @param $customAttributes AttributeValue[]
 	 * @return User
 	 */
 	public function UpdateUser($userId, $username, $email, $firstName, $lastName, $timezone, $extraAttributes, $customAttributes);
+=======
+	 * @return User
+	 */
+	public function UpdateUser($userId, $username, $email, $firstName, $lastName, $timezone, $extraAttributes);
+>>>>>>> old/master
 
 	/**
 	 * @param $userId int
@@ -64,7 +74,11 @@ interface IManageUsersService
 	 */
 	public function ChangeAttribute($userId, $attribute);
 
+<<<<<<< HEAD
 	/**
+=======
+    /**
+>>>>>>> old/master
 	 * @param $userId int
 	 * @param $attributes AttributeValue[]
 	 */
@@ -80,6 +94,7 @@ interface IManageUsersService
 	 * @param int[] $groupIds
 	 */
 	public function ChangeGroups($user, $groupIds);
+<<<<<<< HEAD
 
 	/**
 	 * @param int $userId
@@ -92,6 +107,8 @@ interface IManageUsersService
 	 * @return User
 	 */
 	public function LoadUser($email);
+=======
+>>>>>>> old/master
 }
 
 class ManageUsersService implements IManageUsersService
@@ -116,6 +133,7 @@ class ManageUsersService implements IManageUsersService
 	 */
 	private $userViewRepository;
 
+<<<<<<< HEAD
 	/**
 	 * @var PasswordEncryption
 	 */
@@ -126,12 +144,19 @@ class ManageUsersService implements IManageUsersService
 								IGroupRepository $groupRepository,
 								IUserViewRepository $userViewRepository,
 								PasswordEncryption $passwordEncryption)
+=======
+	public function __construct(IRegistration $registration, IUserRepository $userRepository, IGroupRepository $groupRepository,
+								IUserViewRepository $userViewRepository)
+>>>>>>> old/master
 	{
 		$this->registration = $registration;
 		$this->userRepository = $userRepository;
 		$this->groupRepository = $groupRepository;
 		$this->userViewRepository = $userViewRepository;
+<<<<<<< HEAD
 		$this->passwordEncryption = $passwordEncryption;
+=======
+>>>>>>> old/master
 	}
 
 	public function AddUser(
@@ -160,16 +185,26 @@ class ManageUsersService implements IManageUsersService
 		return $user;
 	}
 
+<<<<<<< HEAD
 	public function ChangeAttribute($userId, $attributeValue)
 	{
 		$user = $this->userRepository->LoadById($userId);
 		$user->ChangeCustomAttribute($attributeValue);
 		$this->userRepository->Update($user);
 	}
+=======
+    public function ChangeAttribute($userId, $attributeValue)
+    {
+        $user = $this->userRepository->LoadById($userId);
+        $user->ChangeCustomAttribute($attributeValue);
+        $this->userRepository->Update($user);
+    }
+>>>>>>> old/master
 
 	public function ChangeAttributes($userId, $attributes)
 	{
 		$user = $this->userRepository->LoadById($userId);
+<<<<<<< HEAD
 		foreach ($attributes as $attribute)
 		{
 			$user->ChangeCustomAttribute($attribute);
@@ -192,6 +227,22 @@ class ManageUsersService implements IManageUsersService
 		if ($notify && Configuration::Instance()->GetKey(ConfigKeys::REGISTRATION_NOTIFY, new BooleanConverter()))
 		{
 
+=======
+		foreach($attributes as $attribute) {
+            $user->ChangeCustomAttribute($attribute);
+        }
+        $this->userRepository->Update($user);
+	}
+
+	public function DeleteUser($userId)
+	{
+		$user = $this->userRepository->LoadById($userId);
+		$this->userRepository->DeleteById($userId);
+
+		if (Configuration::Instance()->GetKey(ConfigKeys::REGISTRATION_NOTIFY, new BooleanConverter()))
+		{
+			$currentUser = ServiceLocator::GetServer()->GetUserSession();
+>>>>>>> old/master
 			$applicationAdmins = $this->userViewRepository->GetApplicationAdmins();
 			$groupAdmins = $this->userViewRepository->GetGroupAdmins($userId);
 
@@ -207,7 +258,11 @@ class ManageUsersService implements IManageUsersService
 		}
 	}
 
+<<<<<<< HEAD
 	public function UpdateUser($userId, $username, $email, $firstName, $lastName, $timezone, $extraAttributes, $customAttributes)
+=======
+	public function UpdateUser($userId, $username, $email, $firstName, $lastName, $timezone, $extraAttributes)
+>>>>>>> old/master
 	{
 		$attributes = new UserAttribute($extraAttributes);
 		$user = $this->userRepository->LoadById($userId);
@@ -219,10 +274,13 @@ class ManageUsersService implements IManageUsersService
 								$attributes->Get(UserAttribute::Organization),
 								$attributes->Get(UserAttribute::Position));
 
+<<<<<<< HEAD
 		foreach ($customAttributes as $attribute)
 		{
 			$user->ChangeCustomAttribute($attribute);
 		}
+=======
+>>>>>>> old/master
 		$this->userRepository->Update($user);
 
 		return $user;
@@ -263,6 +321,7 @@ class ManageUsersService implements IManageUsersService
 			}
 		}
 	}
+<<<<<<< HEAD
 
 	public function UpdatePassword($userId, $password)
 	{
@@ -279,4 +338,6 @@ class ManageUsersService implements IManageUsersService
 	{
 		return $this->userRepository->LoadByUsername($email);
 	}
+=======
+>>>>>>> old/master
 }

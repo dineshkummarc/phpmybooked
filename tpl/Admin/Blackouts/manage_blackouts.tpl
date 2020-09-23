@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -34,8 +38,12 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 													 value="{formatdate date=$AddStartDate key=system}"/>
 					<input {formname key=BEGIN_TIME} type="text" id="addStartTime"
 													 class="form-control dateinput inline-block timepicker"
+<<<<<<< HEAD
 													 value="{format_date format='h:00 A' date=now}" title="{translate key=StartTime}"/>
                     <label for="addStartTime" class="no-show">{translate key=StartTime}</label>
+=======
+													 value="{format_date format='h:00 A' date=now}" title="Start time"/>
+>>>>>>> old/master
 				</div>
 				<div class="form-group col-xs-6">
 					<label for="addEndDate">{translate key=EndDate}</label>
@@ -46,9 +54,14 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 					<input {formname key=END_TIME} type="text" id="addEndTime"
 												   class="form-control dateinput inline-block timepicker"
 												   value="{format_date format='h:00 A' date=Date::Now()->AddHours(1)}"
+<<<<<<< HEAD
 												   title="{translate key=EndTime}"/>
                     <label for="addEndTime" class="no-show">{translate key=EndTime}</label>
                 </div>
+=======
+												   title="End time"/>
+				</div>
+>>>>>>> old/master
 				<div class="form-group col-xs-12">
 					<label for="addResourceId">{translate key=Resource}</label>
 					<select {formname key=RESOURCE_ID} class="form-control" id="addResourceId">
@@ -60,9 +73,14 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 							<input {formname key=BLACKOUT_APPLY_TO_SCHEDULE} type="checkbox" id="allResources"/>
 							<label for="allResources" style="">{translate key=AllResourcesOn} </label>
 						</div>
+<<<<<<< HEAD
                         <label for="addScheduleId" class="no-show">{translate key=Schedule} </label>
                         <select {formname key=SCHEDULE_ID} id="addScheduleId" class="form-control" disabled="disabled"
 														   title="{translate key=Schedule}">
+=======
+						<select {formname key=SCHEDULE_ID} id="addScheduleId" class="form-control" disabled="disabled"
+														   title="Schedule">
+>>>>>>> old/master
 							{object_html_options options=$Schedules key='GetId' label="GetName" selected=$ScheduleId}
 						</select>
 					{/if}
@@ -84,7 +102,11 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 															  name="existingReservations"
 															  checked="checked"
 															  value="{ReservationConflictResolution::BookAround}"/>
+<<<<<<< HEAD
 						<label for="bookAround">{translate key=BlackoutAroundConflicts}</label>
+=======
+						<label for="notifyExisting">{translate key=BlackoutAroundConflicts}</label>
+>>>>>>> old/master
 					</div>
 					<div class="radio">
 						<input {formname key=CONFLICT_ACTION} type="radio" id="notifyExisting"
@@ -122,6 +144,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 					<input id="endDate" type="text" class="form-control dateinput inline-block"
 						   value="{formatdate date=$EndDate}" placeholder="{translate key=EndDate}"/>
 					<input id="formattedEndDate" type="hidden" value="{formatdate date=$EndDate key=system}"/>
+<<<<<<< HEAD
                     <label for="startDate" class="no-show">{translate key=StartDate}</label>
                     <label for="endDate" class="no-show">{translate key=EndDate}</label>
 
@@ -130,14 +153,23 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                     <label for="scheduleId" class="no-show">{translate key=Schedule} </label>
 
                     <select id="scheduleId" class="form-control col-xs-12">
+=======
+				</div>
+				<div class="form-group col-xs-4">
+					<select id="scheduleId" class="form-control col-xs-12">
+>>>>>>> old/master
 						<option value="">{translate key=AllSchedules}</option>
 						{object_html_options options=$Schedules key='GetId' label="GetName" selected=$ScheduleId}
 					</select>
 				</div>
 				<div class="form-group col-xs-4">
+<<<<<<< HEAD
                     <label for="resourceId" class="no-show">{translate key=Resource} </label>
 
                     <select id="resourceId" class="form-control col-xs-12">
+=======
+					<select id="resourceId" class="form-control col-xs-12">
+>>>>>>> old/master
 						<option value="">{translate key=AllResources}</option>
 						{object_html_options options=$Resources key='GetId' label="GetName" selected=$ResourceId}
 					</select>
@@ -160,19 +192,26 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 			<th>{translate key=CreatedBy}</th>
 			<th>{translate key=Update}</th>
 			<th>{translate key=Delete}</th>
+<<<<<<< HEAD
 			<th class="action-delete">
 				<div class="checkbox checkbox-single">
 					<input type="checkbox" id="delete-all" aria-label="{translate key=All}"/>
 					<label for="delete-all" class="no-show">All</label>
 				</div>
 			</th>
+=======
+>>>>>>> old/master
 		</tr>
 		</thead>
 		<tbody>
 		{foreach from=$blackouts item=blackout}
 			{cycle values='row0,row1' assign=rowCss}
+<<<<<<< HEAD
 			{assign var=id value=$blackout->InstanceId}
 			<tr class="{$rowCss} editable" data-blackout-id="{$id}">
+=======
+			<tr class="{$rowCss} editable" data-blackout-id="{$blackout->InstanceId}">
+>>>>>>> old/master
 				<td>{$blackout->ResourceName}</td>
 				<td class="date">{formatdate date=$blackout->StartDate timezone=$Timezone key=res_popup}</td>
 				<td class="date">{formatdate date=$blackout->EndDate timezone=$Timezone key=res_popup}</td>
@@ -188,6 +227,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 						<a href="#" class="update delete"><span class="fa fa-trash icon remove"></span></a>
 					</td>
 				{/if}
+<<<<<<< HEAD
 				<td class="action-delete">
 					<div class="checkbox checkbox-single">
 						<input {formname key=BLACKOUT_INSTANCE_ID multi=true} class="delete-multiple" type="checkbox" id="delete{$id}"
@@ -205,6 +245,11 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 			<td class="action-delete"><a href="#" id="delete-selected" class="no-show" title="{translate key=Delete}">{translate key=Delete}<span class="fa fa-trash icon remove"></span></a></td>
 		</tr>
 		</tfoot>
+=======
+			</tr>
+		{/foreach}
+		</tbody>
+>>>>>>> old/master
 	</table>
 
 	{pagination pageInfo=$PageInfo}
@@ -251,7 +296,11 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 						<button type="button" class="btn btn-default cancel"
 								data-dismiss="modal">{translate key='Cancel'}</button>
 
+<<<<<<< HEAD
 						<button type="button" class="btn btn-danger save btnUpdateThisInstance">
+=======
+						<button type="button" class="btn btn-danger save btnUpdateAllInstances">
+>>>>>>> old/master
 							<span class="fa fa-remove"></span> {translate key='ThisInstance'}</button>
 
 						<button type="button" class="btn btn-danger save btnUpdateAllInstances">
@@ -265,6 +314,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 		</div>
 	</div>
 
+<<<<<<< HEAD
 	<div id="deleteMultipleDialog" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteMultipleModalLabel"
 		 aria-hidden="true">
 		<form id="deleteMultipleForm" method="post" action="{$smarty.server.SCRIPT_NAME}?action={ManageBlackoutsActions::DELETE_MULTIPLE}">
@@ -293,6 +343,9 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
 	{csrf_token}
     {include file="javascript-includes.tpl" Timepicker=true}
+=======
+	{csrf_token}
+>>>>>>> old/master
 
 	{jsfile src="reservationPopup.js"}
 	{jsfile src="ajax-helpers.js"}
@@ -330,7 +383,14 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 			};
 
 			var recurElements = {
+<<<<<<< HEAD
 				beginDate: $('#formattedAddStartDate'), endDate: $('#formattedAddEndDate'), beginTime: $('#addStartTime'), endTime: $('#addEndTime')
+=======
+				beginDate: $('#formattedAddStartDate'),
+				endDate: $('#formattedAddEndDate'),
+				beginTime: $('#addStartTime'),
+				endTime: $('#addEndTime')
+>>>>>>> old/master
 			};
 
 			var recurrence = new Recurrence(recurOpts, recurElements);
@@ -351,10 +411,15 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 	{control type="DatePickerSetupControl" ControlId="addStartDate" AltId="formattedAddStartDate"}
 	{control type="DatePickerSetupControl" ControlId="addEndDate" AltId="formattedAddEndDate"}
 	{control type="DatePickerSetupControl" ControlId="EndRepeat" AltId="formattedEndRepeat"}
+<<<<<<< HEAD
     {control type="DatePickerSetupControl" ControlId="RepeatDate" AltId="formattedRepeatDate"}
 
 
     <div id="wait-box" class="wait-box">
+=======
+
+	<div id="wait-box" class="wait-box">
+>>>>>>> old/master
 		<div id="creatingNotification">
 			<h3>
 				{block name="ajaxMessage"}

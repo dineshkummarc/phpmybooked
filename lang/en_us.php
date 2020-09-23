@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -37,6 +41,7 @@ class en_us extends Language
 		$dates['general_date'] = 'm/d/Y';
 		$dates['general_datetime'] = 'm/d/Y g:i:s A';
 		$dates['short_datetime'] = 'n/j/y g:i A';
+<<<<<<< HEAD
 		$dates['schedule_daily'] = 'l, n/j/y';
 		$dates['reservation_email'] = 'm/d/Y @ g:i A (e)';
 		$dates['res_popup'] = 'D, n/d g:i A';
@@ -56,6 +61,21 @@ class en_us extends Language
 		$dates['embedded_time'] = 'g:i A';
 		$dates['embedded_datetime'] = 'n/j g:i A';
 		$dates['report_date'] = '%m/%d';
+=======
+		$dates['schedule_daily'] = 'l, m/d/Y';
+		$dates['reservation_email'] = 'm/d/Y @ g:i A (e)';
+		$dates['res_popup'] = 'D, n/d g:i A';
+		$dates['res_popup_time'] = 'D, n/d g:i A';
+		$dates['short_reservation_date'] = 'n/j/y g:i A';
+		$dates['dashboard'] = 'D, n/d g:i A';
+		$dates['period_time'] = 'g:i A';
+		$dates['mobile_reservation_date'] = 'n/j g:i A';
+		$dates['general_date_js'] = 'mm/dd/yy';
+		$dates['general_time_js'] = 'h:mm tt';
+		$dates['momentjs_datetime'] = 'M/D/YY h:mm A';
+		$dates['calendar_time'] = 'h:mmt';
+		$dates['calendar_dates'] = 'M d';
+>>>>>>> old/master
 
 		$this->Dates = $dates;
 
@@ -90,7 +110,11 @@ class en_us extends Language
 		$strings['UniqueEmailRequired'] = 'That email address is already registered.';
 		$strings['UniqueUsernameRequired'] = 'That user name is already registered.';
 		$strings['UserNameRequired'] = 'User name is required.';
+<<<<<<< HEAD
 		$strings['CaptchaMustMatch'] = 'Captcha is required.';
+=======
+		$strings['CaptchaMustMatch'] = 'Please enter the letters from security image exactly as shown.';
+>>>>>>> old/master
 		$strings['Today'] = 'Today';
 		$strings['Week'] = 'Week';
 		$strings['Month'] = 'Month';
@@ -181,10 +205,13 @@ class en_us extends Language
 		$strings['ResourcePermissionNotAutoGranted'] = 'Permission is not automatically granted';
 		$strings['ResourceMinNotice'] = 'Reservations must be made at least %s prior to start time';
 		$strings['ResourceMinNoticeNone'] = 'Reservations can be made up until the current time';
+<<<<<<< HEAD
 		$strings['ResourceMinNoticeUpdate'] = 'Reservations must be updated at least %s prior to start time';
 		$strings['ResourceMinNoticeNoneUpdate'] = 'Reservations can be updated up until the current time';
 		$strings['ResourceMinNoticeDelete'] = 'Reservations must be deleted at least %s prior to start time';
 		$strings['ResourceMinNoticeNoneDelete'] = 'Reservations can be deleted up until the current time';
+=======
+>>>>>>> old/master
 		$strings['ResourceMaxNotice'] = 'Reservations must not end more than %s from the current time';
 		$strings['ResourceMaxNoticeNone'] = 'Reservations can end at any point in the future';
 		$strings['ResourceBufferTime'] = 'There must be %s between reservations';
@@ -307,7 +334,11 @@ class en_us extends Language
 		$strings['QuantityRequested'] = 'Quantity Requested';
 		$strings['CreatingReservation'] = 'Creating Reservation';
 		$strings['UpdatingReservation'] = 'Updating Reservation';
+<<<<<<< HEAD
 		$strings['DeleteWarning'] = 'This action is permanent and cannot be undone!';
+=======
+		$strings['DeleteWarning'] = 'This action is permanent and irrecoverable!';
+>>>>>>> old/master
 		$strings['DeleteAccessoryWarning'] = 'Deleting this accessory will remove it from all reservations.';
 		$strings['AddAccessory'] = 'Add Accessory';
 		$strings['AddBlackout'] = 'Add Blackout';
@@ -370,8 +401,13 @@ class en_us extends Language
 		$strings['Restricted'] = 'Restricted';
 		$strings['ViewAll'] = 'View All';
 		$strings['MoveResourcesAndReservations'] = 'Move resources and reservations to';
+<<<<<<< HEAD
 		$strings['TurnOffSubscription'] = 'Hide from public';
 		$strings['TurnOnSubscription'] = 'Show to public (RSS, iCalendar, Tablet, Monitor)';
+=======
+		$strings['TurnOffSubscription'] = 'Turn Off Calendar Subscriptions';
+		$strings['TurnOnSubscription'] = 'Allow Subscriptions to this Calendar';
+>>>>>>> old/master
 		$strings['SubscribeToCalendar'] = 'Subscribe to this Calendar';
 		$strings['SubscriptionsAreDisabled'] = 'The administrator has disabled calendar subscriptions';
 		$strings['NoResourceAdministratorLabel'] = '(No Resource Administrator)';
@@ -427,7 +463,11 @@ class en_us extends Language
 		$strings['FilterBy'] = 'Filter By';
 		$strings['Select'] = 'Select';
 		$strings['List'] = 'List';
+<<<<<<< HEAD
 		$strings['TotalTime'] = 'Time';
+=======
+		$strings['TotalTime'] = 'Total Time';
+>>>>>>> old/master
 		$strings['Count'] = 'Count';
 		$strings['Usage'] = 'Usage';
 		$strings['AggregateBy'] = 'Aggregate By';
@@ -515,20 +555,31 @@ class en_us extends Language
 		$strings['AddRule'] = 'Add Rule';
 		$strings['Attribute'] = 'Attribute';
 		$strings['RequiredValue'] = 'Required Value';
+<<<<<<< HEAD
 		$strings['ReservationCustomRuleAdd'] = 'Use this color when the reservation attribute is set to the following value';
+=======
+		$strings['ReservationCustomRuleAdd'] = 'If %s then the reservation color will be';
+>>>>>>> old/master
 		$strings['AddReservationColorRule'] = 'Add Reservation Color Rule';
 		$strings['LimitAttributeScope'] = 'Collect In Specific Cases';
 		$strings['CollectFor'] = 'Collect For';
 		$strings['SignIn'] = 'Sign In';
 		$strings['AllParticipants'] = 'All Participants';
+<<<<<<< HEAD
 		$strings['RegisterANewAccount'] = 'Register a New Account';
+=======
+		$strings['RegisterANewAccount'] = 'Register A New Account';
+>>>>>>> old/master
 		$strings['Dates'] = 'Dates';
 		$strings['More'] = 'More';
 		$strings['ResourceAvailability'] = 'Resource Availability';
 		$strings['UnavailableAllDay'] = 'Unavailable All Day';
 		$strings['AvailableUntil'] = 'Available Until';
 		$strings['AvailableBeginningAt'] = 'Available Beginning At';
+<<<<<<< HEAD
         $strings['AvailableAt'] = 'Available At';
+=======
+>>>>>>> old/master
 		$strings['AllResourceTypes'] = 'All Resource Types';
 		$strings['AllResourceStatuses'] = 'All Resource Statuses';
 		$strings['AllowParticipantsToJoin'] = 'Allow Participants To Join';
@@ -538,7 +589,11 @@ class en_us extends Language
 		$strings['YouCanJoinThisReservation'] = 'You can join this reservation';
 		$strings['Import'] = 'Import';
 		$strings['GetTemplate'] = 'Get Template';
+<<<<<<< HEAD
 		$strings['UserImportInstructions'] = '<ul><li>File must be in CSV format.</li><li>Username and email are required fields.</li><li>Attribute validity will not be enforced.</li><li>Leaving other fields blank will set default values and \'password\' as the user\'s password.</li><li>Use the supplied template as an example.</li></ul>';
+=======
+		$strings['UserImportInstructions'] = 'File must be in CSV format. Username and email are required fields. Leaving other fields blank will set default values and \'password\' as the user\'s password. Use the supplied template as an example.';
+>>>>>>> old/master
 		$strings['RowsImported'] = 'Rows Imported';
 		$strings['RowsSkipped'] = 'Rows Skipped';
 		$strings['Columns'] = 'Columns';
@@ -546,7 +601,11 @@ class en_us extends Language
 		$strings['AllDay'] = 'All Day';
 		$strings['Everyday'] = 'Everyday';
 		$strings['IncludingCompletedReservations'] = 'Including Completed Reservations';
+<<<<<<< HEAD
 		$strings['NotCountingCompletedReservations'] = 'Not Including Completed Reservations';
+=======
+		$strings['NotCountingCompletedReservations'] = 'Not Counting Completed Reservations';
+>>>>>>> old/master
 		$strings['RetrySkipConflicts'] = 'Skip conflicting reservations';
 		$strings['Retry'] = 'Retry';
 		$strings['RemoveExistingPermissions'] = 'Remove existing permissions?';
@@ -614,6 +673,7 @@ class en_us extends Language
 		$strings['Forward'] = 'Forward';
 		$strings['DateRange'] = 'Date Range';
 		$strings['Copy'] = 'Copy';
+<<<<<<< HEAD
 		$strings['Detect'] = 'Detect';
 		$strings['Autofill'] = 'Autofill';
 		$strings['NameOrEmail'] = 'name or email';
@@ -800,6 +860,12 @@ class en_us extends Language
 
 		// Install
 		$strings['InstallApplication'] = 'Install Booked Scheduler';
+=======
+        // End Strings
+
+		// Install
+		$strings['InstallApplication'] = 'Install Booked Scheduler (MySQL only)';
+>>>>>>> old/master
 		$strings['IncorrectInstallPassword'] = 'Sorry, that password was incorrect.';
 		$strings['SetInstallPassword'] = 'You must set an install password before the installation can be run.';
 		$strings['InstallPasswordInstructions'] = 'In %s please set %s to a password which is random and difficult to guess, then return to this page.<br/>You can use %s';
@@ -834,26 +900,44 @@ class en_us extends Language
 		$strings['ConfigureApplication'] = 'Configure Booked Scheduler';
 		$strings['ConfigUpdateSuccess'] = 'Your config file is now up to date!';
 		$strings['ConfigUpdateFailure'] = 'We could not automatically update your config file. Please overwrite the contents of config.php with the following:';
+<<<<<<< HEAD
 		$strings['ScriptUrlWarning'] = 'Your <em>script.url</em> setting may not be correct. It is currently <strong>%s</strong>, we think it should be <strong>%s</strong>';
+=======
+		$strings['SelectUser'] = 'Select User';
+		$strings['InviteUsers'] = 'Invite Users';
+		$strings['InviteUsersLabel'] = 'Enter the email addresses of the people to invite';
+>>>>>>> old/master
 		// End Install
 
 		// Errors
 		$strings['LoginError'] = 'We could not match your username or password';
 		$strings['ReservationFailed'] = 'Your reservation could not be made';
+<<<<<<< HEAD
 		$strings['MinNoticeError'] = 'This reservation requires advance notice. The earliest date and time that can be reserved is %s.';
 		$strings['MinNoticeErrorUpdate'] = 'Changing this reservation requires advance notice. Reservations before %s are not allowed to be changed.';
 		$strings['MinNoticeErrorDelete'] = 'Deleting this reservation requires advance notice. Reservations before %s are not allowed to be deleted.';
 		$strings['MaxNoticeError'] = 'This reservation cannot be made this far in the future. The latest date and time that can be reserved is %s.';
+=======
+		$strings['MinNoticeError'] = 'This reservation requires advance notice.  The earliest date and time that can be reserved is %s.';
+		$strings['MaxNoticeError'] = 'This reservation cannot be made this far in the future.  The latest date and time that can be reserved is %s.';
+>>>>>>> old/master
 		$strings['MinDurationError'] = 'This reservation must last at least %s.';
 		$strings['MaxDurationError'] = 'This reservation cannot last longer than %s.';
 		$strings['ConflictingAccessoryDates'] = 'There are not enough of the following accessories:';
 		$strings['NoResourcePermission'] = 'You do not have permission to access one or more of the requested resources.';
 		$strings['ConflictingReservationDates'] = 'There are conflicting reservations on the following dates:';
+<<<<<<< HEAD
 		$strings['InstancesOverlapRule'] = 'Some instances of the reservation series overlap:';
 		$strings['StartDateBeforeEndDateRule'] = 'The start date and time must be before the end date and time.';
 		$strings['StartIsInPast'] = 'The start date and time cannot be in the past.';
 		$strings['EmailDisabled'] = 'The administrator has disabled email notifications.';
 		$strings['ValidLayoutRequired'] = 'Slots must be provided for all 24 hours of the day beginning and ending at 00:00.';
+=======
+		$strings['StartDateBeforeEndDateRule'] = 'The start date and time must be before the end date and time.';
+		$strings['StartIsInPast'] = 'The start date and time cannot be in the past.';
+		$strings['EmailDisabled'] = 'The administrator has disabled email notifications.';
+		$strings['ValidLayoutRequired'] = 'Slots must be provided for all 24 hours of the day beginning and ending at 12:00 AM.';
+>>>>>>> old/master
 		$strings['CustomAttributeErrors'] = 'There are problems with the additional attributes you provided:';
 		$strings['CustomAttributeRequired'] = '%s is a required field.';
 		$strings['CustomAttributeInvalid'] = 'The value provided for %s is invalid.';
@@ -881,6 +965,7 @@ class en_us extends Language
 		$strings['ReservationCannotBeCheckedInTo'] = 'This reservation cannot be checked in to.';
 		$strings['ReservationCannotBeCheckedOutFrom'] = 'This reservation cannot be checked out from.';
 		$strings['InvalidEmailDomain'] = 'That email address is not from an allowed domain';
+<<<<<<< HEAD
 		$strings['TermsOfServiceError'] = 'You must accept the Terms of Service';
 		$strings['UserNotFound'] = 'That user could not be found';
 		$strings['ScheduleAvailabilityError'] = 'This schedule is available between %s and %s';
@@ -893,6 +978,8 @@ class en_us extends Language
 		$strings['RegisteredAccountRequired'] = 'Only registered users can book reservations';
 		$strings['InvalidNumberOfResourcesError'] = 'The maximum number of resources that can be reserved in a single reservation is %s';
 		$strings['ScheduleTotalReservationsError'] = 'This schedule only allows %s resources to be reserved concurrently. This reservation would violate that limit on the following dates:';
+=======
+>>>>>>> old/master
 		// End Errors
 
 		// Page Titles
@@ -950,11 +1037,14 @@ class en_us extends Language
 		$strings['ManageResourceTypes'] = 'Resource Types';
 		$strings['ManageResourceStatus'] = 'Resource Statuses';
 		$strings['ReservationColors'] = 'Reservation Colors';
+<<<<<<< HEAD
 		$strings['SearchReservations'] = 'Search Reservations';
 		$strings['ManagePayments'] = 'Payments';
 		$strings['ViewCalendar'] = 'View Calendar';
 		$strings['DataCleanup'] = 'Data Cleanup';
 		$strings['ManageEmailTemplates'] = 'Manage Email Templates';
+=======
+>>>>>>> old/master
 		// End Page Titles
 
 		// Day representations
@@ -994,8 +1084,12 @@ class en_us extends Language
 		$strings['ReservationEndingSoonSubject'] = 'Reservation for %s is ending soon';
 		$strings['UserAdded'] = 'A new user has been added';
 		$strings['UserDeleted'] = 'User account for %s was deleted by %s';
+<<<<<<< HEAD
 		$strings['GuestAccountCreatedSubject'] = 'Your %s account details';
 		$strings['AccountCreatedSubject'] = 'Your %s account details';
+=======
+		$strings['GuestAccountCreatedSubject'] = 'Your account details';
+>>>>>>> old/master
 		$strings['InviteUserSubject'] = '%s has invited you to join %s';
 
 		$strings['ReservationApprovedSubjectWithResource'] = 'Reservation Has Been Approved for %s';
@@ -1009,12 +1103,15 @@ class en_us extends Language
 		$strings['ParticipantAddedSubjectWithResource'] = '%s Added You to a Reservation for %s';
 		$strings['ParticipantDeletedSubjectWithResource'] = '%s Removed a Reservation for %s';
 		$strings['InviteeAddedSubjectWithResource'] = '%s Invited You to a Reservation for %s';
+<<<<<<< HEAD
 		$strings['MissedCheckinEmailSubject'] = 'Missed checkin for %s';
 		$strings['ReservationShareSubject'] = '%s Shared a Reservation for %s';
 		$strings['ReservationSeriesEndingSubject'] = 'Reservation Series for %s is Ending on %s';
 		$strings['ReservationParticipantAccept'] = '%s Has Accepted Your Reservation Invitation for %s on %s';
 		$strings['ReservationParticipantDecline'] = '%s Has Declined Your Reservation Invitation for %s on %s';
 		$strings['ReservationParticipantJoin'] = '%s Has Joined Your Reservation for %s on %s';
+=======
+>>>>>>> old/master
 		// End Email Subjects
 
 		$this->Strings = $strings;

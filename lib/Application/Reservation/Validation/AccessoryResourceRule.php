@@ -54,7 +54,23 @@ class AccessoryResourceRule implements IReservationValidationRule
 
 		$association = $this->GetResourcesAndRequiredAccessories($accessories);
 
+<<<<<<< HEAD
 		$bookedResourceIds = $reservationSeries->AllResourceIds();
+=======
+//		if ($accessoriesCannotBeBookedWithGivenResources())
+//		{
+//
+//		}
+		$bookedResourceIds = $reservationSeries->AllResourceIds();
+//		$missingAccessories = $association->GetAccessoriesMissingRequiredResources($bookedResourceIds, $bookedAccessories, $bookedResourceIds);
+//		if (!empty($missingAccessories))
+//		{
+//			foreach ($missingAccessories as $accessory)
+//			{
+//				$errors[] = $this->strings->GetString('AccessoryResourceAssociationErrorMessage', $accessory->GetName());
+//			}
+//		}
+>>>>>>> old/master
 
 		$badAccessories = $association->GetAccessoriesThatCannotBeBookedWithGivenResources($bookedAccessories, $bookedResourceIds);
 
@@ -83,7 +99,11 @@ class AccessoryResourceRule implements IReservationValidationRule
 
 					if (!empty($resource->MaxQuantity) && $bookedAccessories[$accessoryId]->QuantityReserved > $resource->MaxQuantity)
 					{
+<<<<<<< HEAD
 						$errors[] = $this->strings->GetString('AccessoryMaxQuantityErrorMessage', array($resource->MaxQuantity, $accessory->GetName()));
+=======
+						$errors[] = $this->strings->GetString('AccessoryMinQuantityErrorMessage', array($resource->MinQuantity, $accessory->GetName()));
+>>>>>>> old/master
 					}
 				}
 			}
@@ -115,6 +135,10 @@ class AccessoryResourceRule implements IReservationValidationRule
 class ResourceAccessoryAssociation
 {
 	private $resources = array();
+<<<<<<< HEAD
+=======
+	private $requiredResources = array();
+>>>>>>> old/master
 
 	/** @var Accessory[] */
 	private $accessories = array();
@@ -126,8 +150,50 @@ class ResourceAccessoryAssociation
 	public function AddRelationship($resource, $accessory)
 	{
 		$this->resources[$resource->ResourceId][$accessory->GetId()] = $accessory;
+<<<<<<< HEAD
 	}
 
+=======
+
+		if (!empty($resource->MinQuantity))
+		{
+			$this->requiredResources[$accessory->GetId()][] = $resource->ResourceId;
+		}
+	}
+
+//	/**
+//	 * @param int[] $resourceIds
+//	 * @param ReservationAccessory[] $bookedAccessories
+//	 * @param int[] $bookedResourceIds
+//	 * @return Accessory[]
+//	 */
+//	public function GetAccessoriesMissingRequiredResources($resourceIds, $bookedAccessories, $bookedResourceIds)
+//	{
+//		$accessories = array();
+//
+//		foreach ($this->requiredResources as $accessoryId => $requiredResourceIds)
+//		{
+//			if (!array_key_exists($accessoryId, $bookedAccessories))
+//			{
+//				// if this accessory isn't booked then we dont care if the resources are present
+//				continue;
+//			}
+//
+//			if (in_array($b))
+//
+//			$intersect = array_intersect($requiredResourceIds, $resourceIds);
+//
+//			if (count($intersect) != count($requiredResourceIds))
+//			{
+//				// this accessory can only be booked with specific resources
+//				$accessories[] = $this->accessories[$accessoryId];
+//			}
+//		}
+//
+//		return $accessories;
+//	}
+
+>>>>>>> old/master
 	/**
 	 * @param int $resourceId
 	 * @return bool
@@ -166,18 +232,39 @@ class ResourceAccessoryAssociation
 		$bookedAccessoryIds = array();
 		foreach ($bookedAccessories as $accessory)
 		{
+<<<<<<< HEAD
 			$accessoryId = $accessory->AccessoryId;
 			$bookedAccessoryIds[] = $accessoryId;
 
 			if ($this->AccessoryNeedsARequiredResourceToBeBooked($accessoryId, $bookedResourceIds))
 			{
 				$badAccessories[] = $this->accessories[$accessoryId]->GetName();
+=======
+			$bookedAccessoryIds[] = $accessory->AccessoryId;
+		}
+
+		foreach ($bookedResourceIds as $resourceId)
+		{
+			if (!$this->ContainsResource($resourceId))
+			{
+				continue;
+			}
+			$resourceAccessories = $this->GetResourceAccessories($resourceId);
+
+			foreach ($bookedAccessoryIds as $accessoryId)
+			{
+				if (!array_key_exists($accessoryId, $resourceAccessories))
+				{
+					$badAccessories = $this->accessories[$accessoryId]->GetName();
+				}
+>>>>>>> old/master
 			}
 		}
 
 		return $badAccessories;
 
 	}
+<<<<<<< HEAD
 
 	private function AccessoryNeedsARequiredResourceToBeBooked($accessoryId, $bookedResourceIds)
 	{
@@ -190,4 +277,6 @@ class ResourceAccessoryAssociation
 		}
 		return false;
 	}
+=======
+>>>>>>> old/master
 }

@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -23,7 +27,10 @@ require_once(ROOT_DIR . 'Domain/BookableResource.php');
 require_once(ROOT_DIR . 'Domain/Reservation.php');
 require_once(ROOT_DIR . 'Domain/Values/ReservationAccessory.php');
 require_once(ROOT_DIR . 'Domain/Values/ReservationReminder.php');
+<<<<<<< HEAD
 require_once(ROOT_DIR . 'Domain/Values/ReservationPastTimeConstraint.php');
+=======
+>>>>>>> old/master
 require_once(ROOT_DIR . 'Domain/ReservationAttachment.php');
 
 class ReservationSeries
@@ -196,6 +203,7 @@ class ReservationSeries
 	}
 
 	/**
+<<<<<<< HEAD
 	 * @return Reservation[]
 	 */
 	public function SortedInstances()
@@ -218,6 +226,8 @@ class ReservationSeries
 	}
 
 	/**
+=======
+>>>>>>> old/master
 	 * @var array|ReservationAccessory[]
 	 */
 	protected $_accessories = array();
@@ -322,7 +332,10 @@ class ReservationSeries
 
 	/**
 	 * @param IRepeatOptions $repeatOptions
+<<<<<<< HEAD
 	 * @throws Exception
+=======
+>>>>>>> old/master
 	 */
 	protected function Repeats(IRepeatOptions $repeatOptions)
 	{
@@ -365,15 +378,23 @@ class ReservationSeries
 	}
 
 	/**
+<<<<<<< HEAD
 	 * @param Reservation $reservation
 	 * @return bool
 	 * @throws Exception
+=======
+	 * @return bool
+>>>>>>> old/master
 	 */
 	public function RemoveInstance(Reservation $reservation)
 	{
 		if ($reservation == $this->CurrentInstance())
 		{
+<<<<<<< HEAD
 			return false; // never remove the current instance, we need it for validations and notifications
+=======
+			return false; // never remove the current instance
+>>>>>>> old/master
 		}
 
 		$instanceKey = $this->GetNewKey($reservation);
@@ -383,6 +404,7 @@ class ReservationSeries
 	}
 
 	/**
+<<<<<<< HEAD
 	 * @return bool
 	 */
 	public function HasAcceptedTerms()
@@ -415,6 +437,8 @@ class ReservationSeries
 	}
 
 	/**
+=======
+>>>>>>> old/master
 	 * @param DateRange $reservationDate
 	 * @return bool
 	 */
@@ -514,7 +538,10 @@ class ReservationSeries
 
 	/**
 	 * @return Reservation
+<<<<<<< HEAD
 	 * @throws Exception
+=======
+>>>>>>> old/master
 	 */
 	public function CurrentInstance()
 	{
@@ -603,7 +630,10 @@ class ReservationSeries
 	/**
 	 * @param Reservation $instance
 	 * @return bool
+<<<<<<< HEAD
 	 * @throws Exception
+=======
+>>>>>>> old/master
 	 */
 	protected function IsCurrent(Reservation $instance)
 	{
@@ -716,6 +746,7 @@ class ReservationSeries
 
 	public function GetCreditsRequired()
 	{
+<<<<<<< HEAD
 		$creditsRequired = 0;
 		foreach ($this->Instances() as $instance)
 		{
@@ -726,11 +757,14 @@ class ReservationSeries
 		}
 
 		$this->creditsRequired = $creditsRequired;
+=======
+>>>>>>> old/master
 		return $this->creditsRequired;
 	}
 
 	public function CalculateCredits(IScheduleLayout $layout)
 	{
+<<<<<<< HEAD
 		$credits = 0;
 		foreach ($this->AllResources() as $resource)
 		{
@@ -747,6 +781,19 @@ class ReservationSeries
 	}
 
 	private function TotalSlots(IScheduleLayout $layout)
+=======
+		$this->TotalSlots($layout);
+		$creditsRequired = 0;
+		foreach ($this->Instances() as $instance)
+		{
+			$creditsRequired += $instance->GetCreditsRequired();
+		}
+
+		$this->creditsRequired = $creditsRequired;
+	}
+
+	public function TotalSlots(IScheduleLayout $layout)
+>>>>>>> old/master
 	{
 		$slots = 0;
 		foreach ($this->Instances() as $instance)
@@ -758,6 +805,7 @@ class ReservationSeries
 
 			$instanceSlots = 0;
 			$peakSlots = 0;
+<<<<<<< HEAD
 			$startDate = $instance->StartDate()->ToTimezone($layout->Timezone());
 			$endDate = $instance->EndDate()->ToTimezone($layout->Timezone());
 
@@ -765,6 +813,15 @@ class ReservationSeries
 			{
 				$count = $layout->GetSlotCount($startDate, $endDate);
 				Log::Debug('Slot count off peak %s, peak %s', $count->OffPeak, $count->Peak);
+=======
+			$startDate = $instance->StartDate();
+			$endDate = $instance->EndDate();
+
+			if ($startDate->DateEquals($endDate))
+			{
+				$count = $layout->GetSlotCount($startDate, $endDate, $startDate);
+				Log::Debug('SLOT COUNT op %s peak %s', $count->OffPeak, $count->Peak);
+>>>>>>> old/master
 				$instanceSlots += $count->OffPeak;
 				$peakSlots += $count->Peak;
 			}
@@ -774,7 +831,11 @@ class ReservationSeries
 				{
 					if ($date->DateEquals($startDate))
 					{
+<<<<<<< HEAD
 						$count = $layout->GetSlotCount($startDate, $endDate);
+=======
+						$count = $layout->GetSlotCount($startDate, $endDate, $startDate->AddDays(1)->GetDate());
+>>>>>>> old/master
 						$instanceSlots += $count->OffPeak;
 						$peakSlots += $count->Peak;
 					}
@@ -782,13 +843,21 @@ class ReservationSeries
 					{
 						if ($date->DateEquals($endDate))
 						{
+<<<<<<< HEAD
 							$count = $layout->GetSlotCount($endDate->GetDate(), $endDate);
+=======
+							$count = $layout->GetSlotCount($endDate->GetDate(), $endDate, $endDate);
+>>>>>>> old/master
 							$instanceSlots += $count->OffPeak;
 							$peakSlots += $count->Peak;
 						}
 						else
 						{
+<<<<<<< HEAD
 							$count = $layout->GetSlotCount($date, $endDate);
+=======
+							$count = $layout->GetSlotCount($date, $endDate, $date->AddDays(1));
+>>>>>>> old/master
 							$instanceSlots += $count->OffPeak;
 							$peakSlots += $count->Peak;
 						}

@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,9 +28,15 @@ class InviteeAddedEmail extends ReservationEmailMessage
 	 */
 	private $invitee;
 
+<<<<<<< HEAD
 	public function __construct(User $reservationOwner, User $invitee, ReservationSeries $reservationSeries, IAttributeRepository $attributeRepository, IUserRepository $userRepository)
 	{
 		parent::__construct($reservationOwner, $reservationSeries, $invitee->Language(), $attributeRepository, $userRepository);
+=======
+	public function __construct(User $reservationOwner, User $invitee, ReservationSeries $reservationSeries, IAttributeRepository $attributeRepository)
+	{
+		parent::__construct($reservationOwner, $reservationSeries, $invitee->Language(), $attributeRepository);
+>>>>>>> old/master
 
 		$this->reservationOwner = $reservationOwner;
 		$this->reservationSeries = $reservationSeries;

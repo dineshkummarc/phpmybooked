@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2012-2020 Nick Korbel
+=======
+ * Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,6 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
+<<<<<<< HEAD
 
 class Report_Filter
 {
@@ -26,6 +31,19 @@ class Report_Filter
 	 * @var int[]|null
 	 */
 	private $scheduleIds;
+=======
+class Report_Filter
+{
+	/**
+	 * @var int|null
+	 */
+	private $resourceId;
+
+	/**
+	 * @var int|null
+	 */
+	private $scheduleId;
+>>>>>>> old/master
 
 	/**
 	 * @var int|null
@@ -38,6 +56,7 @@ class Report_Filter
 	private $participantId;
 
 	/**
+<<<<<<< HEAD
 	 * @var int[]|null
 	 */
 	private $groupIds;
@@ -46,6 +65,11 @@ class Report_Filter
      * @var int[]|null
      */
 	private $accessoryIds;
+=======
+	 * @var int|null
+	 */
+	private $groupId;
+>>>>>>> old/master
 
 	/**
 	 * @var bool
@@ -53,6 +77,7 @@ class Report_Filter
 	private $includeDeleted;
 
 	/**
+<<<<<<< HEAD
 	 * @var int[]|null
 	 */
 	private $resourceTypeIds;
@@ -103,10 +128,30 @@ class Report_Filter
 		$this->participantId = $participantId;
 		$this->includeDeleted = $includeDeleted;
 		$this->resourceTypeIds =array_filter($resourceTypeIds, $removeEmpty) ;
+=======
+	 * @param $resourceId int|null
+	 * @param $scheduleId int|null
+	 * @param $userId int|null
+	 * @param $groupId int|null
+	 * @param $accessoryId int|null
+	 * @param $participantId int|null
+	 * @param $includeDeleted bool
+	 */
+	public function __construct($resourceId, $scheduleId, $userId, $groupId, $accessoryId, $participantId, $includeDeleted)
+	{
+		$this->resourceId = $resourceId;
+		$this->scheduleId = $scheduleId;
+		$this->userId = $userId;
+		$this->groupId = $groupId;
+		$this->accessoryId = $accessoryId;
+		$this->participantId = $participantId;
+		$this->includeDeleted = $includeDeleted;
+>>>>>>> old/master
 	}
 
 	public function Add(ReportCommandBuilder $builder)
 	{
+<<<<<<< HEAD
 		if (!empty($this->resourceIds))
 		{
 			$builder->WithResourceIds($this->resourceIds);
@@ -114,6 +159,15 @@ class Report_Filter
 		if (!empty($this->scheduleIds))
 		{
 			$builder->WithScheduleIds($this->scheduleIds);
+=======
+		if (!empty($this->resourceId))
+		{
+			$builder->WithResourceId($this->resourceId);
+		}
+		if (!empty($this->scheduleId))
+		{
+			$builder->WithScheduleId($this->scheduleId);
+>>>>>>> old/master
 		}
 		if (!empty($this->userId))
 		{
@@ -123,6 +177,7 @@ class Report_Filter
 		{
 			$builder->WithParticipantId($this->participantId);
 		}
+<<<<<<< HEAD
 		if (!empty($this->groupIds))
 		{
 			$builder->WithGroupIds($this->groupIds);
@@ -130,11 +185,21 @@ class Report_Filter
 		if (!empty($this->accessoryIds))
 		{
 			$builder->WithAccessoryIds($this->accessoryIds);
+=======
+		if (!empty($this->groupId))
+		{
+			$builder->WithGroupId($this->groupId);
+		}
+		if (!empty($this->accessoryId))
+		{
+			$builder->WithAccessoryId($this->accessoryId);
+>>>>>>> old/master
 		}
 		if ($this->includeDeleted)
 		{
 			$builder->WithDeleted();
 		}
+<<<<<<< HEAD
 		if (!empty($this->resourceTypeIds))
 		{
 			$builder->WithResourceTypeIds($this->resourceTypeIds);
@@ -163,6 +228,24 @@ class Report_Filter
 	public function ScheduleIds()
 	{
 		return $this->scheduleIds;
+=======
+	}
+
+	/**
+	 * @return int|null
+	 */
+	public function ResourceId()
+	{
+		return $this->resourceId;
+	}
+
+	/**
+	 * @return int|null
+	 */
+	public function ScheduleId()
+	{
+		return $this->scheduleId;
+>>>>>>> old/master
 	}
 
 	/**
@@ -182,6 +265,7 @@ class Report_Filter
 	}
 
 	/**
+<<<<<<< HEAD
 	 * @return int[]|null
 	 */
 	public function GroupIds()
@@ -195,6 +279,21 @@ class Report_Filter
 	public function AccessoryIds()
 	{
 		return $this->accessoryIds;
+=======
+	 * @return int|null
+	 */
+	public function GroupId()
+	{
+		return $this->groupId;
+	}
+
+	/**
+	 * @return int|null
+	 */
+	public function AccessoryId()
+	{
+		return $this->accessoryId;
+>>>>>>> old/master
 	}
 
 	/**

@@ -76,9 +76,15 @@ function Registration()
 			captchaImg.attr('src', src);
 			$('#captchaValue').val('');
 		}
+<<<<<<< HEAD
 		else if(window.grecaptcha)
 		{
             grecaptcha.reset();
+=======
+		else if(typeof Recaptcha != "undefined")
+		{
+			Recaptcha.reload();
+>>>>>>> old/master
 		}
 	}
 }

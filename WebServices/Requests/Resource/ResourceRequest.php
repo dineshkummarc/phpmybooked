@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2013-2020 Nick Korbel
+=======
+ * Copyright 2013-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -116,10 +120,13 @@ class ResourceRequest extends JsonRequest
      * @var int|null
      */
     public $peakCreditsPerSlot;
+<<<<<<< HEAD
 	/**
 	 * @var int|null
 	 */
 	public $maxConcurrentReservations;
+=======
+>>>>>>> old/master
 
     /**
      * @return ExampleResourceRequest
@@ -168,6 +175,9 @@ class ExampleResourceRequest extends ResourceRequest
         $this->color = '#ffffff';
         $this->creditsPerSlot = 3;
         $this->peakCreditsPerSlot = 6;
+<<<<<<< HEAD
         $this->maxConcurrentReservations = 1;
+=======
+>>>>>>> old/master
     }
 }

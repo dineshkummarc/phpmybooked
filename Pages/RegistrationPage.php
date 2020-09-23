@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -19,7 +23,10 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 require_once(ROOT_DIR . 'Pages/ActionPage.php');
+<<<<<<< HEAD
 require_once(ROOT_DIR . 'Pages/Ajax/AutoCompletePage.php');
+=======
+>>>>>>> old/master
 require_once(ROOT_DIR . 'Presenters/RegistrationPresenter.php');
 require_once(ROOT_DIR . 'config/timezones.php');
 require_once(ROOT_DIR . 'lib/Application/Authentication/namespace.php');
@@ -57,16 +64,25 @@ interface IRegistrationPage extends IPage, IActionPage
 	public function GetCaptcha();
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param $attributeValues array|Attribute[]
 	 */
 	public function SetAttributes($attributeValues);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @return AttributeFormElement[]
 	 */
 	public function GetAttributes();
 
 	public function RedirectPage($url);
+<<<<<<< HEAD
 
     /**
      * @return bool
@@ -77,6 +93,8 @@ interface IRegistrationPage extends IPage, IActionPage
      * @param TermsOfService $terms
      */
     public function SetTerms($terms);
+=======
+>>>>>>> old/master
 }
 
 class RegistrationPage extends ActionPage implements IRegistrationPage
@@ -269,6 +287,7 @@ class RegistrationPage extends ActionPage implements IRegistrationPage
 	{
 		return false;
 	}
+<<<<<<< HEAD
 
     public function GetTermsOfServiceAcknowledgement()
     {
@@ -279,4 +298,6 @@ class RegistrationPage extends ActionPage implements IRegistrationPage
     {
        $this->Set('Terms', $terms);
     }
+=======
+>>>>>>> old/master
 }

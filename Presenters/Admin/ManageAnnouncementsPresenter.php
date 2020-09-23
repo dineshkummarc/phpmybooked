@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -99,19 +103,29 @@ class ManageAnnouncementsPresenter extends ActionPresenter
     {
         $user = ServiceLocator::GetServer()->GetUserSession();
         $text = $this->page->GetText();
+<<<<<<< HEAD
 		$text = str_replace('&lt;script&gt;', '', $text);
 		$text = str_replace('&lt;/script&gt;', '', $text);
+=======
+>>>>>>> old/master
         $start = Date::Parse($this->page->GetStart(), $user->Timezone);
         $end = Date::Parse($this->page->GetEnd(), $user->Timezone);
         $priority = $this->page->GetPriority();
         $groupIds = $this->page->GetGroups();
         $resourceIds = $this->page->GetResources();
         $sendAsEmail = $this->page->GetSendAsEmail();
+<<<<<<< HEAD
         $displayPage = $this->page->GetDisplayPage();
 
         Log::Debug('Adding new Announcement');
 
         $announcement = Announcement::Create($text, $start, $end, $priority, $groupIds, $resourceIds, $displayPage);
+=======
+
+        Log::Debug('Adding new Announcement');
+
+        $announcement = Announcement::Create($text, $start, $end, $priority, $groupIds, $resourceIds);
+>>>>>>> old/master
         $this->announcementRepository->Add($announcement);
 
         if ($sendAsEmail) {
@@ -128,8 +142,11 @@ class ManageAnnouncementsPresenter extends ActionPresenter
         $start = Date::Parse($this->page->GetStart(), $user->Timezone);
         $end = Date::Parse($this->page->GetEnd(), $user->Timezone);
         $priority = $this->page->GetPriority();
+<<<<<<< HEAD
         $groupIds = $this->page->GetGroups();
         $resourceIds = $this->page->GetResources();
+=======
+>>>>>>> old/master
 
         Log::Debug('Changing Announcement with id %s', $id);
 
@@ -137,8 +154,11 @@ class ManageAnnouncementsPresenter extends ActionPresenter
         $announcement->SetText($text);
         $announcement->SetDates($start, $end);
         $announcement->SetPriority($priority);
+<<<<<<< HEAD
         $announcement->SetGroups($groupIds);
         $announcement->SetResources($resourceIds);
+=======
+>>>>>>> old/master
 
         $this->announcementRepository->Update($announcement);
     }
@@ -228,9 +248,15 @@ class ManageAnnouncementsPresenter extends ActionPresenter
             $userList = $this->userViewRepository->GetList(null, null, null, null, null, AccountStatus::ACTIVE)->Results();
             foreach ($userList as $user) {
                 $allUsers[$user->Id] = $user;
+<<<<<<< HEAD
                 $usersToSendTo[] = $user;
             }
             return $usersToSendTo;
+=======
+                $usersToSendTo[] = $user->Id;
+            }
+            return array($allUsers, $usersToSendTo);
+>>>>>>> old/master
         }
         else {
             $groupUserIds = array();
@@ -252,8 +278,16 @@ class ManageAnnouncementsPresenter extends ActionPresenter
                 }
             }
 
+<<<<<<< HEAD
 			$usersToSendTo = array_unique(array_merge($groupUserIds, $resourceUserIds));
 
+=======
+            //Log::Debug(var_export($groupUserIds, true));
+            //Log::Debug(var_export($resourceUserIds, true));
+			$usersToSendTo = array_unique(array_merge($groupUserIds, $resourceUserIds));
+
+           // Log::Debug(var_export($usersToSendTo, true));
+>>>>>>> old/master
             foreach ($usersToSendTo as $userId)
             {
                 $validUsers[] = $allUsers[$userId];

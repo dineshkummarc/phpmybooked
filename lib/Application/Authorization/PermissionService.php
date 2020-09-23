@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -22,6 +26,7 @@ interface IPermissionService
 	 * @return bool
 	 */
 	public function CanAccessResource(IPermissibleResource $resource, UserSession $user);
+<<<<<<< HEAD
 
     /**
      * @param IPermissibleResource $resource
@@ -37,6 +42,8 @@ interface IPermissionService
      */
     public function CanViewResource(IPermissibleResource $resource, UserSession $user);
 
+=======
+>>>>>>> old/master
 }
 
 class PermissionService implements IPermissionService
@@ -48,12 +55,16 @@ class PermissionService implements IPermissionService
 
 	private $_allowedResourceIds;
 
+<<<<<<< HEAD
     private $_bookableResourceIds;
 
     private $_viewOnlyResourceIds;
 
 
     /**
+=======
+	/**
+>>>>>>> old/master
 	 * @param IResourcePermissionStore $store
 	 */
 	public function __construct(IResourcePermissionStore $store)
@@ -75,6 +86,7 @@ class PermissionService implements IPermissionService
 
 		if ($this->_allowedResourceIds == null)
 		{
+<<<<<<< HEAD
 			$this->_allowedResourceIds = $this->_store->GetAllResources($user->UserId);
 		}
 
@@ -120,4 +132,11 @@ class PermissionService implements IPermissionService
 
         return in_array($resource->GetResourceId(), $this->_viewOnlyResourceIds);
     }
+=======
+			$this->_allowedResourceIds = $this->_store->GetPermittedResources($user->UserId);
+		}
+
+		return in_array($resource->GetResourceId(), $this->_allowedResourceIds);
+	}
+>>>>>>> old/master
 }

@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -91,11 +95,14 @@ class Quota implements IQuota
 	private $scope;
 
 	/**
+<<<<<<< HEAD
 	 * @var Schedule
 	 */
 	private $schedule;
 
 	/**
+=======
+>>>>>>> old/master
 	 * @param int $quotaId
 	 * @param IQuotaDuration $duration
 	 * @param IQuotaLimit $limit
@@ -125,7 +132,11 @@ class Quota implements IQuota
 	/**
 	 * @static
 	 * @param string $duration
+<<<<<<< HEAD
 	 * @param float $limit
+=======
+	 * @param decimal $limit
+>>>>>>> old/master
 	 * @param string $unit
 	 * @param int $resourceId
 	 * @param int $groupId
@@ -144,7 +155,11 @@ class Quota implements IQuota
 
 	/**
 	 * @static
+<<<<<<< HEAD
 	 * @param float $limit
+=======
+	 * @param decimal $limit
+>>>>>>> old/master
 	 * @param string $unit QuotaUnit
 	 * @return IQuotaLimit
 	 */
@@ -206,7 +221,10 @@ class Quota implements IQuota
 	public function ExceedsQuota($reservationSeries, $user, $schedule, IReservationViewRepository $reservationViewRepository)
 	{
 		$timezone = $schedule->GetTimezone();
+<<<<<<< HEAD
 		$this->schedule = $schedule;
+=======
+>>>>>>> old/master
 
 		if (!is_null($this->resourceId))
 		{
@@ -253,7 +271,11 @@ class Quota implements IQuota
 			return false;
 		}
 
+<<<<<<< HEAD
 		$dates = $this->duration->GetSearchDates($reservationSeries, $timezone, $this->GetFirstWeekday());
+=======
+		$dates = $this->duration->GetSearchDates($reservationSeries, $timezone);
+>>>>>>> old/master
 		$reservationsWithinRange = $reservationViewRepository->GetReservations($this->GetScope()->GetSearchStartDate($dates->Start()), $dates->End(),
 																				  $reservationSeries->UserId(),
 																				  ReservationUserLevel::OWNER);
@@ -388,6 +410,7 @@ class Quota implements IQuota
 	}
 
 	/**
+<<<<<<< HEAD
 	 * @return int
 	 */
 	protected function GetFirstWeekday()
@@ -408,6 +431,8 @@ class Quota implements IQuota
 	}
 
 	/**
+=======
+>>>>>>> old/master
 	 * @return bool
 	 */
 	private function EnforcedAllDay()
@@ -434,7 +459,11 @@ class Quota implements IQuota
 
 	private function AddExisting(ReservationItemView $reservation, $timezone)
 	{
+<<<<<<< HEAD
         $this->_breakAndAdd($reservation->StartDate, $reservation->EndDate, $timezone);
+=======
+		$this->_breakAndAdd($reservation->StartDate, $reservation->EndDate, $timezone);
+>>>>>>> old/master
 	}
 
 	private function AddInstance(Reservation $reservation, $timezone)
@@ -518,7 +547,11 @@ class Quota implements IQuota
 
 		$range = new DateRange($start, $end);
 
+<<<<<<< HEAD
 		$ranges = $this->duration->Split($range, $this->GetFirstWeekday());
+=======
+		$ranges = $this->duration->Split($range);
+>>>>>>> old/master
 
 		foreach ($ranges as $dr)
 		{
@@ -528,7 +561,11 @@ class Quota implements IQuota
 
 	private function _add(DateRange $dateRange)
 	{
+<<<<<<< HEAD
 	    if (!$this->EnforcedEveryDay() && !$this->EnforcedOnWeekday($dateRange->GetBegin()->Weekday()))
+=======
+		if (!$this->EnforcedEveryDay() && !$this->EnforcedOnWeekday($dateRange->GetBegin()->Weekday()))
+>>>>>>> old/master
 		{
 			return;
 		}
@@ -536,21 +573,37 @@ class Quota implements IQuota
 		if (!$this->EnforcedAllDay())
 		{
 			$enforcedStart = $dateRange->GetBegin()->SetTime($this->EnforcedStartTime());
+<<<<<<< HEAD
 			$enforcedEnd = $dateRange->GetBegin()->SetTime($this->EnforcedEndTime());
+=======
+			$enforcedEnd = $dateRange->GetEnd()->SetTime($this->EnforcedEndTime());
+>>>>>>> old/master
 			$enforcedRange = new DateRange($enforcedStart, $enforcedEnd);
 			if (!$enforcedRange->Overlaps($dateRange))
 			{
 				return;
 			}
+<<<<<<< HEAD
 			$newStart = $dateRange->GetBegin()->GreaterThan($enforcedStart) ? $dateRange->GetBegin() : $enforcedStart;
+=======
+			$newStart = $dateRange->GetBegin()->LessThan($enforcedStart) ? $dateRange->GetBegin() : $enforcedStart;
+>>>>>>> old/master
 			$newEnd = $dateRange->GetEnd()->LessThan($enforcedEnd) ? $dateRange->GetEnd() : $enforcedEnd;
 			$dateRange = new DateRange($newStart, $newEnd);
 
 		}
+<<<<<<< HEAD
 		$durationKey = $this->duration->GetDurationKey($dateRange->GetBegin(), $this->GetFirstWeekday());
 
 		$this->limit->TryAdd($dateRange->GetBegin(), $dateRange->GetEnd(), $durationKey);
 	}
+=======
+		$durationKey = $this->duration->GetDurationKey($dateRange->GetBegin());
+
+		$this->limit->TryAdd($dateRange->GetBegin(), $dateRange->GetEnd(), $durationKey);
+	}
+
+>>>>>>> old/master
 }
 
 class QuotaUnit
@@ -562,6 +615,10 @@ class QuotaUnit
 interface IQuotaDuration
 {
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @return string QuotaDuration
 	 */
 	public function Name();
@@ -569,6 +626,7 @@ interface IQuotaDuration
 	/**
 	 * @param ReservationSeries $reservationSeries
 	 * @param string $timezone
+<<<<<<< HEAD
 	 * @param int $firstWeekday
 	 * @return QuotaSearchDates
 	 */
@@ -587,6 +645,25 @@ interface IQuotaDuration
 	 * @return string
 	 */
 	public function GetDurationKey(Date $date, $firstWeekday);
+=======
+	 * @return QuotaSearchDates
+	 */
+	public function GetSearchDates(ReservationSeries $reservationSeries, $timezone);
+
+	/**
+	 * @abstract
+	 * @param DateRange $dateRange
+	 * @return array|DateRange[]
+	 */
+	public function Split(DateRange $dateRange);
+
+	/**
+	 * @abstract
+	 * @param Date $date
+	 * @return string
+	 */
+	public function GetDurationKey(Date $date);
+>>>>>>> old/master
 }
 
 class QuotaSearchDates
@@ -652,7 +729,16 @@ abstract class QuotaDuration implements IQuotaDuration
 
 class QuotaDurationDay extends QuotaDuration
 {
+<<<<<<< HEAD
 	public function GetSearchDates(ReservationSeries $reservationSeries, $timezone, $firstWeekday)
+=======
+	/**
+	 * @param ReservationSeries $reservationSeries
+	 * @param string $timezone
+	 * @return QuotaSearchDates
+	 */
+	public function GetSearchDates(ReservationSeries $reservationSeries, $timezone)
+>>>>>>> old/master
 	{
 		$dates = $this->GetFirstAndLastReservationDates($reservationSeries);
 
@@ -662,7 +748,11 @@ class QuotaDurationDay extends QuotaDuration
 		return new QuotaSearchDates($startDate, $endDate);
 	}
 
+<<<<<<< HEAD
 	public function Split(DateRange $dateRange, $firstWeekday)
+=======
+	public function Split(DateRange $dateRange)
+>>>>>>> old/master
 	{
 		$start = $dateRange->GetBegin();
 		$end = $dateRange->GetEnd();
@@ -671,6 +761,7 @@ class QuotaDurationDay extends QuotaDuration
 
 		if (!$start->DateEquals($end))
 		{
+<<<<<<< HEAD
 			$currentDate = $start;
 
 			for ($i = 1; $currentDate->DateCompare($end) < 0; $i++)
@@ -682,17 +773,42 @@ class QuotaDurationDay extends QuotaDuration
 			if (!$currentDate->Equals($end)) {
                 $ranges[] = new DateRange($currentDate, $end);
             }
+=======
+			$beginningOfNextDay = $start->AddDays(1)->GetDate();
+			$ranges[] = new DateRange($start, $beginningOfNextDay);
+
+			$currentDate = $beginningOfNextDay;
+
+			for ($i = 1; $currentDate->LessThan($end) < 0; $i++)
+			{
+				$currentDate = $start->AddDays($i);
+				$ranges[] = new DateRange($currentDate, $currentDate->AddDays(1)->GetDate());
+			}
+
+			$ranges[] = new DateRange($currentDate, $end);
+>>>>>>> old/master
 		}
 		else
 		{
 			$ranges[] = new DateRange($start, $end);
 		}
 
+<<<<<<< HEAD
 //		Log::Debug("Split %s into %s", $dateRange, var_export($ranges, true));
 		return $ranges;
 	}
 
 	public function GetDurationKey(Date $date, $firstWeekday)
+=======
+		return $ranges;
+	}
+
+	/**
+	 * @param Date $date
+	 * @return string
+	 */
+	public function GetDurationKey(Date $date)
+>>>>>>> old/master
 	{
 		return sprintf("%s%s%s", $date->Year(), $date->Month(), $date->Day());
 	}
@@ -708,6 +824,7 @@ class QuotaDurationDay extends QuotaDuration
 
 class QuotaDurationWeek extends QuotaDuration
 {
+<<<<<<< HEAD
 	public function GetSearchDates(ReservationSeries $reservationSeries, $timezone, $firstWeekday)
 	{
 		$dates = $this->GetFirstAndLastReservationDates($reservationSeries);
@@ -728,10 +845,29 @@ class QuotaDurationWeek extends QuotaDuration
             $daysFromWeekEnd = $daysFromWeekEnd -7;
         }
         $endDate = $endDate->AddDays($daysFromWeekEnd)->GetDate();
+=======
+	/**
+	 * @param ReservationSeries $reservationSeries
+	 * @param string $timezone
+	 * @return QuotaSearchDates
+	 */
+	public function GetSearchDates(ReservationSeries $reservationSeries, $timezone)
+	{
+		$dates = $this->GetFirstAndLastReservationDates($reservationSeries);
+
+		$startDate = $dates[0]->ToTimezone($timezone);
+		$daysFromWeekStart = $startDate->Weekday();
+		$startDate = $startDate->AddDays(-$daysFromWeekStart)->GetDate();
+
+		$endDate = $dates[1]->ToTimezone($timezone);
+		$daysFromWeekEnd = 7 - $endDate->Weekday();
+		$endDate = $endDate->AddDays($daysFromWeekEnd)->GetDate();
+>>>>>>> old/master
 
 		return new QuotaSearchDates($startDate, $endDate);
 	}
 
+<<<<<<< HEAD
 	public function GetDurationKey(Date $date, $firstWeekday)
 	{
 		$daysFromWeekStart = $date->Weekday() - $firstWeekday;
@@ -739,11 +875,28 @@ class QuotaDurationWeek extends QuotaDuration
 		{
 			$daysFromWeekStart = $daysFromWeekStart + 7;
 		}
+=======
+	/**
+	 * @param Date $date
+	 * @return string
+	 */
+	public function GetDurationKey(Date $date)
+	{
+		$daysFromWeekStart = $date->Weekday();
+>>>>>>> old/master
 		$firstDayOfWeek = $date->AddDays(-$daysFromWeekStart)->GetDate();
 		return sprintf("%s%s%s", $firstDayOfWeek->Year(), $firstDayOfWeek->Month(), $firstDayOfWeek->Day());
 	}
 
+<<<<<<< HEAD
 	public function Split(DateRange $dateRange, $firstWeekday)
+=======
+	/**
+	 * @param DateRange $dateRange
+	 * @return array|DateRange[]
+	 */
+	public function Split(DateRange $dateRange)
+>>>>>>> old/master
 	{
 		$start = $dateRange->GetBegin();
 		$end = $dateRange->GetEnd();
@@ -752,14 +905,22 @@ class QuotaDurationWeek extends QuotaDuration
 
 		if (!$start->DateEquals($end))
 		{
+<<<<<<< HEAD
 			$nextWeek = $this->GetStartOfNextWeek($start, $firstWeekday);
+=======
+			$nextWeek = $this->GetStartOfNextWeek($start);
+>>>>>>> old/master
 
 			if ($nextWeek->LessThan($end))
 			{
 				$ranges[] = new DateRange($start, $nextWeek);
 				while ($nextWeek->LessThan($end))
 				{
+<<<<<<< HEAD
 					$thisEnd = $this->GetStartOfNextWeek($nextWeek, $firstWeekday);
+=======
+					$thisEnd = $this->GetStartOfNextWeek($nextWeek);
+>>>>>>> old/master
 
 					if ($thisEnd->LessThan($end))
 					{
@@ -789,12 +950,20 @@ class QuotaDurationWeek extends QuotaDuration
 
 	/**
 	 * @param Date $date
+<<<<<<< HEAD
 	 * @param int $firstWeekday
 	 * @return Date
 	 */
 	private function GetStartOfNextWeek(Date $date, $firstWeekday)
 	{
 		$daysFromWeekEnd = 7 - $date->Weekday() + $firstWeekday;
+=======
+	 * @return Date
+	 */
+	private function GetStartOfNextWeek(Date $date)
+	{
+		$daysFromWeekEnd = 7 - $date->Weekday();
+>>>>>>> old/master
 		return $date->AddDays($daysFromWeekEnd)->GetDate();
 	}
 
@@ -809,7 +978,16 @@ class QuotaDurationWeek extends QuotaDuration
 
 class QuotaDurationMonth extends QuotaDuration
 {
+<<<<<<< HEAD
 	public function GetSearchDates(ReservationSeries $reservationSeries, $timezone, $firstWeekday)
+=======
+	/**
+	 * @param ReservationSeries $reservationSeries
+	 * @param string $timezone
+	 * @return QuotaSearchDates
+	 */
+	public function GetSearchDates(ReservationSeries $reservationSeries, $timezone)
+>>>>>>> old/master
 	{
 		$minMax = $this->GetFirstAndLastReservationDates($reservationSeries);
 
@@ -824,7 +1002,15 @@ class QuotaDurationMonth extends QuotaDuration
 		return new QuotaSearchDates($searchStart, $searchEnd);
 	}
 
+<<<<<<< HEAD
 	public function Split(DateRange $dateRange, $firstWeekday)
+=======
+	/**
+	 * @param DateRange $dateRange
+	 * @return array|DateRange[]
+	 */
+	public function Split(DateRange $dateRange)
+>>>>>>> old/master
 	{
 		$ranges = array();
 
@@ -877,7 +1063,15 @@ class QuotaDurationMonth extends QuotaDuration
 		return ($d1->Month() == $d2->Month()) && ($d1->Year() == $d2->Year());
 	}
 
+<<<<<<< HEAD
 	public function GetDurationKey(Date $date, $firstWeekday)
+=======
+	/**
+	 * @param Date $date
+	 * @return string
+	 */
+	public function GetDurationKey(Date $date)
+>>>>>>> old/master
 	{
 		return sprintf("%s%s", $date->Year(), $date->Month());
 	}
@@ -902,7 +1096,16 @@ class QuotaDurationYear extends QuotaDuration
 		return QuotaDuration::Year;
 	}
 
+<<<<<<< HEAD
 	public function GetSearchDates(ReservationSeries $reservationSeries, $timezone, $firstWeekday)
+=======
+	/**
+	 * @param ReservationSeries $reservationSeries
+	 * @param string $timezone
+	 * @return QuotaSearchDates
+	 */
+	public function GetSearchDates(ReservationSeries $reservationSeries, $timezone)
+>>>>>>> old/master
 	{
 		$minMax = $this->GetFirstAndLastReservationDates($reservationSeries);
 
@@ -917,7 +1120,15 @@ class QuotaDurationYear extends QuotaDuration
 		return new QuotaSearchDates($searchStart, $searchEnd);
 	}
 
+<<<<<<< HEAD
 	public function Split(DateRange $dateRange, $firstWeekday)
+=======
+	/**
+	 * @param DateRange $dateRange
+	 * @return array|DateRange[]
+	 */
+	public function Split(DateRange $dateRange)
+>>>>>>> old/master
 	{
 		$ranges = array();
 
@@ -970,7 +1181,15 @@ class QuotaDurationYear extends QuotaDuration
 		return ($d1->Year() == $d2->Year());
 	}
 
+<<<<<<< HEAD
 	public function GetDurationKey(Date $date, $firstWeekday)
+=======
+	/**
+	 * @param Date $date
+	 * @return string
+	 */
+	public function GetDurationKey(Date $date)
+>>>>>>> old/master
 	{
 		return sprintf("Y%s", $date->Year());
 	}
@@ -1009,7 +1228,11 @@ class QuotaLimitCount implements IQuotaLimit
 	private $totalAllowed;
 
 	/**
+<<<<<<< HEAD
 	 * @param float $totalAllowed
+=======
+	 * @param int $totalAllowed
+>>>>>>> old/master
 	 */
 	public function __construct($totalAllowed)
 	{
@@ -1068,12 +1291,20 @@ class QuotaLimitHours implements IQuotaLimit
 	private $allowedDuration;
 
 	/**
+<<<<<<< HEAD
 	 * @var float
+=======
+	 * @var decimal
+>>>>>>> old/master
 	 */
 	private $allowedHours;
 
 	/**
+<<<<<<< HEAD
 	 * @param float $allowedHours
+=======
+	 * @param decimal $allowedHours
+>>>>>>> old/master
 	 */
 	public function __construct($allowedHours)
 	{
@@ -1107,7 +1338,11 @@ class QuotaLimitHours implements IQuotaLimit
 	}
 
 	/**
+<<<<<<< HEAD
 	 * @return float
+=======
+	 * @return decimal
+>>>>>>> old/master
 	 */
 	public function Amount()
 	{

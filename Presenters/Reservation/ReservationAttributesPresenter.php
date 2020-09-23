@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2014-2020 Nick Korbel
+=======
+ * Copyright 2014-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -66,12 +70,15 @@ class ReservationAttributesPresenter
 
 	public function PageLoad(UserSession $userSession)
 	{
+<<<<<<< HEAD
 		$hideReservations = !Configuration::Instance()->GetSectionKey(ConfigSection::PRIVACY, ConfigKeys::PRIVACY_VIEW_RESERVATIONS, new BooleanConverter());
 		$hideDetails = Configuration::Instance()->GetSectionKey(ConfigSection::PRIVACY, ConfigKeys::PRIVACY_HIDE_RESERVATION_DETAILS, new BooleanConverter());
 		if (($hideReservations || $hideDetails) && !$userSession->IsLoggedIn())
 		{
 			return;
 		}
+=======
+>>>>>>> old/master
 		$requestedUserId = $this->page->GetRequestedUserId();
 		$requestedReferenceNumber = $this->page->GetRequestedReferenceNumber();
 		$resourceIds = $this->page->GetRequestedResourceIds();

@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 Ce fichier fait parti de Booked Scheduler.
 
@@ -18,6 +22,7 @@ avec Booked Scheduler. si ce n'est pas le cas consultez <http://www.gnu.org/lice
 *}
 
 
+<<<<<<< HEAD
 Détails de la réservation :
 <br/>
 <br/>
@@ -61,5 +66,42 @@ Description: {$Description|nl2br}<br/>
 {/if}
 
 <a href="{$ScriptUrl}">Connexion à Booked Scheduler</a>
+=======
+	Détails de la réservation :
+	<br/>
+	<br/>
+
+	Début: {formatdate date=$StartDate key=reservation_email}<br/>
+	Fin: {formatdate date=$EndDate key=reservation_email}<br/>
+	{if $ResourceNames|count > 1}
+		Ressources:<br/>
+		{foreach from=$ResourceNames item=resourceName}
+			{$resourceName}<br/>
+		{/foreach}
+		{else}
+		Ressource: {$ResourceName}<br/>
+	{/if}
+	Titre: {$Title}<br/>
+	Description: {$Description|nl2br}<br/>
+
+	{if count($RepeatDates) gt 0}
+		<br/>
+		Les dates suivantes ont été effacées:
+		<br/>
+	{/if}
+
+	{foreach from=$RepeatDates item=date name=dates}
+		{formatdate date=$date}<br/>
+	{/foreach}
+
+	{if $Accessories|count > 0}
+		<br/>Accessoires:<br/>
+		{foreach from=$Accessories item=accessory}
+			({$accessory->QuantityReserved}) {$accessory->Name}<br/>
+		{/foreach}
+	{/if}
+
+	<a href="{$ScriptUrl}">Connexion à Booked Scheduler</a>
+>>>>>>> old/master
 
 

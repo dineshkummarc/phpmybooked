@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2017-2020 Nick Korbel
+=======
+Copyright 2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -23,7 +27,10 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
         <div class="pull-right">
             <a href="#" title="{translate key=ShowHide} {translate key="ResourceAvailability"}">
                 <i class="glyphicon"></i>
+<<<<<<< HEAD
                 <span class="no-show">Expand/Collapse</span>
+=======
+>>>>>>> old/master
             </a>
         </div>
         <div class="clearfix"></div>
@@ -31,6 +38,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
     <div class="dashboardContents">
         <div class="header">{translate key=Available}</div>
         {foreach from=$Schedules item=s}
+<<<<<<< HEAD
             {assign var=availability value=$Available[$s->GetId()]}
             {if is_array($availability) && $availability|count > 0}
             <h5>{$s->GetName()}</h5>
@@ -43,6 +51,14 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                                resource-id="{$i->ResourceId()}"
                                class="resourceNameSelector" style="color:{$i->GetTextColor()}">{$i->ResourceName()}</a>
                         </div>
+=======
+            <h5>{$s->GetName()}</h5>
+            {foreach from=$Available[$s->GetId()] item=i}
+                <div class="availabilityItem">
+                    <div class="resourceName col-xs-12 col-sm-5">
+                        <a href="#" resource-id="{$i->ResourceId()}"
+                           class="resourceNameSelector">{$i->ResourceName()}</a>
+>>>>>>> old/master
                     </div>
                     <div class="availability col-xs-12 col-sm-4">
                         {if $i->NextTime() != null}
@@ -56,17 +72,26 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                         <a class="btn btn-xs col-xs-12"
                            href="{$Path}{Pages::RESERVATION}?{QueryStringKeys::RESOURCE_ID}={$i->ResourceId()}">{translate key=Reserve}</a>
                     </div>
+<<<<<<< HEAD
                     <div class="clearfix"></div>
                 </div>
                 {foreachelse}
                 <div class="no-data">{translate key=None}</div>
             {/foreach}
             {/if}
+=======
+                </div>
+                <div class="clearfix"></div>
+                {foreachelse}
+                <div class="no-data">{translate key=None}</div>
+            {/foreach}
+>>>>>>> old/master
         {/foreach}
 
         <div class="header">{translate key=Unavailable}</div>
 
         {foreach from=$Schedules item=s}
+<<<<<<< HEAD
             {assign var=availability value=$Unavailable[$s->GetId()]}
             {if is_array($availability) && $availability|count > 0}
             <h5>{$s->GetName()}</h5>
@@ -93,10 +118,31 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                 <div class="no-data">{translate key=None}</div>
             {/foreach}
             {/if}
+=======
+            <h5>{$s->GetName()}</h5>
+            {foreach from=$Unavailable[$s->GetId()] item=i}
+                <div class="availabilityItem">
+                    <div class="resourceName">
+                        <a href="#" resource-id="{$i->ResourceId()}"
+                           class="resourceNameSelector">{$i->ResourceName()}</a>
+                    </div>
+                    <div class="availability">
+                        {translate key=AvailableBeginningAt} {format_date date=$i->ReservationEnds() timezone=$Timezone key=dashboard}
+                    </div>
+                    <div class="reserveButton">
+                        <a class="btn btn-xs"
+                           href="{$Path}{Pages::RESERVATION}?{QueryStringKeys::RESOURCE_ID}={$i->ResourceId()}&{QueryStringKeys::START_DATE}={format_date date=$i->ReservationEnds() timezone=$Timezone key=url_full}">{translate key=Reserve}</a>
+                    </div>
+                </div>
+                {foreachelse}
+                <div class="no-data">{translate key=None}</div>
+            {/foreach}
+>>>>>>> old/master
         {/foreach}
 
         <div class="header">{translate key=UnavailableAllDay}</div>
         {foreach from=$Schedules item=s}
+<<<<<<< HEAD
             {assign var=availability value=$UnavailableAllDay[$s->GetId()]}
             {if is_array($availability) && $availability|count > 0}
             <h5>{$s->GetName()}</h5>
@@ -123,6 +169,26 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                 <div class="no-data">{translate key=None}</div>
             {/foreach}
             {/if}
+=======
+            <h5>{$s->GetName()}</h5>
+            {foreach from=$UnavailableAllDay[$s->GetId()] item=i}
+                <div class="availabilityItem">
+                    <div class="resourceName">
+                        <a href="#" resource-id="{$i->ResourceId()}"
+                           class="resourceNameSelector">{$i->ResourceName()}</a>
+                    </div>
+                    <div class="availability">
+                        Available At {format_date date=$i->ReservationEnds() timezone=$Timezone key=dashboard}
+                    </div>
+                    <div class="reserveButton">
+                        <a class="btn btn-xs"
+                           href="{$Path}{Pages::RESERVATION}?{QueryStringKeys::RESOURCE_ID}={$i->ResourceId()}&{QueryStringKeys::START_DATE}={format_date date=$i->ReservationEnds() timezone=$Timezone key=url_full}">{translate key=Reserve}</a>
+                    </div>
+                </div>
+                {foreachelse}
+                <div class="no-data">{translate key=None}</div>
+            {/foreach}
+>>>>>>> old/master
         {/foreach}
     </div>
 </div>

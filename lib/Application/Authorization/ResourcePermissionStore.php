@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -19,6 +23,7 @@ require_once(ROOT_DIR . 'Domain/Access/namespace.php');
 
 interface IResourcePermissionStore
 {
+<<<<<<< HEAD
     /**
      * @param $userId int
      * @return array[]int
@@ -36,6 +41,13 @@ interface IResourcePermissionStore
      * @return array[]int
      */
     function GetViewOnlyResources($userId);
+=======
+	/**
+	 * @param $userId int
+	 * @return array[]int
+	 */
+	function GetPermittedResources($userId);
+>>>>>>> old/master
 }
 
 class ResourcePermissionStore implements IResourcePermissionStore
@@ -53,7 +65,11 @@ class ResourcePermissionStore implements IResourcePermissionStore
 		$this->_scheduleUserRepository = $scheduleUserRepository;
 	}
 
+<<<<<<< HEAD
 	public function GetAllResources($userId)
+=======
+	public function GetPermittedResources($userId)
+>>>>>>> old/master
 	{
 		$permittedResourceIds = array();
 
@@ -67,6 +83,7 @@ class ResourcePermissionStore implements IResourcePermissionStore
 
 		return $permittedResourceIds;
 	}
+<<<<<<< HEAD
 
     public function GetBookableResources($userId)
     {
@@ -99,4 +116,6 @@ class ResourcePermissionStore implements IResourcePermissionStore
 
         return $resourceIds;
     }
+=======
+>>>>>>> old/master
 }

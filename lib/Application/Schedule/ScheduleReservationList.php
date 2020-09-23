@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -97,8 +101,11 @@ class ScheduleReservationList implements IScheduleReservationList
 		$this->_layoutItems = $this->_layout->GetLayout($layoutDate, $hideBlockedPeriods);
 		$this->_midnight = new Time(0, 0, 0, $this->_destinationTimezone);
 
+<<<<<<< HEAD
         $this->layoutIndexCache = new LayoutIndexCache();
 
+=======
+>>>>>>> old/master
 		$this->IndexLayout();
 		$this->IndexItems();
 	}
@@ -220,12 +227,21 @@ class ScheduleReservationList implements IScheduleReservationList
 	{
 		$sw = StopWatch::StartNew();
 
+<<<<<<< HEAD
 		if (!$this->layoutIndexCache->Contains($this->_layoutDateStart))
 		{
             $this->layoutIndexCache->Add($this->_layoutDateStart, $this->_layoutItems, $this->_layoutDateStart,
 								  $this->_layoutDateEnd);
 		}
 		$cachedIndex = $this->layoutIndexCache->Get($this->_layoutDateStart);
+=======
+		if (!LayoutIndexCache::Contains($this->_layoutDateStart))
+		{
+			LayoutIndexCache::Add($this->_layoutDateStart, $this->_layoutItems, $this->_layoutDateStart,
+								  $this->_layoutDateEnd);
+		}
+		$cachedIndex = LayoutIndexCache::Get($this->_layoutDateStart);
+>>>>>>> old/master
 		$this->_firstLayoutTime = $cachedIndex->GetFirstLayoutTime();
 		$this->_lastLayoutTime = $cachedIndex->GetLastLayoutTime();
 		$this->_layoutByStartTime = $cachedIndex->LayoutByStartTime();
@@ -350,15 +366,25 @@ class LayoutIndexCache
 	/**
 	 * @var CachedLayoutIndex[]
 	 */
+<<<<<<< HEAD
 	private $_cache = array();
+=======
+	private static $_cache = array();
+>>>>>>> old/master
 
 	/**
 	 * @param Date $date
 	 * @return bool
 	 */
+<<<<<<< HEAD
 	public function Contains(Date $date)
 	{
 		return array_key_exists($date->Timestamp(), $this->_cache);
+=======
+	public static function Contains(Date $date)
+	{
+		return array_key_exists($date->Timestamp(), self::$_cache);
+>>>>>>> old/master
 	}
 
 	/**
@@ -367,6 +393,7 @@ class LayoutIndexCache
 	 * @param Date $startDate
 	 * @param Date $endDate
 	 */
+<<<<<<< HEAD
 	public function Add(Date $date, $schedulePeriods, Date $startDate, Date $endDate)
 	{
         $this->_cache[$date->Timestamp()] = new CachedLayoutIndex($schedulePeriods, $startDate, $endDate);
@@ -378,6 +405,19 @@ class LayoutIndexCache
 	}
 
 	public function Clear() { $this->_cache = array(); }
+=======
+	public static function Add(Date $date, $schedulePeriods, Date $startDate, Date $endDate)
+	{
+		self::$_cache[$date->Timestamp()] = new CachedLayoutIndex($schedulePeriods, $startDate, $endDate);
+	}
+
+	public static function Get(Date $date)
+	{
+		return self::$_cache[$date->Timestamp()];
+	}
+
+	public static function Clear() { self::$_cache = array(); }
+>>>>>>> old/master
 }
 
 class CachedLayoutIndex

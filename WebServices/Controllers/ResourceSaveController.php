@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2013-2020 Nick Korbel
+=======
+Copyright 2013-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -155,9 +159,12 @@ class ResourceSaveController implements IResourceSaveController
         $resource->SetColor($request->color);
         $resource->SetCreditsPerSlot($request->creditsPerSlot);
         $resource->SetPeakCreditsPerSlot($request->peakCreditsPerSlot);
+<<<<<<< HEAD
         if (isset($request->maxConcurrentReservations)) {
         	$resource->SetMaxConcurrentReservations(intval($request->maxConcurrentReservations));
 		}
+=======
+>>>>>>> old/master
 
 		return $resource;
 	}

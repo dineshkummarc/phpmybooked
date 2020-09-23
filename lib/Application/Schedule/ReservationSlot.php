@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -241,11 +245,14 @@ class ReservationSlot implements IReservationSlot
 		return $this->_reservation->GetTextColor();
 	}
 
+<<<<<<< HEAD
 	public function BorderColor()
 	{
 		return $this->_reservation->GetBorderColor();
 	}
 
+=======
+>>>>>>> old/master
 	/**
 	 * @return ReservationItemView
 	 */
@@ -258,6 +265,7 @@ class ReservationSlot implements IReservationSlot
 	{
 		return $this->_reservation->CollidesWith($date);
 	}
+<<<<<<< HEAD
 
     public function OwnerId()
     {
@@ -288,4 +296,6 @@ class ReservationSlot implements IReservationSlot
             (!empty($modifiedDate)) &&
             ($this->_reservation->ModifiedDate->AddMinutes($newMinutes)->GreaterThanOrEqual(Date::Now()));
     }
+=======
+>>>>>>> old/master
 }

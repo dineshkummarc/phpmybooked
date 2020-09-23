@@ -2,9 +2,13 @@ function Configuration() {
 	var elements = {
 		form: $('#frmConfigSettings'),
 		configFileSelection: $('#cf'),
+<<<<<<< HEAD
 		configFileForm: $('#frmConfigFile'),
         updateHomepageForm: $('#updateHomepageForm'),
         updateHomepageButton:$('#applyHomepage')
+=======
+		configFileForm: $('#frmConfigFile')
+>>>>>>> old/master
 	};
 
 	Configuration.prototype.init = function () {
@@ -14,12 +18,17 @@ function Configuration() {
 			elements.form.submit();
 		});
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> old/master
 		elements.configFileSelection.change(function(e){
 			elements.configFileForm.submit();
 		});
 
 		elements.form.bind('onValidationFailed', onValidationFailed);
 
+<<<<<<< HEAD
 		elements.updateHomepageButton.click(function(e){
 		    e.preventDefault();
 		    $('#homepage_id').val($("#default__homepage").val());
@@ -28,6 +37,9 @@ function Configuration() {
 
 		ConfigureAsyncForm(elements.form, defaultSubmitCallback, successHandler, null, {onBeforeSubmit: onBeforeAddSubmit});
 		ConfigureAsyncForm(elements.updateHomepageForm, defaultSubmitCallback, function(){}, function(){});
+=======
+		ConfigureAsyncForm(elements.form, defaultSubmitCallback, successHandler, null, {onBeforeSubmit: onBeforeAddSubmit});
+>>>>>>> old/master
 	};
 
 	var defaultSubmitCallback = function (form) {

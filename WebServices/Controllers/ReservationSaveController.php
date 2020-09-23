@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2012-2020 Nick Korbel
+=======
+ * Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -520,12 +524,16 @@ class ReservationRequestResponseFacade implements IReservationSavePage
 		return $this->GetDate($this->recurrenceRule->repeatTerminationDate, 'Y-m-d');
 	}
 
+<<<<<<< HEAD
 	public function GetRepeatCustomDates()
     {
        return [];
     }
 
     public function GetUserId()
+=======
+	public function GetUserId()
+>>>>>>> old/master
 	{
 		if (!empty($this->request->userId))
 		{
@@ -780,6 +788,7 @@ class ReservationRequestResponseFacade implements IReservationSavePage
 	{
 		$this->_canJoinWaitlist = $canJoinWaitlist;
 	}
+<<<<<<< HEAD
 
     /**
      * @return bool
@@ -788,6 +797,8 @@ class ReservationRequestResponseFacade implements IReservationSavePage
     {
         return $this->request->termsAccepted == true;
     }
+=======
+>>>>>>> old/master
 }
 
 class ReservationUpdateRequestResponseFacade extends ReservationRequestResponseFacade implements IReservationUpdatePage
@@ -952,6 +963,7 @@ class ReservationDeleteRequestResponseFacade implements IReservationDeletePage
 	{
 		// no-op
 	}
+<<<<<<< HEAD
 
     /**
      * @return string
@@ -960,6 +972,8 @@ class ReservationDeleteRequestResponseFacade implements IReservationDeletePage
     {
         return '';
     }
+=======
+>>>>>>> old/master
 }
 
 class ReservationApprovalRequestResponseFacade implements IReservationApprovalPage

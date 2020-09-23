@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2012-2020 Nick Korbel
+=======
+Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -81,7 +85,11 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 					<label class="btn btn-default btn-sm active">
 						<input type="radio" {formname key=REPEAT_MONTHLY_TYPE}
 							   value="{RepeatMonthlyType::DayOfMonth}"
+<<<<<<< HEAD
 							   id="{$prefix}repeatMonthDay" checked="checked"/>
+=======
+							   id="{$prefix}repeatMonthDay"/>
+>>>>>>> old/master
 						{translate key="repeatDayOfMonth"}
 					</label>
 					<label class="btn btn-default btn-sm">
@@ -101,6 +109,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 			<input type="hidden" id="{$prefix}formattedEndRepeat" {formname key=end_repeat_date}
 				   value="{formatdate date=$RepeatTerminationDate key=system}"/>
 		</div>
+<<<<<<< HEAD
 
         <div id="{$prefix}customDatesDiv" class="col-xs-12 no-show specific-dates">
             <label for="{$prefix}RepeatDate">{translate key=RepeatOn}</label>
@@ -111,5 +120,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
             </div>
         </div>
+=======
+>>>>>>> old/master
 	</div>
 </div>

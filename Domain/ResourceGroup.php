@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2013-2020 Nick Korbel
+=======
+ * Copyright 2013-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -80,6 +84,7 @@ class ResourceGroupTree
 	{
 		if (array_key_exists($assignment->group_id, $this->references))
 		{
+<<<<<<< HEAD
 			$this->resources[$assignment->resource_id] = new ResourceDto($assignment->resource_id,
 																		 $assignment->resource_name,
 																		 true,
@@ -96,6 +101,15 @@ class ResourceGroupTree
 																		 $assignment->GetAutoReleaseMinutes(),
 																		 $assignment->GetColor(),
 																		 $assignment->GetMaxConcurrentReservations());
+=======
+			$this->resources[$assignment->resource_id] = new ResourceDto($assignment->resource_id, $assignment->resource_name, true,
+																		 $assignment->GetScheduleId(), $assignment->GetMinimumLength(),
+																		 $assignment->GetResourceTypeId(), $assignment->GetAdminGroupId(),
+																		 $assignment->GetScheduleAdminGroupId(), $assignment->GetStatusId(),
+																		 $assignment->GetRequiresApproval(), $assignment->IsCheckInEnabled(),
+																		 $assignment->IsAutoReleased(), $assignment->GetAutoReleaseMinutes(),
+																		 $assignment->GetColor());
+>>>>>>> old/master
 			$this->references[$assignment->group_id]->AddResource($assignment);
 		}
 	}
@@ -205,7 +219,11 @@ class ResourceGroup
 	/**
 	 * @param $resourceGroup ResourceGroup
 	 */
+<<<<<<< HEAD
 	public function AddChild(ResourceGroup $resourceGroup)
+=======
+	public function AddChild(ResourceGroup &$resourceGroup)
+>>>>>>> old/master
 	{
 		$resourceGroup->parent_id = $this->id;
 		$this->children[] = $resourceGroup;
@@ -214,7 +232,11 @@ class ResourceGroup
 	/**
 	 * @param $assignment ResourceGroupAssignment
 	 */
+<<<<<<< HEAD
 	public function AddResource(ResourceGroupAssignment $assignment)
+=======
+	public function AddResource(ResourceGroupAssignment &$assignment)
+>>>>>>> old/master
 	{
 		$this->children[] = $assignment;
 	}
@@ -282,10 +304,16 @@ class ResourceGroupAssignment implements IBookableResource
 	public $resourceTypeId;
 	public $color;
 	public $textColor;
+<<<<<<< HEAD
 	public $maxConcurrentReservations;
 
 	public function __construct($group_id, $resource_name, $resource_id, $resourceAdminGroupId, $scheduleId, $statusId, $scheduleAdminGroupId,
 								$requiresApproval, $isCheckInEnabled, $isAutoReleased, $autoReleaseMinutes, $minLength, $resourceTypeId, $color, $maxConcurrentReservations)
+=======
+
+	public function __construct($group_id, $resource_name, $resource_id, $resourceAdminGroupId, $scheduleId, $statusId, $scheduleAdminGroupId,
+								$requiresApproval, $isCheckInEnabled, $isAutoReleased, $autoReleaseMinutes, $minLength, $resourceTypeId, $color)
+>>>>>>> old/master
 	{
 		$this->group_id = $group_id;
 		$this->resource_name = $resource_name;
@@ -309,7 +337,10 @@ class ResourceGroupAssignment implements IBookableResource
 			$textColor = new ContrastingColor($color);
 			$this->textColor = $textColor->__toString();
 		}
+<<<<<<< HEAD
 		$this->maxConcurrentReservations = $maxConcurrentReservations;
+=======
+>>>>>>> old/master
 	}
 
 	public function GetId()
@@ -386,9 +417,12 @@ class ResourceGroupAssignment implements IBookableResource
 	{
 		return $this->textColor;
 	}
+<<<<<<< HEAD
 
 	public function GetMaxConcurrentReservations()
 	{
 		return $this->maxConcurrentReservations;
 	}
+=======
+>>>>>>> old/master
 }

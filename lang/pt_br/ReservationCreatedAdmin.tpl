@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -22,7 +26,11 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 	<br/>
 	<br/>
 
+<<<<<<< HEAD
 	Usuï¿½rio: {$UserName}<br/>
+=======
+	Usuário: {$UserName}<br/>
+>>>>>>> old/master
 	Inicio: {formatdate date=$StartDate key=reservation_email}<br/>
 	Fim: {formatdate date=$EndDate key=reservation_email}<br/>
 	Recurso: {$ResourceName}<br/>
@@ -31,12 +39,21 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 		<div class="resource-image"><img src="{$ScriptUrl}/{$ResourceImage}"/></div>
 	{/if}
 
+<<<<<<< HEAD
 	Tï¿½tulo: {$Title}<br/>
 	Descriï¿½ï¿½o: {$Description}<br/>
 
 	{if count($RepeatDates) gt 0}
 		<br/>
 		A reserva ocorrerï¿½ nas seguintes datas:
+=======
+	Título: {$Title}<br/>
+	Descrição: {$Description}<br/>
+
+	{if count($RepeatDates) gt 0}
+		<br/>
+		A reserva ocorrerá nas seguintes datas:
+>>>>>>> old/master
 		<br/>
 	{/if}
 
@@ -46,7 +63,11 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
 	{if $RequiresApproval}
 		<br/>
+<<<<<<< HEAD
 		Um ou mais recursos necessitam de aprovaï¿½ï¿½o antes do seu uso. Essa reserva ficarï¿½ pendente atï¿½ que a mesma seja aprovada.
+=======
+		Um ou mais recursos necessitam de aprovação antes do seu uso. Essa reserva ficará pendente até que a mesma seja aprovada.
+>>>>>>> old/master
 	{/if}
 
 	<br/>

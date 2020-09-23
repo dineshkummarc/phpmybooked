@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2012-2020 Nick Korbel
+=======
+Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -16,6 +20,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 *}
+<<<<<<< HEAD
 <div class="form-group {$class} {if !$searchmode && $attribute->Required()}has-feedback{/if}">
     <label class="customAttribute {if $readonly}readonly{elseif $searchmode}search{else}standard{/if}"
            for="{$attributeId}">{$attribute->Label()}</label>
@@ -34,4 +39,27 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
             <i class="glyphicon glyphicon-asterisk form-control-feedback" data-bv-icon-for="{$attributeId}"></i>
         {/if}
     {/if}
+=======
+<div class="form-group {$class}">
+	<label class="customAttribute" for="{$attributeId}">{$attribute->Label()}</label>
+	{if $readonly}
+		<span class="attributeValue {$class}">{$attribute->Value()}</span>
+	{else}
+		<select id="{$attributeId}" name="{$attributeName}" class="customAttribute form-control {$inputClass}">
+			{if !$attribute->Required() || $searchmode}
+				<option value="">--</option>
+			{/if}
+			{foreach from=$attribute->PossibleValueList() item=value}
+				<option value="{$value}"
+						{if $attribute->Value() == $value}selected="selected"{/if}>{$value}</option>
+			{/foreach}
+		</select>
+		{*<script type="text/javascript">*}
+			{*$(function() {*}
+				{*var name = '#{$attributeId}';*}
+				{*$(name).select2();*}
+			{*});*}
+		{*</script>*}
+	{/if}
+>>>>>>> old/master
 </div>

@@ -30,7 +30,11 @@ class SMTP
      * The PHPMailer SMTP version number.
      * @var string
      */
+<<<<<<< HEAD
     const VERSION = '5.2.21';
+=======
+    const VERSION = '5.2.16';
+>>>>>>> old/master
 
     /**
      * SMTP line break constant.
@@ -81,7 +85,11 @@ class SMTP
      * @deprecated Use the `VERSION` constant instead
      * @see SMTP::VERSION
      */
+<<<<<<< HEAD
     public $Version = '5.2.21';
+=======
+    public $Version = '5.2.16';
+>>>>>>> old/master
 
     /**
      * SMTP server port number.
@@ -150,6 +158,7 @@ class SMTP
      */
     public $Timelimit = 300;
 
+<<<<<<< HEAD
 	/**
 	 * @var array patterns to extract smtp transaction id from smtp reply
 	 * Only first capture group will be use, use non-capturing group to deal with it
@@ -161,6 +170,8 @@ class SMTP
 		'postfix' => '/[0-9]{3} 2.0.0 Ok: queued as (.*)/'
 	);
 
+=======
+>>>>>>> old/master
     /**
      * The socket for the server connection.
      * @var resource
@@ -217,7 +228,11 @@ class SMTP
         }
         //Avoid clash with built-in function names
         if (!in_array($this->Debugoutput, array('error_log', 'html', 'echo')) and is_callable($this->Debugoutput)) {
+<<<<<<< HEAD
             call_user_func($this->Debugoutput, $str, $level);
+=======
+            call_user_func($this->Debugoutput, $str, $this->do_debug);
+>>>>>>> old/master
             return;
         }
         switch ($this->Debugoutput) {
@@ -283,8 +298,13 @@ class SMTP
         $errstr = '';
         if ($streamok) {
             $socket_context = stream_context_create($options);
+<<<<<<< HEAD
             set_error_handler(array($this, 'errorHandler'));
             $this->smtp_conn = stream_socket_client(
+=======
+            //Suppress errors; connection failures are handled at a higher level
+            $this->smtp_conn = @stream_socket_client(
+>>>>>>> old/master
                 $host . ":" . $port,
                 $errno,
                 $errstr,
@@ -292,14 +312,20 @@ class SMTP
                 STREAM_CLIENT_CONNECT,
                 $socket_context
             );
+<<<<<<< HEAD
             restore_error_handler();
+=======
+>>>>>>> old/master
         } else {
             //Fall back to fsockopen which should work in more places, but is missing some features
             $this->edebug(
                 "Connection: stream_socket_client not available, falling back to fsockopen",
                 self::DEBUG_CONNECTION
             );
+<<<<<<< HEAD
             set_error_handler(array($this, 'errorHandler'));
+=======
+>>>>>>> old/master
             $this->smtp_conn = fsockopen(
                 $host,
                 $port,
@@ -307,7 +333,10 @@ class SMTP
                 $errstr,
                 $timeout
             );
+<<<<<<< HEAD
             restore_error_handler();
+=======
+>>>>>>> old/master
         }
         // Verify we connected properly
         if (!is_resource($this->smtp_conn)) {
@@ -488,7 +517,11 @@ class SMTP
                 $temp = new stdClass;
                 $ntlm_client = new ntlm_sasl_client_class;
                 //Check that functions are available
+<<<<<<< HEAD
                 if (!$ntlm_client->initialize($temp)) {
+=======
+                if (!$ntlm_client->Initialize($temp)) {
+>>>>>>> old/master
                     $this->setError($temp->error);
                     $this->edebug(
                         'You need to enable some modules in your php.ini file: '
@@ -498,7 +531,11 @@ class SMTP
                     return false;
                 }
                 //msg1
+<<<<<<< HEAD
                 $msg1 = $ntlm_client->typeMsg1($realm, $workstation); //msg1
+=======
+                $msg1 = $ntlm_client->TypeMsg1($realm, $workstation); //msg1
+>>>>>>> old/master
 
                 if (!$this->sendCommand(
                     'AUTH NTLM',
@@ -517,7 +554,11 @@ class SMTP
                     $password
                 );
                 //msg3
+<<<<<<< HEAD
                 $msg3 = $ntlm_client->typeMsg3(
+=======
+                $msg3 = $ntlm_client->TypeMsg3(
+>>>>>>> old/master
                     $ntlm_res,
                     $username,
                     $realm,
@@ -1203,6 +1244,7 @@ class SMTP
     {
         return $this->Timeout;
     }
+<<<<<<< HEAD
 
     /**
      * Reports an error number and string.
@@ -1247,3 +1289,6 @@ class SMTP
 		return false;
     }
 }
+=======
+}
+>>>>>>> old/master

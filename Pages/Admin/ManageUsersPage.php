@@ -1,5 +1,6 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
@@ -16,6 +17,24 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
+=======
+Copyright 2011-2016 Nick Korbel
+
+This file is part of Booked Scheduler.
+
+Booked Scheduler is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Booked Scheduler is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
+>>>>>>> old/master
  */
 
 require_once(ROOT_DIR . 'config/timezones.php');
@@ -146,10 +165,14 @@ interface IManageUsersPage extends IPageable, IActionPage
 	 */
 	public function GetName();
 
+<<<<<<< HEAD
 	/**
 	 * @param CustomAttribute[] $attributes
 	 */
 	public function ShowTemplateCSV($attributes);
+=======
+	public function ShowTemplateCSV();
+>>>>>>> old/master
 
 	/**
 	 * @return UploadedFile
@@ -165,6 +188,7 @@ interface IManageUsersPage extends IPageable, IActionPage
 	 * @return string
 	 */
 	public function GetInvitedEmails();
+<<<<<<< HEAD
 
 	public function ShowExportCsv();
 
@@ -190,6 +214,8 @@ interface IManageUsersPage extends IPageable, IActionPage
 	 * @param CustomAttribute[] $attributes
 	 */
 	public function ShowUserUpdate(User $user, $attributes);
+=======
+>>>>>>> old/master
 }
 
 class ManageUsersPage extends ActionPage implements IManageUsersPage
@@ -211,6 +237,7 @@ class ManageUsersPage extends ActionPage implements IManageUsersPage
 		parent::__construct('ManageUsers', 1);
 		$groupRepository = new GroupRepository();
 		$this->_presenter = new ManageUsersPresenter(
+<<<<<<< HEAD
 				$this,
 				new UserRepository(),
 				new ResourceRepository(),
@@ -219,6 +246,16 @@ class ManageUsersPage extends ActionPage implements IManageUsersPage
 				new AttributeService(new AttributeRepository()),
 				$groupRepository,
 				$groupRepository);
+=======
+			$this,
+			new UserRepository(),
+			new ResourceRepository(),
+			new PasswordEncryption(),
+			$serviceFactory->CreateAdmin(),
+			new AttributeService(new AttributeRepository()),
+			$groupRepository,
+			$groupRepository);
+>>>>>>> old/master
 
 		$this->pageable = new PageablePage($this);
 	}
@@ -228,6 +265,12 @@ class ManageUsersPage extends ActionPage implements IManageUsersPage
 		$this->_presenter->PageLoad();
 
 		$config = Configuration::Instance();
+<<<<<<< HEAD
+=======
+		$resources = Resources::GetInstance();
+		$this->Set('statusDescriptions',
+				   array(AccountStatus::ALL => $resources->GetString('All'), AccountStatus::ACTIVE => $resources->GetString('Active'), AccountStatus::AWAITING_ACTIVATION => $resources->GetString('Pending'), AccountStatus::INACTIVE => $resources->GetString('Inactive')));
+>>>>>>> old/master
 
 		$this->Set('Timezone', $config->GetDefaultTimezone());
 		$this->Set('Timezones', $GLOBALS['APP_TIMEZONES']);
@@ -237,13 +280,17 @@ class ManageUsersPage extends ActionPage implements IManageUsersPage
 		$this->Set('FilterStatusId', $this->GetFilterStatusId());
 		$this->Set('PerUserColors', $config->GetSectionKey(ConfigSection::SCHEDULE, ConfigKeys::SCHEDULE_PER_USER_COLORS, new BooleanConverter()));
 		$this->Set('CreditsEnabled', $config->GetSectionKey(ConfigSection::CREDITS, ConfigKeys::CREDITS_ENABLED, new BooleanConverter()));
+<<<<<<< HEAD
 		$url = $this->server->GetUrl();
 		$exportUrl = BookedStringHelper::Contains($url, '?') ? $url . '&dr=export' : $this->server->GetRequestUri() . '?dr=export';
 		$this->Set('ExportUrl', $exportUrl);
+=======
+>>>>>>> old/master
 
 		$this->RenderTemplate();
 	}
 
+<<<<<<< HEAD
 	public function BindStatusDescriptions()
 	{
 		$resources = Resources::GetInstance();
@@ -255,6 +302,11 @@ class ManageUsersPage extends ActionPage implements IManageUsersPage
 	protected function RenderTemplate()
 	{
 		$this->Display('Admin/Users/manage_users.tpl');
+=======
+	protected function RenderTemplate()
+	{
+		$this->Display('Admin/manage_users.tpl');
+>>>>>>> old/master
 	}
 
 	public function BindPageInfo(PageInfo $pageInfo)
@@ -409,12 +461,16 @@ class ManageUsersPage extends ActionPage implements IManageUsersPage
 
 	public function BindGroups($groups)
 	{
+<<<<<<< HEAD
 		$gs = [];
 		foreach ($groups as $g)
 		{
 			$gs[$g->Id()] = $g;
 		}
 		$this->Set('Groups', $gs);
+=======
+		$this->Set('Groups', $groups);
+>>>>>>> old/master
 	}
 
 	public function GetReservationColor()
@@ -433,9 +489,14 @@ class ManageUsersPage extends ActionPage implements IManageUsersPage
 	}
 
 
+<<<<<<< HEAD
 	public function ShowTemplateCSV($attributes)
 	{
 		$this->Set('attributes', $attributes);
+=======
+	public function ShowTemplateCSV()
+	{
+>>>>>>> old/master
 		$this->DisplayCsv('Admin/Users/import_user_template_csv.tpl', 'users.csv');
 	}
 
@@ -453,6 +514,7 @@ class ManageUsersPage extends ActionPage implements IManageUsersPage
 	{
 		return $this->GetForm(FormKeys::INVITED_EMAILS);
 	}
+<<<<<<< HEAD
 
 	public function ShowExportCsv()
 	{
@@ -488,4 +550,6 @@ class ManageUsersPage extends ActionPage implements IManageUsersPage
 		$this->Set('Attributes', $attributes);
 		$this->Display('Admin/Users/user-update.tpl');
 	}
+=======
+>>>>>>> old/master
 }

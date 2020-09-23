@@ -1,23 +1,40 @@
 <?php
 /**
  * Smarty Internal Plugin Filter Handler
+<<<<<<< HEAD
  * Smarty filter handler class
  *
  * @package    Smarty
  * @subpackage PluginsInternal
  * @author     Uwe Tews
+=======
+ *
+ * Smarty filter handler class
+ *
+ * @package Smarty
+ * @subpackage PluginsInternal
+ * @author Uwe Tews
+>>>>>>> old/master
  */
 
 /**
  * Class for filter processing
  *
+<<<<<<< HEAD
  * @package    Smarty
+=======
+ * @package Smarty
+>>>>>>> old/master
  * @subpackage PluginsInternal
  */
 class Smarty_Internal_Filter_Handler
 {
     /**
      * Run filters over content
+<<<<<<< HEAD
+=======
+     *
+>>>>>>> old/master
      * The filters will be lazy loaded if required
      * class name format: Smarty_FilterType_FilterName
      * plugin filename format: filtertype.filtername.php
@@ -26,8 +43,11 @@ class Smarty_Internal_Filter_Handler
      * @param  string                   $type     the type of filter ('pre','post','output') which shall run
      * @param  string                   $content  the content which shall be processed by the filters
      * @param  Smarty_Internal_Template $template template object
+<<<<<<< HEAD
      *
      * @throws SmartyException
+=======
+>>>>>>> old/master
      * @return string                   the filtered content
      */
     public static function runFilter($type, $content, Smarty_Internal_Template $template)
@@ -64,4 +84,8 @@ class Smarty_Internal_Filter_Handler
         // return filtered output
         return $output;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> old/master
 }

@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -21,7 +25,10 @@ class ErrorMessages
 	const MISSING_RESOURCE = 2;
 	const MISSING_SCHEDULE = 3;
 	const RESERVATION_NOT_FOUND = 4;
+<<<<<<< HEAD
 	const RESERVATION_NOT_AVAILABLE = 5;
+=======
+>>>>>>> old/master
 
 	private $_resourceKeys = array();
 	private static $_instance;
@@ -32,7 +39,10 @@ class ErrorMessages
 		$this->SetKey(ErrorMessages::MISSING_RESOURCE, 'MissingReservationResourceError');
 		$this->SetKey(ErrorMessages::MISSING_SCHEDULE, 'MissingReservationScheduleError');
 		$this->SetKey(ErrorMessages::RESERVATION_NOT_FOUND, 'ReservationNotFoundError');
+<<<<<<< HEAD
 		$this->SetKey(ErrorMessages::RESERVATION_NOT_AVAILABLE, 'ReservationNotAvailable');
+=======
+>>>>>>> old/master
 	}
 
     /**

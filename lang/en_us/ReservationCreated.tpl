@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -41,12 +45,17 @@ Ending: {formatdate date=$EndDate key=reservation_email}<br/>
 Title: {$Title}<br/>
 Description: {$Description|nl2br}
 
+<<<<<<< HEAD
 {if count($RepeatRanges) gt 0}
+=======
+{if count($RepeatDates) gt 0}
+>>>>>>> old/master
 	<br/>
 	The reservation occurs on the following dates:
 	<br/>
 {/if}
 
+<<<<<<< HEAD
 {foreach from=$RepeatRanges item=date name=dates}
 	{formatdate date=$date->GetBegin()}
     {if !$date->IsSameDate()} - {formatdate date=$date->GetEnd()}{/if}
@@ -85,6 +94,13 @@ Description: {$Description|nl2br}
     {/foreach}
 {/if}
 
+=======
+{foreach from=$RepeatDates item=date name=dates}
+	{formatdate date=$date}
+	<br/>
+{/foreach}
+
+>>>>>>> old/master
 {if $Accessories|count > 0}
 	<br/>
 	Accessories:
@@ -95,6 +111,7 @@ Description: {$Description|nl2br}
 	{/foreach}
 {/if}
 
+<<<<<<< HEAD
 {if $CreditsCurrent > 0}
     <br/>
     This reservation costs {$CreditsCurrent} credits.
@@ -103,6 +120,8 @@ Description: {$Description|nl2br}
     {/if}
 {/if}
 
+=======
+>>>>>>> old/master
 {if $Attributes|count > 0}
 	<br/>
 	{foreach from=$Attributes item=attribute}
@@ -135,6 +154,7 @@ Description: {$Description|nl2br}
 {/if}
 
 <br/>
+<<<<<<< HEAD
 Reference Number: {$ReferenceNumber}
 
 <br/>
@@ -144,3 +164,9 @@ Reference Number: {$ReferenceNumber}
 <a href="http://www.google.com/calendar/event?action=TEMPLATE&text={$Title|escape:'url'}&dates={formatdate date=$StartDate->ToUtc() key=google}/{formatdate date=$EndDate->ToUtc() key=google}&ctz={$StartDate->Timezone()}&details={$Description|escape:'url'}&location={$ResourceName|escape:'url'}&trp=false&sprop=&sprop=name:"
    target="_blank" rel="nofollow">Add to Google Calendar</a> |
 <a href="{$ScriptUrl}">Log in to {$AppTitle}</a>
+=======
+<br/>
+<a href="{$ScriptUrl}/{$ReservationUrl}">View this reservation</a> |
+<a href="{$ScriptUrl}/{$ICalUrl}">Add to Calendar</a> |
+<a href="{$ScriptUrl}">Log in to Booked Scheduler</a>
+>>>>>>> old/master

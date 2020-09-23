@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +21,11 @@
 
 class FormKeys
 {
+<<<<<<< HEAD
     private function __construct()
+=======
+	private function __construct()
+>>>>>>> old/master
 	{
 	}
 
@@ -58,10 +66,13 @@ class FormKeys
 	const AUTO_ASSIGN_CLEAR = 'AUTO_ASSIGN_CLEAR';
 	const AUTO_RELEASE_MINUTES = 'AUTO_RELEASE_MINUTES';
 	const AVAILABILITY_RANGE = 'AVAILABILITY_RANGE';
+<<<<<<< HEAD
 	const AVAILABLE_ALL_YEAR = 'AVAILABLE_ALL_YEAR';
 	const AVAILABLE_BEGIN_DATE = 'AVAILABLE_BEGIN_DATE';
 	const AVAILABLE_END_DATE = 'AVAILABLE_END_DATE';
 	const ALLOW_CONCURRENT_RESERVATIONS = 'ALLOW_CONCURRENT_RESERVATIONS';
+=======
+>>>>>>> old/master
 
 	const BEGIN_DATE = 'beginDate';
 	const BEGIN_PERIOD = 'beginPeriod';
@@ -75,19 +86,27 @@ class FormKeys
 	const CONFLICT_ACTION = 'conflictAction';
 	const CONTACT_INFO = 'contactInfo';
 	const CREDITS = 'CREDITS';
+<<<<<<< HEAD
     const CREDIT_COST = 'CREDIT_COST';
     const CREDIT_CURRENCY = 'CREDIT_CURRENCY';
     const CSS_FILE = 'CSS_FILE';
 	const CSRF_TOKEN = 'CSRF_TOKEN';
 	const CREDIT_QUANTITY = 'CREDIT_QUANTITY';
+=======
+	const CSS_FILE = 'CSS_FILE';
+	const CSRF_TOKEN = 'CSRF_TOKEN';
+>>>>>>> old/master
 	const CURRENT_PASSWORD = 'currentPassword';
 
 	const DAY = 'DAY';
 	const DEFAULT_HOMEPAGE = 'defaultHomepage';
 	const DESCRIPTION = 'reservationDescription';
 	const DURATION = 'duration';
+<<<<<<< HEAD
 	const DELETE_REASON = 'DELETE_REASON';
 	const DISPLAY_PAGE = 'DISPLAY_PAGE';
+=======
+>>>>>>> old/master
 
 	const EMAIL = 'email';
 	const END_DATE = 'endDate';
@@ -101,11 +120,16 @@ class FormKeys
 	const ENFORCE_EVERY_DAY = 'ENFORCE_EVERY_DAY';
 	const ENABLE_CHECK_IN = 'ENABLE_CHECK_IN';
 	const ENABLE_AUTO_RELEASE = 'ENABLE_AUTO_RELEASE';
+<<<<<<< HEAD
 	const EMAIL_CONTENTS = 'EMAIL_CONTENTS';
 	const EMAIL_TEMPLATE_NAME = 'EMAIL_TEMPLATE_NAME';
 
 	const FIRST_NAME = 'fname';
 	const FAVICON_FILE = 'FAVICON_FILE';
+=======
+
+	const FIRST_NAME = 'fname';
+>>>>>>> old/master
 
 	const GROUP = 'group';
 	const GROUP_ID = 'group_id';
@@ -124,7 +148,10 @@ class FormKeys
     const ICS_IMPORT_FILE = 'ICS_IMPORT_FILE';
     const INCLUDE_DELETED = 'INCLUDE_DELETED';
     const INVITED_EMAILS = 'INVITED_EMAILS';
+<<<<<<< HEAD
     const IS_DEFAULT = 'IS_DEFAULT';
+=======
+>>>>>>> old/master
 
 	const LANGUAGE = 'language';
 	const LAST_NAME = 'lname';
@@ -132,8 +159,11 @@ class FormKeys
 	const LOCATION = 'location';
 	const LOGIN = 'login';
 	const LOGO_FILE = 'LOGO_FILE';
+<<<<<<< HEAD
 	const LAYOUT_TYPE = 'LAYOUT_TYPE';
 	const LAYOUT_PERIOD_ID = 'LAYOUT_PERIOD_ID';
+=======
+>>>>>>> old/master
 
 	const MIN_DURATION = 'minDuration';
 	const MIN_DURATION_NONE = 'minDurationNone';
@@ -143,6 +173,7 @@ class FormKeys
 	const MAX_DURATION = 'maxDuration';
 	const MAX_DURATION_NONE = 'maxDurationNone';
 	const MAX_PARTICIPANTS = 'maxParticipants';
+<<<<<<< HEAD
 	const MAX_PARTICIPANTS_UNLIMITED = 'maxParticipantsUnlimited';
 	const MIN_NOTICE_ADD = 'minNoticeAdd';
 	const MIN_NOTICE_UPDATE = 'minNoticeUpdate';
@@ -158,17 +189,27 @@ class FormKeys
 	const MAXIMUM_RESOURCES_PER_RESERVATION_UNLIMITED = 'MAXIMUM_RESOURCES_PER_RESERVATION_UNLIMITED';
 	const MAXIMUM_RESOURCES_PER_RESERVATION = 'MAXIMUM_RESOURCES_PER_RESERVATION';
 	const MAX_CONCURRENT_RESERVATIONS = 'MAX_CONCURRENT_RESERVATIONS';
+=======
+	const MIN_NOTICE = 'minNotice';
+	const MIN_NOTICE_NONE = 'minNoticeNone';
+	const MAX_NOTICE = 'maxNotice';
+	const MAX_NOTICE_NONE = 'maxNoticeNone';
+>>>>>>> old/master
 
 	const NAME = 'name';
 	const NOTES = 'notes';
 
 	const ORGANIZATION = 'organization';
 	const ORIGINAL_RESOURCE_ID = 'ORIGINAL_RESOURCE_ID';
+<<<<<<< HEAD
 	const OWNER_TEXT = 'ot';
+=======
+>>>>>>> old/master
 
 	const PARENT_ID = 'PARENT_ID';
 	const PARTICIPANT_LIST = 'participantList';
 	const PARTICIPANT_ID = 'PARTICIPANT_ID';
+<<<<<<< HEAD
 	const PARTICIPANT_TEXT = 'pt';
 	const PASSWORD = 'password';
 	const PASSWORD_CONFIRM = 'passwordConfirm';
@@ -177,6 +218,10 @@ class FormKeys
 	const PAYPAL_SECRET = 'PAYPAL_SECRET';
 	const PAYPAL_ENVIRONMENT = 'PAYPAL_ENVIRONMENT';
 	const PAYMENT_RESPONSE_DATA = 'PAYMENT_RESPONSE_DATA';
+=======
+	const PASSWORD = 'password';
+	const PASSWORD_CONFIRM = 'passwordConfirm';
+>>>>>>> old/master
 	const PEAK_ALL_DAY = 'PEAK_ALL_DAY';
 	const PEAK_ALL_YEAR = 'PEAK_ALL_YEAR';
 	const PEAK_EVERY_DAY = 'PEAK_EVERY_DAY';
@@ -192,13 +237,19 @@ class FormKeys
 	const PHONE = 'phone';
 	const POSITION = 'position';
 	const PK = 'pk';
+<<<<<<< HEAD
 	const PERMISSION_TYPE = 'PERMISSION_TYPE';
+=======
+>>>>>>> old/master
 
 	const QUOTA_SCOPE= 'QUOTA_SCOPE';
 
 	const REFERENCE_NUMBER = 'referenceNumber';
+<<<<<<< HEAD
 	const REFUND_AMOUNT = 'REFUND_AMOUNT';
 	const REFUND_TRANSACTION_ID = 'REFUND_TRANSACTION_ID';
+=======
+>>>>>>> old/master
 	const REMOVED_FILE_IDS = 'removeFile';
 	const REPEAT_OPTIONS = 'repeatOptions';
 	const REPEAT_EVERY = 'repeatEvery';
@@ -225,14 +276,20 @@ class FormKeys
 	const RESERVATION_ID = 'reservationId';
 	const RESERVATION_TITLE = 'reservationTitle';
 	const RESERVATION_RETRY_PREFIX = 'RESERVATION_RETRY_PREFIX';
+<<<<<<< HEAD
 	const RESERVATION_IMPORT_FILE = 'RESERVATION_IMPORT_FILE';
+=======
+>>>>>>> old/master
 	const RESOURCE = 'resource';
 	const RESOURCE_ADMIN_GROUP_ID = 'resourceAdminGroupId';
 	const RESOURCE_CONTACT = 'resourceContact';
 	const RESOURCE_DESCRIPTION = 'resourceDescription';
 	const RESOURCE_ID = 'resourceId';
 	const RESOURCE_IMAGE = 'resourceImage';
+<<<<<<< HEAD
 	const RESOURCE_IMPORT_FILE = 'resourceImportFile';
+=======
+>>>>>>> old/master
 	const RESOURCE_LOCATION = 'resourceLocation';
 	const RESOURCE_NAME = 'resourceName';
 	const RESOURCE_NOTES = 'resourceNotes';
@@ -248,13 +305,19 @@ class FormKeys
 	const RESOURCE_STATUS_REASON_ID = 'RESOURCE_STATUS_REASON_ID';
 	const RESOURCE_STATUS_UPDATE_SCOPE = 'RESOURCE_STATUS_UPDATE_SCOPE';
 	const ROLLING = 'ROLLING';
+<<<<<<< HEAD
 	const REPEAT_CUSTOM_DATES = 'repeatCustomDates';
+=======
+>>>>>>> old/master
 
 	const SCHEDULE_ID = 'scheduleId';
 	const SCHEDULE_NAME = 'scheduleName';
 	const SCHEDULE_WEEKDAY_START = 'scheduleWeekdayStart';
 	const SCHEDULE_DAYS_VISIBLE = 'scheduleDaysVisible';
+<<<<<<< HEAD
 	const SCHEDULE_DEFAULT_STYLE = 'SCHEDULE_DEFAULT_STYLE';
+=======
+>>>>>>> old/master
 	const SEND_AS_EMAIL = 'SEND_AS_EMAIL';
 	const SERIES_UPDATE_SCOPE = 'seriesUpdateScope';
 	const START_REMINDER_ENABLED = 'START_REMINDER_ENABLED';
@@ -263,6 +326,7 @@ class FormKeys
 	const SLOTS_BLOCKED = 'blockedSlots';
 	const SLOTS_RESERVABLE = 'reservableSlots';
 	const STATUS_ID = 'STATUS_ID';
+<<<<<<< HEAD
     const STRIPE_ENABLED = 'ENABLE_STRIPE';
 	const STRIPE_PUBLISHABLE_KEY = 'STRIPE_PUBLISHABLE_KEY';
 	const STRIPE_SECRET_KEY = 'STRIPE_SECRET_KEY';
@@ -276,17 +340,25 @@ class FormKeys
 	const SLACK_TOKEN = 'token';
 	const SPECIFIC_TIME = 'SPECIFIC_TIME';
 	const SPECIFIC_DATES = 'SPECIFIC_DATES';
+=======
+	const SUBMIT = 'SUBMIT';
+	const SUMMARY = 'summary';
+	const SCHEDULE_ADMIN_GROUP_ID = 'adminGroupId';
+>>>>>>> old/master
 
 	const THISWEEK = 'THISWEEK';
 	const TIMEZONE = 'timezone';
 	const TODAY = 'TODAY';
 	const TOMMOROW = 'TOMMOROW';
+<<<<<<< HEAD
 	const TOS_METHOD = 'TOS_METHOD';
 	const TOS_APPLICABILITY = 'TOS_APPLICABILITY';
 	const TOS_TEXT = 'TOS_TEXT';
 	const TOS_URL = 'TOS_URL';
 	const TOS_UPLOAD = 'TOS_UPLOAD';
 	const TOS_ACKNOWLEDGEMENT = 'TOS_ACKNOWLEDGEMENT';
+=======
+>>>>>>> old/master
 
 	const UNIT = 'unit';
 	const UNIT_COST = 'unitCost';
@@ -294,7 +366,10 @@ class FormKeys
 	const USERNAME = 'username';
 	const USER_IMPORT_FILE = 'USER_IMPORT_FILE';
 	const USING_SINGLE_LAYOUT = 'USING_SINGLE_LAYOUT';
+<<<<<<< HEAD
 	const UPDATE_ON_IMPORT = 'UPDATE_ON_IMPORT';
+=======
+>>>>>>> old/master
 
 	const VALUE = 'value';
 

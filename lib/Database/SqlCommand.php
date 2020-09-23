@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -35,7 +39,11 @@ class SqlCommand implements ISqlCommand
 		$this->Parameters = new Parameters();
 	}
 
+<<<<<<< HEAD
 	public function SetParameters(Parameters $parameters)
+=======
+	public function SetParameters(Parameters &$parameters)
+>>>>>>> old/master
 	{
 		$this->_paramNames = array(); // Clean out contents
 		$this->_values = array();
@@ -50,7 +58,11 @@ class SqlCommand implements ISqlCommand
 		}
 	}
 
+<<<<<<< HEAD
 	public function AddParameter(Parameter $parameter)
+=======
+	public function AddParameter(Parameter &$parameter)
+>>>>>>> old/master
 	{
 		$this->Parameters->Add($parameter);
 	}
@@ -84,11 +96,14 @@ class SqlCommand implements ISqlCommand
 	{
 		return false;
 	}
+<<<<<<< HEAD
 
 	public function IsMultiQuery()
     {
         return false;
     }
+=======
+>>>>>>> old/master
 }
 
 class AdHocCommand extends SqlCommand
@@ -124,7 +139,11 @@ class CountCommand extends SqlCommand
 
 	public function GetQuery()
 	{
+<<<<<<< HEAD
 		return 'SELECT COUNT(*) as `total` FROM (' . $this->baseCommand->GetQuery() . ') `results`';
+=======
+		return 'SELECT COUNT(*) as total FROM (' . $this->baseCommand->GetQuery() . ') results';
+>>>>>>> old/master
 	}
 }
 
@@ -140,6 +159,7 @@ class SortCommand extends SqlCommand
         {
             $sortDirection = 'asc';
         }
+<<<<<<< HEAD
         else {
             $sortDirection = 'desc';
         }
@@ -150,6 +170,15 @@ class SortCommand extends SqlCommand
 
         $query = $baseCommand->GetQuery();
         $this->query = preg_replace('/ORDER BY\\s+[`a-zA-Z0-9_,\\s\\-\\.]+$/', "ORDER BY @sort_params $sortDirection", $query, 1);    }
+=======
+
+        $this->Parameters = $baseCommand->Parameters;
+        $this->AddParameter(new ParameterRaw('@sort_params', "$sortField $sortDirection"));
+
+        $query = $baseCommand->GetQuery();
+        $this->query = preg_replace('/ORDER BY\\s+[a-zA-Z0-9_,\\s\\-\\.]+$/', 'ORDER BY @sort_params', $query, 1);
+    }
+>>>>>>> old/master
 
     public function GetQuery()
     {
@@ -240,9 +269,12 @@ class FilterCommand extends SqlCommand
 
 		return $query;
 	}
+<<<<<<< HEAD
 
 	public function ContainsGroupConcat()
     {
         return $this->baseCommand->ContainsGroupConcat();
     }
+=======
+>>>>>>> old/master
 }

@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -40,5 +44,8 @@ require_once(ROOT_DIR . 'Domain/RepeatOptions.php');
 require_once(ROOT_DIR . 'Domain/User.php');
 require_once(ROOT_DIR . 'Domain/Group.php');
 require_once(ROOT_DIR . 'Domain/Quota.php');
+<<<<<<< HEAD
 require_once(ROOT_DIR . 'Domain/ReservationAttachment.php');
+=======
+>>>>>>> old/master
 require_once(ROOT_DIR . 'Domain/ReservationAttachment.php');

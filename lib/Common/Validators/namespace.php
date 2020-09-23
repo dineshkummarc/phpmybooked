@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -30,6 +34,10 @@ require_once(ROOT_DIR . 'lib/Common/Validators/FileTypeValidator.php');
 require_once(ROOT_DIR . 'lib/Common/Validators/FileUploadValidator.php');
 require_once(ROOT_DIR . 'lib/Common/Validators/PasswordComplexityValidator.php');
 require_once(ROOT_DIR . 'lib/Common/Validators/FileExtensionValidator.php');
+<<<<<<< HEAD
 require_once(ROOT_DIR . 'lib/Common/Validators/RequiredEmailDomainValidator.php');
 require_once(ROOT_DIR . 'lib/Common/Validators/TermsOfServiceValidator.php');
 require_once(ROOT_DIR . 'lib/Common/Validators/RestrictedGuestValidator.php');
+=======
+require_once(ROOT_DIR . 'lib/Common/Validators/RequiredEmailDomainValidator.php');
+>>>>>>> old/master

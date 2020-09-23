@@ -19,6 +19,7 @@ You should have received a copy of the GNU General Public License
 along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 *}
 
+<<<<<<< HEAD
 La tua prenotazione sta per iniziare.<br />
 Dettagli prenotazione:
 	<br />
@@ -30,6 +31,19 @@ Dettagli prenotazione:
 	Descrizione: {$Description|nl2br}<br />
 <br />
 <br />
+=======
+La tua prenotazione sta per iniziare.<br/>
+Dettagli prenotazione:
+	<br/>
+	<br/>
+	Inizio: {formatdate date=$StartDate key=reservation_email}<br/>
+	Fine: {formatdate date=$EndDate key=reservation_email}<br/>
+	Risorsa: {$ResourceName}<br/>
+	Note: {$Title}<br/>
+	Descrizione: {$Description|nl2br}<br/>
+<br/>
+<br/>
+>>>>>>> old/master
 <a href="{$ScriptUrl}/{$ReservationUrl}">Vedi questa prenotazione</a> |
 <a href="{$ScriptUrl}/{$ICalUrl}">Aggiungi al calendario</a> |
 <a href="{$ScriptUrl}">Accedi a Booked Scheduler</a>

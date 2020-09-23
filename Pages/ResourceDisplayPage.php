@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2017-2020 Nick Korbel
+=======
+ * Copyright 2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -59,6 +63,7 @@ interface IResourceDisplayPage extends IPage, IActionPage
 
     public function BindResource(BookableResource $resource);
 
+<<<<<<< HEAD
     /**
      * @param IDailyLayout $dailyLayout
      * @param Date $today
@@ -69,6 +74,9 @@ interface IResourceDisplayPage extends IPage, IActionPage
      * @param string $checkinReferenceNumber
      */
     public function DisplayAvailability(IDailyLayout $dailyLayout, Date $today, $current, $next, $upcoming, $requiresCheckin, $checkinReferenceNumber);
+=======
+    public function DisplayAvailability(IDailyLayout $dailyLayout, Date $today);
+>>>>>>> old/master
 
     /**
      * @param bool $availableNow
@@ -101,12 +109,15 @@ interface IResourceDisplayPage extends IPage, IActionPage
     public function SetReservationSaveResults($success, $resultCollector);
 
     /**
+<<<<<<< HEAD
      * @param bool $success
      * @param ReservationResultCollector $resultCollector
      */
     public function SetReservationCheckinResults($success, $resultCollector);
 
     /**
+=======
+>>>>>>> old/master
      * @param Schedule $schedule
      */
     public function BindSchedule(Schedule $schedule);
@@ -120,6 +131,7 @@ interface IResourceDisplayPage extends IPage, IActionPage
      * @return AttributeFormElement[]|array
      */
     public function GetAttributes();
+<<<<<<< HEAD
 
     /**
      * @return string
@@ -137,6 +149,8 @@ interface IResourceDisplayPage extends IPage, IActionPage
     public function GetTermsOfServiceAcknowledgement();
 
 	public function DisplayInstructions();
+=======
+>>>>>>> old/master
 }
 
 class ResourceDisplayPage extends ActionPage implements IResourceDisplayPage, IRequestedResourcePage
@@ -162,12 +176,16 @@ class ResourceDisplayPage extends ActionPage implements IResourceDisplayPage, IR
                     new UserRepository(),
                     new GuestRegistrationNotificationStrategy(),
                     new GuestReservationPermissionStrategy($this))),
+<<<<<<< HEAD
             new AttributeService(new AttributeRepository(), new GuestPermissionService()),
             new ReservationRepository(),
             new TermsOfServiceRepository());
 
         $this->Set('AllowAutocomplete', Configuration::Instance()->GetSectionKey(ConfigSection::TABLET_VIEW, ConfigKeys::TABLET_VIEW_AUTOCOMPLETE, new BooleanConverter()));
 		$this->Set('ShouldLogout', false);
+=======
+            new AttributeService(new AttributeRepository()));
+>>>>>>> old/master
     }
 
     public function ProcessAction()
@@ -242,6 +260,7 @@ class ResourceDisplayPage extends ActionPage implements IResourceDisplayPage, IR
         $this->Set('ResourceId', $resource->GetId());
     }
 
+<<<<<<< HEAD
     public function DisplayAvailability(IDailyLayout $dailyLayout, Date $today, $current, $next, $upcoming, $requiresCheckin, $checkinReferenceNumber)
     {
         $this->Set('TimeFormat', Resources::GetInstance()->GetDateFormat('period_time'));
@@ -255,6 +274,14 @@ class ResourceDisplayPage extends ActionPage implements IResourceDisplayPage, IR
         $this->Set('RequiresCheckin', $requiresCheckin);
         $this->Set('CheckinReferenceNumber', $checkinReferenceNumber);
         $this->Set('NoTitle', Resources::GetInstance()->GetString('NoTitleLabel'));
+=======
+    public function DisplayAvailability(IDailyLayout $dailyLayout, Date $today)
+    {
+        $this->Set('TimeFormat', Resources::GetInstance()->GetDateFormat('period_time'));
+        $this->Set('Today', $today);
+        $this->Set('DailyLayout', $dailyLayout);
+        $this->Set('SlotLabelFactory', new SlotLabelFactory(new NullUserSession()));
+>>>>>>> old/master
         $this->Display('ResourceDisplay/resource-display-resource.tpl');
     }
 
@@ -294,11 +321,14 @@ class ResourceDisplayPage extends ActionPage implements IResourceDisplayPage, IR
         $this->SetJson(array('success' => $success, 'errors' => $resultCollector->Errors));
     }
 
+<<<<<<< HEAD
     public function SetReservationCheckinResults($success, $resultCollector)
     {
         $this->SetJson(array('success' => $success, 'errors' => $resultCollector->Errors));
     }
 
+=======
+>>>>>>> old/master
     public function GetRequestedResourceId()
     {
         return $this->GetResourceId();
@@ -324,6 +354,7 @@ class ResourceDisplayPage extends ActionPage implements IResourceDisplayPage, IR
     {
         return AttributeFormParser::GetAttributes($this->GetForm(FormKeys::ATTRIBUTE_PREFIX));
     }
+<<<<<<< HEAD
 
     public function GetReferenceNumber()
     {
@@ -344,4 +375,6 @@ class ResourceDisplayPage extends ActionPage implements IResourceDisplayPage, IR
 	{
 		$this->Display('ResourceDisplay/resource-display-instructions.tpl');
 	}
+=======
+>>>>>>> old/master
 }

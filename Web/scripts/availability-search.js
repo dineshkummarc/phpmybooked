@@ -9,17 +9,25 @@ function AvailabilitySearch(options) {
         // thisweek: $('#thisweek'),
         daterange: $('input[name="AVAILABILITY_RANGE"]'),
         beginDate: $('#beginDate'),
+<<<<<<< HEAD
         endDate: $('#endDate'),
         specificTime: $('#specificTime'),
         hours: $('#hours'),
         minutes: $('#minutes'),
         beginTime: $('#startTime'),
         endTime: $('#endTime'),
+=======
+        endDate: $('#endDate')
+>>>>>>> old/master
     };
 
     var init = function () {
         ConfigureAsyncForm(elements.searchForm, function () {
+<<<<<<< HEAD
             elements.availabilityResults.empty();
+=======
+            elements.availabilityResults.empty()
+>>>>>>> old/master
         }, showSearchResults);
 
         elements.availabilityResults.on('click', '.opening', function (e) {
@@ -40,7 +48,11 @@ function AvailabilitySearch(options) {
             }
         });
 
+<<<<<<< HEAD
         elements.daterange.change(function (e) {
+=======
+        elements.daterange.change(function(e){
+>>>>>>> old/master
             if ($(e.target).val() == 'daterange') {
                 elements.beginDate.removeAttr('disabled');
                 elements.endDate.removeAttr('disabled');
@@ -48,6 +60,7 @@ function AvailabilitySearch(options) {
             else {
                 elements.beginDate.val('').attr('disabled', 'disabled');
                 elements.endDate.val('').attr('disabled', 'disabled');
+<<<<<<< HEAD
             }
         });
 
@@ -66,6 +79,10 @@ function AvailabilitySearch(options) {
                 elements.endTime.attr('disabled', 'disabled');
             }
         });
+=======
+        }
+        })
+>>>>>>> old/master
     };
 
     var showSearchResults = function (data) {

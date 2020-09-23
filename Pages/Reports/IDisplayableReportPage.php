@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2012-2020 Nick Korbel
+=======
+Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -20,7 +24,11 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
 interface IDisplayableReportPage
 {
+<<<<<<< HEAD
 	public function BindReport(IReport $report, IReportDefinition $definition, $selectedColumns);
+=======
+	public function BindReport(IReport $report, IReportDefinition $definition);
+>>>>>>> old/master
 
 	public function DisplayError();
 

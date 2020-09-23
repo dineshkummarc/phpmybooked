@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2017-2020 Nick Korbel
+=======
+Copyright 2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of phpScheduleIt.
 
@@ -27,19 +31,28 @@ along with phpScheduleIt.  If not, see <http://www.gnu.org/licenses/>.
 	{indicator id="waitIndicator"}
 </div>
 
+<<<<<<< HEAD
 {include file="javascript-includes.tpl"}
 {jsfile src="resourceDisplay.js"}
 {jsfile src="ajax-helpers.js"}
 {jsfile src="autocomplete.js"}
+=======
+{jsfile src="resourceDisplay.js"}
+{jsfile src="ajax-helpers.js"}
+>>>>>>> old/master
 
 <script type="text/javascript">
 	$(function () {
 		var resourceDisplay = new ResourceDisplay();
 		resourceDisplay.initDisplay(
                 {
+<<<<<<< HEAD
                     url: '{$smarty.server.SCRIPT_NAME}?dr=resource&rid={$PublicResourceId}&dr=display',
                     userAutocompleteUrl: "ajax/autocomplete.php?type={AutoCompleteType::User}&as=1",
                     allowAutocomplete: {if $AllowAutocomplete}true{else}false{/if}
+=======
+                    url: '{$smarty.server.SCRIPT_NAME}?dr=resource&rid={$PublicResourceId}&dr=display'
+>>>>>>> old/master
                 }
         );
 	});

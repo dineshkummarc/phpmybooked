@@ -13,7 +13,10 @@ function ScheduleManagement(opts) {
 		deleteForm: $('#deleteForm'),
 
 		addForm: $('#addScheduleForm'),
+<<<<<<< HEAD
 		addName: $('#addName'),
+=======
+>>>>>>> old/master
 
 		reservableEdit: $('#reservableEdit'),
 		blockedEdit: $('#blockedEdit'),
@@ -39,6 +42,7 @@ function ScheduleManagement(opts) {
 		peakAllDay: $('#peakAllDay'),
 		peakTimes: $('#peakTimes'),
 		deletePeakTimesButton: $('#deletePeakBtn'),
+<<<<<<< HEAD
 		deletePeakTimes: $('#deletePeakTimes'),
 
 		availabilityDialog: $('#availabilityDialog'),
@@ -77,6 +81,9 @@ function ScheduleManagement(opts) {
 		deleteSlot: $('#deleteSlot'),
 		confirmCreateSlotDialog: $('#confirmCreateSlotDialog'),
 		cancelCreateSlot: $('#cancelCreateSlot'),
+=======
+		deletePeakTimes: $('#deletePeakTimes')
+>>>>>>> old/master
 	};
 
 	ScheduleManagement.prototype.init = function () {
@@ -115,6 +122,7 @@ function ScheduleManagement(opts) {
 			});
 
 			details.find('.changeLayoutButton').click(function (e) {
+<<<<<<< HEAD
 				if ($(e.target).data('layout-type') == 0)
 				{
 					showChangeLayout(e, reservable, blocked, timezone, (usesDailyLayouts.val() == 'false'));
@@ -123,6 +131,9 @@ function ScheduleManagement(opts) {
 				{
 					showChangeCustomLayout(id);
 				}
+=======
+				showChangeLayout(e, reservable, blocked, timezone, (usesDailyLayouts.val() == 'false'));
+>>>>>>> old/master
 				return false;
 			});
 
@@ -152,6 +163,7 @@ function ScheduleManagement(opts) {
 				e.preventDefault();
 				showPeakTimesDialog(getActiveScheduleId());
 			});
+<<<<<<< HEAD
 
 			details.find('.changeAvailability').click(function (e) {
 				e.preventDefault();
@@ -196,10 +208,16 @@ function ScheduleManagement(opts) {
 		});
 
 		elements.deletePeakTimesButton.click(function (e) {
+=======
+		});
+
+		elements.deletePeakTimesButton.click(function(e) {
+>>>>>>> old/master
 			e.preventDefault();
 			elements.deletePeakTimes.val('1');
 		});
 
+<<<<<<< HEAD
 		elements.availableAllYear.on('click', function (e) {
 			if ($(e.target).is(':checked'))
 			{
@@ -216,6 +234,9 @@ function ScheduleManagement(opts) {
 		$(".save").click(function (e) {
 			e.preventDefault();
 			e.stopPropagation();
+=======
+		$(".save").click(function () {
+>>>>>>> old/master
 			$(this).closest('form').submit();
 		});
 
@@ -249,6 +270,7 @@ function ScheduleManagement(opts) {
 			elements.addDialog.modal('show');
 		});
 
+<<<<<<< HEAD
 		elements.addDialog.on('shown.bs.modal', function () {
 			elements.addName.focus();
 		});
@@ -284,17 +306,22 @@ function ScheduleManagement(opts) {
 			autoFillBlocked();
 		});
 
+=======
+>>>>>>> old/master
 		wireUpPeakTimeToggles();
 
 		ConfigureAsyncForm(elements.changeLayoutForm, getSubmitCallback(options.changeLayoutAction));
 		ConfigureAsyncForm(elements.addForm, getSubmitCallback(options.addAction), null, handleAddError);
 		ConfigureAsyncForm(elements.deleteForm, getSubmitCallback(options.deleteAction));
 		ConfigureAsyncForm(elements.peakTimesForm, getSubmitCallback(options.peakTimesAction), refreshPeakTimes);
+<<<<<<< HEAD
 		ConfigureAsyncForm(elements.availabilityForm, getSubmitCallback(options.availabilityAction), refreshAvailability);
 		ConfigureAsyncForm(elements.switchLayoutForm, getSubmitCallback(options.switchLayout));
 		ConfigureAsyncForm(elements.deleteCustomTimeSlotForm, getSubmitCallback(options.deleteLayoutSlot), afterDeleteSlot);
 		ConfigureAsyncForm(elements.concurrentMaximumForm, getSubmitCallback(options.maximumConcurrentAction));
 		ConfigureAsyncForm(elements.resourcesPerReservationForm, getSubmitCallback(options.maximumResourcesAction));
+=======
+>>>>>>> old/master
 	};
 
 	var getSubmitCallback = function (action) {
@@ -358,6 +385,7 @@ function ScheduleManagement(opts) {
 		return hour + ":" + minute;
 	};
 
+<<<<<<< HEAD
 	var autoFillBlocked = function () {
 
 		function splitAndTrim(line) {
@@ -412,6 +440,8 @@ function ScheduleManagement(opts) {
 		$('.blockedEdit:visible', elements.layoutDialog).val(blocked);
 	};
 
+=======
+>>>>>>> old/master
 	var handleAddError = function (responseText) {
 		$('#addScheduleResults').text(responseText);
 		$('#addScheduleResults').show();
@@ -427,7 +457,11 @@ function ScheduleManagement(opts) {
 
 	var showChangeLayout = function (e, reservableDiv, blockedDiv, timezone, usesSingleLayout) {
 		elements.changeLayoutForm.find('.validationSummary ').addClass('no-show');
+<<<<<<< HEAD
 		$.each(reservableDiv, function (index, val) {
+=======
+	    $.each(reservableDiv, function (index, val) {
+>>>>>>> old/master
 			var slots = reformatTimeSlots($(val));
 			$('#' + $(val).attr('ref')).val(slots);
 		});
@@ -594,6 +628,7 @@ function ScheduleManagement(opts) {
 			peakOnAllDayChanged();
 		});
 	};
+<<<<<<< HEAD
 
 	var showAvailabilityDialog = function (scheduleId) {
 		var placeholder = $('[data-schedule-id=' + scheduleId + ']').find('.availabilityPlaceHolder');
@@ -727,4 +762,6 @@ function ScheduleManagement(opts) {
 		elements.deleteCustomLayoutDialog.hide();
 		_fullCalendar.fullCalendar('refetchEvents');
 	}
+=======
+>>>>>>> old/master
 }

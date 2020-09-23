@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2013-2020 Nick Korbel
+=======
+Copyright 2013-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -23,9 +27,13 @@ require_once(ROOT_DIR . 'Presenters/Admin/ManageThemePresenter.php');
 
 class ManageThemePage extends ActionPage
 {
+<<<<<<< HEAD
     private $presenter;
 
     public function __construct()
+=======
+	public function __construct()
+>>>>>>> old/master
 	{
 		parent::__construct('LookAndFeel', 1);
 
@@ -72,6 +80,7 @@ class ManageThemePage extends ActionPage
 	{
 		return $this->server->GetFile(FormKeys::CSS_FILE);
 	}
+<<<<<<< HEAD
 
 	/**
 	 * @return null|UploadedFile
@@ -80,5 +89,7 @@ class ManageThemePage extends ActionPage
 	{
 		return $this->server->GetFile(FormKeys::FAVICON_FILE);
 	}
+=======
+>>>>>>> old/master
 }
 

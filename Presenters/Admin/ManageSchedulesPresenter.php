@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -37,6 +41,7 @@ class ManageSchedules
 	const ActionDisableSubscription = 'disableSubscription';
 	const ChangeAdminGroup = 'changeAdminGroup';
 	const ActionChangePeakTimes = 'ActionChangePeakTimes';
+<<<<<<< HEAD
 	const ActionChangeAvailability = 'ActionChangeAvailability';
 	const ActionSwitchLayoutType = 'ActionSwitchLayoutType';
 	const ActionAddLayoutSlot = 'addLayoutSlot';
@@ -45,6 +50,8 @@ class ManageSchedules
 	const ActionChangeDefaultStyle = 'changeDefaultStyle';
 	const ActionChangeMaximumConcurrent = 'changeMaximumConcurrent';
 	const ActionChangeResourcesPerReservation = 'changeResourcesPerReservation';
+=======
+>>>>>>> old/master
 }
 
 class ManageScheduleService
@@ -96,7 +103,12 @@ class ManageScheduleService
 	 */
 	public function GetLayout($schedule)
 	{
+<<<<<<< HEAD
 		return $this->scheduleRepository->GetLayout($schedule->GetId(), new ScheduleLayoutFactory($schedule->GetTimezone()));
+=======
+		return $this->scheduleRepository->GetLayout($schedule->GetId(),
+													new ScheduleLayoutFactory($schedule->GetTimezone()));
+>>>>>>> old/master
 	}
 
 	/**
@@ -203,7 +215,10 @@ class ManageScheduleService
 	{
 		$schedule = $this->scheduleRepository->LoadById($scheduleId);
 		$schedule->EnableSubscription();
+<<<<<<< HEAD
 		Configuration::Instance()->EnableSubscription();
+=======
+>>>>>>> old/master
 		$this->scheduleRepository->Update($schedule);
 	}
 
@@ -260,6 +275,7 @@ class ManageScheduleService
 
 		return $layout;
 	}
+<<<<<<< HEAD
 
 	/**
 	 * @return BookableResource[] resources indexed by scheduleId
@@ -423,6 +439,8 @@ class ManageScheduleService
 		$schedule->SetMaxResourcesPerReservation($unlimited ? 0 : intval($max));
 		$this->scheduleRepository->Update($schedule);
 	}
+=======
+>>>>>>> old/master
 }
 
 class ManageSchedulesPresenter extends ActionPresenter
@@ -442,8 +460,12 @@ class ManageSchedulesPresenter extends ActionPresenter
 	 */
 	private $groupViewRepository;
 
+<<<<<<< HEAD
 	public function __construct(IManageSchedulesPage $page,
 								ManageScheduleService $manageSchedulesService,
+=======
+	public function __construct(IManageSchedulesPage $page, ManageScheduleService $manageSchedulesService,
+>>>>>>> old/master
 								IGroupViewRepository $groupViewRepository)
 	{
 		parent::__construct($page);
@@ -462,6 +484,7 @@ class ManageSchedulesPresenter extends ActionPresenter
 		$this->AddAction(ManageSchedules::ActionDisableSubscription, 'DisableSubscription');
 		$this->AddAction(ManageSchedules::ChangeAdminGroup, 'ChangeAdminGroup');
 		$this->AddAction(ManageSchedules::ActionChangePeakTimes, 'ChangePeakTimes');
+<<<<<<< HEAD
 		$this->AddAction(ManageSchedules::ActionChangeAvailability, 'ChangeAvailability');
 		$this->AddAction(ManageSchedules::ActionSwitchLayoutType, 'SwitchLayoutType');
 		$this->AddAction(ManageSchedules::ActionAddLayoutSlot, 'AddLayoutSlot');
@@ -470,6 +493,8 @@ class ManageSchedulesPresenter extends ActionPresenter
 		$this->AddAction(ManageSchedules::ActionChangeDefaultStyle, 'ChangeDefaultStyle');
 		$this->AddAction(ManageSchedules::ActionChangeMaximumConcurrent, 'ChangeMaximumConcurrentReservations');
 		$this->AddAction(ManageSchedules::ActionChangeResourcesPerReservation, 'ChangeResourcesPerReservation');
+=======
+>>>>>>> old/master
 	}
 
 	public function PageLoad()
@@ -478,7 +503,10 @@ class ManageSchedulesPresenter extends ActionPresenter
 		$schedules = $results->Results();
 
 		$sourceSchedules = $this->manageSchedulesService->GetSourceSchedules();
+<<<<<<< HEAD
 		$resources = $this->manageSchedulesService->GetResources();
+=======
+>>>>>>> old/master
 
 		$layouts = array();
 		/* @var $schedule Schedule */
@@ -492,7 +520,10 @@ class ManageSchedulesPresenter extends ActionPresenter
 
 		$this->page->BindSchedules($schedules, $layouts, $sourceSchedules);
 		$this->page->BindPageInfo($results->PageInfo());
+<<<<<<< HEAD
 		$this->page->BindResources($resources);
+=======
+>>>>>>> old/master
 		$this->PopulateTimezones();
 
 	}
@@ -633,12 +664,17 @@ class ManageSchedulesPresenter extends ActionPresenter
 			$endDay = $this->page->GetPeakEndDay();
 			$endMonth = $this->page->GetPeakEndDMonth();
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> old/master
 			$peakTimes = new PeakTimes($allDay, $beginTime, $endTime, $everyDay, $peakDays, $allYear, $beginDay, $beginMonth, $endDay, $endMonth);
 			$layout = $this->manageSchedulesService->ChangePeakTimes($scheduleId, $peakTimes);
 		}
 		$this->page->DisplayPeakTimes($layout);
 	}
 
+<<<<<<< HEAD
 	public function ChangeAvailability()
 	{
 		$availableAllYear = $this->page->GetAvailableAllYear();
@@ -760,6 +796,8 @@ class ManageSchedulesPresenter extends ActionPresenter
 		$this->manageSchedulesService->ChangeResourcesPerReservation($scheduleId, $max, $unlimited);
 	}
 
+=======
+>>>>>>> old/master
 	protected function LoadValidators($action)
 	{
 		if ($action == ManageSchedules::ActionChangeLayout)

@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2017-2020 Nick Korbel
+=======
+ * Copyright 2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -20,7 +24,11 @@
 
 class AccessoryAggregation
 {
+<<<<<<< HEAD
 	private $knownAccessoryIds = array();
+=======
+	private $quantities = array();
+>>>>>>> old/master
 
 	/**
 	 * @var \DateRange
@@ -32,8 +40,11 @@ class AccessoryAggregation
 	 */
 	private $addedReservations = array();
 
+<<<<<<< HEAD
 	private $accessoryQuantity = array();
 
+=======
+>>>>>>> old/master
 	/**
 	 * @param array|AccessoryToCheck[] $accessories
 	 * @param DateRange $duration
@@ -42,6 +53,7 @@ class AccessoryAggregation
 	{
 		foreach ($accessories as $a)
 		{
+<<<<<<< HEAD
             $this->knownAccessoryIds[$a->GetId()] = 1;
 		}
 
@@ -54,6 +66,21 @@ class AccessoryAggregation
 	public function Add(AccessoryReservation $accessoryReservation)
 	{
 		if ($accessoryReservation->GetStartDate()->GreaterThanOrEqual($this->duration->GetEnd()) || $accessoryReservation->GetEndDate()->LessThanOrEqual($this->duration->GetBegin()))
+=======
+			$this->quantities[$a->GetId()] = 0;
+		}
+
+		$this->duration = $duration;
+
+	}
+	/**
+	 * @param AccessoryReservation $accessoryReservation
+	 * @return void
+	 */
+	public function Add(AccessoryReservation $accessoryReservation)
+	{
+		if ($accessoryReservation->GetStartDate()->Equals($this->duration->GetEnd()) || $accessoryReservation->GetEndDate()->Equals($this->duration->GetBegin()))
+>>>>>>> old/master
 		{
 			return;
 		}
@@ -69,6 +96,7 @@ class AccessoryAggregation
 
 		$this->addedReservations[$key] = true;
 
+<<<<<<< HEAD
 		if (array_key_exists($accessoryId, $this->accessoryQuantity))
         {
             $this->accessoryQuantity[$accessoryId] += $accessoryReservation->QuantityReserved();
@@ -78,6 +106,12 @@ class AccessoryAggregation
             $this->accessoryQuantity[$accessoryId] = $accessoryReservation->QuantityReserved();
 
         }
+=======
+		if (array_key_exists($accessoryId, $this->quantities))
+		{
+			$this->quantities[$accessoryId] += $accessoryReservation->QuantityReserved();
+		}
+>>>>>>> old/master
 	}
 
 	/**
@@ -86,6 +120,7 @@ class AccessoryAggregation
 	 */
 	public function GetQuantity($accessoryId)
 	{
+<<<<<<< HEAD
 
 	    if (array_key_exists($accessoryId, $this->accessoryQuantity))
         {
@@ -94,3 +129,8 @@ class AccessoryAggregation
         return 0;
 	}
 }
+=======
+		return $this->quantities[$accessoryId];
+	}
+}
+>>>>>>> old/master

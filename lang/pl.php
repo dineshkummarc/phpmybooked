@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 Translated to Polish by Dariusz Kliszewski
 
 This file is part of Booked Scheduler.
@@ -18,11 +22,17 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
+<<<<<<< HEAD
 
 require_once('Language.php');
 require_once('en_gb.php');
 
 class pl extends en_gb
+=======
+require_once('Language.php');
+require_once('en_us.php');
+class pl extends en_us
+>>>>>>> old/master
 {
     public function __construct()
     {
@@ -32,6 +42,32 @@ class pl extends en_gb
 	/**
      * @return array
      */
+<<<<<<< HEAD
+=======
+    protected function _LoadDates()
+    {
+        $dates = parent::_LoadDates();
+
+        $dates['general_date'] = 'Y-m-d';
+        $dates['general_datetime'] = 'Y-m-d H:i:s';
+        $dates['schedule_daily'] = 'l, Y-m-d';
+        $dates['reservation_email'] = 'Y-m-d @ G:i (e)';
+        $dates['res_popup'] = 'Y-m-d G:i';
+        $dates['dashboard'] = 'l, Y-m-d G:i';
+        $dates['period_time'] = "G:i";
+		$dates['general_date_js'] = "dd.mm.yy";
+		$dates['calendar_time'] = 'h:mmt';
+		$dates['calendar_dates'] = 'M/d';
+
+		$this->Dates = $dates;
+
+		return $this->Dates;
+    }
+
+	/**
+     * @return array
+     */
+>>>>>>> old/master
     protected function _LoadStrings()
     {
         $strings = parent::_LoadStrings();

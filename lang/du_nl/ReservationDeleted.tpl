@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -18,6 +22,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 *}
 
 
+<<<<<<< HEAD
 Reserverings Details:
 <br/>
 <br/>
@@ -70,4 +75,49 @@ Beschrijving: {$Description|nl2br}<br/>
 <br/>
 <br/>
 <a href="{$ScriptUrl}">Login in Booked Scheduler</a>
+=======
+	Reserverings Details:
+	<br/>
+	<br/>
+
+	Gebruiker: {$UserName}<br/>
+	Start: {formatdate date=$StartDate key=reservation_email}<br/>
+	Eindingd: {formatdate date=$EndDate key=reservation_email}<br/>
+	{if $ResourceNames|count > 1}
+		Bronnen:<br/>
+		{foreach from=$ResourceNames item=resourceName}
+			{$resourceName}<br/>
+		{/foreach}
+		{else}
+		Bron: {$ResourceName}<br/>
+	{/if}
+
+	{if $ResourceImage}
+		<div class="resource-image"><img src="{$ScriptUrl}/{$ResourceImage}"/></div>
+	{/if}
+
+	Titel: {$Title}<br/>
+	Beschrijving: {$Description|nl2br}<br/>
+
+	{if count($RepeatDates) gt 0}
+		<br/>
+		De volgende data zijn verwijderd:
+		<br/>
+	{/if}
+
+	{foreach from=$RepeatDates item=date name=dates}
+		{formatdate date=$date}<br/>
+	{/foreach}
+
+	{if $Accessories|count > 0}
+		<br/>Benodigdheden:<br/>
+		{foreach from=$Accessories item=accessory}
+			({$accessory->QuantityReserved}) {$accessory->Name}<br/>
+		{/foreach}
+	{/if}
+
+	<br/>
+        <br/>
+	<a href="{$ScriptUrl}">Login in Booked Scheduler</a>
+>>>>>>> old/master
 

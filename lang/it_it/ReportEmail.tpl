@@ -20,8 +20,14 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 *}
 
 
+<<<<<<< HEAD
 In allegato il report richiesto in Booked Scheduler.<br />
 
 <br />
+=======
+In allegato il report richiesto in Booked Scheduler.<br/>
+
+<br/>
+>>>>>>> old/master
 <a href="{$ScriptUrl}">Accedi a Booked Scheduler</a>
 

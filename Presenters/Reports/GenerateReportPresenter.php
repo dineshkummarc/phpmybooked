@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2012-2020 Nick Korbel
+=======
+ * Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -50,10 +54,13 @@ class GenerateReportPresenter extends ActionPresenter
 	 * @var IGroupRepository
 	 */
 	private $groupRepo;
+<<<<<<< HEAD
 	/**
 	 * @var IUserRepository
 	 */
 	private $userRepository;
+=======
+>>>>>>> old/master
 
 	/**
 	 * @param IGenerateReportPage $page
@@ -62,7 +69,10 @@ class GenerateReportPresenter extends ActionPresenter
 	 * @param IResourceRepository $resourceRepo
 	 * @param IScheduleRepository $scheduleRepo
 	 * @param IGroupViewRepository $groupRepo
+<<<<<<< HEAD
 	 * @param IUserRepository $userRepository
+=======
+>>>>>>> old/master
 	 */
 	public function __construct(
 			IGenerateReportPage $page,
@@ -70,8 +80,12 @@ class GenerateReportPresenter extends ActionPresenter
 			IReportingService $reportingService,
 			IResourceRepository $resourceRepo,
 			IScheduleRepository $scheduleRepo,
+<<<<<<< HEAD
 			IGroupViewRepository $groupRepo,
 			IUserRepository $userRepository)
+=======
+			IGroupViewRepository $groupRepo)
+>>>>>>> old/master
 	{
 		parent::__construct($page);
 		$this->page = $page;
@@ -80,19 +94,28 @@ class GenerateReportPresenter extends ActionPresenter
 		$this->resourceRepo = $resourceRepo;
 		$this->scheduleRepo = $scheduleRepo;
 		$this->groupRepo = $groupRepo;
+<<<<<<< HEAD
 		$this->userRepository = $userRepository;
+=======
+>>>>>>> old/master
 
 		$this->AddAction(ReportActions::Generate, 'GenerateCustomReport');
 		$this->AddAction(ReportActions::PrintReport, 'PrintReport');
 		$this->AddAction(ReportActions::Csv, 'ExportToCsv');
 		$this->AddAction(ReportActions::Save, 'SaveReport');
+<<<<<<< HEAD
 		$this->AddAction(ReportActions::SaveColumns, 'SaveColumns');
+=======
+>>>>>>> old/master
 	}
 
 	public function PageLoad()
 	{
 		$this->page->BindResources($this->resourceRepo->GetResourceList());
+<<<<<<< HEAD
 		$this->page->BindResourceTypes($this->resourceRepo->GetResourceTypes());
+=======
+>>>>>>> old/master
 		$this->page->BindAccessories($this->resourceRepo->GetAccessoryList());
 		$this->page->BindSchedules($this->scheduleRepo->GetAll());
 		$this->page->BindGroups($this->groupRepo->GetList()->Results());
@@ -142,6 +165,7 @@ class GenerateReportPresenter extends ActionPresenter
 		$this->reportingService->Save($reportName, $userId, $usage, $selection, $groupBy, $range, $filter);
 	}
 
+<<<<<<< HEAD
 	public function SaveColumns()
 	{
 		$user = $this->userRepository->LoadById($this->user->UserId);
@@ -149,6 +173,8 @@ class GenerateReportPresenter extends ActionPresenter
 		$this->userRepository->Update($user);
 	}
 
+=======
+>>>>>>> old/master
 	private function BindReport()
 	{
 		$usage = $this->GetUsage();
@@ -157,12 +183,19 @@ class GenerateReportPresenter extends ActionPresenter
 		$range = $this->GetRange();
 		$filter = $this->GetFilter();
 
+<<<<<<< HEAD
 		$report = $this->reportingService->GenerateCustomReport($usage, $selection, $groupBy, $range, $filter, $this->user->Timezone);
 		$reportDefinition = new ReportDefinition($report, $this->user->Timezone);
 
 		$user = $this->userRepository->LoadById($this->user->UserId);
 
 		$this->page->BindReport($report, $reportDefinition, $user->GetPreference(UserPreferences::REPORT_COLUMNS));
+=======
+		$report = $this->reportingService->GenerateCustomReport($usage, $selection, $groupBy, $range, $filter);
+		$reportDefinition = new ReportDefinition($report, $this->user->Timezone);
+
+		$this->page->BindReport($report, $reportDefinition);
+>>>>>>> old/master
 	}
 
 	/**
@@ -205,6 +238,7 @@ class GenerateReportPresenter extends ActionPresenter
 	 */
 	private function GetFilter()
 	{
+<<<<<<< HEAD
 		return new Report_Filter($this->page->GetResourceIds(),
 								 $this->page->GetScheduleIds(),
 								 $this->page->GetUserId(),
@@ -213,5 +247,14 @@ class GenerateReportPresenter extends ActionPresenter
 								 $this->page->GetParticipantId(),
 								 $this->page->GetIncludeDeleted(),
 								 $this->page->GetResourceTypeIds());
+=======
+		return new Report_Filter($this->page->GetResourceId(),
+								 $this->page->GetScheduleId(),
+								 $this->page->GetUserId(),
+								 $this->page->GetGroupId(),
+								 $this->page->GetAccessoryId(),
+								 $this->page->GetParticipantId(),
+								 $this->page->GetIncludeDeleted());
+>>>>>>> old/master
 	}
 }

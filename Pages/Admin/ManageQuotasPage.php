@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -25,60 +29,105 @@ require_once(ROOT_DIR . 'Domain/Access/namespace.php');
 interface IManageQuotasPage extends IActionPage
 {
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param array|BookableResource[] $resources
 	 * @return void
 	 */
 	public function BindResources($resources);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param array|GroupItemView[] $groups
 	 * @return void
 	 */
 	public function BindGroups($groups);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param array|Schedule[] $schedules
 	 * @return void
 	 */
 	public function BindSchedules($schedules);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param array|QuotaItemView[] $quotas
 	 * @return void
 	 */
 	public function BindQuotas($quotas);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @return string
 	 */
 	public function GetDuration();
 
 	/**
+<<<<<<< HEAD
 	 * @return float
+=======
+	 * @abstract
+	 * @return decimal
+>>>>>>> old/master
 	 */
 	public function GetLimit();
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @return int
 	 */
 	public function GetResourceId();
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @return int
 	 */
 	public function GetGroupId();
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @return string
 	 */
 	public function GetUnit();
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @return int
 	 */
 	public function GetQuotaId();
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @return int
 	 */
 	public function GetScheduleId();
@@ -145,7 +194,10 @@ class ManageQuotasPage extends ActionPage implements IManageQuotasPage
 				5 => 'DayFridayAbbr',
 				6 => 'DaySaturdayAbbr',
 		));
+<<<<<<< HEAD
 		$this->Set('TimeFormat', Resources::GetInstance()->GetDateFormat('timepicker'));
+=======
+>>>>>>> old/master
 
 		$this->Display('Admin/manage_quotas.tpl');
 	}

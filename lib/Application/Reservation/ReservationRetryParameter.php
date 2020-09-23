@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2017-2020 Nick Korbel
+=======
+ * Copyright 2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -21,11 +25,18 @@
 
 class ReservationRetryParameter
 {
+<<<<<<< HEAD
 	public static $SKIP_CONFLICTS = "skipconflicts";
+=======
+>>>>>>> old/master
 	private $name;
 	private $value;
 
 	/**
+<<<<<<< HEAD
+=======
+	 * ReservationRetryParameter constructor.
+>>>>>>> old/master
 	 * @param string $name
 	 * @param string $value
 	 */

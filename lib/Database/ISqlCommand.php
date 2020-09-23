@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -23,12 +27,20 @@ interface ISqlCommand
 	/**
 	 * @param Parameters $parameters
 	 */
+<<<<<<< HEAD
 	public function SetParameters(Parameters $parameters);
+=======
+	public function SetParameters(Parameters &$parameters);
+>>>>>>> old/master
 
 	/**
 	 * @param Parameter $parameter
 	 */
+<<<<<<< HEAD
 	public function AddParameter(Parameter $parameter);
+=======
+	public function AddParameter(Parameter &$parameter);
+>>>>>>> old/master
 
 	/**
 	 * @return string the underlying query to be executed
@@ -39,9 +51,12 @@ interface ISqlCommand
 	 * @return bool
 	 */
 	public function ContainsGroupConcat();
+<<<<<<< HEAD
 
 	/**
      * @return bool
      */
 	public function IsMultiQuery();
+=======
+>>>>>>> old/master
 }

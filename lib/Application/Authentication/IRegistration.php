@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -27,11 +31,17 @@ interface IRegistration
 	 * @param int $homepageId lookup id of the page to redirect the user to on login
 	 * @param array $additionalFields key value pair of additional fields to use during registration
 	 * @param array|AttributeValue[] $attributeValues
+<<<<<<< HEAD
      * @param null|UserGroup[] $groups
 	 * @param bool $acceptTerms
 	 * @return User
 	 */
 	public function Register($login, $email, $firstName, $lastName, $password, $timezone, $language, $homepageId, $additionalFields = array(), $attributeValues = array(), $groups = null, $acceptTerms = false);
+=======
+	 * @return User
+	 */
+	public function Register($login, $email, $firstName, $lastName, $password, $timezone, $language, $homepageId, $additionalFields = array(), $attributeValues = array());
+>>>>>>> old/master
 
 	/**
 	 * @param string $loginName
@@ -40,6 +50,7 @@ interface IRegistration
 	 */
 	public function UserExists($loginName, $emailAddress);
 
+<<<<<<< HEAD
     /**
      * Add or update a user who has already been authenticated
      * @param AuthenticatedUser $user
@@ -48,4 +59,13 @@ interface IRegistration
      * @return void
      */
 	public function Synchronize(AuthenticatedUser $user, $insertOnly = false, $overwritePassword = true);
+=======
+	/**
+	 * Add or update a user who has already been authenticated
+	 * @param AuthenticatedUser $user
+	 * @param bool $insertOnly
+	 * @return void
+	 */
+	public function Synchronize(AuthenticatedUser $user, $insertOnly = false);
+>>>>>>> old/master
 }

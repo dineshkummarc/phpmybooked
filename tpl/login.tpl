@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -25,6 +29,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 		</div>
 	{/if}
 
+<<<<<<< HEAD
     {if $EnableCaptcha}
         {validation_group class="alert alert-danger"}
         {validator id="captcha" key="CaptchaMustMatch"}
@@ -46,6 +51,16 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 				<div class="col-xs-12 login-icon">
 					{html_image src="$LogoUrl?2.6" alt="$Title"}
 				</div>
+=======
+	<div class="col-md-offset-3 col-md-6 col-xs-12 ">
+		<div id="login-header" class="default-box-header">
+			<span class="sign-in">{translate key=SignIn}</span>
+
+		</div>
+		<form role="form" name="login" id="login" class="form-horizontal" method="post"
+			  action="{$smarty.server.SCRIPT_NAME}">
+			<div id="login-box" class="col-xs-12 default-box straight-top">
+>>>>>>> old/master
 				{if $ShowUsernamePrompt}
 					<div class="col-xs-12">
 						<div class="input-group margin-bottom-25">
@@ -70,6 +85,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 					</div>
 				{/if}
 
+<<<<<<< HEAD
                 {if $EnableCaptcha}
                     <div class="col-xs-12">
                         <div class="margin-bottom-25">
@@ -81,21 +97,30 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                 {/if}
 
 				{if $ShowUsernamePrompt &&  $ShowPasswordPrompt}
+=======
+>>>>>>> old/master
 				<div class="col-xs-12">
 					<button type="submit" class="btn btn-large btn-primary  btn-block" name="{Actions::LOGIN}"
 							value="submit">{translate key='LogIn'}</button>
 					<input type="hidden" {formname key=RESUME} value="{$ResumeUrl}"/>
 				</div>
+<<<<<<< HEAD
 				{/if}
 
 				{if $ShowUsernamePrompt &&  $ShowPasswordPrompt}
+=======
+
+>>>>>>> old/master
 				<div class="col-xs-12 {if $ShowRegisterLink}col-sm-6{/if}">
 					<div class="checkbox">
 						<input id="rememberMe" type="checkbox" {formname key=PERSIST_LOGIN}>
 						<label for="rememberMe">{translate key=RememberMe}</label>
 					</div>
 				</div>
+<<<<<<< HEAD
 				{/if}
+=======
+>>>>>>> old/master
 
                 {if $ShowRegisterLink}
                     <div class="col-xs-12 col-sm-6 register">
@@ -106,6 +131,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                     </div>
                 {/if}
 
+<<<<<<< HEAD
 				<div class="clearfix"></div>
 
 				{if $AllowGoogleLogin && $AllowFacebookLogin}
@@ -124,6 +150,17 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 				{if $AllowFacebookLogin}
 					<div class="{$socialClass} social-login" id="socialLoginFacebook">
 						<a href="https://www.social.twinkletoessoftware.com/fblogin.php?protocol={$Protocol}&resume={$ScriptUrlNoProtocol}/external-auth.php%3Ftype%3Dfb%26redirect%3D{$ResumeUrl}">
+=======
+				{if $AllowSocialLogin}
+					<div class="col-lg-6 col-md-12">
+						<a href="https://accounts.google.com/o/oauth2/v2/auth?scope=email%20profile&state={$GoogleState}&redirect_uri=http://www.social.twinkletoessoftware.com/googleresume.php&response_type=code&client_id=531675809673-3sfvrchh6svd9bfl7m55dao8n4s6cqpc.apps.googleusercontent.com"
+						   class="pull-left-lg">
+							<img src="img/external/btn_google_signin_dark_normal_web.png" alt="Sign in with Google"/>
+						</a>
+					</div>
+					<div class="col-lg-6 col-md-12">
+						<a href="http://www.social.twinkletoessoftware.com/fblogin.php?protocol={$Protocol}&resume={$ScriptUrlNoProtocol}/external-auth.php%3Ftype%3Dfb" class="pull-right-lg">
+>>>>>>> old/master
 							<img style="max-height:42px" src="img/external/btn_facebook_login.png" alt="Sign in with Facebook"/>
 						</a>
 					</div>
@@ -156,8 +193,11 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
 {setfocus key='EMAIL'}
 
+<<<<<<< HEAD
 {include file="javascript-includes.tpl"}
 
+=======
+>>>>>>> old/master
 <script type="text/javascript">
 	var url = 'index.php?{QueryStringKeys::LANGUAGE}=';
 	$(document).ready(function () {
@@ -169,6 +209,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
 		if (!langCode)
 		{
+<<<<<<< HEAD
 			langCode = (navigator.language+"").replace("-", "_").toLowerCase();
 
 			var availableLanguages = [{foreach from=$Languages item=lang}"{$lang->GetLanguageCode()}",{/foreach}];
@@ -182,3 +223,9 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 	});
 </script>
 {include file='globalfooter.tpl'}
+=======
+		}
+	});
+</script>
+{include file='globalfooter.tpl'}
+>>>>>>> old/master

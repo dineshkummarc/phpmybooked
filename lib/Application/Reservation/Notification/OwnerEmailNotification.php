@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,12 +30,20 @@ abstract class OwnerEmailNotification implements IReservationNotification
 	/**
 	 * @var IUserRepository
 	 */
+<<<<<<< HEAD
 	protected $_userRepo;
+=======
+	private $_userRepo;
+>>>>>>> old/master
 
 	/**
 	 * @var IAttributeRepository
 	 */
+<<<<<<< HEAD
     protected $_attributeRepo;
+=======
+	private $_attributeRepo;
+>>>>>>> old/master
 
 	/**
 	 * @param IUserRepository $userRepo
@@ -52,7 +64,11 @@ abstract class OwnerEmailNotification implements IReservationNotification
 		$owner = $this->_userRepo->LoadById($reservation->UserId());
 		if ($this->ShouldSend($owner))
 		{
+<<<<<<< HEAD
 			$message = $this->GetMessage($owner, $reservation, $this->_attributeRepo, $this->_userRepo);
+=======
+			$message = $this->GetMessage($owner, $reservation, $this->_attributeRepo);
+>>>>>>> old/master
 			ServiceLocator::GetEmailService()->Send($message);
 		}
 		else
@@ -70,12 +86,20 @@ abstract class OwnerEmailNotification implements IReservationNotification
 
 	/**
 	 * @param User $owner
+<<<<<<< HEAD
 	 * @param ReservationSeries|ExistingReservationSeries $reservation
 	 * @param IAttributeRepository $attributeRepo
      * @param IUserRepository $userRepository
 	 * @return EmailMessage
 	 */
 	protected abstract function GetMessage(User $owner, $reservation, IAttributeRepository $attributeRepo, IUserRepository $userRepository);
+=======
+	 * @param ReservationSeries $reservation
+	 * @param IAttributeRepository $attributeRepo
+	 * @return EmailMessage
+	 */
+	protected abstract function GetMessage(User $owner, ReservationSeries $reservation, IAttributeRepository $attributeRepo);
+>>>>>>> old/master
 }
 
 class OwnerEmailCreatedNotification extends OwnerEmailNotification
@@ -85,9 +109,15 @@ class OwnerEmailCreatedNotification extends OwnerEmailNotification
 		return $owner->WantsEventEmail(new ReservationCreatedEvent());
 	}
 
+<<<<<<< HEAD
 	protected function GetMessage(User $owner, $reservation, IAttributeRepository $attributeRepository, IUserRepository $userRepository)
 	{
 		return new ReservationCreatedEmail($owner, $reservation, null, $attributeRepository, $userRepository);
+=======
+	protected function GetMessage(User $owner, ReservationSeries $reservation, IAttributeRepository $attributeRepository)
+	{
+		return new ReservationCreatedEmail($owner, $reservation, null, $attributeRepository);
+>>>>>>> old/master
 	}
 }
 
@@ -98,9 +128,15 @@ class OwnerEmailUpdatedNotification extends OwnerEmailNotification
 		return $owner->WantsEventEmail(new ReservationUpdatedEvent());
 	}
 
+<<<<<<< HEAD
 	protected function GetMessage(User $owner, $reservation, IAttributeRepository $attributeRepository, IUserRepository $userRepository)
 	{
 		return new ReservationUpdatedEmail($owner, $reservation, null, $attributeRepository, $userRepository);
+=======
+	protected function GetMessage(User $owner, ReservationSeries $reservation, IAttributeRepository $attributeRepository)
+	{
+		return new ReservationUpdatedEmail($owner, $reservation, null, $attributeRepository);
+>>>>>>> old/master
 	}
 }
 
@@ -115,9 +151,15 @@ class OwnerEmailApprovedNotification extends OwnerEmailNotification
 		return $owner->WantsEventEmail(new ReservationApprovedEvent());
 	}
 
+<<<<<<< HEAD
 	protected function GetMessage(User $owner, $reservation, IAttributeRepository $attributeRepository, IUserRepository $userRepository)
 	{
 		return new ReservationApprovedEmail($owner, $reservation, null, $attributeRepository, $userRepository);
+=======
+	protected function GetMessage(User $owner, ReservationSeries $reservation, IAttributeRepository $attributeRepository)
+	{
+		return new ReservationApprovedEmail($owner, $reservation, null, $attributeRepository);
+>>>>>>> old/master
 	}
 }
 
@@ -132,8 +174,14 @@ class OwnerEmailDeletedNotification extends OwnerEmailNotification
         return $owner->WantsEventEmail(new ReservationDeletedEvent());
     }
 
+<<<<<<< HEAD
     protected function GetMessage(User $owner, $reservation, IAttributeRepository $attributeRepository, IUserRepository $userRepository)
     {
         return new ReservationDeletedEmail($owner, $reservation, null, $attributeRepository, $userRepository);
+=======
+    protected function GetMessage(User $owner, ReservationSeries $reservation, IAttributeRepository $attributeRepository)
+    {
+        return new ReservationDeletedEmail($owner, $reservation, null, $attributeRepository);
+>>>>>>> old/master
     }
 }

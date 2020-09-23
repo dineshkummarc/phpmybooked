@@ -40,6 +40,7 @@ class ShibbolethUser {
      */
     private $_phone;
 
+<<<<<<< HEAD
 
     /**
      * The user's organization.
@@ -47,6 +48,8 @@ class ShibbolethUser {
      */
     private $_organization;
 
+=======
+>>>>>>> old/master
     /**
      * Constructor.
      * Populates the object's members with given values.
@@ -61,7 +64,10 @@ class ShibbolethUser {
         $this->_lastname = $this->GetValue($values, $config[ShibbolethConfig::LASTNAME]);
         $this->_email = $this->GetValue($values, $config[ShibbolethConfig::EMAIL]);
         $this->_phone = $this->GetValue($values, $config[ShibbolethConfig::PHONE]);
+<<<<<<< HEAD
         $this->_organization = $this->GetValue($values, $config[ShibbolethConfig::ORGANIZATION]);
+=======
+>>>>>>> old/master
     }
 
     /**
@@ -105,6 +111,7 @@ class ShibbolethUser {
     }
 
     /**
+<<<<<<< HEAD
      * Retrieves the user's organization.
      * @return string|null
      */
@@ -113,6 +120,8 @@ class ShibbolethUser {
     }
 
     /**
+=======
+>>>>>>> old/master
      * Retrieves a value from a given map by a given key.
      *
      * @param array $values A map of key/value pairs.

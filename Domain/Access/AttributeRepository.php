@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2012-2020 Nick Korbel
+=======
+ * Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -111,7 +115,11 @@ class AttributeRepository implements IAttributeRepository
 			}
 
 			$this->cache->Add($category, $attributes);
+<<<<<<< HEAD
 			$reader->Free();
+=======
+
+>>>>>>> old/master
 		}
 
 		return $this->cache->Get($category);
@@ -131,7 +139,10 @@ class AttributeRepository implements IAttributeRepository
 			$attribute = CustomAttribute::FromRow($row);
 		}
 
+<<<<<<< HEAD
 		$reader->Free();
+=======
+>>>>>>> old/master
 		return $attribute;
 	}
 
@@ -190,14 +201,24 @@ class AttributeRepository implements IAttributeRepository
 					$row[ColumnNames::ATTRIBUTE_VALUE]);
 		}
 
+<<<<<<< HEAD
 		$reader->Free();
+=======
+>>>>>>> old/master
 		return $values;
 	}
 
 	public function DeleteById($attributeId)
 	{
+<<<<<<< HEAD
 		ServiceLocator::GetDatabase()->Execute(new DeleteAttributeCommand($attributeId));
 		ServiceLocator::GetDatabase()->Execute(new DeleteAttributeValuesCommand($attributeId));
 		ServiceLocator::GetDatabase()->Execute(new DeleteAttributeColorRulesCommand($attributeId));
+=======
+		ServiceLocator::GetDatabase()
+					  ->Execute(new DeleteAttributeCommand($attributeId));
+		ServiceLocator::GetDatabase()
+					  ->Execute(new DeleteAttributeValuesCommand($attributeId));
+>>>>>>> old/master
 	}
 }

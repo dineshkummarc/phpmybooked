@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2017-2020 Nick Korbel
+=======
+ * Copyright 2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -73,6 +77,7 @@ class CustomAttributeRequest extends JsonRequest
 	 */
 	public $isPrivate;
 
+<<<<<<< HEAD
     /**
      * @var int|null
      */
@@ -83,6 +88,8 @@ class CustomAttributeRequest extends JsonRequest
      */
     public $secondaryEntityIds;
 
+=======
+>>>>>>> old/master
 	/**
 	 * @return ExampleCustomAttributeRequest
 	 */
@@ -97,8 +104,23 @@ class ExampleCustomAttributeRequest extends CustomAttributeRequest
 	public function __construct()
 	{
 		$this->label = 'attribute name';
+<<<<<<< HEAD
 		$this->type = 1;
 		$this->categoryId = 1;
+=======
+		$this->type = sprintf('Allowed values for type: %s (checkbox), %s (multi line), %s (select list), %s (single line)',
+										CustomAttributeTypes::CHECKBOX,
+										CustomAttributeTypes::MULTI_LINE_TEXTBOX,
+										CustomAttributeTypes::SELECT_LIST,
+										CustomAttributeTypes::SINGLE_LINE_TEXTBOX);
+
+		$this->categoryId = sprintf('Allowed values for category: %s (reservation), %s (resource), %s (resource type), %s (user)',
+										CustomAttributeCategory::RESERVATION,
+										CustomAttributeCategory::RESOURCE,
+										CustomAttributeCategory::RESOURCE_TYPE,
+										CustomAttributeCategory::USER);
+
+>>>>>>> old/master
 		$this->regex = 'validation regex';
 		$this->required = true;
 		$this->possibleValues = array('possible','values','only valid for select list');
@@ -106,7 +128,10 @@ class ExampleCustomAttributeRequest extends CustomAttributeRequest
 		$this->appliesToIds = array(10);
 		$this->adminOnly = true;
 		$this->isPrivate = true;
+<<<<<<< HEAD
 		$this->secondaryCategoryId = 1;
 		$this->secondaryEntityIds = array(1,2);
+=======
+>>>>>>> old/master
 	}
 }

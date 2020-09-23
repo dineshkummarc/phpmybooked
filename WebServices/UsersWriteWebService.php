@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2013-2020 Nick Korbel
+=======
+Copyright 2013-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -20,9 +24,14 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
 require_once(ROOT_DIR . 'lib/WebService/namespace.php');
 require_once(ROOT_DIR . 'WebServices/Controllers/UserSaveController.php');
+<<<<<<< HEAD
 require_once(ROOT_DIR . 'WebServices/Requests/User/CreateUserRequest.php');
 require_once(ROOT_DIR . 'WebServices/Requests/User/UpdateUserRequest.php');
 require_once(ROOT_DIR . 'WebServices/Requests/User/UpdateUserPasswordRequest.php');
+=======
+require_once(ROOT_DIR . 'WebServices/Requests/CreateUserRequest.php');
+require_once(ROOT_DIR . 'WebServices/Requests/UpdateUserRequest.php');
+>>>>>>> old/master
 require_once(ROOT_DIR . 'WebServices/Responses/UserCreatedResponse.php');
 require_once(ROOT_DIR . 'WebServices/Responses/UserUpdatedResponse.php');
 
@@ -139,6 +148,7 @@ class UsersWriteWebService
 										 RestResponse::BAD_REQUEST_CODE);
 		}
 	}
+<<<<<<< HEAD
 
     /**
      * @name UpdatePassword
@@ -172,5 +182,7 @@ class UsersWriteWebService
                 RestResponse::BAD_REQUEST_CODE);
         }
     }
+=======
+>>>>>>> old/master
 }
 

@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -24,18 +28,24 @@ require_once(ROOT_DIR . 'Presenters/ActionPresenter.php');
 require_once(ROOT_DIR . 'lib/Application/Admin/namespace.php');
 require_once(ROOT_DIR . 'lib/Application/Attributes/namespace.php');
 require_once(ROOT_DIR . 'lib/Application/Reservation/namespace.php');
+<<<<<<< HEAD
 require_once(ROOT_DIR . 'lib/Application/Admin/ReservationImportCsv.php');
 require_once(ROOT_DIR . 'lib/Application/Admin/CsvImportResult.php');
 require_once(ROOT_DIR . 'lib/FileSystem/namespace.php');
+=======
+>>>>>>> old/master
 
 class ManageReservationsActions
 {
     const UpdateAttribute = 'updateAttribute';
     const ChangeStatus = 'changeStatus';
+<<<<<<< HEAD
     const Import = 'Import';
     const DeleteMultiple = 'DeleteMultiple';
     const UpdateTermsOfService = 'termsOfService';
     const DeleteTermsOfService = 'deleteTerms';
+=======
+>>>>>>> old/master
 }
 
 class ManageReservationsPresenter extends ActionPresenter
@@ -70,19 +80,26 @@ class ManageReservationsPresenter extends ActionPresenter
      */
     private $userRepository;
 
+<<<<<<< HEAD
     /**
      * @var ITermsOfServiceRepository
      */
     private $termsOfServiceRepository;
 
+=======
+>>>>>>> old/master
     public function __construct(
         IManageReservationsPage $page,
         IManageReservationsService $manageReservationsService,
         IScheduleRepository $scheduleRepository,
         IResourceRepository $resourceRepository,
         IAttributeService $attributeService,
+<<<<<<< HEAD
         IUserRepository $userRepository,
         ITermsOfServiceRepository $termsOfServiceRepository)
+=======
+        IUserRepository $userRepository)
+>>>>>>> old/master
     {
         parent::__construct($page);
 
@@ -92,6 +109,7 @@ class ManageReservationsPresenter extends ActionPresenter
         $this->resourceRepository = $resourceRepository;
         $this->attributeService = $attributeService;
         $this->userRepository = $userRepository;
+<<<<<<< HEAD
         $this->termsOfServiceRepository = $termsOfServiceRepository;
 
         $this->AddAction(ManageReservationsActions::UpdateAttribute, 'UpdateAttribute');
@@ -100,6 +118,11 @@ class ManageReservationsPresenter extends ActionPresenter
         $this->AddAction(ManageReservationsActions::DeleteMultiple, 'DeleteMultiple');
         $this->AddAction(ManageReservationsActions::UpdateTermsOfService, 'UpdateTermsOfService');
         $this->AddAction(ManageReservationsActions::DeleteTermsOfService, 'DeleteTermsOfService');
+=======
+
+        $this->AddAction(ManageReservationsActions::UpdateAttribute, 'UpdateAttribute');
+        $this->AddAction(ManageReservationsActions::ChangeStatus, 'UpdateResourceStatus');
+>>>>>>> old/master
     }
 
     public function PageLoad($userTimezone)
@@ -132,10 +155,13 @@ class ManageReservationsPresenter extends ActionPresenter
         $referenceNumber = $this->page->GetReferenceNumber();
         $resourceStatusId = $this->page->GetResourceStatusFilterId();
         $resourceReasonId = $this->page->GetResourceStatusReasonFilterId();
+<<<<<<< HEAD
         $title = $this->page->GetResourceFilterTitle();
         $description = $this->page->GetResourceFilterDescription();
         $missedCheckin = $this->page->GetMissedCheckin();
         $missedCheckout = $this->page->GetMissedCheckout();
+=======
+>>>>>>> old/master
 
         if (!$this->page->FilterButtonPressed()) {
             // Get filter settings from db
@@ -147,10 +173,13 @@ class ManageReservationsPresenter extends ActionPresenter
             $reservationStatusId = $filterPreferences->GetFilterReservationStatusId();
             $resourceStatusId = $filterPreferences->GetFilterResourceStatusId();
             $resourceReasonId = $filterPreferences->GetFilterResourceReasonId();
+<<<<<<< HEAD
             $title = $filterPreferences->GetFilterTitle();
             $description = $filterPreferences->GetFilterDescription();
             $missedCheckin = $filterPreferences->GetMissedCheckin();
             $missedCheckout = $filterPreferences->GetMissedCheckout();
+=======
+>>>>>>> old/master
             $filters = $filterPreferences->GetFilterCustomAttributes();
         }
         else {
@@ -173,10 +202,13 @@ class ManageReservationsPresenter extends ActionPresenter
             $filterPreferences->SetFilterReservationStatusId($reservationStatusId);
             $filterPreferences->SetFilterResourceStatusId($resourceStatusId);
             $filterPreferences->SetFilterResourceReasonId($resourceReasonId);
+<<<<<<< HEAD
             $filterPreferences->SetFilterTitle($title);
             $filterPreferences->SetFilterDescription($description);
             $filterPreferences->SetFilterMissedCheckin($missedCheckin);
             $filterPreferences->SetFilterMissedCheckout($missedCheckout);
+=======
+>>>>>>> old/master
             $filterPreferences->SetFilterCustomAttributes($filters);
 
             $filterPreferences->Update();
@@ -205,6 +237,7 @@ class ManageReservationsPresenter extends ActionPresenter
         $this->page->SetResourceStatusReasonFilterId($resourceReasonId);
         $this->page->SetAttributeFilters($attributeFilters);
         $this->page->SetReservationAttributes($reservationAttributes);
+<<<<<<< HEAD
         $this->page->SetReservationTitle($title);
         $this->page->SetReservationDescription($description);
         $this->page->SetMissedCheckin($missedCheckin);
@@ -213,6 +246,11 @@ class ManageReservationsPresenter extends ActionPresenter
         $filter = new ReservationFilter($startDate, $endDate, $referenceNumber, $scheduleId, $resourceId, $userId,
             $reservationStatusId, $resourceStatusId, $resourceReasonId, $attributeFilters, $title, $description,
             $missedCheckin, $missedCheckout);
+=======
+
+        $filter = new ReservationFilter($startDate, $endDate, $referenceNumber, $scheduleId, $resourceId, $userId,
+            $reservationStatusId, $resourceStatusId, $resourceReasonId, $attributeFilters);
+>>>>>>> old/master
 
         $reservations = $this->manageReservationsService->LoadFiltered($this->page->GetPageNumber(),
             $this->page->GetPageSize(),
@@ -332,6 +370,7 @@ class ManageReservationsPresenter extends ActionPresenter
                 ServiceLocator::GetServer()->GetUserSession());
             $this->page->SetReservationJson($rv);
         }
+<<<<<<< HEAD
         elseif ($dataRequest == 'template') {
             $attributes = $this->attributeService->GetByCategory(CustomAttributeCategory::RESERVATION);
             $importAttributes = array();
@@ -358,6 +397,8 @@ class ManageReservationsPresenter extends ActionPresenter
             }
         }
 
+=======
+>>>>>>> old/master
     }
 
     public function UpdateAttribute()
@@ -389,6 +430,7 @@ class ManageReservationsPresenter extends ActionPresenter
         return new AttributeValue($id, $value);
     }
 
+<<<<<<< HEAD
     public function ImportReservations()
     {
         $userSession = ServiceLocator::GetServer()->GetUserSession();
@@ -536,6 +578,8 @@ class ManageReservationsPresenter extends ActionPresenter
             $this->page->RegisterValidator('fileExtensionValidator', new FileExtensionValidator('csv', $this->page->GetImportFile()));
         }
     }
+=======
+>>>>>>> old/master
 }
 
 class ReservationFilterPreferences
@@ -551,10 +595,13 @@ class ReservationFilterPreferences
     private $FilterResourceStatusId = '';
     private $FilterResourceReasonId = '';
     private $FilterCustomAttributes = '';
+<<<<<<< HEAD
     private $FilterTitle = '';
     private $FilterDescription = '';
     private $FilterMissedCheckin = 0;
     private $FilterMissedCheckout = 0;
+=======
+>>>>>>> old/master
 
     /**
      * @var User
@@ -621,6 +668,7 @@ class ReservationFilterPreferences
         return $this->FilterResourceReasonId;
     }
 
+<<<<<<< HEAD
     public function GetFilterTitle()
     {
         return $this->FilterTitle;
@@ -641,6 +689,8 @@ class ReservationFilterPreferences
         return $this->FilterMissedCheckout;
     }
 
+=======
+>>>>>>> old/master
     public function SetFilterStartDateDelta($FilterStartDateDelta)
     {
         $this->FilterStartDateDelta = $FilterStartDateDelta;
@@ -703,6 +753,7 @@ class ReservationFilterPreferences
         $this->FilterResourceReasonId = $reasonId;
     }
 
+<<<<<<< HEAD
     public function SetFilterTitle($title)
     {
         $this->FilterTitle = $title;
@@ -723,6 +774,8 @@ class ReservationFilterPreferences
         $this->FilterMissedCheckout = intval($missed);
     }
 
+=======
+>>>>>>> old/master
     /**
      * @return array
      */
@@ -754,10 +807,13 @@ class ReservationFilterPreferences
         'FilterResourceStatusId' => '',
         'FilterResourceReasonId' => '',
         'FilterCustomAttributes' => '',
+<<<<<<< HEAD
         'FilterTitle' => '',
         'FilterDescription' => '',
         'FilterMissedCheckin' => 0,
         'FilterMissedCheckout' => 0,
+=======
+>>>>>>> old/master
     );
 
 

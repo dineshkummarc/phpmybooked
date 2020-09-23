@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -23,5 +27,9 @@ define('ROOT_DIR', '../../');
 require_once(ROOT_DIR . 'Pages/Admin/ManageResourceGroupsPage.php');
 require_once(ROOT_DIR . 'Presenters/Admin/ManageResourceGroupsPresenter.php');
 
+<<<<<<< HEAD
 $page = new RoleRestrictedPageDecorator(new ManageResourceGroupsPage(), array(RoleLevel::APPLICATION_ADMIN, RoleLevel::SCHEDULE_ADMIN, RoleLevel::RESOURCE_ADMIN));
+=======
+$page = new AdminPageDecorator(new ManageResourceGroupsPage());
+>>>>>>> old/master
 $page->PageLoad();

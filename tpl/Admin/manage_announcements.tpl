@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -26,6 +30,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 			<div class="panel-heading">{translate key="AddAnnouncement"} {showhide_icon}</div>
 			<div class="panel-body add-contents">
 				<div id="addResults" class="error no-show"></div>
+<<<<<<< HEAD
                 <div>
 				<div class="form-group col-xs-12">
 					<label for="addAnnouncement">{translate key='Announcement'} <i class="glyphicon glyphicon-asterisk form-control-feedback"></i></label>
@@ -33,15 +38,28 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 				</div>
                 </div>
 				<div class="form-group col-sm-3 col-xs-6">
+=======
+				<div class="form-group has-feedback">
+					<label for="addAnnouncement">{translate key='Announcement'}</label>
+					<textarea class="form-control required" rows="1" {formname key=ANNOUNCEMENT_TEXT} id="addAnnouncement"></textarea>
+					<i class="glyphicon glyphicon-asterisk form-control-feedback" data-bv-icon-for="addAnnouncement"></i>
+				</div>
+				<div class="form-group">
+>>>>>>> old/master
 					<label for="BeginDate">{translate key='BeginDate'}</label>
 					<input type="text" id="BeginDate" class="form-control" {formname key=ANNOUNCEMENT_START} />
 					<input type="hidden" id="formattedBeginDate" {formname key=ANNOUNCEMENT_START} />
 				</div>
+<<<<<<< HEAD
 				<div class="form-group col-sm-3 col-xs-6">
+=======
+				<div class="form-group">
+>>>>>>> old/master
 					<label for="EndDate">{translate key='EndDate'}</label>
 					<input type="text" id="EndDate" class="form-control" {formname key=ANNOUNCEMENT_END} />
 					<input type="hidden" id="formattedEndDate" {formname key=ANNOUNCEMENT_END} />
 				</div>
+<<<<<<< HEAD
 				<div class="form-group col-sm-3 col-xs-6">
 					<label for="addPriority">{translate key='Priority'}</label>
 					<input type="number" min="0" step="1" class="form-control" {formname key=ANNOUNCEMENT_PRIORITY} id="addPriority" />
@@ -81,6 +99,37 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                     </div>
                 </div>
 
+=======
+				<div class="form-group">
+					<label for="addPriority">{translate key='Priority'}</label>
+					<input type="number" min="0" step="1" class="form-control" {formname key=ANNOUNCEMENT_PRIORITY} id="addPriority" />
+				</div>
+				<div><a href="#" data-toggle="collapse" data-target="#advancedAnnouncementOptions">{translate key=MoreOptions} &raquo;</a></div>
+				<div id="advancedAnnouncementOptions" class="collapse">
+					<div class="form-group col-xs-12 col-md-6">
+						<label for="announcementGroups" class="no-show">{translate key=UsersInGroups}</label>
+						<select id="announcementGroups" class="form-control" multiple="multiple" style="width:100%" {formname key=FormKeys::GROUP_ID multi=true}>
+							{foreach from=$Groups item=group}
+								<option value="{$group->Id}">{$group->Name}</option>
+							{/foreach}
+						</select>
+					</div>
+					<div class="form-group col-xs-12 col-md-6">
+						<label for="resourceGroups" class="no-show">{translate key=UsersWithAccessToResources}</label>
+						<select id="resourceGroups" class="form-control" multiple="multiple" style="width:100%" {formname key=RESOURCE_ID multi=true}>
+							{foreach from=$Resources item=resource}
+								<option value="{$resource->GetId()}">{$resource->GetName()}</option>
+							{/foreach}
+						</select>
+					</div>
+					<div class="form-group col-xs-12">
+						<div class="checkbox no-padding-left">
+							<input type="checkbox" id="sendAsEmail" {formname key=FormKeys::SEND_AS_EMAIL} />
+							<label for="sendAsEmail">{translate key=SendAsEmail}</label>
+						</div>
+					</div>
+				</div>
+>>>>>>> old/master
 			</div>
 			<div class="panel-footer">
 			 	{add_button class="btn-sm"}
@@ -99,7 +148,10 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 			<th>{sort_column key=EndDate field=ColumnNames::ANNOUNCEMENT_END}</th>
 			<th>{translate key='Groups'}</th>
 			<th>{translate key='Resources'}</th>
+<<<<<<< HEAD
 			<th>{translate key='DisplayPage'}</th>
+=======
+>>>>>>> old/master
 			<th class="action">{translate key='Actions'}</th>
 		</tr>
 		</thead>
@@ -113,6 +165,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 				<td class="announcementEnd">{formatdate date=$announcement->End()->ToTimezone($timezone)}</td>
 				<td class="announcementGroups">{foreach from=$announcement->GroupIds() item=groupId}{$Groups[$groupId]->Name} {/foreach}</td>
 				<td class="announcementResources">{foreach from=$announcement->ResourceIds() item=resourceId}{$Resources[$resourceId]->GetName()} {/foreach}</td>
+<<<<<<< HEAD
 				<td class="announcementDisplayPage">{translate key={Pages::NameFromId($announcement->DisplayPage())}}</td>
 				<td class="action announcementActions">
 					<a href="#" title="{translate key=Edit}" class="update edit"><span class="fa fa-pencil-square-o icon"></a> |
@@ -120,6 +173,12 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                     <a href="#" title="{translate key=Email}" class="update sendEmail"><span class="fa fa-envelope-o icon"></a> |
                     {/if}
                     <a href="#" title="{translate key=Delete}" class="update delete"><span class="fa fa-trash icon remove"></span></a>
+=======
+				<td class="action announcementActions">
+					<a href="#" title="{translate key=Edit}" class="update edit"><span class="fa fa-pencil-square-o icon"></a> |
+					<a href="#" title="{translate key=Email}" class="update sendEmail"><span class="fa fa-envelope-o icon"></a> |
+					<a href="#" title="{translate key=Delete}" class="update delete"><span class="fa fa-trash icon remove"></span></a>
+>>>>>>> old/master
 				</td>
 			</tr>
 		{/foreach}
@@ -179,7 +238,11 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 							<label for="editPriority">{translate key='Priority'}</label> <br/>
 							<input type="number" min="0" step="1" id="editPriority" class="form-control" {formname key=ANNOUNCEMENT_PRIORITY} />
 						</div>
+<<<<<<< HEAD
 						<div class="form-group" id="editUserGroupsDiv">
+=======
+						<div class="form-group">
+>>>>>>> old/master
 							<label for="editUserGroups" class="no-show">{translate key=UsersInGroups}</label>
 							<select id="editUserGroups" class="form-control" multiple="multiple" style="width:100%" {formname key=FormKeys::GROUP_ID multi=true}>
 								{foreach from=$Groups item=group}
@@ -187,7 +250,11 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 								{/foreach}
 							</select>
 						</div>
+<<<<<<< HEAD
 						<div class="form-group" id="editResourceGroupsDiv">
+=======
+						<div class="form-group">
+>>>>>>> old/master
 							<label for="editResourceGroups" class="no-show">{translate key=UsersWithAccessToResources}</label>
 							<select id="editResourceGroups" class="form-control" multiple="multiple" style="width:100%" {formname key=RESOURCE_ID multi=true}>
 								{foreach from=$Resources item=resource}
@@ -227,7 +294,10 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 		</div>
 	</div>
 
+<<<<<<< HEAD
     {include file="javascript-includes.tpl" Select2=true}
+=======
+>>>>>>> old/master
 	{control type="DatePickerSetupControl" ControlId="BeginDate" AltId="formattedBeginDate"}
 	{control type="DatePickerSetupControl" ControlId="EndDate" AltId="formattedEndDate"}
 	{control type="DatePickerSetupControl" ControlId="editBegin" AltId="formattedEditBegin"}
@@ -267,8 +337,12 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 					'{formatdate date=$announcement->End()->ToTimezone($timezone)}',
 					'{$announcement->Priority()}',
 					[{foreach from=$announcement->GroupIds() item=id}{$id},{/foreach}],
+<<<<<<< HEAD
 					[{foreach from=$announcement->ResourceIds() item=id}{$id},{/foreach}],
                     {$announcement->DisplayPage()}
+=======
+					[{foreach from=$announcement->ResourceIds() item=id}{$id},{/foreach}]
+>>>>>>> old/master
 			);
 			{/foreach}
 

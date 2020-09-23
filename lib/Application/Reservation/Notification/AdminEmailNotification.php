@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,17 +28,29 @@ abstract class AdminEmailNotification implements IReservationNotification
 	/**
 	 * @var IUserRepository
 	 */
+<<<<<<< HEAD
 	protected $userRepo;
+=======
+	private $userRepo;
+>>>>>>> old/master
 
 	/**
 	 * @var IUserViewRepository
 	 */
+<<<<<<< HEAD
     protected $userViewRepo;
+=======
+	private $userViewRepo;
+>>>>>>> old/master
 
 	/**
 	 * @var IAttributeRepository
 	 */
+<<<<<<< HEAD
     protected $attributeRepository;
+=======
+	protected $attributeRepository;
+>>>>>>> old/master
 
 	/**
 	 * @param IUserRepository $userRepo
@@ -99,6 +115,7 @@ abstract class AdminEmailNotification implements IReservationNotification
 		}
 	}
 
+<<<<<<< HEAD
     /**
      * @param UserDto $admin
      * @param User $owner
@@ -106,6 +123,11 @@ abstract class AdminEmailNotification implements IReservationNotification
      * @param BookableResource $resource
      * @return IEmailMessage
      */
+=======
+	/**
+	 * @return IEmailMessage
+	 */
+>>>>>>> old/master
 	protected abstract function GetMessage($admin, $owner, $reservationSeries, $resource);
 
 	/**
@@ -131,7 +153,11 @@ class AdminEmailCreatedNotification extends AdminEmailNotification
 {
 	protected function GetMessage($admin, $owner, $reservationSeries, $resource)
 	{
+<<<<<<< HEAD
 		return new ReservationCreatedEmailAdmin($admin, $owner, $reservationSeries, $resource, $this->attributeRepository, $this->userRepo);
+=======
+		return new ReservationCreatedEmailAdmin($admin, $owner, $reservationSeries, $resource, $this->attributeRepository);
+>>>>>>> old/master
 	}
 
 	protected function SendForResourceAdmins(ReservationSeries $reservationSeries)
@@ -160,7 +186,11 @@ class AdminEmailUpdatedNotification extends AdminEmailNotification
 {
 	protected function GetMessage($admin, $owner, $reservationSeries, $resource)
 	{
+<<<<<<< HEAD
 		return new ReservationUpdatedEmailAdmin($admin, $owner, $reservationSeries, $resource, $this->attributeRepository, $this->userRepo);
+=======
+		return new ReservationUpdatedEmailAdmin($admin, $owner, $reservationSeries, $resource, $this->attributeRepository);
+>>>>>>> old/master
 	}
 
 	protected function SendForResourceAdmins(ReservationSeries $reservationSeries)
@@ -190,7 +220,11 @@ class AdminEmailDeletedNotification extends AdminEmailNotification
 {
 	protected function GetMessage($admin, $owner, $reservationSeries, $resource)
 	{
+<<<<<<< HEAD
 		return new ReservationDeletedEmailAdmin($admin, $owner, $reservationSeries, $resource, $this->attributeRepository, $this->userRepo);
+=======
+		return new ReservationDeletedEmailAdmin($admin, $owner, $reservationSeries, $resource, $this->attributeRepository);
+>>>>>>> old/master
 	}
 
 	protected function SendForResourceAdmins(ReservationSeries $reservationSeries)
@@ -220,7 +254,11 @@ class AdminEmailApprovalNotification extends AdminEmailNotification
 {
 	protected function GetMessage($admin, $owner, $reservationSeries, $resource)
 	{
+<<<<<<< HEAD
 		return new ReservationRequiresApprovalEmailAdmin($admin, $owner, $reservationSeries, $resource, $this->attributeRepository, $this->userRepo);
+=======
+		return new ReservationRequiresApprovalEmailAdmin($admin, $owner, $reservationSeries, $resource, $this->attributeRepository);
+>>>>>>> old/master
 	}
 
 	protected function SendForResourceAdmins(ReservationSeries $reservationSeries)

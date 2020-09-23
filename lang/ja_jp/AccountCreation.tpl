@@ -1,5 +1,9 @@
 {* -*-coding:utf-8-*-
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel, Paul Menchini
+=======
+Copyright 2011-2016 Nick Korbel, Paul Menchini
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 

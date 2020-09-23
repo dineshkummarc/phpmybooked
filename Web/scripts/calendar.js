@@ -1,6 +1,7 @@
 function Calendar(opts) {
     var _options = opts;
     var _fullCalendar;
+<<<<<<< HEAD
     var dateVar = null;
 
     var dayDialog = $('#dayDialog');
@@ -25,6 +26,12 @@ function Calendar(opts) {
             elements.loadingIndicator.addClass('no-show');
         }
 
+=======
+
+    var dayDialog = $('#dayDialog');
+
+    Calendar.prototype.init = function () {
+>>>>>>> old/master
         _fullCalendar = $('#calendar').fullCalendar({
             header: {
                 left: 'prev,next,today',
@@ -38,6 +45,10 @@ function Calendar(opts) {
                 day: _options.dayText
             },
             allDaySlot: false,
+<<<<<<< HEAD
+=======
+            editable: false,
+>>>>>>> old/master
             defaultView: _options.view,
             defaultDate: _options.defaultDate,
             eventSources: [{
@@ -46,6 +57,7 @@ function Calendar(opts) {
                 data: _options.eventsData
             }],
             eventRender: function (event, element, view) {
+<<<<<<< HEAD
                 if (!_.isEmpty(event.id)) {
                     element.attachReservationPopup(event.id);
                     var moment = view.start;
@@ -55,6 +67,9 @@ function Calendar(opts) {
                     var redirect = _options.returnTo + encodeURIComponent('?ct=' + view.name + '&start=' + moment.year() + '-' + (moment.month() + 1) + '-' + moment.date())
                     element.attr('href', event.url.replace('[redirect]', redirect));
                 }
+=======
+                element.attachReservationPopup(event.id);
+>>>>>>> old/master
             },
             dayClick: dayClick,
             dayNames: _options.dayNames,
@@ -63,6 +78,7 @@ function Calendar(opts) {
             monthNamesShort: _options.monthNamesShort,
             timeFormat: _options.timeFormat,
             firstDay: _options.firstDay,
+<<<<<<< HEAD
             views: {
                 agendaDay: {slotLabelFormat: _options.timeFormat},
                 agendaWeek: {slotLabelFormat: _options.timeFormat}
@@ -93,6 +109,15 @@ function Calendar(opts) {
                 elements.moveReferenceNumber.val(event.id);
                 elements.moveStartDate.val(event.start.format('YYYY-MM-DD HH:mm'));
                 ajaxPost(elements.moveReservationForm, _options.moveReservationUrl, showLoadingIndicator, handleMoveResponse);
+=======
+            loading: function (isLoading) {
+                if (isLoading) {
+                    $('#loadingIndicator').removeClass('no-show');
+                }
+                else {
+                    $('#loadingIndicator').addClass('no-show');
+                }
+>>>>>>> old/master
             }
         });
 
@@ -114,7 +139,10 @@ function Calendar(opts) {
         $('#calendarFilter').on('change', function () {
             var sid = '';
             var rid = '';
+<<<<<<< HEAD
             var gid = getQueryStringValue('gid');
+=======
+>>>>>>> old/master
 
             if ($(this).find(':selected').hasClass('schedule')) {
                 sid = $(this).val().replace('s', '');
@@ -126,12 +154,20 @@ function Calendar(opts) {
 
             _options.eventsData.sid = sid;
             _options.eventsData.rid = rid;
+<<<<<<< HEAD
             _options.eventsData.gid = gid;
             _options.dayClickUrl = _options.dayClickUrlTemplate.replace('[sid]', sid).replace('[rid]', rid).replace('[gid]', gid);
             _options.reservationUrl = _options.reservationUrlTemplate.replace('[sid]', sid).replace('[rid]', rid).replace('[gid]', gid);
             _fullCalendar.fullCalendar('refetchEvents');
 
             rebindSubscriptionData(rid, sid, gid);
+=======
+            _options.dayClickUrl = _options.dayClickUrlTemplate.replace('[sid]', sid).replace('[rid]', rid);
+            _options.reservationUrl = _options.reservationUrlTemplate.replace('[sid]', sid).replace('[rid]', rid);
+            _fullCalendar.fullCalendar('refetchEvents');
+
+            rebindSubscriptionData(rid, sid);
+>>>>>>> old/master
         });
 
         $('#subscriptionContainer').on('click', '#turnOffSubscription', function (e) {
@@ -142,7 +178,11 @@ function Calendar(opts) {
                 },
                 null,
                 function () {
+<<<<<<< HEAD
                     return rebindSubscriptionData('', '', '')
+=======
+                    return rebindSubscriptionData('', '')
+>>>>>>> old/master
                 }
             );
         });
@@ -154,7 +194,11 @@ function Calendar(opts) {
                 },
                 null,
                 function () {
+<<<<<<< HEAD
                     return rebindSubscriptionData('', '', '');
+=======
+                    return rebindSubscriptionData('', '')
+>>>>>>> old/master
                 }
             );
         });
@@ -190,6 +234,7 @@ function Calendar(opts) {
                 resourceGroupsContainer.data('positionSet', true);
                 resourceGroupsContainer.show();
             }
+<<<<<<< HEAD
         });
 
         elements.moveErrorOk.click(function(e) {
@@ -229,6 +274,9 @@ function Calendar(opts) {
             participantFilter.val('');
             _fullCalendar.fullCalendar('refetchEvents');
         });
+=======
+        })
+>>>>>>> old/master
     };
 
     Calendar.prototype.bindResourceGroups = function (resourceGroups, selectedNode) {
@@ -289,7 +337,11 @@ function Calendar(opts) {
 
             onCreateLi: function (node, $li) {
                 if (node.type == 'resource') {
+<<<<<<< HEAD
                     $li.addClass('group-resource');
+=======
+                    $li.addClass('group-resource')
+>>>>>>> old/master
                 }
             }
         });
@@ -313,6 +365,11 @@ function Calendar(opts) {
         }
     };
 
+<<<<<<< HEAD
+=======
+    var dateVar = null;
+
+>>>>>>> old/master
     var dayClick = function (date, jsEvent, view) {
         dateVar = date;
 
@@ -332,6 +389,11 @@ function Calendar(opts) {
                 at: 'left top',
                 of: jsEvent
             });
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> old/master
         }
     };
 
@@ -339,8 +401,13 @@ function Calendar(opts) {
         openNewReservation();
     };
 
+<<<<<<< HEAD
     var rebindSubscriptionData = function (rid, sid, gid) {
         var url = _options.getSubscriptionUrl + '&rid=' + rid + '&sid=' + sid + '&gid=' + gid;
+=======
+    var rebindSubscriptionData = function (rid, sid) {
+        var url = _options.getSubscriptionUrl + '&rid=' + rid + '&sid=' + sid;
+>>>>>>> old/master
         ajaxGet(url, function () {
         }, function (response) {
             $('#calendarSubscription').html(response);
@@ -356,6 +423,7 @@ function Calendar(opts) {
     };
 
     var openNewReservation = function () {
+<<<<<<< HEAD
         var view = _fullCalendar.fullCalendar('getView');
         var end = moment(dateVar).add(30, 'minutes');
         var year = dateVar.year();
@@ -367,6 +435,10 @@ function Calendar(opts) {
             "&ed=" + getUrlFormattedDate(end) +
             "&redirect=" + _options.returnTo + encodeURIComponent('?ct=' + view.name + '&start=' + year + '-' + month + '-' + day)
         ;
+=======
+        var end = dateVar.add(30, 'minutes');
+        var url = _options.reservationUrl + "&sd=" + getUrlFormattedDate(dateVar) + "&ed=" + getUrlFormattedDate(end);
+>>>>>>> old/master
 
         window.location = url;
     };
@@ -374,5 +446,10 @@ function Calendar(opts) {
     var getUrlFormattedDate = function (d) {
         var month = d.month() + 1;
         return encodeURI(d.year() + "-" + month + "-" + d.date() + " " + d.hour() + ":" + d.minute());
+<<<<<<< HEAD
     };
+=======
+    }
+
+>>>>>>> old/master
 }

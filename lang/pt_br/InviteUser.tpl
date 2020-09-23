@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -16,4 +20,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 *}
+<<<<<<< HEAD
 {$FullName} convidou vocï¿½ para registrar uma conta no sistema de reservas {$AppTitle}. Por favor, <a href="{$RegisterUrl}">registre sua conta</a>.
+=======
+{$FullName} convidou você para registrar uma conta no sistema de reservas {$AppTitle}. Por favor, <a href="{$RegisterUrl}">registre sua conta</a>.
+>>>>>>> old/master

@@ -1,7 +1,11 @@
 <?php
 /**
  * PHP LDAP CLASS FOR MANIPULATING ACTIVE DIRECTORY 
+<<<<<<< HEAD
  * Version 4.0.4
+=======
+ * Version 4.0.3
+>>>>>>> old/master
  * 
  * PHP Version 5 with SSL and LDAP support
  * 
@@ -9,7 +13,11 @@
  *   email: scott@wiggumworld.com, adldap@richardhyland.com
  *   http://adldap.sourceforge.net/
  * 
+<<<<<<< HEAD
  * Copyright (c) 2006-2012 Scott Barnett, Richard Hyland
+=======
+ * Copyright (c) 2006-2011 Scott Barnett, Richard Hyland
+>>>>>>> old/master
  * 
  * We'd appreciate any improvements or additions to be submitted back
  * to benefit the entire community :)
@@ -28,10 +36,17 @@
  * @package adLDAP
  * @subpackage Utils
  * @author Scott Barnett, Richard Hyland
+<<<<<<< HEAD
  * @copyright (c) 2006-2012 Scott Barnett, Richard Hyland
  * @license http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html LGPLv2.1
  * @revision $Revision: 97 $
  * @version 4.0.4
+=======
+ * @copyright (c) 2006-2011 Scott Barnett, Richard Hyland
+ * @license http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html LGPLv2.1
+ * @revision $Revision: 97 $
+ * @version 4.0.3
+>>>>>>> old/master
  * @link http://adldap.sourceforge.net/
  */
 require_once(dirname(__FILE__) . '/../adLDAP.php');
@@ -40,7 +55,11 @@ require_once(dirname(__FILE__) . '/../adLDAP.php');
 * UTILITY FUNCTIONS
 */
 class adLDAPUtils {
+<<<<<<< HEAD
     const ADLDAP_VERSION = '4.0.4';
+=======
+    const ADLDAP_VERSION = '4.0.3';
+>>>>>>> old/master
     
     /**
     * The current adLDAP connection via dependency injection
@@ -89,6 +108,7 @@ class adLDAPUtils {
         return $str;
     }
     
+<<<<<<< HEAD
     /**
     * Escape strings for the use in LDAP filters
     * 
@@ -108,6 +128,28 @@ class adLDAPUtils {
             }, $str
         );
     }
+=======
+	/**
+	* Escape strings for the use in LDAP filters
+	*
+	* DEVELOPERS SHOULD BE DOING PROPER FILTERING IF THEY'RE ACCEPTING USER INPUT
+	* Ported from Perl's Net::LDAP::Util escape_filter_value
+	*
+	* @param string $str The string the parse
+	* @author Port by Andreas Gohr <andi@splitbrain.org>
+	* @author Modified for PHP55 by Esteban Santana Santana <MentalPower@GMail.com>
+	* @return string
+	*/
+	public function ldapSlashes($str) {
+		return preg_replace_callback(
+			'/([\x00-\x1F\*\(\)\\\\])/',
+			function ($matches) {
+				return "\\".join("", unpack("H2", $matches[1]));
+			},
+			$str
+		);
+	}
+>>>>>>> old/master
     
     /**
     * Converts a string GUID to a hexdecimal value so it can be queried
@@ -259,7 +301,11 @@ class adLDAPUtils {
     * @param long $windowsTime
     * @return long $unixTime
     */
+<<<<<<< HEAD
     public static function convertWindowsTimeToUnixTime($windowsTime) {
+=======
+    public function convertWindowsTimeToUnixTime($windowsTime) {
+>>>>>>> old/master
       $unixTime = round($windowsTime / 10000000) - 11644477200; 
       return $unixTime; 
     }

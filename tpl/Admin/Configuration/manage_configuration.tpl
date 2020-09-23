@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2013-2020 Nick Korbel
+=======
+Copyright 2013-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -23,12 +27,15 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
     <h1>{translate key=ManageConfiguration}</h1>
 
+<<<<<<< HEAD
     {if $ShowScriptUrlWarning}
         <div class="alert alert-danger">
             {translate key=ScriptUrlWarning args="$CurrentScriptUrl,$SuggestedScriptUrl"}
         </div>
     {/if}
 
+=======
+>>>>>>> old/master
     <form id="frmConfigFile" method="GET" action="{$SCRIPT_NAME}" role="form">
         <div class="form-group">
             <label for="cf">{translate key=File}</label>
@@ -58,6 +65,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                             {object_html_options options=$Languages key='GetLanguageCode' label='GetDisplayName' selected=$setting->Value|strtolower}
                         </select>
                     {elseif $setting->Key == ConfigKeys::DEFAULT_HOMEPAGE}
+<<<<<<< HEAD
                         <label for="default__homepage" class="no-show">Homepage</label>
                         <select id="default__homepage" name="{$name}" class="form-control">
                             {html_options values=$HomepageValues output=$HomepageOutput selected=$setting->Value|strtolower}
@@ -85,6 +93,10 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                     {elseif $setting->Key == ConfigKeys::PLUGIN_POSTRESERVATION}
                         <select id="{$name}" name="{$name}" class="form-control">
                             {html_options values=$PostReservationPluginValues output=$PostReservationPluginValues selected=$setting->Value}
+=======
+                        <select id="{$name}" name="{$name}" class="form-control">
+                            {html_options values=$HomepageValues output=$HomepageOutput selected=$setting->Value|strtolower}
+>>>>>>> old/master
                         </select>
                     {elseif $setting->Type == ConfigSettingType::String}
                         <input id="{$name}" type="text" size="50" name="{$name}" value="{$setting->Value|escape}"
@@ -125,7 +137,11 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
         {assign var=HelpUrl value="$ScriptUrl/help.php?ht=admin"}
         <h3>{translate key=ConfigurationUpdateHelp args=$HelpUrl}</h3>
+<<<<<<< HEAD
         <div id="updatedMessage" class="alert alert-success" style="display:none;">
+=======
+        <div id="updatedMessage" class="alert alert-success no-show">
+>>>>>>> old/master
             {translate key=ConfigurationUpdated}
         </div>
         <div id="configSettings">
@@ -155,6 +171,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
             <input type="button" value="{translate key=Update}" class='btn btn-success save'/>
 
         </div>
+<<<<<<< HEAD
 
         <form id="updateHomepageForm"
             method="post" ajaxAction="{ConfigActions::SetHomepage}"
@@ -166,6 +183,9 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
         {include file="javascript-includes.tpl"}
 
+=======
+        {csrf_token}
+>>>>>>> old/master
         {jsfile src="ajax-helpers.js"}
         {jsfile src="js/jquery.form-3.09.min.js"}
         {jsfile src="admin/configuration.js"}

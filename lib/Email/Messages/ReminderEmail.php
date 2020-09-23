@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2013-2020 Nick Korbel
+=======
+Copyright 2013-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -46,7 +50,11 @@ abstract class ReminderEmail extends EmailMessage
 	{
 		$this->Set('StartDate', $this->reminder->StartDate()->ToTimezone($this->reminder->Timezone()));
 		$this->Set('EndDate', $this->reminder->EndDate()->ToTimezone($this->reminder->Timezone()));
+<<<<<<< HEAD
 		$this->Set('ResourceName', $this->reminder->ResourceNames());
+=======
+		$this->Set('ResourceName', $this->reminder->ResourceName());
+>>>>>>> old/master
 		$this->Set('Title', $this->reminder->Title());
 		$this->Set('Description', $this->reminder->Description());
 		$this->Set('ReservationUrl', sprintf("%s?%s=%s", Pages::RESERVATION, QueryStringKeys::REFERENCE_NUMBER,
@@ -66,7 +74,11 @@ class ReminderStartEmail extends ReminderEmail
 	 */
 	public function Subject()
 	{
+<<<<<<< HEAD
 		return $this->Translate('ReservationStartingSoonSubject', array($this->reminder->ResourceNames()));
+=======
+		return $this->Translate('ReservationStartingSoonSubject', array($this->reminder->ResourceName()));
+>>>>>>> old/master
 	}
 
 	protected function GetTemplateName()
@@ -82,7 +94,11 @@ class ReminderEndEmail extends ReminderEmail
 	 */
 	public function Subject()
 	{
+<<<<<<< HEAD
 		return $this->Translate('ReservationEndingSoonSubject', array($this->reminder->ResourceNames()));
+=======
+		return $this->Translate('ReservationEndingSoonSubject', $this->reminder->Title());
+>>>>>>> old/master
 	}
 
 	protected function GetTemplateName()

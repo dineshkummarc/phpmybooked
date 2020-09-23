@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -18,6 +22,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 *}
 
 
+<<<<<<< HEAD
 פרטי ההזמנה:
 <br/>
 <br/>
@@ -62,5 +67,42 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 {/if}
 
 <a href="{$ScriptUrl}">להתחבר ל-Booked Scheduler</a>
+=======
+	פרטי ההזמנה:
+	<br/>
+	<br/>
+
+	התחלה: {formatdate date=$StartDate key=reservation_email}<br/>
+	סיום: {formatdate date=$EndDate key=reservation_email}<br/>
+	{if $ResourceNames|count > 1}
+		משאבים:<br/>
+		{foreach from=$ResourceNames item=resourceName}
+			{$resourceName}<br/>
+		{/foreach}
+		{else}
+		משאב: {$ResourceName}<br/>
+	{/if}
+	כותר: {$Title}<br/>
+	תאור: {$Description|nl2br}<br/>
+
+	{if count($RepeatDates) gt 0}
+		<br/>
+		הוסרו התאריכים הבאים:
+		<br/>
+	{/if}
+
+	{foreach from=$RepeatDates item=date name=dates}
+		{formatdate date=$date}<br/>
+	{/foreach}
+
+	{if $Accessories|count > 0}
+		<br/>משאבים:<br/>
+		{foreach from=$Accessories item=accessory}
+			({$accessory->QuantityReserved}) {$accessory->Name}<br/>
+		{/foreach}
+	{/if}
+
+	<a href="{$ScriptUrl}">להתחבר ל-Booked Scheduler</a>
+>>>>>>> old/master
 
 

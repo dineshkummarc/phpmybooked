@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2012-2020 Nick Korbel
+=======
+ * Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
  * Copyright 2012-2014 Alois Schloegl
  *
  * This file is part of Booked Scheduler.
@@ -76,6 +80,7 @@ class CalendarSubscriptionPresenter
 		$accessoryIds = $this->page->GetAccessoryIds();
 		$resourceGroupId = $this->page->GetResourceGroupId();
 
+<<<<<<< HEAD
 		$daysAgo = $this->page->GetPastNumberOfDays();
 		$daysAhead = $this->page->GetFutureNumberOfDays();
 
@@ -91,6 +96,10 @@ class CalendarSubscriptionPresenter
 
 		$weekAgo = Date::Now()->AddDays(-$daysAgo);
 		$nextYear = Date::Now()->AddDays($daysAhead);
+=======
+		$weekAgo = Date::Now()->AddDays(-7);
+		$nextYear = Date::Now()->AddDays(365);
+>>>>>>> old/master
 
 		$sid = null;
 		$rid = null;
@@ -134,7 +143,11 @@ class CalendarSubscriptionPresenter
 
 		if (!empty($uid) || !empty($sid) || !empty($rid) || !empty($resourceIds))
 		{
+<<<<<<< HEAD
 			$res = $this->reservationViewRepository->GetReservations($weekAgo, $nextYear, $uid, $reservationUserLevel, $sid, $rid, true);
+=======
+			$res = $this->reservationViewRepository->GetReservations($weekAgo, $nextYear, $uid, $reservationUserLevel, $sid, $rid);
+>>>>>>> old/master
 		}
 		elseif (!empty($aid))
 		{

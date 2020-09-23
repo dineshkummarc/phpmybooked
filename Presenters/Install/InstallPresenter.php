@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -41,10 +45,19 @@ class InstallPresenter
 		$this->securityGuard = $securityGuard;
 	}
 
+<<<<<<< HEAD
 	public function PageLoad()
 	{
         $this->CheckIfScriptUrlMayBeWrong();
 
+=======
+	/**
+	 * Get and Set data to be process by template engine
+	 * @return void
+	 */
+	public function PageLoad()
+	{
+>>>>>>> old/master
 		if ($this->page->RunningInstall())
 		{
 			$this->RunInstall();
@@ -164,6 +177,7 @@ class InstallPresenter
             $this->page->SetInstallPasswordMissing(false);
         }
 	}
+<<<<<<< HEAD
 
     private function CheckIfScriptUrlMayBeWrong()
     {
@@ -184,4 +198,6 @@ class InstallPresenter
             $this->page->ShowScriptUrlWarning($scriptUrl, $suggestedUrl);
         }
     }
+=======
+>>>>>>> old/master
 }

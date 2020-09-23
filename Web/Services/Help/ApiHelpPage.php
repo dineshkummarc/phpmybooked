@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2012-2020 Nick Korbel
+=======
+Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -27,8 +31,11 @@ class ApiHelpPage
 	        <head>
 	            <meta charset="utf-8"/>
 	            <title>Booked Scheduler API Documentation</title>
+<<<<<<< HEAD
 	              <link rel="shortcut icon" href="../favicon.ico"/>
                   <link rel="icon" href="../favicon.ico"/> 
+=======
+>>>>>>> old/master
 	            <style type="text/css">
 					body
 					{
@@ -72,9 +79,12 @@ class ApiHelpPage
 						color:blue;
 					}
 
+<<<<<<< HEAD
                     .secure, .admin {
                         color:#ff0000;
                     }
+=======
+>>>>>>> old/master
 	            </style>
 	        </head>
 	        <body>
@@ -164,11 +174,19 @@ EOT;
 
 		if ($endpoint->IsSecure())
 		{
+<<<<<<< HEAD
 			echo '<h4 class="secure">This service is secure and requires authentication</h4>';
 		}
 		if ($endpoint->IsLimitedToAdmin())
 		{
 			echo '<h4 class="admin">This service is only available to application administrators</h4>';
+=======
+			echo '<h4>This service is secure and requires authentication</h4>';
+		}
+		if ($endpoint->IsLimitedToAdmin())
+		{
+			echo '<h4>This service is only available to application administrators</h4>';
+>>>>>>> old/master
 		}
 
 		echo '<h4>Response</h4>';

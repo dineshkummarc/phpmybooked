@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -18,7 +22,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
+<<<<<<< HEAD
 
+=======
+>>>>>>> old/master
 interface IQuotaRepository
 {
 	/**
@@ -77,7 +84,11 @@ class QuotaRepository implements IQuotaRepository, IQuotaViewRepository
 
 			$quotas[] = new Quota($quotaId, $duration, $limit, $resourceId, $groupId, $scheduleId, $enforcedStartTime, $enforcedEndTime, $enforcedDays, $scope);
 		}
+<<<<<<< HEAD
 		$reader->Free();
+=======
+
+>>>>>>> old/master
 		return $quotas;
 	}
 
@@ -110,7 +121,10 @@ class QuotaRepository implements IQuotaRepository, IQuotaViewRepository
 										  $enforcedDays, $scope);
 		}
 
+<<<<<<< HEAD
 		$reader->Free();
+=======
+>>>>>>> old/master
 		return $quotas;
 	}
 
@@ -160,7 +174,10 @@ class QuotaItemView
 	public $EnforcedStartTime;
 	public $EnforcedEndTime;
 	public $EnforcedDays;
+<<<<<<< HEAD
 	public $Scope;
+=======
+>>>>>>> old/master
 
 	/**
 	 * @param int $quotaId

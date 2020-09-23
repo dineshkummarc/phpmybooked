@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -18,7 +22,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
+<<<<<<< HEAD
 
+=======
+>>>>>>> old/master
 class CustomAttributeValidationRule implements IReservationValidationRule
 {
 	/**
@@ -47,7 +54,11 @@ class CustomAttributeValidationRule implements IReservationValidationRule
 		$isResourceAdmin = $bookedBy->IsResourceAdminForOneOf($reservationSeries->AllResources());
 		$isAdminUser = $bookedBy->IsAdminFor($user) || $isResourceAdmin;
 
+<<<<<<< HEAD
 		$result = $this->attributeService->Validate(CustomAttributeCategory::RESERVATION, $reservationSeries->AttributeValues(), array(), false, $isAdminUser);
+=======
+		$result = $this->attributeService->Validate(CustomAttributeCategory::RESERVATION, $reservationSeries->AttributeValues(), null, false, $isAdminUser);
+>>>>>>> old/master
 
 		$isValid = $result->IsValid();
 
@@ -57,14 +68,24 @@ class CustomAttributeValidationRule implements IReservationValidationRule
 			foreach ($result->InvalidAttributes() as $invalidAttribute)
 			{
 				$secondaryCategory = $invalidAttribute->Attribute->SecondaryCategory();
+<<<<<<< HEAD
 				$secondaryEntityIds = $invalidAttribute->Attribute->SecondaryEntityIds();
 
 				if ($secondaryCategory == CustomAttributeCategory::USER && !in_array($reservationSeries->UserId(), $secondaryEntityIds))
+=======
+				$secondaryEntityId = $invalidAttribute->Attribute->SecondaryEntityIds();
+
+				if ($secondaryCategory == CustomAttributeCategory::USER && $secondaryEntityId != $reservationSeries->UserId())
+>>>>>>> old/master
 				{
 					// the attribute applies to a different user
 					continue;
 				}
+<<<<<<< HEAD
 				if ($secondaryCategory == CustomAttributeCategory::RESOURCE && count(array_intersect($secondaryEntityIds, $reservationSeries->AllResourceIds())) == 0)
+=======
+				if ($secondaryCategory == CustomAttributeCategory::RESOURCE && !in_array($secondaryEntityId, $reservationSeries->AllResourceIds()))
+>>>>>>> old/master
 				{
 					// the attribute is not for a resource that is being booked
 					continue;
@@ -79,7 +100,11 @@ class CustomAttributeValidationRule implements IReservationValidationRule
 							// don't keep checking if we already know it applies to this resource type
 							break;
 						}
+<<<<<<< HEAD
 						if (in_array($resource->GetResourceTypeId(),$secondaryEntityIds))
+=======
+						if ($resource->GetResourceTypeId() == $secondaryEntityId)
+>>>>>>> old/master
 						{
 							$appliesToResourceType = true;
 						}

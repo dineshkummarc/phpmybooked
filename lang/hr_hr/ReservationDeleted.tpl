@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -17,6 +21,7 @@ You should have received a copy of the GNU General Public License
 along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 *}
 
+<<<<<<< HEAD
 
 Detalji o rezervaciji:
 <br/>
@@ -68,4 +73,48 @@ Opis: {$Description|nl2br}<br/>
 {/if}
 <br/>
 <a href="{$ScriptUrl}">Ulogiraj se</a>
+=======
+ 
+	Detalji o rezervaciji:
+	<br/>
+	<br/>
+
+	Korisnik: {$UserName}<br/>
+	Pocetak: {formatdate date=$StartDate key=reservation_email}<br/>
+	Kraj: {formatdate date=$EndDate key=reservation_email}<br/>
+	{if $ResourceNames|count > 1}
+		Tereni:<br/>
+		{foreach from=$ResourceNames item=resourceName}
+			{$resourceName}<br/>
+		{/foreach}
+		{else}
+		Tereni: {$ResourceName}<br/>
+	{/if}
+
+	{if $ResourceImage}
+		<div class="resource-image"><img src="{$ScriptUrl}/{$ResourceImage}"/></div>
+	{/if}
+
+	Naziv: {$Title}<br/>
+	Opis: {$Description|nl2br}<br/>
+
+	{if count($RepeatDates) gt 0}
+		<br/>
+		Navedeni datumi su obrisani:
+		<br/>
+	{/if}
+
+	{foreach from=$RepeatDates item=date name=dates}
+		{formatdate date=$date}<br/>
+	{/foreach}
+
+	{if $Accessories|count > 0}
+		<br/>Dodatno:<br/>
+		{foreach from=$Accessories item=accessory}
+			({$accessory->QuantityReserved}) {$accessory->Name}<br/>
+		{/foreach}
+	{/if}
+	<br/>
+	<a href="{$ScriptUrl}">Ulogiraj se</a>
+>>>>>>> old/master
 

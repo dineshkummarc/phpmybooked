@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -17,6 +21,7 @@ You should have received a copy of the GNU General Public License
 along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 *}
 
+<<<<<<< HEAD
 
 Reservierungsdetails:
 <br/>
@@ -68,4 +73,48 @@ Beschreibung: {$Description|nl2br}<br/>
 {/if}
 <br/>
 <a href="{$ScriptUrl}">Anmelden bei Booked Scheduler</a>
+=======
+	
+	Reservierungsdetails:
+	<br/>
+	<br/>
+
+	Benutzer: {$UserName}
+	Beginn: {formatdate date=$StartDate key=reservation_email}<br/>
+	Ende: {formatdate date=$EndDate key=reservation_email}<br/>
+	{if $ResourceNames|count > 1}
+		Ressourcen:<br/>
+		{foreach from=$ResourceNames item=resourceName}
+			{$resourceName}<br/>
+		{/foreach}
+		{else}
+		Ressource: {$ResourceName}<br/>
+	{/if}
+
+	{if $ResourceImage}
+		<div class="resource-image"><img src="{$ScriptUrl}/{$ResourceImage}"/></div>
+	{/if}
+
+	Titel: {$Title}<br/>
+	Beschreibung: {$Description|nl2br}<br/>
+	
+	{if count($RepeatDates) gt 0}
+		<br/>
+		Die folgenden Reservierungen wurden entfernt:
+		<br/>
+	{/if}
+	
+	{foreach from=$RepeatDates item=date name=dates}
+		{formatdate date=$date}<br/>
+	{/foreach}
+
+	{if $Accessories|count > 0}
+		<br/>Zubehör:<br/>
+		{foreach from=$Accessories item=accessory}
+			({$accessory->QuantityReserved}) {$accessory->Name}<br/>
+		{/foreach}
+	{/if}
+	<br/>
+	<a href="{$ScriptUrl}">Anmelden bei Booked Scheduler</a>
+>>>>>>> old/master
 	

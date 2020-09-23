@@ -15,7 +15,11 @@
 // | Author: Bertrand Mansion <bmansion@mamasam.com>                      |
 // +----------------------------------------------------------------------+
 //
+<<<<<<< HEAD
 // $Id: GenericConf.php 306537 2010-12-21 08:09:34Z cweiske $
+=======
+// $Id: GenericConf.php,v 1.7 2005/12/24 02:24:30 aashley Exp $
+>>>>>>> old/master
 
 /**
 * Config parser for  generic .conf files like
@@ -42,7 +46,11 @@ class Config_Container_GenericConf {
     * @access public
     * @param    string  $options    (optional)Options to be used by renderer
     */
+<<<<<<< HEAD
     function __construct($options = array())
+=======
+    function Config_Container_GenericConf($options = array())
+>>>>>>> old/master
     {
         if (empty($options['comment'])) {
             $options['comment'] = '#';
@@ -78,9 +86,15 @@ class Config_Container_GenericConf {
         foreach ($lines as $line) {
             $n++;
             if (!preg_match('/^\s*'.$this->options['comment'].'/', $line) && 
+<<<<<<< HEAD
                  preg_match('/^\s*(.*)'.$this->options['newline'].'\s*$/', $line, $match)) {
                 // directive on more than one line
                 $lastline .= $match[1];
+=======
+                 preg_match('/^\s*(.*)\s+'.$this->options['newline'].'\s*$/', $line, $match)) {
+                // directive on more than one line
+                $lastline .= $match[1].' ';
+>>>>>>> old/master
                 continue;
             }
             if ($lastline != '') {
@@ -93,7 +107,11 @@ class Config_Container_GenericConf {
             } elseif (preg_match('/^\s*$/', $line)) {
                 // a blank line
                 $currentSection->createBlank();
+<<<<<<< HEAD
             } elseif (preg_match('/^\s*([\w-]+)\s*'.$this->options['equals'].'\s*((.*?)|)\s*$/', $line, $match)) {
+=======
+            } elseif (preg_match('/^\s*(\w+)'.$this->options['equals'].'\s*((.*?)|)\s*$/', $line, $match)) {
+>>>>>>> old/master
                 // a directive
                 $currentSection->createDirective($match[1], $match[2]);
             } else {
@@ -136,4 +154,8 @@ class Config_Container_GenericConf {
         return $string;
     } // end func toString
 } // end class Config_Container_GenericConf
+<<<<<<< HEAD
 ?>
+=======
+?>
+>>>>>>> old/master

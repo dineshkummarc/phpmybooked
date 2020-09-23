@@ -36,7 +36,11 @@ CREATE TABLE `account_activation` (
   INDEX (`activation_code`),
   UNIQUE KEY (`activation_code`),
   FOREIGN KEY (`user_id`)
+<<<<<<< HEAD
 	REFERENCES `users`(`user_id`)
+=======
+	REFERENCES users(`user_id`)
+>>>>>>> old/master
 	ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
@@ -50,6 +54,10 @@ CREATE TABLE IF NOT EXISTS `reservation_files` (
   `file_extension` varchar(10) NOT NULL,
   PRIMARY KEY  (`file_id`),
   FOREIGN KEY (`series_id`)
+<<<<<<< HEAD
   	REFERENCES `reservation_series`(`series_id`)
+=======
+  	REFERENCES reservation_series(`series_id`)
+>>>>>>> old/master
   	ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;

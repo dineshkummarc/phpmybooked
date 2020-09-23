@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -26,6 +30,10 @@ require_once(ROOT_DIR . 'lib/Database/Commands/namespace.php');
 interface IScheduleRepository
 {
 	/**
+<<<<<<< HEAD
+=======
+	 * Gets all schedules
+>>>>>>> old/master
 	 * @return array|Schedule[]
 	 */
 	public function GetAll();
@@ -37,6 +45,10 @@ interface IScheduleRepository
 	public function LoadById($scheduleId);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param string $publicId
 	 * @return Schedule
 	 */
@@ -73,6 +85,7 @@ interface IScheduleRepository
 	public function AddScheduleLayout($scheduleId, ILayoutCreation $layout);
 
 	/**
+<<<<<<< HEAD
 	 * @param Date $periodDate
 	 * @param int $scheduleId
 	 * @return SchedulePeriod[]
@@ -88,6 +101,8 @@ interface IScheduleRepository
 	public function GetCustomLayoutPeriodsInRange(Date $start, Date $end, $scheduleId);
 
 	/**
+=======
+>>>>>>> old/master
 	 * @param int $pageNumber
 	 * @param int $pageSize
 	 * @param string|null $sortField
@@ -102,6 +117,7 @@ interface IScheduleRepository
 	 * @param ScheduleLayout $layout
 	 */
 	public function UpdatePeakTimes($scheduleId, ScheduleLayout $layout);
+<<<<<<< HEAD
 
 	/**
 	 * @param int $scheduleId
@@ -120,6 +136,8 @@ interface IScheduleRepository
 	 * @return array all public schedule ids in key value id=>publicid
 	 */
 	public function GetPublicScheduleIds();
+=======
+>>>>>>> old/master
 }
 
 interface ILayoutFactory
@@ -128,6 +146,7 @@ interface ILayoutFactory
 	 * @return IScheduleLayout
 	 */
 	public function CreateLayout();
+<<<<<<< HEAD
 
 	/**
 	 * @param IScheduleRepository $repository
@@ -135,6 +154,8 @@ interface ILayoutFactory
 	 * @return IScheduleLayout
 	 */
 	public function CreateCustomLayout(IScheduleRepository $repository, $scheduleId);
+=======
+>>>>>>> old/master
 }
 
 class ScheduleLayoutFactory implements ILayoutFactory
@@ -144,20 +165,33 @@ class ScheduleLayoutFactory implements ILayoutFactory
 	/**
 	 * @param string $targetTimezone target timezone of layout
 	 */
+<<<<<<< HEAD
 	public function __construct($targetTimezone = null)
+=======
+	public function __construct($targetTimezone)
+>>>>>>> old/master
 	{
 		$this->_targetTimezone = $targetTimezone;
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * @see ILayoutFactory::CreateLayout()
+	 */
+>>>>>>> old/master
 	public function CreateLayout()
 	{
 		return new ScheduleLayout($this->_targetTimezone);
 	}
+<<<<<<< HEAD
 
 	public function CreateCustomLayout(IScheduleRepository $repository, $scheduleId)
 	{
 		return new CustomScheduleLayout($this->_targetTimezone, $scheduleId, $repository);
 	}
+=======
+>>>>>>> old/master
 }
 
 class ReservationLayoutFactory implements ILayoutFactory
@@ -172,15 +206,24 @@ class ReservationLayoutFactory implements ILayoutFactory
 		$this->_targetTimezone = $targetTimezone;
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * @see ILayoutFactory::CreateLayout()
+	 */
+>>>>>>> old/master
 	public function CreateLayout()
 	{
 		return new ReservationLayout($this->_targetTimezone);
 	}
+<<<<<<< HEAD
 
 	public function CreateCustomLayout(IScheduleRepository $repository, $scheduleId)
 	{
 		return new CustomScheduleLayout($this->_targetTimezone, $scheduleId, $repository);
 	}
+=======
+>>>>>>> old/master
 }
 
 class ScheduleRepository implements IScheduleRepository
@@ -259,12 +302,16 @@ class ScheduleRepository implements IScheduleRepository
 													   $schedule->GetDaysVisible(),
 													   $schedule->GetIsCalendarSubscriptionAllowed(),
 													   $schedule->GetPublicId(),
+<<<<<<< HEAD
 													   $schedule->GetAdminGroupId(),
 													   $schedule->GetAvailabilityBegin(),
 													   $schedule->GetAvailabilityEnd(),
 													   $schedule->GetDefaultStyle(),
 													   $schedule->GetTotalConcurrentReservations(),
 													   $schedule->GetMaxResourcesPerReservation()));
+=======
+													   $schedule->GetAdminGroupId()));
+>>>>>>> old/master
 
 		if ($schedule->GetIsDefault())
 		{
@@ -278,6 +325,7 @@ class ScheduleRepository implements IScheduleRepository
 
 		$db = ServiceLocator::GetDatabase();
 
+<<<<<<< HEAD
 		$scheduleId = $db->ExecuteInsert(new AddScheduleCommand(
 												 $schedule->GetName(),
 												 $schedule->GetIsDefault(),
@@ -294,6 +342,16 @@ class ScheduleRepository implements IScheduleRepository
 		}
 
 		return $scheduleId;
+=======
+		return $db->ExecuteInsert(new AddScheduleCommand(
+										  $schedule->GetName(),
+										  $schedule->GetIsDefault(),
+										  $schedule->GetWeekdayStart(),
+										  $schedule->GetDaysVisible(),
+										  $source->GetLayoutId(),
+										  $schedule->GetAdminGroupId()
+								  ));
+>>>>>>> old/master
 	}
 
 	public function Delete(Schedule $schedule)
@@ -303,6 +361,7 @@ class ScheduleRepository implements IScheduleRepository
 
 	public function GetLayout($scheduleId, ILayoutFactory $layoutFactory)
 	{
+<<<<<<< HEAD
 		$reader = ServiceLocator::GetDatabase()->Query(new GetLayoutCommand($scheduleId));
 
 		/** @var ScheduleLayout $layout */
@@ -323,6 +382,17 @@ class ScheduleRepository implements IScheduleRepository
 				}
 			}
 
+=======
+		/**
+		 * @var $layout ScheduleLayout
+		 */
+		$layout = $layoutFactory->CreateLayout();
+
+		$reader = ServiceLocator::GetDatabase()->Query(new GetLayoutCommand($scheduleId));
+
+		while ($row = $reader->GetRow())
+		{
+>>>>>>> old/master
 			$timezone = $row[ColumnNames::BLOCK_TIMEZONE];
 			$start = Time::Parse($row[ColumnNames::BLOCK_START], $timezone);
 			$end = Time::Parse($row[ColumnNames::BLOCK_END], $timezone);
@@ -339,6 +409,10 @@ class ScheduleRepository implements IScheduleRepository
 				$layout->AppendBlockedPeriod($start, $end, $label, $dayOfWeek);
 			}
 		}
+<<<<<<< HEAD
+=======
+
+>>>>>>> old/master
 		$reader->Free();
 
 		$reader = ServiceLocator::GetDatabase()->Query(new GetPeakTimesCommand($scheduleId));
@@ -347,6 +421,7 @@ class ScheduleRepository implements IScheduleRepository
 			$layout->ChangePeakTimes(PeakTimes::FromRow($row));
 		}
 
+<<<<<<< HEAD
 		$reader->Free();
 
 		return $layout;
@@ -394,11 +469,17 @@ class ScheduleRepository implements IScheduleRepository
 		return $periods;
 	}
 
+=======
+		return $layout;
+	}
+
+>>>>>>> old/master
 	public function AddScheduleLayout($scheduleId, ILayoutCreation $layout)
 	{
 		$db = ServiceLocator::GetDatabase();
 		$timezone = $layout->Timezone();
 
+<<<<<<< HEAD
 		$layoutType = $layout->GetType();
 		$addLayoutCommand = new AddLayoutCommand($timezone, $layoutType);
 		$layoutId = $db->ExecuteInsert($addLayoutCommand);
@@ -423,6 +504,27 @@ class ScheduleRepository implements IScheduleRepository
 			}
 		}
 
+=======
+		$addLayoutCommand = new AddLayoutCommand($timezone);
+		$layoutId = $db->ExecuteInsert($addLayoutCommand);
+
+		$days = array(null);
+		if ($layout->UsesDailyLayouts())
+		{
+			$days = DayOfWeek::Days();
+		}
+
+		foreach ($days as $day)
+		{
+			$slots = $layout->GetSlots($day);
+
+			/* @var $slot LayoutPeriod */
+			foreach ($slots as $slot)
+			{
+				$db->Execute(new AddLayoutTimeCommand($layoutId, $slot->Start, $slot->End, $slot->PeriodType, $slot->Label, $day));
+			}
+		}
+>>>>>>> old/master
 		$db->Execute(new UpdateScheduleLayoutCommand($scheduleId, $layoutId));
 
 		$db->Execute(new DeleteOrphanLayoutsCommand());
@@ -464,6 +566,7 @@ class ScheduleRepository implements IScheduleRepository
 		}
 
 	}
+<<<<<<< HEAD
 
 	public function AddCustomLayoutPeriod($scheduleId, Date $start, Date $end)
 	{
@@ -489,4 +592,6 @@ class ScheduleRepository implements IScheduleRepository
 
 		return $ids;
 	}
+=======
+>>>>>>> old/master
 }

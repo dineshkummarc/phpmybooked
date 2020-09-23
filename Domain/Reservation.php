@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -225,7 +229,11 @@ class Reservation
 
 		if (empty($referenceNumber))
 		{
+<<<<<<< HEAD
 			$this->SetReferenceNumber(ReferenceNumberGenerator::Generate());
+=======
+			$this->SetReferenceNumber(str_replace('.', '', uniqid('', true)));
+>>>>>>> old/master
 		}
 
 		$this->checkinDate = new NullDate();
@@ -370,6 +378,7 @@ class Reservation
 		$this->unchangedParticipatingGuests[] = $guest;
 	}
 
+<<<<<<< HEAD
     /**
      * @return array|int[]
      */
@@ -379,6 +388,9 @@ class Reservation
     }
 
     /**
+=======
+	/**
+>>>>>>> old/master
 	 * @return array|int[]
 	 */
 	public function AddedInvitees()
@@ -527,6 +539,7 @@ class Reservation
 		return $this->_participatingGuests;
 	}
 
+<<<<<<< HEAD
     /**
      * @return string[]
      */
@@ -535,6 +548,8 @@ class Reservation
         return $this->_invitedGuests;
     }
 
+=======
+>>>>>>> old/master
 	/**
 	 * @return bool
 	 */
@@ -579,7 +594,10 @@ class Reservation
 		}
 
 		$this->addedParticipants[] = $userId;
+<<<<<<< HEAD
 		$this->_participantIds[] = $userId;
+=======
+>>>>>>> old/master
 
 		return true;
 	}
@@ -641,11 +659,14 @@ class Reservation
 		if (in_array($participantId, $this->_participantIds))
 		{
 			$this->removedParticipants[] = $participantId;
+<<<<<<< HEAD
 			$index = array_search($participantId, $this->_participantIds);
 			if ($index !== false)
 			{
 				array_splice($this->_participantIds, $index, 1);
 			}
+=======
+>>>>>>> old/master
 			return true;
 		}
 
@@ -748,6 +769,7 @@ class Reservation
 		}
 		return 0;
 	}
+<<<<<<< HEAD
 }
 
 class ReferenceNumberGenerator
@@ -768,4 +790,6 @@ class ReferenceNumberGenerator
 
 		return self::$__referenceNumber;
 	}
+=======
+>>>>>>> old/master
 }

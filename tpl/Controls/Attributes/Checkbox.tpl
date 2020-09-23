@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2012-2020 Nick Korbel
+=======
+Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -18,10 +22,17 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 *}
 <div class="form-group {$class}">
     {if $readonly}
+<<<<<<< HEAD
         <label class="customAttribute readonly" for="{$attributeId}">{$attribute->Label()}</label>
         <span class="attributeValue {$class}">{if $attribute->Value() == "1"}{translate key='True'}{else}{translate key='False'}{/if}</span>
     {elseif $searchmode}
         <label class="customAttribute search" for="{$attributeId}">{$attribute->Label()}</label>
+=======
+        <label class="customAttribute" for="{$attributeId}">{$attribute->Label()}</label>
+        <span class="attributeValue {$class}">{if $attribute->Value() == "1"}{translate key='True'}{else}{translate key='False'}{/if}</span>
+    {elseif $searchmode}
+        <label class="customAttribute" for="{$attributeId}">{$attribute->Label()}</label>
+>>>>>>> old/master
         <select id="{$attributeId}" name="{$attributeName}" class="customAttribute form-control {$inputClass}">
             <option value="">--</option>
             <option value="0" {if $attribute->Value() == "0"}selected="selected"{/if}>{translate key=No}</option>
@@ -31,7 +42,11 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
         <div class="checkbox">
             <input type="checkbox" value="1" id="{$attributeId}" name="{$attributeName}"
                    {if $attribute->Value() == "1"}checked="checked"{/if} class="{$inputClass}"/>
+<<<<<<< HEAD
             <label class="customAttribute standard" for="{$attributeId}">{$attribute->Label()}
+=======
+            <label class="customAttribute" for="{$attributeId}">{$attribute->Label()}
+>>>>>>> old/master
                 {if $attribute->Required() && !$searchmode}
                     <i class="glyphicon glyphicon-asterisk"></i>
                 {/if}

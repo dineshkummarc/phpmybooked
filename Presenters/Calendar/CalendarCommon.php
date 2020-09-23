@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2017-2020 Nick Korbel
+=======
+ * Copyright 2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -18,6 +22,7 @@
  * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+<<<<<<< HEAD
 require_once(ROOT_DIR . 'Pages/SecurePage.php');
 require_once(ROOT_DIR . 'Domain/Access/namespace.php');
 require_once(ROOT_DIR . 'lib/Config/namespace.php');
@@ -53,6 +58,16 @@ interface ICommonCalendarPage extends IActionPage
     /**
      * @return string
      */
+=======
+interface ICommonCalendarPage
+{
+    public function GetDay();
+
+    public function GetMonth();
+
+    public function GetYear();
+
+>>>>>>> old/master
     public function GetCalendarType();
 
     /**
@@ -69,6 +84,7 @@ interface ICommonCalendarPage extends IActionPage
      * @return string
      */
     public function GetEndDate();
+<<<<<<< HEAD
 
     /**
      * @param ResourceGroup $selectedGroup
@@ -451,25 +467,88 @@ abstract class CommonCalendarPresenter extends ActionPresenter
         $showInaccessible = Configuration::Instance()->GetSectionKey(ConfigSection::SCHEDULE, ConfigKeys::SCHEDULE_SHOW_INACCESSIBLE_RESOURCES, new BooleanConverter());
         $resources = $this->resourceService->GetAllResources($showInaccessible, $userSession);
 
+=======
+}
+
+class CalendarCommon
+{
+    /**
+     * @var ICommonCalendarPage
+     */
+    private $page;
+    /**
+     * @var ICalendarFactory
+     */
+    private $calendarFactory;
+    /**
+     * @var IReservationViewRepository
+     */
+    private $reservationRepository;
+    /**
+     * @var IScheduleRepository
+     */
+    private $scheduleRepository;
+    /**
+     * @var IResourceService
+     */
+    private $resourceService;
+
+    public function __construct(ICommonCalendarPage $page,
+                                IReservationViewRepository $reservationRepository,
+                                IScheduleRepository $scheduleRepository,
+                                IResourceService $resourceService,
+                                ICalendarFactory $calendarFactory)
+    {
+        $this->page = $page;
+        $this->calendarFactory = $calendarFactory;
+        $this->reservationRepository = $reservationRepository;
+        $this->scheduleRepository = $scheduleRepository;
+        $this->resourceService = $resourceService;
+    }
+
+    public function GetAllResources($userSession)
+    {
+        $showInaccessible = Configuration::Instance()->GetSectionKey(ConfigSection::SCHEDULE, ConfigKeys::SCHEDULE_SHOW_INACCESSIBLE_RESOURCES, new BooleanConverter());
+        $resources = $this->resourceService->GetAllResources($showInaccessible, $userSession);
+>>>>>>> old/master
         return $resources;
     }
 
     /**
      * @param array|Schedule[] $schedules
+<<<<<<< HEAD
      * @param int $scheduleId
      * @return Schedule
      */
     protected function GetSelectedSchedule($schedules, $scheduleId)
     {
         if (empty($schedules)) {
+=======
+     * @return Schedule
+     */
+    public function GetSelectedSchedule($schedules)
+    {
+        if (empty($schedules))
+        {
+>>>>>>> old/master
             $schedules = $this->scheduleRepository->GetAll();
         }
 
         $default = new NullSchedule();
+<<<<<<< HEAD
 
         /** @var $schedule Schedule */
         foreach ($schedules as $schedule) {
             if (!empty($scheduleId) && $schedule->GetId() == $scheduleId) {
+=======
+        $scheduleId = $this->page->GetScheduleId();
+
+        /** @var $schedule Schedule */
+        foreach ($schedules as $schedule)
+        {
+            if (!empty($scheduleId) && $schedule->GetId() == $scheduleId)
+            {
+>>>>>>> old/master
                 return $schedule;
             }
         }
@@ -477,25 +556,38 @@ abstract class CommonCalendarPresenter extends ActionPresenter
         return $default;
     }
 
+<<<<<<< HEAD
     /**
      * @return Date
      */
     protected function GetStartDate()
+=======
+    public function GetStartDate()
+>>>>>>> old/master
     {
         $timezone = ServiceLocator::GetServer()->GetUserSession()->Timezone;
 
         $startDate = $this->page->GetStartDate();
 
+<<<<<<< HEAD
         if (empty($startDate)) {
+=======
+        if (empty($startDate))
+        {
+>>>>>>> old/master
             return Date::Now()->ToTimezone($timezone);
         }
         return Date::Parse($startDate, $timezone);
     }
 
+<<<<<<< HEAD
     /**
      * @return Date
      */
     protected function GetEndDate()
+=======
+    public function GetEndDate()
+>>>>>>> old/master
     {
         $timezone = ServiceLocator::GetServer()->GetUserSession()->Timezone;
 
@@ -503,6 +595,7 @@ abstract class CommonCalendarPresenter extends ActionPresenter
 
         return Date::Parse($endDate, $timezone);
     }
+<<<<<<< HEAD
 
     /**
      * @param UserSession $userSession
@@ -555,4 +648,6 @@ class UserCalendarFilter
         $groupId = isset($parts[2]) ? $parts[2] : null;
         return new UserCalendarFilter($resourceId, $scheduleId, $groupId);
     }
+=======
+>>>>>>> old/master
 }

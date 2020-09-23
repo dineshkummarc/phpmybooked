@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -58,11 +62,14 @@ class ExistingReservationSeries extends ReservationSeries
 	 */
 	protected $attachmentIds = array();
 
+<<<<<<< HEAD
 	/**
 	 * @var string
 	 */
 	private $_deleteReason;
 
+=======
+>>>>>>> old/master
 	public function __construct()
 	{
 		parent::__construct();
@@ -142,11 +149,14 @@ class ExistingReservationSeries extends ReservationSeries
 	 */
 	public function WithCurrentInstance(Reservation $reservation)
 	{
+<<<<<<< HEAD
 		if (!array_key_exists($this->GetNewKey($reservation), $this->instances))
 		{
 			$this->originalCreditsConsumed += $reservation->GetCreditsConsumed();
 		}
 
+=======
+>>>>>>> old/master
 		$this->AddInstance($reservation);
 		$this->SetCurrentInstance($reservation);
 	}
@@ -156,10 +166,13 @@ class ExistingReservationSeries extends ReservationSeries
 	 */
 	public function WithInstance(Reservation $reservation)
 	{
+<<<<<<< HEAD
 		if (!array_key_exists($this->GetNewKey($reservation), $this->instances))
 		{
 			$this->originalCreditsConsumed += $reservation->GetCreditsConsumed();
 		}
+=======
+>>>>>>> old/master
 		$this->AddInstance($reservation);
 	}
 
@@ -198,6 +211,7 @@ class ExistingReservationSeries extends ReservationSeries
 		$this->attachmentIds[$fileId] = $extension;
 	}
 
+<<<<<<< HEAD
 	public function RemoveInstance(Reservation $reservation)
 	{
 		// todo: should this check to see if the instance is already marked for removal?
@@ -220,6 +234,20 @@ class ExistingReservationSeries extends ReservationSeries
 		$this->RemoveEvent(new InstanceAddedEvent($toRemove, $this));
 //        }
 		return true;
+=======
+	/**
+	 * @internal
+	 * @return bool
+	 */
+	public function RemoveInstance(Reservation $reservation)
+	{
+		$removed = parent::RemoveInstance($reservation);
+
+		$this->AddEvent(new InstanceRemovedEvent($reservation, $this));
+		$this->_deleteRequestIds[] = $reservation->ReservationId();
+
+		return $removed;
+>>>>>>> old/master
 	}
 
 	public function RequiresNewSeries()
@@ -284,12 +312,15 @@ class ExistingReservationSeries extends ReservationSeries
 		$currentBegin = $currentDuration->GetBegin();
 		$currentEnd = $currentDuration->GetEnd();
 
+<<<<<<< HEAD
 		Log::Debug('duration %s', $currentDuration->ToString());
 		Log::Debug('current begin %s', $currentBegin->ToString());
 		Log::Debug('current end %s', $currentEnd->ToString());
 		Log::Debug('date begin %s', $reservationDate->GetBegin()->ToString());
 		Log::Debug('date end %s', $reservationDate->GetEnd()->ToString());
 
+=======
+>>>>>>> old/master
 		$startTimeAdjustment = $currentBegin->GetDifference($reservationDate->GetBegin());
 		$endTimeAdjustment = $currentEnd->GetDifference($reservationDate->GetEnd());
 
@@ -365,6 +396,7 @@ class ExistingReservationSeries extends ReservationSeries
 
 	/**
 	 * @param UserSession $deletedBy
+<<<<<<< HEAD
 	 * @param string $reason
 	 * @return void
 	 */
@@ -372,6 +404,13 @@ class ExistingReservationSeries extends ReservationSeries
 	{
 		$this->_bookedBy = $deletedBy;
 		$this->_deleteReason = $reason;
+=======
+	 * @return void
+	 */
+	public function Delete(UserSession $deletedBy)
+	{
+		$this->_bookedBy = $deletedBy;
+>>>>>>> old/master
 
 		if (!$this->AppliesToAllInstances())
 		{
@@ -381,7 +420,10 @@ class ExistingReservationSeries extends ReservationSeries
 			foreach ($instances as $instance)
 			{
 				$this->RemoveInstance($instance);
+<<<<<<< HEAD
 				$this->unusedCreditBalance += $instance->GetCreditsConsumed();
+=======
+>>>>>>> old/master
 			}
 		}
 		else
@@ -390,10 +432,13 @@ class ExistingReservationSeries extends ReservationSeries
 
 			$this->_seriesBeingDeleted = true;
 			$this->AddEvent(new SeriesDeletedEvent($this));
+<<<<<<< HEAD
 			foreach ($this->instances as $instance)
 			{
 				$this->unusedCreditBalance += $instance->GetCreditsConsumed();
 			}
+=======
+>>>>>>> old/master
 		}
 	}
 
@@ -489,6 +534,7 @@ class ExistingReservationSeries extends ReservationSeries
 		return $this->seriesUpdateStrategy->Instances($this);
 	}
 
+<<<<<<< HEAD
 	public function SortedInstances()
 	{
 		$instances = $this->Instances();
@@ -497,6 +543,8 @@ class ExistingReservationSeries extends ReservationSeries
 		return $instances;
 	}
 
+=======
+>>>>>>> old/master
 	/**
 	 * @internal
 	 */
@@ -510,6 +558,7 @@ class ExistingReservationSeries extends ReservationSeries
 		$this->events[] = $event;
 	}
 
+<<<<<<< HEAD
 	public function RemoveEvent(SeriesEvent $event)
 	{
 		foreach ($this->events as $i => $e)
@@ -521,6 +570,8 @@ class ExistingReservationSeries extends ReservationSeries
 		}
 	}
 
+=======
+>>>>>>> old/master
 	public function IsMarkedForDelete($reservationId)
 	{
 		return $this->_seriesBeingDeleted || in_array($reservationId, $this->_deleteRequestIds);
@@ -877,6 +928,7 @@ class ExistingReservationSeries extends ReservationSeries
 
 		return $consumed;
 	}
+<<<<<<< HEAD
 
 	/**
 	 * @var float
@@ -901,4 +953,6 @@ class ExistingReservationSeries extends ReservationSeries
 	{
 		return $this->originalCreditsConsumed;
 	}
+=======
+>>>>>>> old/master
 }

@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2017-2020 Nick Korbel
+=======
+ * Copyright 2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -21,6 +25,7 @@
 
 class CSRFToken
 {
+<<<<<<< HEAD
     /**
      * @var string
      */
@@ -37,4 +42,22 @@ class CSRFToken
 
         return base64_encode(md5(BookedStringHelper::Random()));
     }
+=======
+	/**
+	 * @var string
+	 */
+	public static $_Token;
+
+	/**
+	 * @return string
+	 */
+	public static function Create()
+	{
+		if (!empty(self::$_Token))
+		{
+			return self::$_Token;
+		}
+		return base64_encode(md5(uniqid(rand(), true)));
+	}
+>>>>>>> old/master
 }

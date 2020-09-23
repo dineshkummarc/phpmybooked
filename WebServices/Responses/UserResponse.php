@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2012-2020 Nick Korbel
+=======
+Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -20,7 +24,11 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
 require_once(ROOT_DIR . 'WebServices/Responses/CustomAttributes/CustomAttributeResponse.php');
 require_once(ROOT_DIR . 'WebServices/Responses/ResourceItemResponse.php');
+<<<<<<< HEAD
 require_once(ROOT_DIR . 'WebServices/Responses/Group/GroupItemResponse.php');
+=======
+require_once(ROOT_DIR . 'WebServices/Responses/GroupItemResponse.php');
+>>>>>>> old/master
 
 class UserResponse extends RestResponse
 {
@@ -77,14 +85,22 @@ class UserResponse extends RestResponse
 			}
 		}
 
+<<<<<<< HEAD
 		foreach ($user->GetAllowedResourceIds() as $allowedResourceId)
+=======
+		foreach ($user->AllowedResourceIds() as $allowedResourceId)
+>>>>>>> old/master
 		{
 			$this->permissions[] = new ResourceItemResponse($server, $allowedResourceId, '');
 		}
 
 		foreach ($user->Groups() as $group)
 		{
+<<<<<<< HEAD
 			$this->groups[] = new UserGroupItemResponse($server, $group->GroupId, $group->GroupName);
+=======
+			$this->groups[] = new GroupItemResponse($server, $group->GroupId, $group->GroupName);
+>>>>>>> old/master
 		}
 
 		if ($user->GetIsCalendarSubscriptionAllowed())
@@ -100,6 +116,7 @@ class UserResponse extends RestResponse
 	}
 }
 
+<<<<<<< HEAD
 class UserGroupItemResponse extends RestResponse
 {
     /**
@@ -135,6 +152,8 @@ class UserGroupItemResponse extends RestResponse
     }
 }
 
+=======
+>>>>>>> old/master
 class ExampleUserResponse extends UserResponse
 {
 	public function __construct()
@@ -155,11 +174,16 @@ class ExampleUserResponse extends UserResponse
 		$this->icsUrl = 'webcal://url/to/calendar';
 		$this->customAttributes = array(CustomAttributeResponse::Example());
 		$this->permissions = array(ResourceItemResponse::Example());
+<<<<<<< HEAD
 		$this->groups = array(UserGroupItemResponse::Example());
+=======
+		$this->groups = array(GroupItemResponse::Example());
+>>>>>>> old/master
 		$this->defaultScheduleId = 1;
 		$this->currentCredits = '2.50';
 		$this->reservationColor = '#000000';
 	}
+<<<<<<< HEAD
 }
 
 class ExampleUserGroupItemResponse extends UserGroupItemResponse
@@ -169,4 +193,6 @@ class ExampleUserGroupItemResponse extends UserGroupItemResponse
         $this->id = 1;
         $this->name = 'group name';
     }
+=======
+>>>>>>> old/master
 }

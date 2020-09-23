@@ -2,13 +2,18 @@
 /**
  * Smarty shared plugin
  *
+<<<<<<< HEAD
  * @package    Smarty
+=======
+ * @package Smarty
+>>>>>>> old/master
  * @subpackage PluginsShared
  */
 
 /**
  * convert characters to their decimal unicode equivalents
  *
+<<<<<<< HEAD
  * @link   http://www.ibm.com/developerworks/library/os-php-unicode/index.html#listing3 for inspiration
  *
  * @param string $string   characters to calculate unicode of
@@ -18,6 +23,15 @@
  * @author Rodney Rehm
  */
 function smarty_mb_to_unicode($string, $encoding = null)
+=======
+ * @link http://www.ibm.com/developerworks/library/os-php-unicode/index.html#listing3 for inspiration
+ * @param string $string   characters to calculate unicode of
+ * @param string $encoding encoding of $string, if null mb_internal_encoding() is used
+ * @return array sequence of unicodes
+ * @author Rodney Rehm
+ */
+function smarty_mb_to_unicode($string, $encoding=null)
+>>>>>>> old/master
 {
     if ($encoding) {
         $expanded = mb_convert_encoding($string, "UTF-32BE", $encoding);
@@ -31,6 +45,7 @@ function smarty_mb_to_unicode($string, $encoding = null)
 /**
  * convert unicodes to the character of given encoding
  *
+<<<<<<< HEAD
  * @link   http://www.ibm.com/developerworks/library/os-php-unicode/index.html#listing3 for inspiration
  *
  * @param integer|array $unicode  single unicode or list of unicodes to convert
@@ -40,6 +55,15 @@ function smarty_mb_to_unicode($string, $encoding = null)
  * @author Rodney Rehm
  */
 function smarty_mb_from_unicode($unicode, $encoding = null)
+=======
+ * @link http://www.ibm.com/developerworks/library/os-php-unicode/index.html#listing3 for inspiration
+ * @param integer|array $unicode  single unicode or list of unicodes to convert
+ * @param string        $encoding encoding of returned string, if null mb_internal_encoding() is used
+ * @return string unicode as character sequence in given $encoding
+ * @author Rodney Rehm
+ */
+function smarty_mb_from_unicode($unicode, $encoding=null)
+>>>>>>> old/master
 {
     $t = '';
     if (!$encoding) {

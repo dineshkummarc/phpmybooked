@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -78,7 +82,11 @@ class UploadedFile
 		$content = fread($fp, filesize($tmpName));
 		fclose($fp);
 
+<<<<<<< HEAD
 		return trim($content);
+=======
+		return $content;
+>>>>>>> old/master
 	}
 
 	public function IsError()

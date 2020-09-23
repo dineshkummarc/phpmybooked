@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -33,11 +37,14 @@ interface IReservationDeletePage extends IReservationSaveResultsView
 	 * @return SeriesUpdateScope|string
 	 */
 	public function GetSeriesUpdateScope();
+<<<<<<< HEAD
 
     /**
      * @return string
      */
     public function GetReason();
+=======
+>>>>>>> old/master
 }
 
 class ReservationDeletePage extends SecurePage implements IReservationDeletePage
@@ -108,35 +115,68 @@ class ReservationDeletePage extends SecurePage implements IReservationDeletePage
 		return $this->GetForm(FormKeys::SERIES_UPDATE_SCOPE);
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * @param array|string[] $messages
+	 */
+>>>>>>> old/master
 	public function SetRetryMessages($messages)
 	{
 		// no-op
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * @param bool $canBeRetried
+	 */
+>>>>>>> old/master
 	public function SetCanBeRetried($canBeRetried)
 	{
 		// no-op
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * @param ReservationRetryParameter[] $retryParameters
+	 */
+>>>>>>> old/master
 	public function SetRetryParameters($retryParameters)
 	{
 		// no-op
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * @return ReservationRetryParameter[]
+	 */
+>>>>>>> old/master
 	public function GetRetryParameters()
 	{
 		// no-op
 	}
 
+<<<<<<< HEAD
+=======
+    /**
+     * @param bool $canJoinWaitlist
+     */
+>>>>>>> old/master
     public function SetCanJoinWaitList($canJoinWaitlist)
     {
         // no-op
     }
+<<<<<<< HEAD
 
     public function GetReason()
     {
        return $this->GetForm(FormKeys::DELETE_REASON);
     }
+=======
+>>>>>>> old/master
 }
 
 class ReservationDeleteJsonPage extends ReservationDeletePage implements IReservationDeletePage
@@ -149,7 +189,11 @@ class ReservationDeleteJsonPage extends ReservationDeletePage implements IReserv
 	public function PageLoad()
 	{
 		$reservation = $this->presenter->BuildReservation();
+<<<<<<< HEAD
         $this->presenter->HandleReservation($reservation);
+=======
+		$this->presenter->HandleReservation($reservation);
+>>>>>>> old/master
 	}
 
 	/**

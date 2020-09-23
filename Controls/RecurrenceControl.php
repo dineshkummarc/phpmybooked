@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2012-2020 Nick Korbel
+=======
+Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -31,7 +35,10 @@ class RecurrenceControl extends Control
 						'weekly' => array('key' => 'Weekly', 'everyKey' => 'weeks'),
 						'monthly' => array('key' => 'Monthly', 'everyKey' => 'months'),
 						'yearly' => array('key' => 'Yearly', 'everyKey' => 'years'),
+<<<<<<< HEAD
 						'custom' => array('key' => 'Custom', 'everyKey' => 'custom'),
+=======
+>>>>>>> old/master
 								)
 		);
 		$this->Set('DayNames', array(

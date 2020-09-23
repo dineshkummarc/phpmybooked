@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2012-2020 Nick Korbel
+=======
+Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -87,6 +91,7 @@ class Url
         return $this->url;
     }
 
+<<<<<<< HEAD
     /**
      * @return Url
      */
@@ -95,5 +100,7 @@ class Url
         return new Url($this->ToString());
     }
 
+=======
+>>>>>>> old/master
 }
 

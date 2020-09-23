@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  Copyright 2013-2020 Nick Korbel
+=======
+ Copyright 2013-2016 Nick Korbel
+>>>>>>> old/master
 
  This file is part of Booked Scheduler.
 
@@ -21,10 +25,15 @@
 class UserPreferences
 {
 	const RESERVATION_COLOR = 'ReservationColor';
+<<<<<<< HEAD
 	const REPORT_COLUMNS = 'ReportColumns';
     const CALENDAR_FILTER = 'CalendarFilter';
 
     private $preferences = array();
+=======
+
+	private $preferences = array();
+>>>>>>> old/master
 	private $changed = array();
 	private $added = array();
 

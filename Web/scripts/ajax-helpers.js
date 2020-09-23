@@ -44,29 +44,47 @@ function HasResponseText(responseText) {
 }
 
 function ConfigureAsyncForm(formElement, urlCallback, successHandler, responseHandler, options) {
+<<<<<<< HEAD
 
+=======
+	var validationSummary = formElement.find('.validationSummary');
+>>>>>>> old/master
 	var beforeSerialize = (options ? options.onBeforeSerialize : null);
 	var opts = $.extend(
 			{
 				dataType: null,
 				onBeforeSubmit: BeforeFormSubmit,
 				target: null,
+<<<<<<< HEAD
 				validationSummary: null
+=======
+				validationSummary: validationSummary.length > 0 ? validationSummary : null
+>>>>>>> old/master
 			}, options);
 
 	opts.onBeforeSerialize = BeforeSerializeDecorator(beforeSerialize);
 
     var getAction = function(form) {
         var action = $(form).attr('action');
+<<<<<<< HEAD
         var ajaxAction = $(form).attr('ajaxAction');
 
         return _.isEmpty(action) ? (window.location.href.split('?')[0] + '?action=' + ajaxAction) : action;
+=======
+        var ajaxAction = $(form).attr('ajax-action');
+
+        return _.isEmpty(action) ? ajaxAction : action;
+>>>>>>> old/master
     };
 
 	formElement.submit(function () {
 
 		var submitOptions = {
+<<<<<<< HEAD
 			url: urlCallback ? urlCallback(formElement) : getAction(formElement),
+=======
+			url: urlCallback ? urlCallback(formElement) : getAction(formElement) ,
+>>>>>>> old/master
 			beforeSubmit: opts.onBeforeSubmit,
 			beforeSerialize: opts.onBeforeSerialize,
 			dataType: opts.dataType,
@@ -75,8 +93,12 @@ function ConfigureAsyncForm(formElement, urlCallback, successHandler, responseHa
 				formElement.find('.indicator').addClass('no-show');
 				formElement.find('button').removeClass('no-show');
 
+<<<<<<< HEAD
 				var formValidationSummary = formElement.find('.validationSummary');
 				var validationSummary = opts.validationSummary || formValidationSummary;
+=======
+				var validationSummary = opts.validationSummary;
+>>>>>>> old/master
 				var hasValidationSummary = validationSummary && validationSummary.length > 0;
 				var hasResponseText = HasResponseText(responseText);
 
@@ -110,7 +132,11 @@ function ConfigureAsyncForm(formElement, urlCallback, successHandler, responseHa
 							}
 							else
 							{
+<<<<<<< HEAD
 								validationSummary.find('ul').empty().append($('<li/>', {text: responseText.Messages[errorId]}));
+=======
+								validationSummary.find('ul').append($('<li/>', {text: responseText.Messages[errorId]}))
+>>>>>>> old/master
 							}
 						}
 						errorElement.removeClass('no-show');
@@ -191,7 +217,11 @@ function ConfigureUploadForm(buttonElement, urlCallback, preSubmitCallback, succ
 function BeforeFormSubmit(formData, jqForm, opts) {
 	var isValid = true;
 	$(jqForm).find('.required').each(function (index, ele) {
+<<<<<<< HEAD
 		if ($(ele).is(':visible') && $(ele).val() == '' && $(ele).attr('disabled')!='disabled' )
+=======
+		if ($(ele).is(':visible') && $(ele).val() == '')
+>>>>>>> old/master
 		{
 			isValid = false;
 			$(ele).closest('.form-group').addClass('has-error');
@@ -303,6 +333,7 @@ function ClearAsyncErrors(element) {
 
 function HtmlDecode(encoded) {
 	return $('<textarea/>').html(encoded).val();
+<<<<<<< HEAD
 }
 
 function ajaxPagination(element, callback){
@@ -311,4 +342,6 @@ function ajaxPagination(element, callback){
         var a = $(e.target);
         callback(a.data('page'), a.data('page-size'));
     });
+=======
+>>>>>>> old/master
 }

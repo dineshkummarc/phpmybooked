@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2012-2020 Nick Korbel
+=======
+Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -31,6 +35,7 @@ class TableNames
     const SCHEDULES_ALIAS = 's';
     const USERS = 'users';
     const USERS_ALIAS = 'u';
+<<<<<<< HEAD
     const RESERVATION_INSTANCES_ALIAS = 'ri';
     const BLACKOUT_INSTANCES_ALIAS = 'bi';
     const RESERVATION_INSTANCES = 'reservation_instances';
@@ -39,4 +44,6 @@ class TableNames
     const BLACKOUT_SERIES = 'blackout_series';
     const RESERVATION_RESOURCES = 'reservation_resources';
     const BLACKOUT_SERIES_RESOURCES = 'blackout_series_resources';
+=======
+>>>>>>> old/master
 }

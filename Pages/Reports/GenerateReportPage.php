@@ -1,5 +1,6 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2012-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
@@ -16,13 +17,34 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
+=======
+Copyright 2012-2016 Nick Korbel
+
+This file is part of Booked Scheduler.
+
+Booked Scheduler is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Booked Scheduler is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
+>>>>>>> old/master
  */
 
 require_once(ROOT_DIR . 'Pages/SecurePage.php');
 require_once(ROOT_DIR . 'Pages/Reports/IDisplayableReportPage.php');
 require_once(ROOT_DIR . 'Pages/Ajax/AutoCompletePage.php');
 require_once(ROOT_DIR . 'Presenters/Reports/GenerateReportPresenter.php');
+<<<<<<< HEAD
 require_once(ROOT_DIR . 'Presenters/Reports/ReportCsvColumnView.php');
+=======
+>>>>>>> old/master
 
 interface IGenerateReportPage extends IDisplayableReportPage, IActionPage
 {
@@ -57,6 +79,7 @@ interface IGenerateReportPage extends IDisplayableReportPage, IActionPage
 	public function GetEnd();
 
 	/**
+<<<<<<< HEAD
 	 * @return int[]
 	 */
 	public function GetResourceIds();
@@ -75,6 +98,21 @@ interface IGenerateReportPage extends IDisplayableReportPage, IActionPage
 	 * @return int[]
 	 */
 	public function GetScheduleIds();
+=======
+	 * @return int
+	 */
+	public function GetResourceId();
+
+	/**
+	 * @return int
+	 */
+	public function GetAccessoryId();
+
+	/**
+	 * @return int
+	 */
+	public function GetScheduleId();
+>>>>>>> old/master
 
 	/**
 	 * @return int
@@ -87,9 +125,15 @@ interface IGenerateReportPage extends IDisplayableReportPage, IActionPage
 	public function GetParticipantId();
 
 	/**
+<<<<<<< HEAD
 	 * @return int[]
 	 */
 	public function GetGroupIds();
+=======
+	 * @return int
+	 */
+	public function GetGroupId();
+>>>>>>> old/master
 
 	/**
 	 * @return string
@@ -120,6 +164,7 @@ interface IGenerateReportPage extends IDisplayableReportPage, IActionPage
 	 * @return bool
 	 */
 	public function GetIncludeDeleted();
+<<<<<<< HEAD
 
 	/**
 	 * @param ResourceType[] $resourceTypes
@@ -130,6 +175,8 @@ interface IGenerateReportPage extends IDisplayableReportPage, IActionPage
 	 * @return string
 	 */
 	public function GetSelectedColumns();
+=======
+>>>>>>> old/master
 }
 
 class GenerateReportPage extends ActionPage implements IGenerateReportPage
@@ -143,6 +190,7 @@ class GenerateReportPage extends ActionPage implements IGenerateReportPage
 	{
 		parent::__construct('Reports', 1);
 		$this->presenter = new GenerateReportPresenter(
+<<<<<<< HEAD
 				$this,
 				ServiceLocator::GetServer()->GetUserSession(),
 				new ReportingService(new ReportingRepository()),
@@ -152,16 +200,37 @@ class GenerateReportPage extends ActionPage implements IGenerateReportPage
 				new UserRepository());
 	}
 
+=======
+			$this,
+			ServiceLocator::GetServer()->GetUserSession(),
+			new ReportingService(new ReportingRepository()),
+			new ResourceRepository(),
+			new ScheduleRepository(),
+			new GroupRepository());
+	}
+
+	/**
+	 * @return void
+	 */
+>>>>>>> old/master
 	public function ProcessAction()
 	{
 		$this->presenter->ProcessAction();
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * @param $dataRequest string
+	 * @return void
+	 */
+>>>>>>> old/master
 	public function ProcessDataRequest($dataRequest)
 	{
 		// no-op
 	}
 
+<<<<<<< HEAD
 	public function ProcessPageLoad()
 	{
 		$this->presenter->PageLoad();
@@ -169,36 +238,81 @@ class GenerateReportPage extends ActionPage implements IGenerateReportPage
 		$this->Display('Reports/generate-report.tpl');
 	}
 
+=======
+	/**
+	 * @return void
+	 */
+	public function ProcessPageLoad()
+	{
+		$this->presenter->PageLoad();
+		$this->Display('Reports/generate-report.tpl');
+	}
+
+	/**
+	 * @return string|Report_Usage
+	 */
+>>>>>>> old/master
 	public function GetUsage()
 	{
 		return $this->GetValue(FormKeys::REPORT_USAGE);
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * @return string|Report_ResultSelection
+	 */
+>>>>>>> old/master
 	public function GetResultSelection()
 	{
 		return $this->GetValue(FormKeys::REPORT_RESULTS);
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * @return string|Report_GroupBy
+	 */
+>>>>>>> old/master
 	public function GetGroupBy()
 	{
 		return $this->GetValue(FormKeys::REPORT_GROUPBY);
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * @return string|Report_Range
+	 */
+>>>>>>> old/master
 	public function GetRange()
 	{
 		return $this->GetValue(FormKeys::REPORT_RANGE);
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * @return string
+	 */
+>>>>>>> old/master
 	public function GetStart()
 	{
 		return $this->GetValue(FormKeys::REPORT_START);
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * @return string
+	 */
+>>>>>>> old/master
 	public function GetEnd()
 	{
 		return $this->GetValue(FormKeys::REPORT_END);
 	}
 
+<<<<<<< HEAD
 	public function GetResourceIds()
 	{
         return $this->GetMultiFormValue(FormKeys::RESOURCE_ID);
@@ -214,16 +328,44 @@ class GenerateReportPage extends ActionPage implements IGenerateReportPage
         return $this->GetMultiFormValue(FormKeys::SCHEDULE_ID);
 	}
 
+=======
+	/**
+	 * @return int
+	 */
+	public function GetResourceId()
+	{
+		return $this->GetValue(FormKeys::RESOURCE_ID);
+	}
+
+	/**
+	 * @return int
+	 */
+	public function GetScheduleId()
+	{
+		return $this->GetValue(FormKeys::SCHEDULE_ID);
+	}
+
+	/**
+	 * @return int
+	 */
+>>>>>>> old/master
 	public function GetUserId()
 	{
 		return $this->GetValue(FormKeys::USER_ID);
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * @return int
+	 */
+>>>>>>> old/master
 	public function GetParticipantId()
 	{
 		return $this->GetValue(FormKeys::PARTICIPANT_ID);
 	}
 
+<<<<<<< HEAD
 	public function GetGroupIds()
 	{
         return $this->GetMultiFormValue(FormKeys::GROUP_ID);
@@ -246,31 +388,73 @@ class GenerateReportPage extends ActionPage implements IGenerateReportPage
 		$this->Set('SelectedColumns', $selectedColumns);
 	}
 
+=======
+	/**
+	 * @return int
+	 */
+	public function GetGroupId()
+	{
+		return $this->GetValue(FormKeys::GROUP_ID);
+	}
+
+	public function BindReport(IReport $report, IReportDefinition $definition)
+	{
+		$this->Set('Definition', $definition);
+		$this->Set('Report', $report);
+	}
+
+	/**
+	 * @param array|BookableResource[] $resources
+	 */
+>>>>>>> old/master
 	public function BindResources($resources)
 	{
 		$this->Set('Resources', $resources);
 	}
 
+<<<<<<< HEAD
 	public function BindResourceTypes($resourceTypes)
 	{
 		$this->Set('ResourceTypes', $resourceTypes);
 	}
 
+=======
+	/**
+	 * @param array|AccessoryDto[] $accessories
+	 */
+>>>>>>> old/master
 	public function BindAccessories($accessories)
 	{
 		$this->Set('Accessories', $accessories);
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * @param array|Schedule[] $schedules
+	 */
+>>>>>>> old/master
 	public function BindSchedules($schedules)
 	{
 		$this->Set('Schedules', $schedules);
 	}
 
+<<<<<<< HEAD
 	public function GetAccessoryIds()
+=======
+	/**
+	 * @return int
+	 */
+	public function GetAccessoryId()
+>>>>>>> old/master
 	{
 		return $this->GetValue(FormKeys::ACCESSORY_ID);
 	}
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> old/master
 	public function GetReportName()
 	{
 		return $this->GetForm(FormKeys::REPORT_NAME);
@@ -290,7 +474,10 @@ class GenerateReportPage extends ActionPage implements IGenerateReportPage
 
 	public function ShowCsv()
 	{
+<<<<<<< HEAD
 		$this->Set('ReportCsvColumnView', new ReportCsvColumnView($this->GetVar('SelectedColumns')));
+=======
+>>>>>>> old/master
 		$this->DisplayCsv('Reports/custom-csv.tpl', 'report.csv');
 	}
 
@@ -306,10 +493,19 @@ class GenerateReportPage extends ActionPage implements IGenerateReportPage
 
 	public function PrintReport()
 	{
+<<<<<<< HEAD
         $this->Set('ReportCsvColumnView', new ReportCsvColumnView($this->GetVar('SelectedColumns')));
         $this->Display('Reports/print-custom-report.tpl');
 	}
 
+=======
+		$this->Display('Reports/print-custom-report.tpl');
+	}
+
+	/**
+	 * @param array|GroupItemView[] $groups
+	 */
+>>>>>>> old/master
 	public function BindGroups($groups)
 	{
 		$this->Set('Groups', $groups);
@@ -320,10 +516,13 @@ class GenerateReportPage extends ActionPage implements IGenerateReportPage
 		$include = $this->GetValue(FormKeys::INCLUDE_DELETED);
 		return isset($include);
 	}
+<<<<<<< HEAD
 
 	public function GetSelectedColumns()
 	{
 		return $this->GetForm(FormKeys::SELECTED_COLUMNS);
 	}
+=======
+>>>>>>> old/master
 }
 

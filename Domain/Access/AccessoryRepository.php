@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -72,8 +76,11 @@ class AccessoryRepository implements IAccessoryRepository
 				$accessory->AddResource($row[ColumnNames::RESOURCE_ID], $row[ColumnNames::ACCESSORY_MINIMUM_QUANTITY], $row[ColumnNames::ACCESSORY_MAXIMUM_QUANTITY]);
 			}
 
+<<<<<<< HEAD
 			$reader->Free();
 
+=======
+>>>>>>> old/master
 			return $accessory;
 		}
 
@@ -139,7 +146,10 @@ class AccessoryRepository implements IAccessoryRepository
 			$accessories[] = $accessory;
 		}
 
+<<<<<<< HEAD
 		$reader->Free();
+=======
+>>>>>>> old/master
 		return $accessories;
 	}
 }

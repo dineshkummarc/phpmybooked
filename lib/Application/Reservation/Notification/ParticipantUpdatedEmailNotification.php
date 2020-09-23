@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2017-2020 Nick Korbel
+=======
+Copyright 2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -50,7 +54,11 @@ class ParticipantUpdatedEmailNotification extends ParticipantAddedEmailNotificat
 			{
 				$participant = $this->userRepository->LoadById($userId);
 
+<<<<<<< HEAD
 				$message = new ParticipantUpdatedEmail($owner, $participant, $reservationSeries, $this->attributeRepository, $this->userRepository);
+=======
+				$message = new ParticipantUpdatedEmail($owner, $participant, $reservationSeries, $this->attributeRepository);
+>>>>>>> old/master
 				ServiceLocator::GetEmailService()->Send($message);
 			}
 
@@ -58,7 +66,11 @@ class ParticipantUpdatedEmailNotification extends ParticipantAddedEmailNotificat
 			{
 				$participant = $this->userRepository->LoadById($userId);
 
+<<<<<<< HEAD
 				$message = new ParticipantDeletedEmail($owner, $participant, $reservationSeries, $this->attributeRepository, $this->userRepository);
+=======
+				$message = new ParticipantDeletedEmail($owner, $participant, $reservationSeries, $this->attributeRepository);
+>>>>>>> old/master
 				ServiceLocator::GetEmailService()->Send($message);
 			}
 		}

@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -26,9 +30,12 @@ class Announcement
     private $Start;
     private $End;
     private $Priority;
+<<<<<<< HEAD
     private $GroupIds = [];
     private $ResourceIds = [];
     private $DisplayPage;
+=======
+>>>>>>> old/master
 
     /**
      * @return int
@@ -86,6 +93,7 @@ class Announcement
         return empty($this->ResourceIds) ? array() : $this->ResourceIds;
     }
 
+<<<<<<< HEAD
     /**
      * @return int
      */
@@ -99,13 +107,21 @@ class Announcement
         $this->Id = $id;
         $text = str_replace('&lt;script&gt;', '', $text);
         $text = str_replace('&lt;/script&gt;', '', $text);
+=======
+    public function __construct($id, $text, Date $start, Date $end, $priority, $groupIds, $resourceIds)
+    {
+        $this->Id = $id;
+>>>>>>> old/master
         $this->Text = $text;
         $this->Start = $start;
         $this->End = $end;
         $this->Priority = $priority;
         $this->GroupIds = $groupIds;
         $this->ResourceIds = $resourceIds;
+<<<<<<< HEAD
         $this->DisplayPage = $displayPage;
+=======
+>>>>>>> old/master
     }
 
     public static function FromRow($row)
@@ -120,8 +136,12 @@ class Announcement
             Date::FromDatabase($row[ColumnNames::ANNOUNCEMENT_END]),
             $row[ColumnNames::ANNOUNCEMENT_PRIORITY],
             empty($groupIds) ? array() : explode(',', $groupIds),
+<<<<<<< HEAD
             empty($resourceIds) ? array() : explode(',', $resourceIds),
             $row[ColumnNames::ANNOUNCEMENT_DISPLAY_PAGE]
+=======
+            empty($resourceIds) ? array() : explode(',', $resourceIds)
+>>>>>>> old/master
         );
     }
 
@@ -133,15 +153,25 @@ class Announcement
      * @param int $priority
      * @param int[] $groupIds
      * @param int[] $resourceIds
+<<<<<<< HEAD
      * @param int $displayPage
      * @return Announcement
      */
     public static function Create($text, Date $start, Date $end, $priority, $groupIds, $resourceIds, $displayPage)
+=======
+     * @return Announcement
+     */
+    public static function Create($text, Date $start, Date $end, $priority, $groupIds, $resourceIds)
+>>>>>>> old/master
     {
         if (empty($priority)) {
             $priority = null;
         }
+<<<<<<< HEAD
         return new Announcement(null, $text, $start, $end, $priority, $groupIds, $resourceIds, $displayPage);
+=======
+        return new Announcement(null, $text, $start, $end, $priority, $groupIds, $resourceIds);
+>>>>>>> old/master
     }
 
     /**
@@ -171,6 +201,7 @@ class Announcement
     }
 
     /**
+<<<<<<< HEAD
      * @param int[] $groupIds
      */
     public function SetGroups($groupIds)
@@ -187,6 +218,8 @@ class Announcement
     }
 
     /**
+=======
+>>>>>>> old/master
      * @param UserSession $user
      * @param IPermissionService $permissionService
      * @return bool
@@ -199,15 +232,29 @@ class Announcement
         $allowedForGroup = empty($groupIds);
         $allowedForResource = empty($resourceIds);
 
+<<<<<<< HEAD
         foreach ($this->ResourceIds() as $resourceId) {
             if ($permissionService->CanAccessResource(new AnnouncementResource($resourceId), $user)) {
+=======
+        foreach ($this->ResourceIds() as $resourceId)
+        {
+            if ($permissionService->CanAccessResource(new AnnouncementResource($resourceId), $user))
+            {
+>>>>>>> old/master
                 $allowedForResource = true;
                 break;
             }
         }
 
+<<<<<<< HEAD
         foreach ($this->GroupIds() as $groupId) {
             if (in_array($groupId, $user->Groups)) {
+=======
+        foreach ($this->GroupIds() as $groupId)
+        {
+            if (in_array($groupId, $user->Groups))
+            {
+>>>>>>> old/master
                 $allowedForGroup = true;
                 break;
             }
@@ -215,6 +262,7 @@ class Announcement
 
         return $allowedForGroup && $allowedForResource;
     }
+<<<<<<< HEAD
 
     /**
      * @return bool
@@ -223,6 +271,8 @@ class Announcement
     {
         return $this->DisplayPage() == 1;
     }
+=======
+>>>>>>> old/master
 }
 
 class AnnouncementResource implements IPermissibleResource

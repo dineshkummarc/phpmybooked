@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -60,11 +64,14 @@ interface IExistingReservationPage extends IReservationPage
 	function SetRepeatWeekdays($repeatWeekdays);
 
 	/**
+<<<<<<< HEAD
 	 * @param $customRepeatDates Date[]
 	 */
 	function SetCustomRepeatDates($customRepeatDates);
 
 	/**
+=======
+>>>>>>> old/master
 	 * @param $referenceNumber string
 	 */
 	function SetReferenceNumber($referenceNumber);
@@ -107,6 +114,21 @@ interface IExistingReservationPage extends IReservationPage
 	function SetCurrentUserInvited($amIInvited);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @param int $reminderValue
+	 * @param ReservationReminderInterval $reminderInterval
+	 */
+	public function SetStartReminder($reminderValue, $reminderInterval);
+
+	/**
+	 * @param int $reminderValue
+	 * @param ReservationReminderInterval $reminderInterval
+	 */
+	public function SetEndReminder($reminderValue, $reminderInterval);
+
+	/**
+>>>>>>> old/master
 	 * @param bool $canAlterParticipation
 	 */
 	public function SetCanAlterParticipation($canAlterParticipation);
@@ -135,11 +157,14 @@ interface IExistingReservationPage extends IReservationPage
 	 * @param string[] $invitedGuests
 	 */
 	public function SetInvitedGuests($invitedGuests);
+<<<<<<< HEAD
 
 	/**
 	 * @param bool $requiresApproval
 	 */
 	public function SetRequiresApproval($requiresApproval);
+=======
+>>>>>>> old/master
 }
 
 class ExistingReservationPage extends ReservationPage implements IExistingReservationPage
@@ -154,13 +179,20 @@ class ExistingReservationPage extends ReservationPage implements IExistingReserv
 
 	public function PageLoad()
 	{
+<<<<<<< HEAD
 	    $this->Set('CanJoinWaitList', Configuration::Instance()->GetSectionKey(ConfigSection::RESERVATION, ConfigKeys::RESERVATION_ALLOW_WAITLIST, new BooleanConverter()));
+=======
+>>>>>>> old/master
 		parent::PageLoad();
 	}
 
 	protected function GetPresenter()
 	{
+<<<<<<< HEAD
 		$preconditionService = new EditReservationPreconditionService();
+=======
+		$preconditionService = new EditReservationPreconditionService($this->permissionServiceFactory);
+>>>>>>> old/master
 		$reservationViewRepository = new ReservationViewRepository();
 
 		return new EditReservationPresenter($this,
@@ -173,7 +205,11 @@ class ExistingReservationPage extends ReservationPage implements IExistingReserv
 	{
 		$readOnly = $this->GetQuerystring(QueryStringKeys::READ_ONLY) == 1;
 
+<<<<<<< HEAD
 		if (!$readOnly && $this->IsApprovable && !$this->UpdatingBeforeApproving())
+=======
+		if (!$readOnly && $this->IsApprovable)
+>>>>>>> old/master
 		{
 			return 'Reservation/approve.tpl';
 		}
@@ -184,6 +220,7 @@ class ExistingReservationPage extends ReservationPage implements IExistingReserv
 		return 'Reservation/view.tpl';
 	}
 
+<<<<<<< HEAD
     protected function UpdatingBeforeApproving()
     {
         $forceUpdate = $this->GetQuerystring('update');
@@ -200,6 +237,8 @@ class ExistingReservationPage extends ReservationPage implements IExistingReserv
         return parent::GetReturnUrl();
     }
 
+=======
+>>>>>>> old/master
 	protected function GetReservationAction()
 	{
 		return ReservationAction::Update;
@@ -245,11 +284,14 @@ class ExistingReservationPage extends ReservationPage implements IExistingReserv
 		$this->Set('RepeatWeekdays', $repeatWeekdays);
 	}
 
+<<<<<<< HEAD
     public function SetCustomRepeatDates($customRepeatDates)
     {
         $this->Set('CustomRepeatDates', $customRepeatDates);
     }
 
+=======
+>>>>>>> old/master
 	public function SetReferenceNumber($referenceNumber)
 	{
 		$this->Set('ReferenceNumber', $referenceNumber);
@@ -290,6 +332,21 @@ class ExistingReservationPage extends ReservationPage implements IExistingReserv
 		$this->IsApprovable = $canBeApproved;
 	}
 
+<<<<<<< HEAD
+=======
+	public function SetStartReminder($reminderValue, $reminderInterval)
+	{
+		$this->Set('ReminderTimeStart', $reminderValue);
+		$this->Set('ReminderIntervalStart', $reminderInterval);
+	}
+
+	public function SetEndReminder($reminderValue, $reminderInterval)
+	{
+		$this->Set('ReminderTimeEnd', $reminderValue);
+		$this->Set('ReminderIntervalEnd', $reminderInterval);
+	}
+
+>>>>>>> old/master
 	public function SetCanAlterParticipation($canAlterParticipation)
 	{
 		$this->Set('CanAlterParticipation', $canAlterParticipation);
@@ -310,15 +367,28 @@ class ExistingReservationPage extends ReservationPage implements IExistingReserv
 		$this->Set('AutoReleaseMinutes', $autoReleaseMinutes);
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * @param string[] $participatingGuests
+	 */
+>>>>>>> old/master
 	public function SetParticipatingGuests($participatingGuests)
 	{
 		$this->Set('ParticipatingGuests', $participatingGuests);
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * @param string[] $invitedGuests
+	 */
+>>>>>>> old/master
 	public function SetInvitedGuests($invitedGuests)
 	{
 		$this->Set('InvitedGuests', $invitedGuests);
 	}
+<<<<<<< HEAD
 
 	public function SetRequiresApproval($requiresApproval)
 	{
@@ -329,6 +399,8 @@ class ExistingReservationPage extends ReservationPage implements IExistingReserv
     {
         $this->Set('TermsAccepted', $accepted);
     }
+=======
+>>>>>>> old/master
 }
 
 class DuplicateReservationPage extends ExistingReservationPage
@@ -365,9 +437,12 @@ class DuplicateReservationPage extends ExistingReservationPage
 	{
 		return urldecode($this->GetQuerystring(QueryStringKeys::REDIRECT));
 	}
+<<<<<<< HEAD
 
     public function SetTermsAccepted($accepted)
     {
         $this->Set('TermsAccepted', false);
     }
+=======
+>>>>>>> old/master
 }

@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -44,7 +48,11 @@ class PermissionValidationRule implements IReservationValidationRule
 
 		foreach ($resourceIds as $resourceId)
 		{
+<<<<<<< HEAD
 			if (!$permissionService->CanBookResource(new ReservationResource($resourceId), $reservationSeries->BookedBy()))
+=======
+			if (!$permissionService->CanAccessResource(new ReservationResource($resourceId), $reservationSeries->BookedBy()))
+>>>>>>> old/master
 			{
 				return new ReservationRuleResult(false, Resources::GetInstance()->GetString('NoResourcePermission'));
 			}

@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -187,7 +191,11 @@ interface IResourceRepository
 	 * @param int|null $pageSize
 	 * @param ISqlFilter|null $filter
 	 * @param int $accountStatus
+<<<<<<< HEAD
 	 * @return PageableData|UserPermissionItemView[]
+=======
+	 * @return PageableData|UserItemView[]
+>>>>>>> old/master
 	 */
 	public function GetUsersWithPermission($resourceId, $pageNumber = null, $pageSize = null, $filter = null, $accountStatus = AccountStatus::ACTIVE);
 
@@ -197,7 +205,11 @@ interface IResourceRepository
 	 * @param int|null $pageSize
 	 * @param ISqlFilter|null $filter
 	 * @param int $accountStatus
+<<<<<<< HEAD
 	 * @return PageableData|UserPermissionItemView[]
+=======
+	 * @return PageableData|UserItemView[]
+>>>>>>> old/master
 	 */
 	public function GetUsersWithPermissionsIncludingGroups($resourceId, $pageNumber = null, $pageSize = null, $filter = null, $accountStatus = AccountStatus::ACTIVE);
 
@@ -206,13 +218,18 @@ interface IResourceRepository
 	 * @param int|null $pageNumber
 	 * @param int|null $pageSize
 	 * @param ISqlFilter|null $filter
+<<<<<<< HEAD
 	 * @return PageableData|GroupPermissionItemView[]
+=======
+	 * @return PageableData|GroupItemView[]
+>>>>>>> old/master
 	 */
 	public function GetGroupsWithPermission($resourceId, $pageNumber = null, $pageSize = null, $filter = null);
 
 	/**
 	 * @param int $resourceId
 	 * @param int $userId
+<<<<<<< HEAD
      * @param int $type
 	 */
 	public function ChangeResourceUserPermission($resourceId, $userId, $type);
@@ -228,5 +245,27 @@ interface IResourceRepository
      * @return array all public resource ids in key value id=>publicid
      */
     public function GetPublicResourceIds();
+=======
+	 */
+	public function AddResourceUserPermission($resourceId, $userId);
+
+	/**
+	 * @param int $resourceId
+	 * @param int $userId
+	 */
+	public function RemoveResourceUserPermission($resourceId, $userId);
+
+	/**
+	 * @param $resourceId
+	 * @param $groupId
+	 */
+	public function AddResourceGroupPermission($resourceId, $groupId);
+
+	/**
+	 * @param $resourceId
+	 * @param $groupId
+	 */
+	public function RemoveResourceGroupPermission($resourceId, $groupId);
+>>>>>>> old/master
 
 }

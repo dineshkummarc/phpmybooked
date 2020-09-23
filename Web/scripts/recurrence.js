@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  Copyright 2012-2020 Nick Korbel
+=======
+ Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
 
  This file is part of Booked Scheduler.
 
@@ -18,6 +22,7 @@
  */
 
 function Recurrence(recurOptions, recurElements, prefix) {
+<<<<<<< HEAD
     prefix = prefix || '';
     var e = {
         repeatOptions: $('#' + prefix + 'repeatOptions'),
@@ -286,4 +291,198 @@ function Recurrence(recurOptions, recurElements, prefix) {
         DisplayRepeatDates();
         NotifyChange();
     };
+=======
+	prefix = prefix || '';
+	var e = {
+		repeatOptions:$('#' + prefix + 'repeatOptions'),
+		repeatDiv:$('#' + prefix + 'repeatDiv'),
+		repeatInterval:$('#' + prefix + 'repeatInterval'),
+		repeatTermination:$('#' + prefix + 'formattedEndRepeat'),
+		repeatTerminationTextbox:$('#' + prefix + 'EndRepeat'),
+		beginDate: $('#' + prefix + 'formattedBeginDate'),
+		endDate: $('#' + prefix + 'formattedEndDate'),
+		beginTime: $('#' + prefix + 'BeginPeriod'),
+		endTime: $('#' + prefix + 'EndPeriod'),
+        repeatOnWeeklyDiv: $('#' + prefix + 'repeatOnWeeklyDiv')
+	};
+
+	var options = recurOptions;
+
+	var elements = $.extend(e, recurElements);
+
+	var repeatToggled = false;
+	var terminationDateSetManually = false;
+
+	this.init = function () {
+		InitializeDateElements();
+		InitializeRepeatElements();
+		InitializeRepeatOptions();
+        ToggleRepeatOptions();
+	};
+
+	var show = function(element) {
+		element.removeClass('no-show').addClass('inline');
+	};
+
+	var hide = function(element) {
+		element.removeClass('inline').addClass('no-show');
+	};
+
+	var ChangeRepeatOptions = function () {
+		var repeatDropDown = elements.repeatOptions;
+		if (repeatDropDown.val() != 'none') {
+			show($('#' + prefix + 'repeatUntilDiv'));
+		}
+		else {
+			hide($('.recur-toggle', elements.repeatDiv));
+		}
+
+		if (repeatDropDown.val() == 'daily') {
+			hide($('.weeks', elements.repeatDiv));
+			hide($('.months', elements.repeatDiv));
+			hide($('.years', elements.repeatDiv));
+
+			show($('.days', elements.repeatDiv));
+		}
+
+		if (repeatDropDown.val() == 'weekly') {
+			hide($('.days', elements.repeatDiv));
+			hide($('.months', elements.repeatDiv));
+			hide($('.years', elements.repeatDiv));
+
+			show($('.weeks', elements.repeatDiv));
+		}
+
+		if (repeatDropDown.val() == 'monthly') {
+			hide($('.days', elements.repeatDiv));
+			hide($('.weeks', elements.repeatDiv));
+			hide($('.years', elements.repeatDiv));
+
+			show($('.months', elements.repeatDiv));
+		}
+
+		if (repeatDropDown.val() == 'yearly') {
+			hide($('.days', elements.repeatDiv));
+			hide($('.weeks', elements.repeatDiv));
+			hide($('.months', elements.repeatDiv));
+
+			show($('.years', elements.repeatDiv));
+		}
+	};
+
+	function InitializeDateElements() {
+		elements.beginDate.change(function () {
+			ToggleRepeatOptions();
+		});
+
+		elements.endDate.change(function () {
+			ToggleRepeatOptions();
+		});
+
+		elements.beginTime.change(function () {
+			ToggleRepeatOptions();
+		});
+
+		elements.endTime.change(function () {
+			ToggleRepeatOptions();
+		});
+	}
+
+	function InitializeRepeatElements() {
+		elements.repeatOptions.change(function () {
+			ChangeRepeatOptions();
+			AdjustTerminationDate();
+		});
+
+		elements.repeatInterval.change(function () {
+			AdjustTerminationDate();
+		});
+
+		elements.beginDate.change(function () {
+			AdjustTerminationDate();
+		});
+
+		elements.repeatTermination.change(function () {
+			terminationDateSetManually = true;
+		});
+	}
+
+	function InitializeRepeatOptions() {
+		if (options.repeatType) {
+			elements.repeatOptions.val(options.repeatType);
+			elements.repeatInterval.val(options.repeatInterval == '' ? 1 : options.repeatInterval);
+			for (var i = 0; i < options.repeatWeekdays.length; i++) {
+				var id = '#' + prefix + 'repeatDay' + options.repeatWeekdays[i];
+				$(id).closest('label').button('toggle');
+			}
+
+			$("#" + prefix + "repeatOnMonthlyDiv :radio[value='" + options.repeatMonthlyType + "']").prop('checked', true);
+
+			ChangeRepeatOptions();
+		}
+	}
+
+	var ToggleRepeatOptions = function () {
+		var SetValue = function (value, disabled) {
+			elements.repeatOptions.val(value);
+			elements.repeatOptions.trigger('change');
+			if (disabled) {
+				$('select, input', elements.repeatDiv).prop("disabled", 'disabled');
+			}
+			else {
+				$('select, input', elements.repeatDiv).removeAttr("disabled");
+			}
+		};
+
+		if (dateHelper.MoreThanOneDayBetweenBeginAndEnd(elements.beginDate, elements.beginTime, elements.endDate, elements.endTime)) {
+			elements.repeatOptions.data["current"] = elements.repeatOptions.val();
+			repeatToggled = true;
+            if (elements.repeatOptions.val() == 'daily')
+            {
+                elements.repeatOptions.val('none');
+                elements.repeatOptions.trigger('change');
+            }
+            elements.repeatOptions.find("option[value='daily']").prop("disabled","disabled");
+            elements.repeatOnWeeklyDiv.addClass('no-show');
+        }
+		else {
+			if (repeatToggled) {
+				SetValue(elements.repeatOptions.data["current"], false);
+				repeatToggled = false;
+			}
+            elements.repeatOptions.find("option[value='daily']").removeAttr("disabled");
+
+        }
+	};
+
+	var AdjustTerminationDate = function () {
+		if (terminationDateSetManually) {
+			return;
+		}
+
+		var newEndDate = new Date(elements.endDate.val());
+		var interval = parseInt(elements.repeatInterval.val());
+		var currentEnd = new Date(elements.repeatTermination.val());
+
+		var repeatOption = elements.repeatOptions.val();
+
+		if (repeatOption == 'daily') {
+			newEndDate.setDate(newEndDate.getDate() + interval);
+		}
+		else if (repeatOption == 'weekly') {
+			newEndDate.setDate(newEndDate.getDate() + (8 * interval));
+		}
+		else if (repeatOption == 'monthly') {
+			newEndDate.setMonth(newEndDate.getMonth() + interval);
+		}
+		else if (repeatOption = 'yearly') {
+			newEndDate.setFullYear(newEndDate.getFullYear() + interval);
+		}
+		else {
+			newEndDate = currentEnd;
+		}
+
+		elements.repeatTerminationTextbox.datepicker("setDate", newEndDate);
+	};
+>>>>>>> old/master
 }

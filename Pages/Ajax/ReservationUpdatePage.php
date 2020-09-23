@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -70,7 +74,11 @@ class ReservationUpdatePage extends ReservationSavePage implements IReservationU
 			if ($this->_reservationSavedSuccessfully)
 			{
 				$this->Set('Resources', $reservation->AllResources());
+<<<<<<< HEAD
 				$this->Set('Instances', $reservation->SortedInstances());
+=======
+				$this->Set('Instances', $reservation->Instances());
+>>>>>>> old/master
 				$this->Set('Timezone', ServiceLocator::GetServer()->GetUserSession()->Timezone);
 				$this->Display('Ajax/reservation/update_successful.tpl');
 			}

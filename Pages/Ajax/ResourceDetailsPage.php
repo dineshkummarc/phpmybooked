@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -55,13 +59,18 @@ class ResourceDetailsPage extends Page implements IResourceDetailsPage
 
         $this->Set('maxParticipants', $resource->GetMaxParticipants());
         $this->Set('maximumNotice', $resource->GetMaxNotice());
+<<<<<<< HEAD
         $this->Set('minimumNotice', $resource->GetMinNoticeAdd());
+=======
+        $this->Set('minimumNotice', $resource->GetMinNotice());
+>>>>>>> old/master
         $this->Set('requiresApproval', $resource->GetRequiresApproval());
         $this->Set('autoAssign', $resource->GetAutoAssign());
         $this->Set('color', $resource->GetColor());
         $this->Set('textColor', $resource->GetTextColor());
         $this->Set('autoReleaseMinutes', $resource->GetAutoReleaseMinutes());
         $this->Set('isCheckInEnabled', $resource->IsCheckInEnabled());
+<<<<<<< HEAD
         $this->Set('creditsEnabled', Configuration::Instance()->GetSectionKey(ConfigSection::CREDITS, ConfigKeys::CREDITS_ENABLED, new BooleanConverter()));
         $this->Set('peakCredits', $resource->GetPeakCreditsPerSlot());
         $this->Set('offPeakCredits', $resource->GetCreditsPerSlot());
@@ -70,6 +79,12 @@ class ResourceDetailsPage extends Page implements IResourceDetailsPage
         {
             $this->Set('imageUrl', $resource->GetImage() );
             $this->Set('images', $resource->GetImages() );
+=======
+
+        if ($resource->HasImage())
+        {
+            $this->Set('imageUrl', Configuration::Instance()->GetKey(ConfigKeys::IMAGE_UPLOAD_URL) . '/' . $resource->GetImage() );
+>>>>>>> old/master
         }
     }
 

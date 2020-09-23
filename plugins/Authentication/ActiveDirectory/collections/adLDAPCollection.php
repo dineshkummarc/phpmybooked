@@ -1,7 +1,11 @@
 <?php
 /**
  * PHP LDAP CLASS FOR MANIPULATING ACTIVE DIRECTORY 
+<<<<<<< HEAD
  * Version 4.0.4
+=======
+ * Version 4.0.3
+>>>>>>> old/master
  * 
  * PHP Version 5 with SSL and LDAP support
  * 
@@ -9,7 +13,11 @@
  *   email: scott@wiggumworld.com, adldap@richardhyland.com
  *   http://adldap.sourceforge.net/
  * 
+<<<<<<< HEAD
  * Copyright (c) 2006-2012 Scott Barnett, Richard Hyland
+=======
+ * Copyright (c) 2006-2011 Scott Barnett, Richard Hyland
+>>>>>>> old/master
  * 
  * We'd appreciate any improvements or additions to be submitted back
  * to benefit the entire community :)
@@ -28,10 +36,17 @@
  * @package adLDAP
  * @subpackage Collection
  * @author Scott Barnett, Richard Hyland
+<<<<<<< HEAD
  * @copyright (c) 2006-2012 Scott Barnett, Richard Hyland
  * @license http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html LGPLv2.1
  * @revision $Revision: 97 $
  * @version 4.0.4
+=======
+ * @copyright (c) 2006-2011 Scott Barnett, Richard Hyland
+ * @license http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html LGPLv2.1
+ * @revision $Revision: 97 $
+ * @version 4.0.3
+>>>>>>> old/master
  * @link http://adldap.sourceforge.net/
 */
 
@@ -116,6 +131,7 @@ abstract class adLDAPCollection
     * @return bool
     */
     abstract public function __set($attribute, $value);
+<<<<<<< HEAD
     
     /** 
     * Magic isset method to check for the existence of an attribute 
@@ -135,3 +151,7 @@ abstract class adLDAPCollection
      } 
 }
 ?>
+=======
+}
+?>
+>>>>>>> old/master

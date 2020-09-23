@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -163,7 +167,10 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 	</div>
 
 	{csrf_token}
+<<<<<<< HEAD
     {include file="javascript-includes.tpl"}
+=======
+>>>>>>> old/master
 	{jsfile src="ajax-helpers.js"}
 	{jsfile src="admin/resource-status.js"}
 	{jsfile src="js/jquery.form-3.09.min.js"}

@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2012-2020 Nick Korbel
+=======
+ * Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -18,6 +22,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
+<<<<<<< HEAD
 
 class ReportCommandBuilder
 {
@@ -26,6 +31,14 @@ class ReportCommandBuilder
 				FROM `reservation_instances` `ri`
 				INNER JOIN `reservation_series` `rs` ON `rs`.`series_id` = `ri`.`series_id`
 				INNER JOIN `users` `owner` ON `owner`.`user_id` = `rs`.`owner_id`
+=======
+class ReportCommandBuilder
+{
+	const REPORT_TEMPLATE = 'SELECT [SELECT_TOKEN]
+				FROM reservation_instances ri
+				INNER JOIN reservation_series rs ON rs.series_id = ri.series_id
+				INNER JOIN users owner ON owner.user_id = rs.owner_id
+>>>>>>> old/master
 
 				[JOIN_TOKEN]
 				WHERE 1=1
@@ -35,6 +48,7 @@ class ReportCommandBuilder
 				[ORDER_TOKEN]
 				[LIMIT_TOKEN]';
 
+<<<<<<< HEAD
 	const RESERVATION_LIST_FRAGMENT = '`rs`.`date_created` as `date_created`, `rs`.`last_modified` as `last_modified`, `rs`.`repeat_type`, `rs`.`description` as `description`,
 	`rs`.`title` as `title`, `rs`.`status_id` as `status_id`,
 		`ri`.`reference_number`, `ri`.`start_date`, `ri`.`end_date`, `ri`.`checkin_date`, `ri`.`checkout_date`, `ri`.`previous_end_date`, `ri`.`credit_count`, TIMESTAMPDIFF(SECOND, `ri`.`start_date`, `ri`.`end_date`) as `duration`,
@@ -110,6 +124,77 @@ class ReportCommandBuilder
 	const GROUP_BY_SCHEDULE_FRAGMENT = 'GROUP BY `schedules`.`schedule_id`';
 
 	const GROUP_BY_USER_FRAGMENT = 'GROUP BY `owner`.`user_id`';
+=======
+	const RESERVATION_LIST_FRAGMENT = 'rs.date_created as date_created, rs.last_modified as last_modified, rs.repeat_type, rs.description as description,
+	rs.title as title, rs.status_id as status_id,
+		ri.reference_number, ri.start_date, ri.end_date, ri.checkin_date, ri.checkout_date, ri.previous_end_date, TIMESTAMPDIFF(SECOND, ri.start_date, ri.end_date) as duration,
+							(SELECT GROUP_CONCAT(CONCAT(cav.custom_attribute_id,\'=\', cav.attribute_value) SEPARATOR "!sep!")
+								FROM custom_attribute_values cav WHERE cav.entity_id = ri.series_id AND cav.attribute_category = 1) as attribute_list,
+							(SELECT GROUP_CONCAT(CONCAT(participant_users.fname, " ", participant_users.lname) SEPARATOR "!sep!")
+								FROM reservation_users participants INNER JOIN users participant_users ON participant_users.user_id = participants.user_id WHERE participants.reservation_instance_id = ri.reservation_instance_id AND participants.reservation_user_level = 2) as participant_list,
+							(SELECT GROUP_CONCAT(CONCAT(cav.custom_attribute_id,\'=\', cav.attribute_value) SEPARATOR "!sep!")
+								FROM custom_attribute_values cav WHERE cav.entity_id = rs.owner_id AND cav.attribute_category = 2) as user_attribute_list,
+							(SELECT GROUP_CONCAT(CONCAT(cav.custom_attribute_id,\'=\', cav.attribute_value) SEPARATOR "!sep!")
+								FROM custom_attribute_values cav WHERE cav.entity_id = resources.resource_id AND cav.attribute_category = 4) as resource_attribute_list,
+							(SELECT GROUP_CONCAT(CONCAT(cav.custom_attribute_id,\'=\', cav.attribute_value) SEPARATOR "!sep!")
+								FROM custom_attribute_values cav WHERE cav.entity_id = resources.resource_type_id AND cav.attribute_category = 5) as resource_type_attribute_list
+								';
+
+	const COUNT_FRAGMENT = 'COUNT(1) as total';
+
+	const TOTAL_TIME_FRAGMENT = 'SUM( UNIX_TIMESTAMP(LEAST(ri.end_date, @endDate)) - UNIX_TIMESTAMP(GREATEST(ri.start_date, @startDate)) ) AS totalTime';
+
+	const RESOURCE_LIST_FRAGMENT = 'resources.name as resource_name, resources.resource_id';
+
+	const SCHEDULE_LIST_FRAGMENT = 'schedules.schedule_id, schedules.name as schedule_name';
+
+	const ACCESSORY_LIST_FRAGMENT = 'accessories.accessory_name, accessories.accessory_id, ar.quantity';
+
+	const USER_LIST_FRAGMENT = 'owner.fname as owner_fname, owner.lname as owner_lname, owner.email as email, CONCAT(owner.fname, \' \', owner.lname) as owner_name, owner.user_id as owner_id';
+
+	const GROUP_LIST_FRAGMENT = 'groups.name as group_name, groups.group_id';
+
+	const RESOURCE_JOIN_FRAGMENT = 'INNER JOIN reservation_resources rr ON rs.series_id = rr.series_id
+				INNER JOIN resources ON rr.resource_id = resources.resource_id
+				INNER JOIN schedules ON resources.schedule_id = schedules.schedule_id';
+
+	const PARTICIPANT_JOIN_FRAGMENT = 'INNER JOIN users participants ON participants.user_id = @participant_id
+			INNER JOIN reservation_users pu ON pu.user_id = participants.user_id AND pu.reservation_user_level = 2 AND pu.reservation_instance_id = ri.reservation_instance_id ';
+
+	const ACCESSORY_JOIN_FRAGMENT = 'INNER JOIN reservation_accessories ar ON rs.series_id = ar.series_id
+				INNER JOIN accessories ON ar.accessory_id = accessories.accessory_id';
+
+	const GROUP_JOIN_FRAGMENT = 'INNER JOIN user_groups ug ON ug.user_id = owner.user_id
+				INNER JOIN groups ON groups.group_id = ug.group_id';
+
+	const ORDER_BY_FRAGMENT = 'ORDER BY ri.start_date ASC';
+
+	const TOTAL_ORDER_BY_FRAGMENT = 'ORDER BY total DESC';
+
+	const TIME_ORDER_BY_FRAGMENT = 'ORDER BY totalTime DESC';
+
+	const SCHEDULE_ID_FRAGMENT = 'AND schedules.schedule_id = @scheduleid';
+
+	const RESOURCE_ID_FRAGMENT = 'AND resources.resource_id = @resourceid';
+
+	const ACCESSORY_ID_FRAGMENT = 'AND accessories.accessory_id = @accessoryid';
+
+	const USER_ID_FRAGMENT = 'AND owner.user_id = @userid';
+
+	const GROUP_ID_FRAGMENT = 'AND ug.group_id = @groupid';
+
+	const DATE_FRAGMENT = 'AND ((ri.start_date >= @startDate AND ri.start_date < @endDate) OR
+						(ri.end_date >= @startDate AND ri.end_date <= @endDate) OR
+						(ri.start_date <= @startDate AND ri.end_date > @endDate))';
+
+	const GROUP_BY_GROUP_FRAGMENT = 'GROUP BY groups.group_id';
+
+	const GROUP_BY_RESOURCE_FRAGMENT = 'GROUP BY resources.resource_id';
+
+	const GROUP_BY_SCHEDULE_FRAGMENT = 'GROUP BY schedules.schedule_id';
+
+	const GROUP_BY_USER_FRAGMENT = 'GROUP BY owner.user_id';
+>>>>>>> old/master
 
 	/**
 	 * @var bool
@@ -123,10 +208,13 @@ class ReportCommandBuilder
 	 * @var bool
 	 */
 	private $time = false;
+<<<<<<< HEAD
     /**
      * @var bool
      */
 	private $duration = false;
+=======
+>>>>>>> old/master
 	/**
 	 * @var bool
 	 */
@@ -143,10 +231,13 @@ class ReportCommandBuilder
 	 * @var bool
 	 */
 	private $joinAccessories = false;
+<<<<<<< HEAD
     /**
      * @var bool
      */
 	private $joinBlackouts = false;
+=======
+>>>>>>> old/master
 	/**
 	 * @var bool
 	 */
@@ -173,7 +264,11 @@ class ReportCommandBuilder
 	/**
 	 * @var null|int
 	 */
+<<<<<<< HEAD
 	private $scheduleIds = null;
+=======
+	private $scheduleId = null;
+>>>>>>> old/master
 	/**
 	 * @var null|int
 	 */
@@ -185,6 +280,7 @@ class ReportCommandBuilder
 	/**
 	 * @var null|int
 	 */
+<<<<<<< HEAD
 	private $resourceIds = null;
 	/**
 	 * @var null|int
@@ -198,6 +294,17 @@ class ReportCommandBuilder
 	 * @var null|int
 	 */
 	private $groupIds = null;
+=======
+	private $resourceId = null;
+	/**
+	 * @var null|int
+	 */
+	private $accessoryId = null;
+	/**
+	 * @var null|int
+	 */
+	private $groupId = null;
+>>>>>>> old/master
 	/**
 	 * @var null|Date
 	 */
@@ -269,6 +376,7 @@ class ReportCommandBuilder
 	/**
 	 * @return ReportCommandBuilder
 	 */
+<<<<<<< HEAD
 	public function SelectDuration()
 	{
 		$this->duration = true;
@@ -278,6 +386,8 @@ class ReportCommandBuilder
 	/**
 	 * @return ReportCommandBuilder
 	 */
+=======
+>>>>>>> old/master
 	public function OfResources()
 	{
 		$this->joinResources = true;
@@ -295,6 +405,7 @@ class ReportCommandBuilder
 		return $this;
 	}
 
+<<<<<<< HEAD
     /**
      * @return ReportCommandBuilder
      */
@@ -304,6 +415,8 @@ class ReportCommandBuilder
         return $this;
     }
 
+=======
+>>>>>>> old/master
 	/**
 	 * @param Date $start
 	 * @param Date $end
@@ -318,6 +431,7 @@ class ReportCommandBuilder
 	}
 
 	/**
+<<<<<<< HEAD
 	 * @param int[] $resourceIds
 	 * @return ReportCommandBuilder
 	 */
@@ -336,6 +450,15 @@ class ReportCommandBuilder
 	{
 		$this->joinResources = !empty($resourceTypeIds);
 		$this->resourceTypeIds = is_array($resourceTypeIds) ? $resourceTypeIds : array($resourceTypeIds);
+=======
+	 * @param int $resourceId
+	 * @return ReportCommandBuilder
+	 */
+	public function WithResourceId($resourceId)
+	{
+		$this->joinResources = true;
+		$this->resourceId = $resourceId;
+>>>>>>> old/master
 		return $this;
 	}
 
@@ -361,6 +484,7 @@ class ReportCommandBuilder
 	}
 
 	/**
+<<<<<<< HEAD
 	 * @param int[] $scheduleIds
 	 * @return ReportCommandBuilder
 	 */
@@ -368,10 +492,20 @@ class ReportCommandBuilder
 	{
 		$this->joinResources = !empty($scheduleIds);
 		$this->scheduleIds = is_array($scheduleIds) ? $scheduleIds : array($scheduleIds);
+=======
+	 * @param int $scheduleId
+	 * @return ReportCommandBuilder
+	 */
+	public function WithScheduleId($scheduleId)
+	{
+		$this->joinResources = true;
+		$this->scheduleId = $scheduleId;
+>>>>>>> old/master
 		return $this;
 	}
 
 	/**
+<<<<<<< HEAD
 	 * @param int[] $groupIds
 	 * @return ReportCommandBuilder
 	 */
@@ -379,10 +513,20 @@ class ReportCommandBuilder
 	{
 		$this->joinGroups = true;
 		$this->groupIds = is_array($groupIds) ? $groupIds : array($groupIds);
+=======
+	 * @param int $groupId
+	 * @return ReportCommandBuilder
+	 */
+	public function WithGroupId($groupId)
+	{
+		$this->joinGroups = true;
+		$this->groupId = $groupId;
+>>>>>>> old/master
 		return $this;
 	}
 
 	/**
+<<<<<<< HEAD
 	 * @param int[] $accessoryIds
 	 * @return ReportCommandBuilder
 	 */
@@ -390,6 +534,15 @@ class ReportCommandBuilder
 	{
 		$this->joinAccessories = !empty($accessoryIds);
 		$this->accessoryIds = is_array($accessoryIds) ? $accessoryIds : array($accessoryIds);
+=======
+	 * @param int $accessoryId
+	 * @return ReportCommandBuilder
+	 */
+	public function WithAccessoryId($accessoryId)
+	{
+		$this->joinAccessories = true;
+		$this->accessoryId = $accessoryId;
+>>>>>>> old/master
 		return $this;
 	}
 
@@ -443,7 +596,10 @@ class ReportCommandBuilder
 	public function LimitedTo($limit)
 	{
 		$this->limit = $limit;
+<<<<<<< HEAD
 		return $this;
+=======
+>>>>>>> old/master
 	}
 
 	/**
@@ -469,6 +625,7 @@ class ReportCommandBuilder
 		$sql = str_replace('[LIMIT_TOKEN]', $this->GetLimit(), $sql);
 		$sql = str_replace('[STATUS_TOKEN]', $this->GetStatusFilter(), $sql);
 
+<<<<<<< HEAD
         if ($this->joinBlackouts)
         {
             $blackoutsSql = str_replace('1 as `utilization_type`', '2 as `utilization_type`', $sql);
@@ -480,6 +637,8 @@ class ReportCommandBuilder
             $sql = "($sql) UNION ($blackoutsSql)";
         }
 
+=======
+>>>>>>> old/master
 		$query = new AdHocCommand($sql, true);
 		foreach ($this->parameters as $parameter)
 		{
@@ -511,6 +670,7 @@ class ReportCommandBuilder
 			$selectSql->Append(self::TOTAL_TIME_FRAGMENT);
 		}
 
+<<<<<<< HEAD
 		if ($this->duration)
         {
             // TODO NEED TO GET BLACKOUTS
@@ -519,6 +679,8 @@ class ReportCommandBuilder
             $selectSql->AppendSelect(self::SCHEDULE_LIST_FRAGMENT);
         }
 
+=======
+>>>>>>> old/master
 		if ($this->listResources && ($this->fullList || $this->groupByResource))
 		{
 			$selectSql->AppendSelect(self::RESOURCE_LIST_FRAGMENT);
@@ -584,10 +746,17 @@ class ReportCommandBuilder
 	{
 		$and = new ReportQueryFragment();
 
+<<<<<<< HEAD
 		if (!empty($this->scheduleIds))
 		{
 			$and->Append(self::SCHEDULE_ID_FRAGMENT);
 			$this->AddParameter(new Parameter(ParameterNames::SCHEDULE_ID, $this->scheduleIds));
+=======
+		if (!empty($this->scheduleId))
+		{
+			$and->Append(self::SCHEDULE_ID_FRAGMENT);
+			$this->AddParameter(new Parameter(ParameterNames::SCHEDULE_ID, $this->scheduleId));
+>>>>>>> old/master
 		}
 
 		if (!empty($this->userId))
@@ -602,6 +771,7 @@ class ReportCommandBuilder
 			$this->AddParameter(new Parameter(ParameterNames::PARTICIPANT_ID, $this->participantId));
 		}
 
+<<<<<<< HEAD
 		if (!empty($this->groupIds))
 		{
 			$and->Append(self::GROUP_ID_FRAGMENT);
@@ -624,13 +794,35 @@ class ReportCommandBuilder
 		{
 			$and->Append(self::ACCESSORY_ID_FRAGMENT);
 			$this->AddParameter(new Parameter(ParameterNames::ACCESSORY_ID, $this->accessoryIds));
+=======
+		if (!empty($this->groupId))
+		{
+			$and->Append(self::GROUP_ID_FRAGMENT);
+			$this->AddParameter(new Parameter(ParameterNames::GROUP_ID, $this->groupId));
+		}
+
+		if (!empty($this->resourceId))
+		{
+			$and->Append(self::RESOURCE_ID_FRAGMENT);
+			$this->AddParameter(new Parameter(ParameterNames::RESOURCE_ID, $this->resourceId));
+		}
+
+		if (!empty($this->accessoryId))
+		{
+			$and->Append(self::ACCESSORY_ID_FRAGMENT);
+			$this->AddParameter(new Parameter(ParameterNames::ACCESSORY_ID, $this->accessoryId));
+>>>>>>> old/master
 		}
 
 		if ($this->limitWithin)
 		{
 			$and->Append(self::DATE_FRAGMENT);
 			$this->AddParameter(new Parameter(ParameterNames::START_DATE, $this->startDate->ToDatabase()));
+<<<<<<< HEAD
 			$this->AddParameter(new Parameter(ParameterNames::END_DATE, $this->endDate->AddDays(1)->ToDatabase()));
+=======
+			$this->AddParameter(new Parameter(ParameterNames::END_DATE, $this->endDate->ToDatabase()));
+>>>>>>> old/master
 		}
 
 		return $and;
@@ -675,7 +867,11 @@ class ReportCommandBuilder
 	private function GetOrderBy()
 	{
 		$orderBy = new ReportQueryFragment();
+<<<<<<< HEAD
 		if ($this->fullList || $this->duration)
+=======
+		if ($this->fullList)
+>>>>>>> old/master
 		{
 			$orderBy->Append(self::ORDER_BY_FRAGMENT);
 		}
@@ -720,7 +916,11 @@ class ReportCommandBuilder
 			return '';
 		}
 
+<<<<<<< HEAD
 		return 'AND `rs`.`status_id` <> 2';
+=======
+		return 'AND rs.status_id <> 2';
+>>>>>>> old/master
 	}
 }
 

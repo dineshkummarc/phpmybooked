@@ -1,5 +1,6 @@
 #page-reservation {
 	font-size: 12pt;
+<<<<<<< HEAD
 }
 
 #page-reservation .col-top,
@@ -14,4 +15,6 @@
 
 #page-view-reservation .buttons {
     display:none;
+=======
+>>>>>>> old/master
 }

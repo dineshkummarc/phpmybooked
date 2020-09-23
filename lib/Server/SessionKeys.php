@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -23,7 +27,10 @@ class SessionKeys
 	private function __construct()
 	{}
 
+<<<<<<< HEAD
 	const CREDIT_CART = 'CREDIT_CART';
+=======
+>>>>>>> old/master
 	const USER_SESSION = 'USER_SESSION';
 	const INSTALLATION = 'INSTALLATION';
 }

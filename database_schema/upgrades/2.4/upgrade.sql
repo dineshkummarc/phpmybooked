@@ -11,7 +11,11 @@ CREATE TABLE `user_session` (
   INDEX `user_session_user_id` (`user_id`),
   INDEX `user_session_session_token` (`session_token`),
   FOREIGN KEY (`user_id`)
+<<<<<<< HEAD
 	REFERENCES `users`(`user_id`)
+=======
+	REFERENCES users(`user_id`)
+>>>>>>> old/master
 	ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
@@ -28,7 +32,11 @@ CREATE TABLE `reminders` (
  PRIMARY KEY (`reminder_id`),
  INDEX `reminders_user_id` (`user_id`),
  FOREIGN KEY (`user_id`)
+<<<<<<< HEAD
  	REFERENCES `users`(`user_id`)
+=======
+ 	REFERENCES users(`user_id`)
+>>>>>>> old/master
  	ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
@@ -40,10 +48,18 @@ CREATE TABLE `reservation_reminders` (
  `reminder_type` tinyint(2) unsigned NOT NULL,
  PRIMARY KEY (`reminder_id`),
  FOREIGN KEY (`series_id`)
+<<<<<<< HEAD
   	REFERENCES `reservation_series`(`series_id`)
+=======
+  	REFERENCES reservation_series(`series_id`)
+>>>>>>> old/master
   	ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
 ALTER TABLE `users` ADD COLUMN `default_schedule_id` smallint(5) unsigned;
 
+<<<<<<< HEAD
 insert into `dbversion` values('2.4', now());
+=======
+insert into dbversion values('2.4', now());
+>>>>>>> old/master

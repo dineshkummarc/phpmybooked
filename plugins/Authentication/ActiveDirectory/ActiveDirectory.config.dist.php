@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -32,5 +36,8 @@ $conf['settings']['attribute.mapping'] = 'sn=sn,givenname=givenname,mail=mail,te
 $conf['settings']['required.groups'] = '';	// Required groups (empty if not necessary) User only needs to belong to at least one listed (eg. Group1,Group2)
 $conf['settings']['sync.groups'] = 'false';	// Whether or not groups should be synced into Booked. When true then be sure that the attribute.mapping config value contains a correct map for groups
 $conf['settings']['use.sso'] = 'false';	// Whether or not to use single sign on
+<<<<<<< HEAD
 $conf['settings']['prevent.clean.username'] = 'false';	// If the username is an email address or contains the domain, clean it
 ?>
+=======
+>>>>>>> old/master

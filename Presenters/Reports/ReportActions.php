@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2012-2020 Nick Korbel
+=======
+Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -26,6 +30,9 @@ class ReportActions
 	const Save = 'save';
 	const Email = 'email';
 	const Delete = 'delete';
+<<<<<<< HEAD
 	const SaveColumns = 'saveColumns';
+=======
+>>>>>>> old/master
 }
 

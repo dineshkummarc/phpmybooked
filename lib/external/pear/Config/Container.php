@@ -15,7 +15,11 @@
 // | Author: Bertrand Mansion <bmansion@mamasam.com>                     |
 // +---------------------------------------------------------------------+
 //
+<<<<<<< HEAD
 // $Id: Container.php 306597 2010-12-24 05:11:09Z aharvey $
+=======
+// $Id: Container.php,v 1.41 2006/05/30 06:37:28 aashley Exp $
+>>>>>>> old/master
 
 //require_once 'Config.php';
 
@@ -82,7 +86,11 @@ class Config_Container {
     * @param  string  $content    Content of container object
     * @param  array   $attributes Array of attributes for container object
     */
+<<<<<<< HEAD
     function __construct($type = 'section', $name = '', $content = '', $attributes = null)
+=======
+    function Config_Container($type = 'section', $name = '', $content = '', $attributes = null)
+>>>>>>> old/master
     {
         $this->type       = $type;
         $this->name       = $name;
@@ -694,7 +702,11 @@ class Config_Container {
         $array[$this->name] = array();
         switch ($this->type) {
             case 'directive':
+<<<<<<< HEAD
                 if ($useAttr && is_array($this->attributes) && count($this->attributes) > 0) {
+=======
+                if ($useAttr && count($this->attributes) > 0) {
+>>>>>>> old/master
                     $array[$this->name]['#'] = $this->content;
                     $array[$this->name]['@'] = $this->attributes;
                 } else {
@@ -702,7 +714,11 @@ class Config_Container {
                 }
                 break;
             case 'section':
+<<<<<<< HEAD
                 if ($useAttr && is_array($this->attributes) && count($this->attributes) > 0) {
+=======
+                if ($useAttr && count($this->attributes) > 0) {
+>>>>>>> old/master
                     $array[$this->name]['@'] = $this->attributes;
                 }
                 if ($count = count($this->children)) {
@@ -750,7 +766,11 @@ class Config_Container {
         }
         $includeFile = $GLOBALS['CONFIG_TYPES'][$configType][0];
         $className = $GLOBALS['CONFIG_TYPES'][$configType][1];
+<<<<<<< HEAD
         include_once($includeFile);
+=======
+        require_once($includeFile);
+>>>>>>> old/master
 
         $writeMethodName = (version_compare(phpversion(), '5', '<')) ? 'writedatasrc' : 'writeDatasrc';
         if (in_array($writeMethodName, get_class_methods($className))) {
@@ -773,4 +793,8 @@ class Config_Container {
         }
     } // end func writeDatasrc
 } // end class Config_Container
+<<<<<<< HEAD
 ?>
+=======
+?>
+>>>>>>> old/master

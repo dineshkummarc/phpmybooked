@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2012-2020 Nick Korbel
+=======
+Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -48,6 +52,7 @@ class Report_Range
 		$this->range = $range;
 		$this->start = empty($startString) ? Date::Min() : Date::Parse($startString, $timezone);
 		$this->end = empty($endString) ? Date::Max() : Date::Parse($endString, $timezone);
+<<<<<<< HEAD
         $userTimezone = ServiceLocator::GetServer()->GetUserSession()->Timezone;
 
 		$now = Date::Now()->ToTimezone($userTimezone);
@@ -55,16 +60,33 @@ class Report_Range
 		{
             $this->start = Date::Create($now->Year(), $now->Month(), 1, 0, 0, 0, $userTimezone);
 			$this->end = $this->start->AddMonths(1)->AddDays(-1);
+=======
+
+		$now = Date::Now()->ToTimezone($timezone);
+		if ($this->range == self::CURRENT_MONTH)
+		{
+			$this->start = Date::Create($now->Year(), $now->Month(), 1, 0, 0, 0, $timezone);
+			$this->end = $this->start->AddMonths(1);
+>>>>>>> old/master
 		}
 		if ($this->range == self::CURRENT_WEEK)
 		{
 			$this->start = $now->GetDate()->AddDays(-$now->Weekday());
+<<<<<<< HEAD
 			$this->end = $this->Start()->AddDays(6);
 		}
 		if ($this->range == self::TODAY)
 		{
 			$this->start = Date::Create($now->Year(), $now->Month(), $now->Day(), 0, 0, 0, $userTimezone);
 			$this->end = $this->start;
+=======
+			$this->end = $this->Start()->AddDays(8);
+		}
+		if ($this->range == self::TODAY)
+		{
+			$this->start = Date::Create($now->Year(), $now->Month(), $now->Day(), 0, 0, 0, $timezone);
+			$this->end = $this->start->AddDays(1);
+>>>>>>> old/master
 		}
 	}
 
@@ -105,6 +127,7 @@ class Report_Range
 	{
 		return new Report_Range(Report_Range::ALL_TIME, Date::Min(), Date::Max());
 	}
+<<<<<<< HEAD
 
     /**
      * @return Date[]
@@ -123,4 +146,6 @@ class Report_Range
     {
         return $range == $this->range;
     }
+=======
+>>>>>>> old/master
 }

@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel, Paul Menchini
+=======
+Copyright 2011-2016 Nick Korbel, Paul Menchini
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -17,8 +21,16 @@ You should have received a copy of the GNU General Public License
 along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 *}
 
+<<<<<<< HEAD
 <p>You have created a new {$AppTitle} account with the following information:<br/>
 Email: {$EmailAddress}<br/>
 Password: {$Password}<br/>
 
 <a href="{$ScriptUrl}">Log in to view your reservations and manage your account</a>
+=======
+<p>You have created a new Booked account with the following information:<br/>
+Email: {$EmailAddress}<br/>
+Password: {$Password}<br/>
+
+<a href="{$ScriptUrl}">Log in to view your reservations and manage your account</a>
+>>>>>>> old/master

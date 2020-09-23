@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,6 +52,12 @@ class DateRange
 	 */
 	public function __construct(Date $begin, Date $end, $timezone = null)
 	{
+<<<<<<< HEAD
+=======
+		$this->_begin = $begin;
+		$this->_end = $end;
+
+>>>>>>> old/master
 		if (empty($timezone))
 		{
 			$this->_timezone = $begin->Timezone();
@@ -55,6 +65,7 @@ class DateRange
 		else
 		{
 			$this->_timezone = $timezone;
+<<<<<<< HEAD
 			if ($begin->Timezone() != $timezone)
             {
                 $begin = $begin->ToTimezone($timezone);
@@ -70,6 +81,11 @@ class DateRange
 
 
         $this->weekdays = 0;
+=======
+		}
+
+		$this->weekdays = 0;
+>>>>>>> old/master
 		$this->weekends = 0;
 	}
 
@@ -318,6 +334,7 @@ class DateRange
 			}
 		}
 	}
+<<<<<<< HEAD
 
     /**
      * @return bool
@@ -342,6 +359,8 @@ class DateRange
     {
         return $this->_begin->GetDifference($this->_end);
     }
+=======
+>>>>>>> old/master
 }
 
 class NullDateRange extends DateRange

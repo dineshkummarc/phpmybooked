@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -18,7 +22,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
+<<<<<<< HEAD
 
+=======
+>>>>>>> old/master
 interface IResource extends IPermissibleResource
 {
 	/**
@@ -103,6 +110,7 @@ interface IBookableResource extends IResource
 	public function GetTextColor();
 }
 
+<<<<<<< HEAD
 class BookableResourceBuilder
 {
 	private $id;
@@ -516,6 +524,8 @@ class BookableResourceBuilder
 	}
 }
 
+=======
+>>>>>>> old/master
 class BookableResource implements IBookableResource
 {
 	protected $_resourceId;
@@ -541,6 +551,7 @@ class BookableResource implements IBookableResource
 	/**
 	 * @var string|int
 	 */
+<<<<<<< HEAD
 	protected $_minNoticeAdd;
 	/**
 	 * @var string|int
@@ -550,6 +561,9 @@ class BookableResource implements IBookableResource
 	 * @var string|int
 	 */
 	protected $_minNoticeDelete;
+=======
+	protected $_minNotice;
+>>>>>>> old/master
 	/**
 	 * @var string|int
 	 */
@@ -560,7 +574,10 @@ class BookableResource implements IBookableResource
 	protected $_bufferTime;
 	protected $_scheduleId;
 	protected $_imageName;
+<<<<<<< HEAD
 	protected $_imageNames = array();
+=======
+>>>>>>> old/master
 	protected $_statusId = ResourceStatus::AVAILABLE;
 	protected $_statusReasonId;
 	protected $_adminGroupId;
@@ -577,7 +594,10 @@ class BookableResource implements IBookableResource
 	protected $_textColor;
 	protected $_creditsPerSlot;
 	protected $_peakCreditsPerSlot;
+<<<<<<< HEAD
 	protected $_maxConcurrentReservations = 1;
+=======
+>>>>>>> old/master
 
 	/**
 	 * @var array|AttributeValue[]
@@ -595,6 +615,7 @@ class BookableResource implements IBookableResource
 								$requiresApproval,
 								$allowMultiday,
 								$maxParticipants,
+<<<<<<< HEAD
 								$minNoticeAdd,
 								$maxNotice,
 								$description = null,
@@ -602,6 +623,13 @@ class BookableResource implements IBookableResource
 								$adminGroupId = null,
 								$minNoticeUpdate = null,
 								$minNoticeDelete = null
+=======
+								$minNotice,
+								$maxNotice,
+								$description = null,
+								$scheduleId = null,
+								$adminGroupId = null
+>>>>>>> old/master
 	)
 	{
 		$this->SetResourceId($resourceId);
@@ -616,9 +644,13 @@ class BookableResource implements IBookableResource
 		$this->SetRequiresApproval($requiresApproval);
 		$this->SetAllowMultiday($allowMultiday);
 		$this->SetMaxParticipants($maxParticipants);
+<<<<<<< HEAD
 		$this->SetMinNoticeAdd($minNoticeAdd);
 		$this->SetMinNoticeUpdate($minNoticeUpdate);
 		$this->SetMinNoticeDelete($minNoticeDelete);
+=======
+		$this->SetMinNotice($minNotice);
+>>>>>>> old/master
 		$this->SetMaxNotice($maxNotice);
 		$this->SetScheduleId($scheduleId);
 		$this->SetAdminGroupId($adminGroupId);
@@ -667,7 +699,11 @@ class BookableResource implements IBookableResource
 										 $row[ColumnNames::RESOURCE_REQUIRES_APPROVAL],
 										 $row[ColumnNames::RESOURCE_ALLOW_MULTIDAY],
 										 $row[ColumnNames::RESOURCE_MAX_PARTICIPANTS],
+<<<<<<< HEAD
 										 $row[ColumnNames::RESOURCE_MINNOTICE_ADD],
+=======
+										 $row[ColumnNames::RESOURCE_MINNOTICE],
+>>>>>>> old/master
 										 $row[ColumnNames::RESOURCE_MAXNOTICE],
 										 $row[ColumnNames::RESOURCE_DESCRIPTION],
 										 $row[ColumnNames::SCHEDULE_ID]);
@@ -712,6 +748,7 @@ class BookableResource implements IBookableResource
 		{
 			$resource->_isDisplayAllowed = intval($row[ColumnNames::RESOURCE_ALLOW_DISPLAY]);
 		}
+<<<<<<< HEAD
 		if (isset($row[ColumnNames::RESOURCE_IMAGE_LIST]))
 		{
 			$resource->_imageNames = explode('!sep!', $row[ColumnNames::RESOURCE_IMAGE_LIST]);
@@ -722,6 +759,11 @@ class BookableResource implements IBookableResource
 		$resource->SetMinNoticeUpdate($row[ColumnNames::RESOURCE_MINNOTICE_UPDATE]);
 		$resource->SetMinNoticeDelete($row[ColumnNames::RESOURCE_MINNOTICE_DELETE]);
 		$resource->DeserializeProperties($row[ColumnNames::RESOURCE_ADDITIONAL_PROPERTIES]);
+=======
+
+		$resource->WithCreditsPerSlot($row[ColumnNames::CREDIT_COUNT]);
+		$resource->WithPeakCreditsPerSlot($row[ColumnNames::PEAK_CREDIT_COUNT]);
+>>>>>>> old/master
 
 		return $resource;
 	}
@@ -856,6 +898,7 @@ class BookableResource implements IBookableResource
 		return $this->_resourceGroupIds;
 	}
 
+<<<<<<< HEAD
 	/**
 	 * @param string $imageName
 	 */
@@ -904,6 +947,8 @@ class BookableResource implements IBookableResource
 	 * @param TimeInterval|string|int $value
 	 * @return int
 	 */
+=======
+>>>>>>> old/master
 	private function GetIntervalValue($value)
 	{
 		if (is_a($value, 'TimeInterval'))
@@ -1060,6 +1105,7 @@ class BookableResource implements IBookableResource
 	/**
 	 * @return TimeInterval
 	 */
+<<<<<<< HEAD
 	public function GetMinNoticeAdd()
 	{
 		return TimeInterval::Parse($this->_minNoticeAdd);
@@ -1111,22 +1157,39 @@ class BookableResource implements IBookableResource
 	public function GetMinNoticeDelete()
 	{
 		return TimeInterval::Parse($this->_minNoticeDelete);
+=======
+	public function GetMinNotice()
+	{
+		return TimeInterval::Parse($this->_minNotice);
+>>>>>>> old/master
 	}
 
 	/**
 	 * @param string|int|TimeInterval $value
 	 */
+<<<<<<< HEAD
 	public function SetMinNoticeDelete($value)
 	{
 		$this->_minNoticeDelete = $this->GetIntervalValue($value);
+=======
+	public function SetMinNotice($value)
+	{
+		$this->_minNotice = $this->GetIntervalValue($value);
+>>>>>>> old/master
 	}
 
 	/**
 	 * @return bool
 	 */
+<<<<<<< HEAD
 	public function HasMinNoticeDelete()
 	{
 		return !empty($this->_minNoticeDelete);
+=======
+	public function HasMinNotice()
+	{
+		return !empty($this->_minNotice);
+>>>>>>> old/master
 	}
 
 	/**
@@ -1220,6 +1283,7 @@ class BookableResource implements IBookableResource
 	 */
 	public function HasImage()
 	{
+<<<<<<< HEAD
 		return !empty($this->_imageName) || !empty($this->_imageNames);
 	}
 
@@ -1237,6 +1301,9 @@ class BookableResource implements IBookableResource
 	public function AddImage($fileName)
 	{
 		$this->_imageNames[] = $fileName;
+=======
+		return !empty($this->_imageName);
+>>>>>>> old/master
 	}
 
 	/**
@@ -1323,7 +1390,11 @@ class BookableResource implements IBookableResource
 	 */
 	public function GetIsDisplayEnabled()
 	{
+<<<<<<< HEAD
 		return !empty($this->_publicId);
+=======
+		return $this->_isDisplayAllowed;
+>>>>>>> old/master
 	}
 
 	/**
@@ -1347,7 +1418,11 @@ class BookableResource implements IBookableResource
 		$this->SetIsCalendarSubscriptionAllowed(true);
 		if (empty($this->_publicId))
 		{
+<<<<<<< HEAD
 			$this->SetPublicId(BookedStringHelper::Random(20));
+=======
+			$this->SetPublicId(uniqid());
+>>>>>>> old/master
 		}
 	}
 
@@ -1356,17 +1431,24 @@ class BookableResource implements IBookableResource
 		$this->SetIsCalendarSubscriptionAllowed(false);
 	}
 
+<<<<<<< HEAD
 	public function GetSubscriptionUrl()
 	{
 		return new CalendarSubscriptionUrl(null, null, $this->GetPublicId());
 	}
 
+=======
+>>>>>>> old/master
 	public function EnableDisplay()
 	{
 		$this->SetIsDisplayEnabled(true);
 		if (empty($this->_publicId))
 		{
+<<<<<<< HEAD
 			$this->SetPublicId(BookedStringHelper::Random(20));
+=======
+			$this->SetPublicId(uniqid());
+>>>>>>> old/master
 		}
 	}
 
@@ -1517,12 +1599,20 @@ class BookableResource implements IBookableResource
 		return new BookableResource(null, null, null, null, null, null, null, false, false, false, null, null, null);
 	}
 
+<<<<<<< HEAD
 	public function WithPublicId($publicId)
+=======
+	protected function WithPublicId($publicId)
+>>>>>>> old/master
 	{
 		$this->SetPublicId($publicId);
 	}
 
+<<<<<<< HEAD
 	public function WithSubscription($isAllowed)
+=======
+	protected function WithSubscription($isAllowed)
+>>>>>>> old/master
 	{
 		$this->SetIsCalendarSubscriptionAllowed($isAllowed);
 	}
@@ -1694,6 +1784,10 @@ class BookableResource implements IBookableResource
 	 */
 	public function SetCreditsPerSlot($creditsPerSlot)
 	{
+<<<<<<< HEAD
+=======
+		Log::Debug('set cps to ' . $creditsPerSlot);
+>>>>>>> old/master
 		$this->_creditsPerSlot = $creditsPerSlot;
 	}
 
@@ -1705,6 +1799,7 @@ class BookableResource implements IBookableResource
 		$this->_peakCreditsPerSlot = $creditsPerSlot;
 	}
 
+<<<<<<< HEAD
 	/**
 	 * @param $max int
 	 */
@@ -1790,4 +1885,15 @@ class ResourceProperties
 	{
 		return json_encode($this);
 	}
+=======
+	public function AsCopy($name)
+    {
+        $this->SetResourceId(null);
+        $this->SetName($name);
+        $this->DisableSubscription();
+        $this->SetImage(null);
+        $this->WithPublicId(null);
+    }
+
+>>>>>>> old/master
 }

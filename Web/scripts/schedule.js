@@ -9,6 +9,7 @@ function Schedule(opts, resourceGroups) {
 	this.init = function () {
 		this.initUserDefaultSchedule();
 		this.initRotateSchedule();
+<<<<<<< HEAD
 		this.initResourceFilter();
 		renderEvents();
 		this.initResources();
@@ -341,6 +342,64 @@ function Schedule(opts, resourceGroups) {
 	}
 
 	this.renderEvents = renderEvents;
+=======
+		this.initReservations();
+		this.initResourceFilter();
+
+		var reservations = $('#reservations');
+
+		reservations.delegate('.clickres:not(.reserved)', 'mouseenter', function () {
+			$(this).siblings('.resourcename').toggleClass('hilite');
+			var ref = $(this).attr('ref');
+			reservations.find('td[ref="' + ref + '"]').addClass('hilite');
+		});
+
+		reservations.delegate('.clickres:not(.reserved)', 'mouseleave', function () {
+			$(this).siblings('.resourcename').removeClass('hilite');
+			var ref = $(this).attr('ref');
+			reservations.find('td[ref="' + ref + '"]').removeClass('hilite');
+			$(this).removeClass('hilite');
+		});
+
+		reservations.delegate('.clickres', 'mousedown', function () {
+			$(this).addClass('clicked');
+		});
+
+		reservations.delegate('.clickres', 'mouseup', function () {
+			$(this).removeClass('clicked');
+		});
+
+		reservations.delegate('.reservable', 'click', function () {
+			var sd = '';
+			var ed = '';
+
+			var start = $(this).attr('data-start');
+			if (start)
+			{
+				sd = start;
+			}
+			var end = $(this).attr('data-end');
+			if (end)
+			{
+				ed = end;
+			}
+
+			var link = $(this).attr('data-href');
+			window.location = link + "&sd=" + sd + "&ed=" + ed;
+		});
+
+		this.initResources();
+		this.initNavigation();
+
+		var today = $(".today");
+		if (today && today.length > 0)
+		{
+			$('html, body').animate({
+				scrollTop: today.offset().top - 50
+			}, 500);
+		}
+	};
+>>>>>>> old/master
 
 	this.initResources = function () {
 		$('.resourceNameSelector').each(function () {
@@ -442,9 +501,15 @@ function Schedule(opts, resourceGroups) {
 			});
 		}
 
+<<<<<<< HEAD
 		$('#schedules').on('change', function (e) {
 			// e.preventDefault();
 			var scheduleId = $(this).val();
+=======
+		$('#schedule-title').find('.schedule-id').on('click', function (e) {
+			e.preventDefault();
+			var scheduleId = $(this).attr('data-scheduleid');
+>>>>>>> old/master
 
 			RedirectToSelf("sid", /sid=\d+/i, "sid=" + scheduleId, function (url) {
 				var x = RemoveGroupId(url);
@@ -453,13 +518,18 @@ function Schedule(opts, resourceGroups) {
 			});
 		});
 
+<<<<<<< HEAD
 		$('.schedule-dates, .alert').find('.change-date').on('click', function (e) {
+=======
+		$('.schedule-dates').find('.change-date').on('click', function (e) {
+>>>>>>> old/master
 			e.preventDefault();
 			var year = $(this).attr('data-year');
 			var month = $(this).attr('data-month');
 			var day = $(this).attr('data-day');
 			ChangeDate(year, month, day);
 		});
+<<<<<<< HEAD
 
 		$("#print_schedule").on('click', (function (e) {
 			e.preventDefault();
@@ -486,6 +556,12 @@ function Schedule(opts, resourceGroups) {
 			return;
 		}
 
+=======
+	};
+
+	this.initUserDefaultSchedule = function () {
+		var makeDefaultButton = $('#make_default');
+>>>>>>> old/master
 		makeDefaultButton.show();
 
 		var defaultSetMessage = $('#defaultSetMessage');
@@ -493,13 +569,20 @@ function Schedule(opts, resourceGroups) {
 			e.preventDefault();
 			var scheduleId = $('#scheduleId').val();
 			var changeDefaultUrl = options.setDefaultScheduleUrl.replace("[scheduleId]", scheduleId);
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> old/master
 			$.ajax({
 				url: changeDefaultUrl, success: function (data) {
 					defaultSetMessage.show().delay(5000).fadeOut();
 				}
 			});
+<<<<<<< HEAD
+=======
+
+>>>>>>> old/master
 		});
 	};
 
@@ -542,12 +625,18 @@ function Schedule(opts, resourceGroups) {
 			{
 				show();
 			}
+<<<<<<< HEAD
 
 			renderEvents(true);
 		}
 
 		$('.toggle-sidebar').on('click', function (e) {
 			e.preventDefault();
+=======
+		}
+
+		$('.toggle-sidebar').on('click', function () {
+>>>>>>> old/master
 			toggle();
 		});
 
@@ -559,6 +648,7 @@ function Schedule(opts, resourceGroups) {
 		}
 	};
 
+<<<<<<< HEAD
 	function initReservable() {
 		let selectingTds = false;
 		const reservations = $('#reservations');
@@ -721,6 +811,139 @@ function Schedule(opts, resourceGroups) {
 			const data = JSON.parse(event.originalEvent.dataTransfer.getData("text"));
 			var referenceNumber = data.referenceNumber;
 			var sourceResourceId = data.resourceId;
+=======
+	this.initReservations = function () {
+		var reservations = $('#reservations');
+
+		this.makeSlotsSelectable(reservations);
+		this.makeReservationsMoveable(reservations);
+
+		$('.reserved', reservations).each(function () {
+			var resid = $(this).attr('resid');
+			var pattern = 'td[resid="' + resid + '"]';
+
+			$(this).hover(function () {
+				$(pattern, reservations).addClass('hilite');
+			}, function () {
+				$(pattern, reservations).removeClass('hilite');
+			});
+
+			$(this).click(function (e) {
+				e.stopPropagation();
+				var reservationUrl = options.reservationUrlTemplate.replace("[referenceNumber]", resid);
+				window.location = reservationUrl;
+			});
+
+			var qTipElement = $(this);
+
+			if ($(this).is('div'))
+			{
+				var fa = $(this).find('.fa');
+				if (fa.length > 0)
+				{
+					qTipElement = $(this).find('.fa');
+
+					qTipElement.click(function (e) {
+						e.stopPropagation();
+					});
+				}
+			}
+
+			qTipElement.qtip({
+				position: {
+					my: 'bottom left', at: 'top left', effect: false
+				},
+
+				content: {
+					text: function (event, api) {
+						var refNum = $(this).attr('id');
+						$.ajax({url: options.summaryPopupUrl, data: {id: resid}})
+								.done(function (html) {
+									api.set('content.text', html)
+								})
+								.fail(function (xhr, status, error) {
+									api.set('content.text', status + ': ' + error)
+								});
+
+						return 'Loading...';
+					}
+				},
+
+				show: {
+					delay: 700, effect: false
+				},
+
+				hide: {
+					fixed: true, delay: 500
+				},
+
+				style: {
+					classes: 'qtip-light qtip-bootstrap'
+				}
+			});
+		});
+	};
+
+	this.makeSlotsSelectable = function (reservationsElement) {
+		var startHref = '';
+		var startDate = '';
+		var endDate = '';
+		var href = '';
+		var select = function (element) {
+			href = element.attr('data-href');
+			if (startHref == '')
+			{
+				startDate = element.attr('data-start');
+				startHref = href;
+			}
+			endDate = element.attr('data-end');
+		};
+
+		reservationsElement.selectable({
+			filter: 'td.reservable',
+			cancel: 'td.reserved',
+			distance: 20,
+			start: function (event, ui) {
+				startHref = '';
+			}, selecting: function (event, ui) {
+				select($(ui.selecting));
+			}, unselecting: function (event, ui) {
+				select($(ui.unselecting));
+			}, stop: function (event, ui) {
+				if (href != '' && startDate != '' && endDate != '')
+				{
+					var start = moment(decodeURIComponent(startDate));
+					var end = moment(decodeURIComponent(endDate));
+
+					// the user dragged right to left
+					if (end < start)
+					{
+						window.location = href + "&sd=" + endDate + "&ed=" + startDate;
+					}
+					else
+					{
+						window.location = href + "&sd=" + startDate + "&ed=" + endDate;
+					}
+				}
+			}
+		});
+	};
+
+	this.makeReservationsMoveable = function (reservations) {
+		var sourceResourceId = null;
+		var referenceNumber = null;
+
+		reservations.find('td[draggable="true"]').on('dragstart', function (event) {
+			$(event.target).removeClass('clicked');
+			referenceNumber = $(event.target).attr('resid');
+			sourceResourceId = $(event.target).attr('data-resourceId');
+
+			event.originalEvent.dataTransfer.setData("text", event.target.id);
+		});
+
+		reservations.find('td.reservable').on('dragover dragleave drop', function (event) {
+			event.preventDefault();
+>>>>>>> old/master
 
 			var targetSlot = $(event.target);
 
@@ -734,9 +957,13 @@ function Schedule(opts, resourceGroups) {
 			}
 			else if (event.type === 'drop')
 			{
+<<<<<<< HEAD
 				var droppedCell = $(event.target);
 				droppedCell.addClass('dropped');
 				droppedCell.html('<i class="fa fa-spin fa-spinner" aria-hidden="true"></i>');
+=======
+				$(event.target).addClass('dropped');
+>>>>>>> old/master
 
 				var targetResourceId = targetSlot.attr('data-resourceId');
 				var startDate = decodeURIComponent(targetSlot.attr('data-start'));
@@ -748,6 +975,7 @@ function Schedule(opts, resourceGroups) {
 				ajaxPost($('#moveReservationForm'), options.updateReservationUrl, null, function (updateResult) {
 					if (updateResult.success)
 					{
+<<<<<<< HEAD
 						renderEvents(true);
 					}
 					else
@@ -755,12 +983,23 @@ function Schedule(opts, resourceGroups) {
 						droppedCell.removeClass('dropped');
 						droppedCell.html('');
 
+=======
+						document.location.reload();
+					}
+					else
+					{
+						$(event.target).removeClass('dropped');
+>>>>>>> old/master
 						return false;
 					}
 				});
 			}
 		});
+<<<<<<< HEAD
 	}
+=======
+	};
+>>>>>>> old/master
 
 	this.initResourceFilter = function () {
 
@@ -771,7 +1010,11 @@ function Schedule(opts, resourceGroups) {
 
 			groupDiv.tree('selectNode', null);
 
+<<<<<<< HEAD
 			$('#clearFilter').val('1');
+=======
+			eraseCookie('resource_filter' + scheduleId.val(), opts.scriptUrl);
+>>>>>>> old/master
 			$('#resettable').find('input, select').val('');
 			$(this).closest('form').submit();
 		});
@@ -807,14 +1050,19 @@ function Schedule(opts, resourceGroups) {
 				var node = event.node;
 				if (node.type != 'resource')
 				{
+<<<<<<< HEAD
 					$('#resourceGroups').find(':checkbox').attr('checked', false);
 					ChangeGroup(node);
+=======
+					ChangeGroup(node.id);
+>>>>>>> old/master
 				}
 			}
 		});
 
 		this.toggleResourceFilter();
 	};
+<<<<<<< HEAD
 
 	function selectOwner(ui, textbox) {
 		$("#ownerId").val(ui.item.value);
@@ -828,6 +1076,10 @@ function Schedule(opts, resourceGroups) {
 }
 
 
+=======
+}
+
+>>>>>>> old/master
 function RemoveResourceId(url) {
 	if (!url)
 	{
@@ -840,6 +1092,7 @@ function RemoveGroupId(url) {
 	return url.replace(/&*gid=\d+/i, "");
 }
 
+<<<<<<< HEAD
 function ChangeGroup(node) {
 	var groupId = node.id;
 	var $resourceGroups = $('#resourceGroups');
@@ -852,6 +1105,14 @@ function ChangeGroup(node) {
 			ChangeGroup(i);
 		}
 	});
+=======
+function ChangeGroup(groupId) {
+	var $resourceGroups = $('#resourceGroups');
+
+	$resourceGroups.find(':checkbox').attr('checked', false);
+	$resourceGroups.find('input[group-id="' + groupId + '"]').click();
+	//RedirectToSelf('gid', /gid=\d+/i, "gid=" + groupId, RemoveResourceId);
+>>>>>>> old/master
 }
 
 function AddSpecificDate(dateText, inst) {
@@ -917,4 +1178,8 @@ function RedirectToSelf(queryStringParam, regexMatch, substitution, preProcess) 
 	newUrl = newUrl.replace("#", "");
 
 	window.location = newUrl;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> old/master

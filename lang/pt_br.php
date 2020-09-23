@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -19,9 +23,15 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 require_once('Language.php');
+<<<<<<< HEAD
 require_once('en_gb.php');
 
 class pt_br extends en_gb
+=======
+require_once('en_us.php');
+
+class pt_br extends en_us
+>>>>>>> old/master
 {
   public function __construct()
   {
@@ -29,6 +39,32 @@ class pt_br extends en_gb
   }
 
   /**
+<<<<<<< HEAD
+=======
+   * @return array
+   */
+  protected function _LoadDates()
+  {
+    $dates = parent::_LoadDates();
+
+    $dates['general_date'] = 'd/m/Y';
+    $dates['general_datetime'] = 'd/m/Y H:i:s';
+    $dates['schedule_daily'] = 'l, d/m/Y';
+    $dates['reservation_email'] = 'd/m/Y @ H:i (e)';
+    $dates['res_popup'] = 'd/m/Y H:i';
+    $dates['dashboard'] = 'l, d/m/Y H:i';
+    $dates['period_time'] = "H:i";
+    $dates['general_date_js'] = "dd/mm/yy";
+    $dates['calendar_time'] = 'H:mm';
+    $dates['calendar_dates'] = 'd/M';
+
+    $this->Dates = $dates;
+
+    return $this->Dates;
+  }
+
+  /**
+>>>>>>> old/master
   * @return array
   */
   protected function _LoadStrings()
@@ -145,8 +181,13 @@ class pt_br extends en_gb
     $strings['ResourcePermissionAutoGranted'] = 'A permissão é concedida automaticamente';
     $strings['ResourcePermissionNotAutoGranted'] = 'A permissão não é concedida automaticamente';
     $strings['ResourceMinNotice'] = 'As reservas devem ser feitas pelo menos %s antes da hora de início';
+<<<<<<< HEAD
     $strings['ResourceMinNoticeNone'] = 'As reservas podem ser feitas até a hora atual';
     $strings['ResourceMaxNotice'] = 'As reservas não deve terminar mais de %s a partir da hora atual';
+=======
+    $strings['ResourceMinNoticeNone'] = 'As reservas podem ser feitas até o tempo atual';
+    $strings['ResourceMaxNotice'] = 'As reservas não deve terminar mais de %s a partir do tempo atual';
+>>>>>>> old/master
     $strings['ResourceMaxNoticeNone'] = 'As reservas podem acabar a qualquer momento no futuro';
     $strings['ResourceBufferTime'] = 'Precisa ter %s entre as reservas';
     $strings['ResourceBufferTimeNone'] = 'Não existem barreiras entre as reservas';
@@ -158,7 +199,10 @@ class pt_br extends en_gb
     $strings['AddNewUser'] = 'Adicionar Novo Usuário';
     $strings['AddUser'] = 'Adicionar Usuário';
     $strings['Schedule'] = 'Agenda';
+<<<<<<< HEAD
     $strings['Schedules'] = 'Agendas';
+=======
+>>>>>>> old/master
     $strings['AddResource'] = 'Adicionar Recurso';
     $strings['Capacity'] = 'Capacidade';
     $strings['Access'] = 'Acesso';
@@ -633,7 +677,11 @@ class pt_br extends en_gb
     $strings['DayFridayAbbr'] = 'Sex';
     $strings['DaySaturdayAbbr'] = 'Sab';
     // End Day representations
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> old/master
     // Email Subjects
     $strings['ReservationApprovedSubject'] = 'Sua reserva foi aprovada';
     $strings['ReservationCreatedSubject'] = 'Sua reserva foi criada';
@@ -651,9 +699,13 @@ class pt_br extends en_gb
     $strings['ReservationStartingSoonSubject'] = 'A reserva para %s está chegando';
     $strings['ReservationEndingSoonSubject'] = 'A reserva para %s está chegando ao fim';
     $strings['UserAdded'] = 'A new user has been added';
+<<<<<<< HEAD
     $strings['InviteUserSubject'] = '%s convidou você para participar do sistema %s';
     $strings['ReservationCreatedSubjectWithResource'] = 'Reserva criada para %s';
     $strings['ReservationDeletedSubjectWithResource'] = 'Reserva removida para %s';
+=======
+	$strings['InviteUserSubject'] = '%s convidou você para participar do sistema %s';
+>>>>>>> old/master
     // End Email Subjects
 
     // Create do pt_br language
@@ -667,6 +719,7 @@ class pt_br extends en_gb
     $strings['ImageUploadDirectory'] = 'Diretório para enviar imagem física';
     $strings['ChangePermissions'] = 'Tente aplicar as permissões corretas';
     // End of creation
+<<<<<<< HEAD
     
     //My count
     //Change Password
@@ -829,6 +882,9 @@ class pt_br extends en_gb
     $strings['PermanentlyDeleteUsers'] = 'Excluir permanentemente os usuários que não estão conectados desde';
     $strings['SelectEmailTemplate'] = 'Selecione um modelo de email';
     
+=======
+
+>>>>>>> old/master
     $this->Strings = $strings;
 
     return $this->Strings;

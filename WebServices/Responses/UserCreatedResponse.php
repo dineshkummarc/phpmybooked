@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2013-2020 Nick Korbel
+=======
+Copyright 2013-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -27,8 +31,13 @@ class UserCreatedResponse extends RestResponse
 	public function __construct(IRestServer $server, $userId)
 	{
 		$this->userId = $userId;
+<<<<<<< HEAD
 		$this->AddService($server, WebServices::GetUser, array(WebServiceParams::UserId => $userId));
 		$this->AddService($server, WebServices::UpdateUser, array(WebServiceParams::UserId => $userId));
+=======
+		$this->AddService($server, WebServices::GetUser, array(WebServiceParams::UserId, $userId));
+		$this->AddService($server, WebServices::UpdateUser, array(WebServiceParams::UserId, $userId));
+>>>>>>> old/master
 	}
 
 	public static function Example()

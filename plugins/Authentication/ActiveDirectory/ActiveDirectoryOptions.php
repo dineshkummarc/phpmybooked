@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -141,6 +145,7 @@ class ActiveDirectoryOptions
 		$groupList = $this->GetConfig(ActiveDirectoryConfig::REQUIRED_GROUPS);
 		return explode(',', strtolower($groupList));
 	}
+<<<<<<< HEAD
 
     /**
      * @return bool
@@ -149,4 +154,6 @@ class ActiveDirectoryOptions
     {
         return !$this->GetConfig(ActiveDirectoryConfig::PREVENT_CLEAN_USERNAME, new BooleanConverter());
     }
+=======
+>>>>>>> old/master
 }

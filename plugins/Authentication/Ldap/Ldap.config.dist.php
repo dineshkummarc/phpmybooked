@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2012-2020 Nick Korbel
+=======
+Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -34,6 +38,9 @@ $conf['settings']['database.auth.when.ldap.user.not.found'] = 'false';	// if lda
 $conf['settings']['ldap.debug.enabled'] = 'false';	// if LDAP2 should use debug logging
 $conf['settings']['attribute.mapping'] = 'sn=sn,givenname=givenname,mail=mail,telephonenumber=telephonenumber,physicaldeliveryofficename=physicaldeliveryofficename,title=title';	// mapping of required attributes to attribute names in your directory
 $conf['settings']['user.id.attribute'] = 'uid';	// the attribute name for user identification
+<<<<<<< HEAD
 $conf['settings']['sync.groups'] = 'false';
 $conf['settings']['prevent.clean.username'] = 'false';	// If the username is an email address or contains the domain, clean it
+=======
+>>>>>>> old/master
 ?>

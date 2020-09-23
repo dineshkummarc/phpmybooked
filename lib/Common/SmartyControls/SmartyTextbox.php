@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -23,16 +27,24 @@ class SmartyTextbox
 	private $attributes;
 	private $smartyVariable;
 	private $smarty;
+<<<<<<< HEAD
     private $required;
 
     public function __construct($formKey, $type, $id, $smartyVariable, $attributes, $required, &$smarty)
+=======
+
+	public function __construct($formKey, $type, $id, $smartyVariable, $attributes, &$smarty)
+>>>>>>> old/master
 	{
 		$this->name = $this->GetName($formKey);
 		$this->type = empty($type) ? 'text' : $type;
         $this->id = empty($id) ? $this->GetName($formKey) : $id;
 		$this->attributes = $attributes;
 		$this->smartyVariable = $smartyVariable;
+<<<<<<< HEAD
 		$this->required = $required;
+=======
+>>>>>>> old/master
 		$this->smarty = $smarty;
 	}
 
@@ -40,9 +52,14 @@ class SmartyTextbox
 	{
 		$value = $this->GetValue();
 		$style = empty($this->style) ? '' : " style=\"{$this->style}\"";
+<<<<<<< HEAD
 		$required = $this->required ? ' required="required" ' : '';
 
 		return "<input type=\"{$this->GetInputType()}\" name=\"{$this->name}\" id=\"{$this->id}\" value=\"$value\"{$required} $this->attributes />";
+=======
+
+		return "<input type=\"{$this->GetInputType()}\" name=\"{$this->name}\" id=\"{$this->id}\" value=\"$value\" $this->attributes />";
+>>>>>>> old/master
 	}
 
 	protected function GetInputType()

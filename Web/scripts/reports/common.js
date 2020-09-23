@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  Copyright 2017-2020 Nick Korbel
+=======
+ Copyright 2016 Nick Korbel
+>>>>>>> old/master
 
  This file is part of Booked Scheduler.
 
@@ -20,10 +24,18 @@
 function ReportsCommon(opts) {
 	return {
 		init: function () {
+<<<<<<< HEAD
 			$(document).on('click', '#btnChart', function (e) {
 				e.preventDefault();
 
 				var chart = new Chart(opts.chartOpts);
+=======
+
+			$(document).on('click', '#btnChart', function (e) {
+				e.preventDefault();
+
+				var chart = new Chart();
+>>>>>>> old/master
 				chart.generate();
 				$('#report-results').hide();
 			});
@@ -55,9 +67,12 @@ function ReportsCommon(opts) {
 			}
 
 			function initColumns(savedColumns){
+<<<<<<< HEAD
 			    if (savedColumns.length == 0) {
 			        return;
                 }
+=======
+>>>>>>> old/master
 				$.each(getAllColumnTitles(), function(i, title){
 					if (savedColumns.length < 1)
 					{
@@ -75,6 +90,7 @@ function ReportsCommon(opts) {
 				});
 			}
 
+<<<<<<< HEAD
 			function saveSelectedCols(selectedColumns) {
 				$('#selectedColumns').val(selectedColumns);
 
@@ -87,6 +103,14 @@ function ReportsCommon(opts) {
 				var selectedCols = $('#selectedColumns').val();
 				var savedCols = selectedCols ? selectedCols.split(separator) : [];
 				initColumns(savedCols);
+=======
+			$(document).on('loaded', '#report-results', function (e) {
+				var cookieName = 'report-columns';
+				var separator = '!s!';
+				var cookie = readCookie(cookieName);
+				var savedCols = cookie ? cookie.split(separator) : [];
+				//initColumns(savedCols);
+>>>>>>> old/master
 
 				var items = [];
 				var allColumns = getAllColumnTitles();
@@ -101,6 +125,10 @@ function ReportsCommon(opts) {
 
 				var btnCustomizeColumns = $('#btnCustomizeColumns');
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> old/master
 				customizeColumns.find(':checkbox').unbind('click');
 
 				customizeColumns.on('click', ':checkbox', function(e) {
@@ -109,13 +137,21 @@ function ReportsCommon(opts) {
 					var columnsToSave = $.map(customizeColumns.find(':checked'), function(checkbox){
 						return $(checkbox).val();
 					});
+<<<<<<< HEAD
 
 					saveSelectedCols(columnsToSave.join(separator));
+=======
+					createCookie(cookieName, columnsToSave.join(separator), 30, opts.scriptUrl);
+>>>>>>> old/master
 				});
 
 				btnCustomizeColumns.unbind('click').on('click', function(e) {
 					e.preventDefault();
+<<<<<<< HEAD
                     customizeColumns.position({my:'right top', at:'right bottom', of: btnCustomizeColumns, collision: 'fit'});
+=======
+                    customizeColumns.position({my:'right top', at:'right bottom', of: btnCustomizeColumns});
+>>>>>>> old/master
 					customizeColumns.show();
 				});
 			});
@@ -124,5 +160,9 @@ function ReportsCommon(opts) {
 				$(this).closest('.dialog').dialog("close");
 			});
 		}
+<<<<<<< HEAD
 	};
+=======
+	}
+>>>>>>> old/master
 }

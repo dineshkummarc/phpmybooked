@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -141,10 +145,13 @@ class Log
 	{
 		try
 		{
+<<<<<<< HEAD
             if (!self::GetInstance()->sqlLogger->isDebugEnabled())
             {
                 return;
             }
+=======
+>>>>>>> old/master
 			$args = func_get_args();
 			$log = vsprintf(array_shift($args), array_values($args));
 			$log = '[User='.ServiceLocator::GetServer()->GetUserSession() . '] ' . $log;

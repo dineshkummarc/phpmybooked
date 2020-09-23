@@ -22,10 +22,17 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
 Questa è la nuova password temporanea per Booked Scheduler: {$TemporaryPassword}
 
+<<<<<<< HEAD
 <br />
 
 La vecchia password è stata disattivata.
 <br />
+=======
+<br/>
+
+La vecchia password è stata disattivata.
+<br/>
+>>>>>>> old/master
 <br />
 
 Per favore <a href="{$ScriptUrl}">Accedi a Booked Scheduler</a> e cambia la password il prima possibile.

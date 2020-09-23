@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -18,6 +22,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 *}
 {include file='globalheader.tpl'}
 
+<<<<<<< HEAD
 <div id="server-settings-page" class="admin-page">
     <div class="default-box col-xs-12 col-sm-8 col-sm-offset-2">
 
@@ -50,4 +55,26 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 </div>
 
 {include file="javascript-includes.tpl"}
+=======
+<h1>{translate key=ServerSettings}</h1>
+
+<ul class="indented">
+	<li>Current Time: {$currentTime}</li>
+	<li>Image Upload Physical Directory: {$imageUploadDirectory} ({translate key=Permissions}: {$imageUploadDirPermissions}) <a href="{$smarty.server.SCRIPT_URL}?{QueryStringKeys::ACTION}=changePermissions">Try to apply correct permissions</a></li>
+	<li>Template Cache Directory: {$tempalteCacheDirectory} <a href="{$smarty.server.SCRIPT_URL}?{QueryStringKeys::ACTION}=flush">Try to flush cached files</a></li>
+</ul>
+
+<h3 style="margin-top: 20px;">Plugins</h3>
+<ul class="indented">
+{foreach from=$plugins key=category item=items}
+	<li>{$category}
+		<ul>
+		{foreach from=$items item=pluginName}
+			<li>{$pluginName}</li>
+		{/foreach}
+		</ul>
+	</li>
+{/foreach}
+</ul>
+>>>>>>> old/master
 {include file='globalfooter.tpl'}

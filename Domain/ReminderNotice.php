@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2013-2020 Nick Korbel
+=======
+Copyright 2013-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -27,7 +31,11 @@ class ReminderNotice
 	private $endDate;
 	private $title;
 	private $description;
+<<<<<<< HEAD
 	private $resourceNames;
+=======
+	private $resourceName;
+>>>>>>> old/master
 	private $emailAddress;
 	private $firstName;
 	private $lastName;
@@ -75,9 +83,15 @@ class ReminderNotice
 		return $this->reservationId;
 	}
 
+<<<<<<< HEAD
 	public function ResourceNames()
 	{
 		return $this->resourceNames;
+=======
+	public function ResourceName()
+	{
+		return $this->resourceName;
+>>>>>>> old/master
 	}
 
 	public function SeriesId()
@@ -113,7 +127,11 @@ class ReminderNotice
 	 * @param Date $endDate
 	 * @param string $title
 	 * @param string $description
+<<<<<<< HEAD
 	 * @param string $resourceNames
+=======
+	 * @param string $resourceName
+>>>>>>> old/master
 	 * @param string $emailAddress
 	 * @param string $firstName
 	 * @param string $lastName
@@ -122,7 +140,11 @@ class ReminderNotice
 	 * @param string $language
 	 */
 	public function __construct($seriesId, $reservationId, $referenceNumber, Date $startDate, Date $endDate, $title,
+<<<<<<< HEAD
 								$description, $resourceNames, $emailAddress, $firstName, $lastName, $timezone,
+=======
+								$description, $resourceName, $emailAddress, $firstName, $lastName, $timezone,
+>>>>>>> old/master
 								$reminder_minutes, $language)
 	{
 		$this->seriesId = $seriesId;
@@ -132,7 +154,11 @@ class ReminderNotice
 		$this->endDate = $endDate;
 		$this->title = $title;
 		$this->description = $description;
+<<<<<<< HEAD
 		$this->resourceNames = $resourceNames;
+=======
+		$this->resourceName = $resourceName;
+>>>>>>> old/master
 		$this->emailAddress = $emailAddress;
 		$this->firstName = $firstName;
 		$this->lastName = $lastName;
@@ -154,7 +180,11 @@ class ReminderNotice
 		$endDate = Date::FromDatabase($row[ColumnNames::RESERVATION_END]);
 		$title = $row[ColumnNames::RESERVATION_TITLE];
 		$description = $row[ColumnNames::RESERVATION_DESCRIPTION];
+<<<<<<< HEAD
 		$resourceNames = str_replace('!sep!', ', ', $row[ColumnNames::RESOURCE_NAMES]);
+=======
+		$resourceName = $row[ColumnNames::RESOURCE_NAME_ALIAS];
+>>>>>>> old/master
 		$emailAddress = $row[ColumnNames::EMAIL];
 		$firstName = $row[ColumnNames::FIRST_NAME];
 		$lastName = $row[ColumnNames::LAST_NAME];
@@ -164,7 +194,11 @@ class ReminderNotice
 
 		return new ReminderNotice($seriesId, $reservationId, $referenceNumber,
 								  $startDate, $endDate, $title, $description,
+<<<<<<< HEAD
 								  $resourceNames, $emailAddress, $firstName,
+=======
+								  $resourceName, $emailAddress, $firstName,
+>>>>>>> old/master
 								  $lastName, $timezone, $reminder_minutes, $language);
 	}
 }

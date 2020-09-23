@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2017-2020 Nick Korbel
+=======
+ * Copyright 2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -20,6 +24,7 @@
 
 interface IFirstRegistrationStrategy
 {
+<<<<<<< HEAD
 	/**
 	 * @param User $user
 	 * @param IUserRepository $userRepository
@@ -27,11 +32,18 @@ interface IFirstRegistrationStrategy
 	 * @return User
 	 */
 	public function HandleLogin(User $user, IUserRepository $userRepository, IGroupRepository $groupRepository);
+=======
+	public function HandleLogin(User $user, IUserRepository $userRepository);
+>>>>>>> old/master
 }
 
 class SetAdminFirstRegistrationStrategy implements IFirstRegistrationStrategy
 {
+<<<<<<< HEAD
 	public function HandleLogin(User $user, IUserRepository $userRepository, IGroupRepository $groupRepository)
+=======
+	public function HandleLogin(User $user, IUserRepository $userRepository)
+>>>>>>> old/master
 	{
 		$users = $userRepository->GetCount();
 		if ($users == 1)
@@ -43,6 +55,7 @@ class SetAdminFirstRegistrationStrategy implements IFirstRegistrationStrategy
 				$str = file_get_contents($configFile);
 				$str = str_replace("admin@example.com", $user->EmailAddress(), $str);
 				file_put_contents($configFile, $str);
+<<<<<<< HEAD
 				$this->ReloadCachedConfig();
 			}
 
@@ -65,5 +78,9 @@ class SetAdminFirstRegistrationStrategy implements IFirstRegistrationStrategy
 	private function ReloadCachedConfig()
 	{
 		Configuration::SetInstance(null);
+=======
+			}
+		}
+>>>>>>> old/master
 	}
 }

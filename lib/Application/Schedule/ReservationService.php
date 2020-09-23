@@ -1,5 +1,6 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
@@ -13,6 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
+=======
+Copyright 2011-2016 Nick Korbel
+
+This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
+*/
+>>>>>>> old/master
 
 class ReservationService implements IReservationService
 {
@@ -34,6 +50,7 @@ class ReservationService implements IReservationService
 
 	public function GetReservations(DateRange $dateRangeUtc, $scheduleId, $targetTimezone, $resourceIds = null)
 	{
+<<<<<<< HEAD
 		$filterResourcesInCode = $resourceIds != null && is_array($resourceIds) && count($resourceIds) > 100;
 		$resourceKeys = array();
 		if ($filterResourcesInCode)
@@ -57,6 +74,16 @@ class ReservationService implements IReservationService
 			{
 				$reservationListing->Add($reservation);
 			}
+=======
+		$reservationListing = $this->_coordinatorFactory->CreateReservationListing($targetTimezone);
+
+		$reservations = $this->_repository->GetReservations($dateRangeUtc->GetBegin(), $dateRangeUtc->GetEnd(), null, null, $scheduleId, $resourceIds);
+		Log::Debug("Found %s reservations for schedule %s between %s and %s", count($reservations), $scheduleId, $dateRangeUtc->GetBegin(), $dateRangeUtc->GetEnd());
+
+		foreach ($reservations as $reservation)
+		{
+			$reservationListing->Add($reservation);
+>>>>>>> old/master
 		}
 
 		$blackouts = $this->_repository->GetBlackoutsWithin($dateRangeUtc, $scheduleId);
@@ -69,6 +96,7 @@ class ReservationService implements IReservationService
 
 		return $reservationListing;
 	}
+<<<<<<< HEAD
 
 	public function Search(DateRange $dateRange, $scheduleId, $resourceIds = null, $ownerId = null, $participantId = null)
 	{
@@ -92,6 +120,8 @@ class ReservationService implements IReservationService
 
 		return $items;
 	}
+=======
+>>>>>>> old/master
 }
 
 interface IReservationService
@@ -103,6 +133,7 @@ interface IReservationService
 	 * @param null|int $resourceIds
 	 * @return IReservationListing
 	 */
+<<<<<<< HEAD
 	public function GetReservations(DateRange $dateRangeUtc, $scheduleId, $targetTimezone, $resourceIds = null);
 
 	/**
@@ -114,4 +145,7 @@ interface IReservationService
 	 * @return ReservationListItem[]
 	 */
 	public function Search(DateRange $dateRange, $scheduleId, $resourceIds = null, $ownerId = null, $participantId = null);
+=======
+	function GetReservations(DateRange $dateRangeUtc, $scheduleId, $targetTimezone, $resourceIds = null);
+>>>>>>> old/master
 }

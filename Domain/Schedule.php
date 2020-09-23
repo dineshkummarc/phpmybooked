@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -41,6 +45,7 @@ interface ISchedule
     public function GetPublicId();
 
     public function GetAdminGroupId();
+<<<<<<< HEAD
 
     /**
      * @return Date
@@ -66,6 +71,8 @@ interface ISchedule
      * @return int
      */
     public function GetDefaultStyle();
+=======
+>>>>>>> old/master
 }
 
 class Schedule implements ISchedule
@@ -80,12 +87,15 @@ class Schedule implements ISchedule
     protected $_isCalendarSubscriptionAllowed = false;
     protected $_publicId;
     protected $_adminGroupId;
+<<<<<<< HEAD
     protected $_availabilityBegin;
     protected $_availabilityEnd;
     protected $_defaultStyle;
     protected $_layoutType;
     protected $_totalConcurrentReservations = 0;
     protected $_maxResourcesPerReservation = 0;
+=======
+>>>>>>> old/master
 
     const Today = 100;
 
@@ -103,6 +113,7 @@ class Schedule implements ISchedule
         $this->_isDefault = $isDefault;
         $this->_weekdayStart = $weekdayStart;
         $this->_daysVisible = $daysVisible;
+<<<<<<< HEAD
         $this->_timezone = empty($timezone) ? Configuration::Instance()->GetDefaultTimezone() : $timezone;
         $this->_layoutId = $layoutId;
         $this->_availabilityBegin = new NullDate();
@@ -111,6 +122,10 @@ class Schedule implements ISchedule
         $this->_layoutType = ScheduleLayout::Standard;
         $this->_totalConcurrentReservations = 0;
         $this->_maxResourcesPerReservation = 0;
+=======
+        $this->_timezone = $timezone;
+        $this->_layoutId = $layoutId;
+>>>>>>> old/master
     }
 
     public function GetId()
@@ -202,7 +217,11 @@ class Schedule implements ISchedule
     {
         $this->SetIsCalendarSubscriptionAllowed(true);
         if (empty($this->_publicId)) {
+<<<<<<< HEAD
             $this->SetPublicId(BookedStringHelper::Random(20));
+=======
+            $this->SetPublicId(uniqid());
+>>>>>>> old/master
         }
     }
 
@@ -216,9 +235,12 @@ class Schedule implements ISchedule
      */
     public function SetAdminGroupId($adminGroupId)
     {
+<<<<<<< HEAD
     	if (empty($adminGroupId)) {
     		$adminGroupId = null;
 		}
+=======
+>>>>>>> old/master
         $this->_adminGroupId = $adminGroupId;
     }
 
@@ -238,6 +260,7 @@ class Schedule implements ISchedule
         return !empty($this->_adminGroupId);
     }
 
+<<<<<<< HEAD
     public function SetAvailableAllYear()
     {
         $this->_availabilityBegin = new NullDate();
@@ -306,6 +329,8 @@ class Schedule implements ISchedule
         $this->_defaultStyle = $defaultDisplay;
     }
 
+=======
+>>>>>>> old/master
     /**
      * @static
      * @return Schedule
@@ -333,11 +358,15 @@ class Schedule implements ISchedule
         $schedule->WithSubscription($row[ColumnNames::ALLOW_CALENDAR_SUBSCRIPTION]);
         $schedule->WithPublicId($row[ColumnNames::PUBLIC_ID]);
         $schedule->SetAdminGroupId($row[ColumnNames::SCHEDULE_ADMIN_GROUP_ID]);
+<<<<<<< HEAD
         $schedule->SetAvailability(Date::FromDatabase($row[ColumnNames::SCHEDULE_AVAILABLE_START_DATE]), Date::FromDatabase($row[ColumnNames::SCHEDULE_AVAILABLE_END_DATE]));
         $schedule->SetDefaultStyle($row[ColumnNames::SCHEDULE_DEFAULT_STYLE]);
         $schedule->SetLayoutType($row[ColumnNames::LAYOUT_TYPE]);
         $schedule->SetTotalConcurrentReservations($row[ColumnNames::TOTAL_CONCURRENT_RESERVATIONS]);
         $schedule->SetMaxResourcesPerReservation($row[ColumnNames::MAX_RESOURCES_PER_RESERVATION]);
+=======
+
+>>>>>>> old/master
         return $schedule;
     }
 
@@ -363,6 +392,7 @@ class Schedule implements ISchedule
     {
         return new CalendarSubscriptionUrl(null, $this->GetPublicId(), null);
     }
+<<<<<<< HEAD
 
 	/**
 	 * @param $layoutType int
@@ -431,6 +461,8 @@ class Schedule implements ISchedule
 	public function EnforceMaxResourcesPerReservation() {
     	return $this->_maxResourcesPerReservation > 0;
 	}
+=======
+>>>>>>> old/master
 }
 
 class NullSchedule extends Schedule
@@ -439,6 +471,7 @@ class NullSchedule extends Schedule
     {
         parent::__construct(0, null, false, 0, 7);
     }
+<<<<<<< HEAD
 }
 
 
@@ -448,4 +481,6 @@ class ScheduleStyle
     const Wide = 1;
     const Tall = 2;
     const CondensedWeek = 3;
+=======
+>>>>>>> old/master
 }

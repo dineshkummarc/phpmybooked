@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2017-2020 Nick Korbel
+=======
+ * Copyright 2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -29,7 +33,11 @@ class AttributeFilter
     {
         $filteringAttributes = false;
 
+<<<<<<< HEAD
         $f = new SqlFilterFreeForm($entityTableAndColumn . ' IN (SELECT `a0`.`' . ColumnNames::ATTRIBUTE_ENTITY_ID . '` FROM `' . TableNames::CUSTOM_ATTRIBUTE_VALUES . '` `a0` ');
+=======
+        $f = new SqlFilterFreeForm($entityTableAndColumn . ' IN (SELECT a0.' . ColumnNames::ATTRIBUTE_ENTITY_ID . ' FROM ' . TableNames::CUSTOM_ATTRIBUTE_VALUES . ' a0 ');
+>>>>>>> old/master
 
         $attributeFragment = new SqlFilterNull();
 
@@ -44,12 +52,20 @@ class AttributeFilter
             $attributeValue = new SqlRepeatingFilterColumn("a$id", ColumnNames::CUSTOM_ATTRIBUTE_VALUE, $id);
 
             $idEquals = new SqlFilterEquals($attributeId, $attribute->Id());
+<<<<<<< HEAD
             $f->AppendSql('LEFT JOIN `' . TableNames::CUSTOM_ATTRIBUTE_VALUES . '` `a' . $id . '` ON `a0`.`entity_id` = `a' . $id . '`.`entity_id` ');
+=======
+            $f->AppendSql('LEFT JOIN ' . TableNames::CUSTOM_ATTRIBUTE_VALUES . ' a' . $id . ' ON a0.entity_id = a' . $id . '.entity_id ');
+>>>>>>> old/master
             if ($attribute->Type() == CustomAttributeTypes::MULTI_LINE_TEXTBOX || $attribute->Type() == CustomAttributeTypes::SINGLE_LINE_TEXTBOX) {
                 $attributeFragment->_And($idEquals->_And(new SqlFilterLike($attributeValue, $attribute->Value())));
             }
             else if ($attribute->Type() == CustomAttributeTypes::CHECKBOX && $attribute->Value() == '0') {
+<<<<<<< HEAD
                 $attributeFragment->_And(new SqlFilterFreeForm('NOT EXISTS (SELECT 1 FROM `' . TableNames::CUSTOM_ATTRIBUTE_VALUES . '` `b` WHERE `b`.`entity_id` = `a0`.`entity_id` AND `b`.`custom_attribute_id` = ' . $id . ')'));
+=======
+                $attributeFragment->_And(new SqlFilterFreeForm('NOT EXISTS (SELECT 1 FROM ' . TableNames::CUSTOM_ATTRIBUTE_VALUES . ' b WHERE b.entity_id = a0.entity_id AND b.custom_attribute_id = ' . $id . ')'));
+>>>>>>> old/master
             }
             else {
                 $attributeFragment->_And($idEquals->_And(new SqlFilterEquals($attributeValue, $attribute->Value())));

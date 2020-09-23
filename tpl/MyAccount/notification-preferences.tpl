@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -96,6 +100,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 								<input id="approvedNo" type="radio" name="{ReservationEvent::Approved}" value="0"
 									   {if !$Approved}checked="checked"{/if}/>{translate key=PreferenceNoEmail}</label>
 						</div>
+<<<<<<< HEAD
 					</div>
 
                     <div class="notification-row">
@@ -129,6 +134,19 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                                        {if !$SeriesEnding}checked="checked"{/if}/>{translate key=PreferenceNoEmail}</label>
                         </div>
                     </div>
+=======
+
+						{*<div class="notification-status">*}
+						{*<input id="approvedYes" type="radio" name="{ReservationEvent::Approved}" value="1"*}
+						{*{if $Approved}checked="checked"{/if}/><label*}
+						{*for="approvedYes">{translate key=PreferenceSendEmail}</label>*}
+						{*<br/>*}
+						{*<input id="approvedNo" type="radio" name="{ReservationEvent::Approved}" value="0"*}
+						{*{if !$Approved}checked="checked"{/if}/><label*}
+						{*for="approvedNo">{translate key=PreferenceNoEmail}</label>*}
+						{*</div>*}
+					</div>
+>>>>>>> old/master
 				</div>
 
 				<div class="form-group">
@@ -141,6 +159,9 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 	{/if}
 
 </div>
+<<<<<<< HEAD
 
 {include file="javascript-includes.tpl"}
+=======
+>>>>>>> old/master
 {include file='globalfooter.tpl'}

@@ -1,7 +1,11 @@
 <?php
 /**
 Copyright 2011-2015 Nick Korbel
+<<<<<<< HEAD
 Translation: 2016 Neklyudov Dmitriy <neodim5@mail.ru>
+=======
+
+>>>>>>> old/master
 This file is part of Booked Scheduler.
 
 Booked Scheduler is free software: you can redistribute it and/or modify
@@ -17,11 +21,18 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
+<<<<<<< HEAD
 
 require_once('Language.php');
 require_once('en_gb.php');
 
 class ru_ru extends en_gb
+=======
+require_once('Language.php');
+require_once('en_us.php');
+
+class ru_ru extends en_us
+>>>>>>> old/master
 {
 	public function __construct()
 	{
@@ -31,6 +42,32 @@ class ru_ru extends en_gb
 	/**
 	 * @return array
 	 */
+<<<<<<< HEAD
+=======
+	protected function _LoadDates()
+	{
+		$dates = array();
+
+		$dates['general_date'] = 'd.m.Y';
+		$dates['general_datetime'] = 'd.m.Y H:i:s';
+		$dates['schedule_daily'] = 'l, d.m.Y';
+		$dates['reservation_email'] = 'd.m.Y H:i';
+		$dates['res_popup'] = 'd.m.Y H:i';
+		$dates['dashboard'] = 'l, d.m.Y H:i';
+		$dates['period_time'] = 'H:i';
+		$dates['general_date_js'] = 'dd.mm.yy';
+		$dates['calendar_time'] = 'HH:mm';
+		$dates['calendar_dates'] = 'd.M.';
+
+		$this->Dates = $dates;
+
+		return $this->Dates;
+	}
+
+	/**
+	 * @return array
+	 */
+>>>>>>> old/master
 	protected function _LoadStrings()
 	{
 		$strings = array();
@@ -41,7 +78,11 @@ class ru_ru extends en_gb
 		$strings['Edit'] = 'Редактировать';
 		$strings['Change'] = 'Изменить';
 		$strings['Rename'] = 'Переименовать';
+<<<<<<< HEAD
 		$strings['Remove'] = 'Очистить';
+=======
+		$strings['Remove'] = 'Переместить';
+>>>>>>> old/master
 		$strings['Delete'] = 'Удалить';
 		$strings['Update'] = 'Обновление';
 		$strings['Cancel'] = 'Отменить';
@@ -124,7 +165,11 @@ class ru_ru extends en_gb
 		$strings['BringOnline'] = 'Откл. автономный режим';
 		$strings['AddImage'] = 'Добавить изображение';
 		$strings['NoImage'] = 'Нет добавленых изображений';
+<<<<<<< HEAD
 		$strings['Move'] = 'Очистить';
+=======
+		$strings['Move'] = 'Переместить';
+>>>>>>> old/master
 		$strings['AppearsOn'] = 'оявляется на %s';
 		$strings['Location'] = 'Место';
 		$strings['NoLocationLabel'] = '(не выбрано место)';
@@ -183,7 +228,10 @@ class ru_ru extends en_gb
 		$strings['CancelParticipation'] = 'Отказаться';
 		$strings['Attending'] = 'Принять';
 		$strings['QuotaConfiguration'] = 'В %s для %s пользователи %s ограничены %s %s на %s';
+<<<<<<< HEAD
 		$strings['QuotaEnforcement'] = 'Enforced %s %s';
+=======
+>>>>>>> old/master
 		$strings['reservations'] = 'бронирования';
 		$strings['reservation'] = 'бронирование';
 		$strings['ChangeCalendar'] = 'Сменить Календарь';
@@ -303,7 +351,11 @@ class ru_ru extends en_gb
 		$strings['AllReservations'] = 'Все Забронированные';
 		$strings['PendingReservations'] = 'Ожидающие Бронирования';
 		$strings['Approving'] = 'Утверждения';
+<<<<<<< HEAD
 		$strings['MoveToSchedule'] = 'Переместить в Планировщик';
+=======
+		$strings['MoveToSchedule'] = 'Перепестит в Планировщик';
+>>>>>>> old/master
 		$strings['DeleteResourceWarning'] = 'Удаление этого ресурса будут удалены все связанные с ним данные, и связи с ним';
 		$strings['DeleteResourceWarningReservations'] = 'Все прошлые, нынешние и будущие Бронирования, связанные с ним';
 		$strings['DeleteResourceWarningPermissions'] = 'Все назначенные разрешение';
@@ -355,11 +407,19 @@ class ru_ru extends en_gb
 		$strings['DisplayLabel'] = 'Показать ярлыки';
 		$strings['Type'] = 'Тип';
 		$strings['Required'] = 'Обязательный';
+<<<<<<< HEAD
 		$strings['ValidationExpression'] = 'Проверка выражения';
 		$strings['PossibleValues'] = 'Возможные значения';
 		$strings['SingleLineTextbox'] = 'Текстовое поле одной строкой';
 		$strings['MultiLineTextbox'] = 'Множество текстовых полей';
 		$strings['Checkbox'] = 'Галочка';
+=======
+		$strings['ValidationExpression'] = 'Validation Expression';
+		$strings['PossibleValues'] = 'Возможные значения';
+		$strings['SingleLineTextbox'] = 'Single Line Textbox';
+		$strings['MultiLineTextbox'] = 'Multiple Line Textbox';
+		$strings['Checkbox'] = 'Checkbox';
+>>>>>>> old/master
 		$strings['SelectList'] = 'Выбор списка';
 		$strings['CommaSeparated'] = 'разделенные запятой';
 		$strings['Category'] = 'Категория';
@@ -475,6 +535,7 @@ class ru_ru extends en_gb
 		$strings['BulkResourceUpdate'] = 'Массовое обновление Помещений';
 		$strings['Unchanged'] = 'без изменений';
 		$strings['Common'] = 'Общий';
+<<<<<<< HEAD
 		$strings['AdminOnly'] = 'Только администратор';
 		$strings['AdvancedFilter'] = 'Расширенный фильтр';
 		$strings['MinimumQuantity'] = 'Минимальное количество';
@@ -492,10 +553,15 @@ class ru_ru extends en_gb
 		$strings['RegisterANewAccount'] = 'Регистрация новой учетной записи';
 		$strings['Dates'] = 'Даты';
 		$strings['More'] = 'Больше';
+=======
+		$strings['AdvancedFilter'] = 'Расширенный фильтр';
+		$strings['AllParticipants'] = 'Все участники';
+>>>>>>> old/master
 		$strings['ResourceAvailability'] = 'Доступные помещения';
 		$strings['UnavailableAllDay'] = 'В течение всего дня';
 		$strings['AvailableUntil'] = 'Доступно до';
 		$strings['AvailableBeginningAt'] = 'Доступно начиная с';
+<<<<<<< HEAD
 		$strings['AllResourceTypes'] = 'Все типы помещений';
 		$strings['AllResourceStatuses'] = 'Все статусы помещений';
 		$strings['AllowParticipantsToJoin'] = 'Разрешить участникам присоединяться';
@@ -569,10 +635,22 @@ class ru_ru extends en_gb
 		$strings['Minutes'] = 'Минуты';
         $strings['ImportICS'] = 'Импортировать из ICS';
         $strings['ImportQuartzy'] = 'Импортировать из Quartzy';
+=======
+		$strings['AllowParticipantsToJoin'] = 'Разрешить участникам присоединиться';
+		$strings['JoinThisReservation'] = 'Присоединиться к этому мероприятию';
+		$strings['Import'] = 'Импорт';
+		$strings['GetTemplate'] = 'Получить шаблон';
+		$strings['UserImportInstructions'] = 'Файл должен быть в формате CSV. Имя пользователя и адрес электронной почты, обязательны для заполнения. Оставив другие поля пустыми будут установлены значения по умолчанию и \'password\' в качестве пароля пользователя. Используйте прилагаемый шаблон в качестве примера.';
+		$strings['RowsImported'] = 'Строки импортированы';
+		$strings['RowsSkipped'] = 'Строки пропущенны';
+		$strings['DateTime'] = 'Дата Время';
+		$strings['SendAsEmail'] = 'Отправить на Email';
+>>>>>>> old/master
 		$strings['IncludeDeleted'] = 'Включить удаленные';
 		$strings['Deleted'] = 'Удалённые';
 		$strings['OnlyIcs'] = 'Только * .ics файлы могут быть загружены.';
 		$strings['IcsLocationsAsResources'] = 'Места будут импортированы в качестве ресурсов.';
+<<<<<<< HEAD
         $strings['IcsMissingOrganizer'] = 'Любому событию, с отсутствующим организатором, организатором будет назначен текущий пользователь.';
         $strings['IcsWarning'] = 'Правила бронирования не будут применяться - возможны конфликты, дубликаты и т. д.';
 		$strings['BlackoutAroundConflicts'] = 'Блокировка из-за противоречивых бронирований';
@@ -609,6 +687,8 @@ class ru_ru extends en_gb
         $strings['InviteUsers'] = 'Пригласить пользователей';
         $strings['InviteUsersLabel'] = 'Введите адреса электронной почты приглашенных лиц.';
         $strings['ApplyToCurrentUsers'] = 'Применить к текущим пользователям';
+=======
+>>>>>>> old/master
 		$strings['IcsMissingOrganizer'] = 'Любое событие отсутствует организатор будет иметь владельца, установленный для текущего пользователя.';
 		$strings['IcsWarning'] = 'Правила бронирования не будут применяться - конфликты, дубликатами и т.д. возможны';
 		// End Strings
@@ -683,6 +763,7 @@ class ru_ru extends en_gb
 		$strings['PasswordError'] = 'Пароль должен содержать по меньшей мере %s букв и по крайней мере %s чисел.';
 		$strings['PasswordErrorRequirements'] = 'Пароль должен содержать комбинацию, по меньшей мере, %s верхние и строчные буквы и %s чисел.';
 		$strings['NoReservationAccess'] = 'Вы не можете изменить это бронирование.';
+<<<<<<< HEAD
 		$strings['PasswordControlledExternallyError'] = 'Ваш пароль контролируется внешней системой и не может быть обновлен здесь.';
 		$strings['AccessoryResourceRequiredErrorMessage'] = 'Доп. оборудование %s можно заказать только с помещениями %s';
 		$strings['AccessoryMinQuantityErrorMessage'] = 'Вы должны заказать %s доп.оборудование %s';
@@ -695,6 +776,11 @@ class ru_ru extends en_gb
 		$strings['ReservationCannotBeCheckedInTo'] = 'Это резервирование невозможно проверить в.';
 		$strings['ReservationCannotBeCheckedOutFrom'] = 'Эту бронь нельзя оформить.';
 		$strings['InvalidEmailDomain'] = 'Этот адрес электронной почты не из разрешенного домена';
+=======
+		$strings['PasswordControlledExternallyError'] = 'Ваш пароль управляется внешней системой и не могут быть обновлены здесь.';
+		$strings['NoResources'] = 'Вы не добавили источники.';
+		$strings['ParticipationNotAllowed'] = 'Вы не можете присоединиться к этому бронированию.';
+>>>>>>> old/master
 		$strings['InsecureRequestError'] = 'Небезопасной запрос. Если вы будете продолжать видеть эту ошибку, пожалуйста, снова войти в систему и повторите запрос.';
 		$strings['RemoveExistingPermissions'] = 'Удалить существующие разрешения?';
 		// End Errors
@@ -755,7 +841,10 @@ class ru_ru extends en_gb
 		$strings['ManageResourceGroups'] = 'Группы помещений';
 		$strings['ManageResourceTypes'] = 'Типы Помещений';
 		$strings['ManageResourceStatus'] = 'Статус Помещений';
+<<<<<<< HEAD
 		$strings['ReservationColors'] = 'Цвет бронирования';
+=======
+>>>>>>> old/master
 		$strings['ImportICS'] = 'Импорт ICS File';
 		$strings['ImportQuartzy'] = 'Импорт Quartzy File';
 		// End Page Titles
@@ -790,14 +879,18 @@ class ru_ru extends en_gb
 		$strings['ParticipantAddedSubject'] = 'Уведомление о участие в Мероприятии';
 		$strings['ParticipantDeletedSubject'] = 'Бронирование удалено';
 		$strings['InviteeAddedSubject'] = 'Приглашение на мероприятие';
+<<<<<<< HEAD
 		$strings['ResetPasswordRequest'] = 'Password Reset Request';
 
+=======
+>>>>>>> old/master
 		$strings['ResetPassword'] = 'Запрос на сброс пароля';
 		$strings['ActivateYourAccount'] = 'Актирируйте свой аккаунт';
 		$strings['ReportSubject'] = 'Ваш запрошенный отёт (%s)';
 		$strings['ReservationStartingSoonSubject'] = 'Мероприятие %s скоро начнется';
 		$strings['ReservationEndingSoonSubject'] = 'Мероприятие %s скоро закончится';
 		$strings['UserAdded'] = 'Добавлен новый пользователь';
+<<<<<<< HEAD
 		$strings['GuestAccountCreatedSubject'] = 'Информация о вашем аккаунте';
 		$strings['InviteUserSubject'] = '%s приглашает вас присоединиться к %s';
 
@@ -814,6 +907,8 @@ class ru_ru extends en_gb
 		$strings['InviteeAddedSubjectWithResource'] = '%s Пригласил вас на мнроприятие для %s';
 		$strings['MissedCheckinEmailSubject'] = 'Не прошли регистрацию %s';
 
+=======
+>>>>>>> old/master
 		$strings['UserDeleted'] = 'Аккаунт Пользователя %s был удален %s';
 		$strings['AnnouncementSubject'] = 'Новое объявление было опубликовано %s';
 		// End Email Subjects

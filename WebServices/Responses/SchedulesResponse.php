@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2012-2020 Nick Korbel
+=======
+Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -22,11 +26,14 @@ require_once(ROOT_DIR . 'WebServices/Responses/ScheduleItemResponse.php');
 
 class SchedulesResponse extends RestResponse
 {
+<<<<<<< HEAD
     /**
      * @var ScheduleItemResponse[]
      */
     public $schedules = array();
 
+=======
+>>>>>>> old/master
 	/**
 	 * @param IRestServer $server
 	 * @param array|Schedule[] $schedules

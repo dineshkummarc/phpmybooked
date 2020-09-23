@@ -44,6 +44,7 @@
 //}
 
 .calendarHeading {
+<<<<<<< HEAD
   color: #666666;
   border-bottom: solid 1px #666666;
   padding: 10px 0px 3px 5px;;
@@ -96,10 +97,49 @@
   border: solid 1px @dark-gray;
   background-color: @lightest-gray;
   color: #333 !important;
+=======
+	color: #666666;
+	border-bottom: solid 1px #666666;
+	padding: 10px 0px 3px 5px;;
+	margin-bottom: 10px;
+	font-size: 16pt;
+	font-weight: bold;
+}
+
+.calendarHeading a {
+	font-weight: normal;
+	font-size: 10pt;
+}
+
+.noresults {
+	font-style: italic;
+	font-size: 14pt;
+}
+
+.fc-agenda-allday {
+	display: none;
+}
+
+
+
+.select2-results {
+  .schedule {font-weight:bold;}
+  .resource {padding-left: 15px;}
+}
+
+.calendar-subscription {
+	text-align: right;
+	padding: 10px 0;
+}
+
+#calendar a, #calendar a:visited {
+	color: #fff;
+>>>>>>> old/master
 }
 
 ul.jqtree-tree li.jqtree-selected > .jqtree-element,
 ul.jqtree-tree li.jqtree-selected > .jqtree-element:hover {
+<<<<<<< HEAD
   background: none;
   font-weight: bold;
 }
@@ -147,6 +187,52 @@ ul.jqtree-tree .jqtree-toggler {
 }
 
 #page-calendar, #page-my-calendar {
+=======
+	background: none;
+	font-weight: bold;
+}
+
+ul.jqtree-tree .jqtree-toggler {
+	top: 10%;
+}
+
+#resourceGroupsContainer {
+	background-color: #fff;
+	padding:10px;
+	display: none;
+	width: 200px;
+	height: 300px;
+	border: solid 1px #999;
+	z-index:200;
+	position:absolute;
+}
+
+.groupName {
+	font-size:1.5em;
+	font-weight: bold;
+}
+
+#dayDialog {
+  display:none;
+//  background-color: @lightest-gray;
+  border-color: @mid-gray;
+  position:absolute;
+  z-index: 2;
+  padding:12px;
+
+  a {padding: 0 5px }
+}
+
+.fc-day {
+	background-color: #fff;
+}
+
+.fc-day-header {
+	background-color: @off-white;
+}
+
+.page-calendar, .page-my-calendar {
+>>>>>>> old/master
   #filter {
     margin: 15px;
     text-align: center;

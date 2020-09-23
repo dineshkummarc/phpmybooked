@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,15 +33,22 @@ require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/ReservationBasic
 require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/ResourceAvailabilityRule.php');
 require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/ExistingResourceAvailabilityRule.php');
 require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/ReservationDateTimeRule.php');
+<<<<<<< HEAD
 require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/ReservationOverlappingRule.php');
+=======
+>>>>>>> old/master
 require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/ReservationStartTimeRule.php');
 require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/PermissionValidationRule.php');
 require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/ReservationRuleResult.php');
 require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/ReservationValidationFactory.php');
 require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/ReservationValidationResult.php');
+<<<<<<< HEAD
 require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/ResourceMinimumNoticeRuleAdd.php');
 require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/ResourceMinimumNoticeRuleUpdate.php');
 require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/ResourceMinimumNoticeRuleDelete.php');
+=======
+require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/ResourceMinimumNoticeRule.php');
+>>>>>>> old/master
 require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/ResourceMaximumNoticeRule.php');
 require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/ResourceMinimumDurationRule.php');
 require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/ResourceMaximumDurationRule.php');
@@ -63,6 +74,7 @@ require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/AccessoryResourc
 require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/ReservationCanBeCheckedInRule.php');
 require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/ReservationCanBeCheckedOutRule.php');
 require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/CreditsRule.php');
+<<<<<<< HEAD
 require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/AnonymousResourceExcludedRule.php');
 require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/TermsOfServiceRule.php');
 require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/ScheduleAvailabilityRule.php');
@@ -70,3 +82,6 @@ require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/TitleRequiredRul
 require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/DescriptionRequiredRule.php');
 require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/ResourceCountRule.php');
 require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/ScheduleTotalConcurrentReservationsRule.php');
+=======
+require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/AnonymousResourceExcludedRule.php');
+>>>>>>> old/master

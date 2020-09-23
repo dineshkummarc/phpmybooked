@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2013-2020 Nick Korbel
+=======
+Copyright 2013-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -79,6 +83,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 				{/if}
 				<td>{if $attribute->AdminOnly()}{translate key=Yes}{else}{translate key=No}{/if}</td>
 				<td class="action">
+<<<<<<< HEAD
 					<a href="#" class="update edit">
                         <span class="no-show">{translate key=Edit}</span>
                         <span class="fa fa-edit icon edit"></span>
@@ -89,6 +94,12 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                         <span class="no-show">{translate key=Remove}</span>
                         <span class="fa fa-trash icon remove"></span>
                     </a>
+=======
+					<a href="#" class="update edit" }"><span class="fa fa-edit icon edit"></span></a>
+				</td>
+				<td class="action">
+					<a href="#" class="update delete" attributeId="{$attribute->Id()}"><span class="fa fa-trash icon remove"></span></a>
+>>>>>>> old/master
 				</td>
 			</tr>
 		{/foreach}

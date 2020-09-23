@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -75,7 +79,12 @@ class ReservationDeletePresenter implements IReservationDeletePresenter
 		$referenceNumber = $this->page->GetReferenceNumber();
 		$existingSeries = $this->persistenceService->LoadByReferenceNumber($referenceNumber);
 		$existingSeries->ApplyChangesTo($this->page->GetSeriesUpdateScope());
+<<<<<<< HEAD
 		$existingSeries->Delete($this->userSession, $this->page->GetReason());
+=======
+
+		$existingSeries->Delete($this->userSession);
+>>>>>>> old/master
 
 		return $existingSeries;
 	}
@@ -87,6 +96,10 @@ class ReservationDeletePresenter implements IReservationDeletePresenter
 	{
 		Log::Debug("Deleting reservation %s", $reservationSeries->CurrentInstance()->ReferenceNumber());
 
+<<<<<<< HEAD
         $this->handler->Handle($reservationSeries, $this->page);
+=======
+		$this->handler->Handle($reservationSeries, $this->page);
+>>>>>>> old/master
 	}
 }

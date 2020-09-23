@@ -20,6 +20,7 @@ function BlackoutManagement(opts) {
 		deleteRecurringForm: $('#deleteRecurringForm'),
 		addBlackoutForm: $('#addBlackoutForm'),
 
+<<<<<<< HEAD
 		referenceNumberList: $(':hidden.reservationId'),
 
 		deleteMultiplePrompt: $('#delete-selected'),
@@ -29,6 +30,9 @@ function BlackoutManagement(opts) {
 		deleteMultipleSelectAll: $('#delete-all'),
 		deleteMultipleCount: $('#deleteMultipleCount'),
 		deleteMultiplePlaceHolder: $('#deleteMultiplePlaceHolder')
+=======
+		referenceNumberList: $(':hidden.reservationId')
+>>>>>>> old/master
 	};
 
 	var blackoutId;
@@ -60,7 +64,12 @@ function BlackoutManagement(opts) {
 			var id = tr.attr('data-blackout-id');
 
 			$.blockUI({
+<<<<<<< HEAD
 				message: $('#update-box'), css: {textAlign: 'left'}
+=======
+				message: $('#update-box'),
+				css: {textAlign: 'left'}
+>>>>>>> old/master
 			});
 
 			var updateDiv = $('#update-contents');
@@ -72,7 +81,12 @@ function BlackoutManagement(opts) {
 				$('#update-spinner').hide();
 
 				ConfigureAsyncForm($('#editBlackoutForm'), getUpdateUrl, onAddSuccess, null, {
+<<<<<<< HEAD
 					onBeforeSubmit: onBeforeAddSubmit, target: '#result'
+=======
+					onBeforeSubmit: onBeforeAddSubmit,
+					target: '#result'
+>>>>>>> old/master
 				});
 
 				wireUpUpdateButtons();
@@ -82,8 +96,12 @@ function BlackoutManagement(opts) {
 				});
 
 				$('#cancelUpdate').click(function (e) {
+<<<<<<< HEAD
                     $('#update-box').addClass('no-show');
                     $.unblockUI();
+=======
+					$.unblockUI();
+>>>>>>> old/master
 				});
 
 				$('.blackoutResources').click(function (e) {
@@ -94,8 +112,13 @@ function BlackoutManagement(opts) {
 				});
 				wireUpTimePickers();
 
+<<<<<<< HEAD
 				$('#update-box').removeClass('no-show');
 			});
+=======
+                $('#update-box').removeClass('no-show');
+            });
+>>>>>>> old/master
 		});
 
 		handleBlackoutApplicabilityChange();
@@ -132,6 +155,7 @@ function BlackoutManagement(opts) {
 			filterReservations();
 		});
 
+<<<<<<< HEAD
 		elements.deleteMultiplePrompt.click(function (e) {
 			e.preventDefault();
 			var checked = elements.blackoutTable.find('.delete-multiple:checked');
@@ -166,6 +190,20 @@ function BlackoutManagement(opts) {
 			onBeforeSubmit: onBeforeDeleteSubmit, target: '#result'
 		});
 		ConfigureAsyncForm(elements.deleteMultipleForm);
+=======
+		ConfigureAsyncForm(elements.addBlackoutForm, getAddUrl, onAddSuccess, null, {
+			onBeforeSubmit: onBeforeAddSubmit,
+			target: '#result'
+		});
+		ConfigureAsyncForm(elements.deleteForm, getDeleteUrl, onDeleteSuccess, null, {
+			onBeforeSubmit: onBeforeDeleteSubmit,
+			target: '#result'
+		});
+		ConfigureAsyncForm(elements.deleteRecurringForm, getDeleteUrl, onDeleteSuccess, null, {
+			onBeforeSubmit: onBeforeDeleteSubmit,
+			target: '#result'
+		});
+>>>>>>> old/master
 	};
 
 	function showDeleteBlackout() {
@@ -240,7 +278,15 @@ function BlackoutManagement(opts) {
 	}
 
 	function filterReservations() {
+<<<<<<< HEAD
 		var filterQuery = 'sd=' + elements.startDate.val() + '&ed=' + elements.endDate.val() + '&sid=' + elements.scheduleId.val() + '&rid=' + elements.resourceId.val();
+=======
+		var filterQuery =
+				'sd=' + elements.startDate.val() +
+				'&ed=' + elements.endDate.val() +
+				'&sid=' + elements.scheduleId.val() +
+				'&rid=' + elements.resourceId.val();
+>>>>>>> old/master
 
 		window.location = document.location.pathname + '?' + encodeURI(filterQuery);
 	}

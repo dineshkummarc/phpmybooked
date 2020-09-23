@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -64,12 +68,19 @@ interface IReservationComponentInitializer
 	/**
 	 * @param Date $startDate
 	 * @param Date $endDate
+<<<<<<< HEAD
 	 * @param array|SchedulePeriod[] $startPeriods
      * @param array|SchedulePeriod[] $endPeriods
      * @param int $firstWeekday
      * @parma bool $lockDates
 	 */
 	public function SetDates(Date $startDate, Date $endDate, $startPeriods, $endPeriods, $firstWeekday, $lockDates = false);
+=======
+	 * @param $startPeriods array|SchedulePeriod[]
+	 * @param $endPeriods array|SchedulePeriod[]
+	 */
+	public function SetDates(Date $startDate, Date $endDate, $startPeriods, $endPeriods);
+>>>>>>> old/master
 
 	/**
 	 * @return UserSession
@@ -102,6 +113,10 @@ interface IReservationComponentInitializer
 	public function SetShowParticipation($shouldShow);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param $showReservationDetails bool
 	 */
 	public function ShowReservationDetails($showReservationDetails);
@@ -132,22 +147,34 @@ interface IReservationComponentInitializer
 	public function SetReservationResource($resource);
 
 	/**
+<<<<<<< HEAD
 	 * @param $maximum int
 	 */
 	public function SetMaximumResources($maximum);
 
 	/**
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param $attribute CustomAttribute
 	 * @param $value mixed
 	 */
 	public function AddAttribute($attribute, $value);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param ErrorMessages|int $errorMessageId
 	 */
 	public function RedirectToError($errorMessageId);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @abstract
+>>>>>>> old/master
 	 * @param bool $isHidden
 	 */
 	public function HideRecurrence($isHidden);
@@ -156,11 +183,14 @@ interface IReservationComponentInitializer
 	 * @return bool
 	 */
 	public function IsNew();
+<<<<<<< HEAD
 
     /**
      * @param DateRange $availability
      */
     public function SetAvailability(DateRange $availability);
+=======
+>>>>>>> old/master
 }
 
 abstract class ReservationInitializerBase implements IReservationInitializer, IReservationComponentInitializer
@@ -204,6 +234,7 @@ abstract class ReservationInitializerBase implements IReservationInitializer, IR
 	 * @var array|Attribute[]
 	 */
 	private $customAttributes = array();
+<<<<<<< HEAD
     /**
      * @var ITermsOfServiceRepository
      */
@@ -217,14 +248,29 @@ abstract class ReservationInitializerBase implements IReservationInitializer, IR
      * @param $userSession UserSession
      * @param ITermsOfServiceRepository $termsOfServiceRepository
      */
+=======
+
+	/**
+	 * @param $page IReservationPage
+	 * @param $userBinder IReservationComponentBinder
+	 * @param $dateBinder IReservationComponentBinder
+	 * @param $resourceBinder IReservationComponentBinder
+	 * @param $userSession UserSession
+	 */
+>>>>>>> old/master
 	public function __construct(
 		$page,
 		IReservationComponentBinder $userBinder,
 		IReservationComponentBinder $dateBinder,
 		IReservationComponentBinder $resourceBinder,
+<<<<<<< HEAD
 		UserSession $userSession,
         ITermsOfServiceRepository $termsOfServiceRepository
     )
+=======
+		UserSession $userSession
+	)
+>>>>>>> old/master
 	{
 		$this->basePage = $page;
 		$this->userBinder = $userBinder;
@@ -232,8 +278,12 @@ abstract class ReservationInitializerBase implements IReservationInitializer, IR
 		$this->resourceBinder = $resourceBinder;
 		$this->currentUser = $userSession;
 		$this->currentUserId = $this->currentUser->UserId;
+<<<<<<< HEAD
         $this->termsRepository = $termsOfServiceRepository;
     }
+=======
+	}
+>>>>>>> old/master
 
 	public function Initialize()
 	{
@@ -243,8 +293,12 @@ abstract class ReservationInitializerBase implements IReservationInitializer, IR
 		$this->BindResourceAndAccessories();
 		$this->BindDates();
 		$this->BindUser();
+<<<<<<< HEAD
         $this->SetTermsOfService();
     }
+=======
+	}
+>>>>>>> old/master
 
 	protected function BindUser()
 	{
@@ -332,6 +386,7 @@ abstract class ReservationInitializerBase implements IReservationInitializer, IR
 		return $periods[$lastIndex];
 	}
 
+<<<<<<< HEAD
 	public function SetDates(Date $startDate, Date $endDate, $startPeriods, $endPeriods, $firstWeekday, $lockDates = false)
 	{
 	    if (count($startPeriods) == 0 || count($endPeriods) == 0) {
@@ -347,6 +402,12 @@ abstract class ReservationInitializerBase implements IReservationInitializer, IR
         else{
 		    $this->basePage->SetFirstWeekday($firstWeekday);
         }
+=======
+	public function SetDates(Date $startDate, Date $endDate, $startPeriods, $endPeriods)
+	{
+		$this->basePage->BindPeriods($startPeriods, $endPeriods);
+		$this->SetSelectedDates($startDate, $endDate, $startPeriods, $endPeriods);
+>>>>>>> old/master
 	}
 
 	/**
@@ -459,15 +520,19 @@ abstract class ReservationInitializerBase implements IReservationInitializer, IR
 		$this->basePage->HideRecurrence($isHidden);
 	}
 
+<<<<<<< HEAD
 	public function SetAvailability(DateRange $availability)
 	{
 		$this->basePage->SetAvailability($availability);
 	}
 
+=======
+>>>>>>> old/master
 	public function IsNew()
 	{
 		return true;
 	}
+<<<<<<< HEAD
 
 	public function SetMaximumResources($maximum)
 	{
@@ -481,4 +546,6 @@ abstract class ReservationInitializerBase implements IReservationInitializer, IR
             $this->basePage->SetTerms($termsOfService);
         }
     }
+=======
+>>>>>>> old/master
 }

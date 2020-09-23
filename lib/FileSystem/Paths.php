@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2012-2020 Nick Korbel
+=======
+Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -57,6 +61,7 @@ class Paths
 		}
 		return $uploadDir;
 	}
+<<<<<<< HEAD
 
     /**
      * Filesystem directory for storing terms of service file. Always contains trailing slash
@@ -83,4 +88,6 @@ class Paths
         }
         return dirname(__FILE__) . '/' . ROOT_DIR . "lang/en_us/";
     }
+=======
+>>>>>>> old/master
 }

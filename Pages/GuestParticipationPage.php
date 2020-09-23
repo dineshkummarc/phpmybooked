@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2017-2020 Nick Korbel
+=======
+ * Copyright 2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -103,6 +107,7 @@ class GuestParticipationPage extends Page implements IGuestParticipationPage
 
 	public function __construct()
 	{
+<<<<<<< HEAD
         $userRepository = new UserRepository();
 		parent::__construct('OpenInvitations');
 		$this->presenter = new GuestParticipationPresenter(
@@ -110,6 +115,10 @@ class GuestParticipationPage extends Page implements IGuestParticipationPage
             new ReservationRepository(),
             $userRepository,
             new ParticipationNotification($userRepository));
+=======
+		parent::__construct('OpenInvitations');
+		$this->presenter = new GuestParticipationPresenter($this, new ReservationRepository(), new UserRepository());
+>>>>>>> old/master
 	}
 
 	public function PageLoad()

@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2014-2020 Nick Korbel
+=======
+Copyright 2014-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -139,7 +143,11 @@ class ManageReservationColorsPage extends ActionPage implements IManageReservati
 	public function ProcessPageLoad()
 	{
 		$this->presenter->PageLoad();
+<<<<<<< HEAD
 		$this->Display('Admin/Reservations/manage_reservation_colors.tpl');
+=======
+		$this->Display('Admin/Configuration/manage_reservation_colors.tpl');
+>>>>>>> old/master
 	}
 
 	public function SetAttributes($attributes)

@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2017-2020 Nick Korbel
+=======
+ * Copyright 2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -109,9 +113,12 @@ class AttributeSaveController implements IAttributeSaveController
 
 		$attribute = CustomAttribute::Create($request->label, $request->type, $request->categoryId, $request->regex . '', (int)$request->required,
 											 $this->GetPossibleValues($request), $request->sortOrder, $request->appliesToIds, $request->adminOnly);
+<<<<<<< HEAD
 
 		$attribute->WithSecondaryEntities($request->secondaryCategoryId, $request->secondaryEntityIds);
 
+=======
+>>>>>>> old/master
 		$attribute->WithIsPrivate($request->isPrivate);
 
 		$attributeId = $this->repository->Add($attribute);
@@ -139,9 +146,13 @@ class AttributeSaveController implements IAttributeSaveController
 
 		$attribute = new CustomAttribute($attributeId, $request->label, $request->type, $request->categoryId, $request->regex, $request->required,
 										 $request->possibleValues, $request->sortOrder, $request->appliesToIds, $request->adminOnly);
+<<<<<<< HEAD
 
         $attribute->WithSecondaryEntities($request->secondaryCategoryId, $request->secondaryEntityIds);
         $attribute->WithIsPrivate($request->isPrivate);
+=======
+		$attribute->WithIsPrivate($request->isPrivate);
+>>>>>>> old/master
 
 		$this->repository->Update($attribute);
 

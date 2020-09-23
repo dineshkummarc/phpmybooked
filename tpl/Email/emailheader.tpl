@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -33,7 +37,11 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 			    height: 100%;
 			}
 
+<<<<<<< HEAD
 			div.resource-image img
+=======
+			div.resource-image
+>>>>>>> old/master
 			{
 			    padding-bottom:25px;
 			    max-height:200px;

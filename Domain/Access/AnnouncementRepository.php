@@ -1,5 +1,6 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
@@ -29,6 +30,38 @@ class AnnouncementRepository implements IAnnouncementRepository
         $reader = ServiceLocator::GetDatabase()->Query(new GetDashboardAnnouncementsCommand(Date::Now(), $displayPage));
 
         while ($row = $reader->GetRow()) {
+=======
+Copyright 2011-2016 Nick Korbel
+
+This file is part of Booked Scheduler.
+
+Booked Scheduler is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Booked Scheduler is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+require_once (ROOT_DIR . 'Domain/Announcement.php');
+
+class AnnouncementRepository implements IAnnouncementRepository
+{
+    public function GetFuture()
+    {
+        $announcements = array();
+
+        $reader = ServiceLocator::GetDatabase()->Query(new GetDashboardAnnouncementsCommand(Date::Now()));
+
+        while ($row = $reader->GetRow())
+        {
+>>>>>>> old/master
             $announcements[] = Announcement::FromRow($row);
         }
 
@@ -43,13 +76,23 @@ class AnnouncementRepository implements IAnnouncementRepository
 
         $command = new GetAllAnnouncementsCommand();
 
+<<<<<<< HEAD
         if (!empty($sortField)) {
+=======
+        if (!empty($sortField))
+        {
+>>>>>>> old/master
             $command = new SortCommand($command, $sortField, $sortDirection);
         }
 
         $reader = ServiceLocator::GetDatabase()->Query($command);
 
+<<<<<<< HEAD
         while ($row = $reader->GetRow()) {
+=======
+        while ($row = $reader->GetRow())
+        {
+>>>>>>> old/master
             $announcements[] = Announcement::FromRow($row);
         }
 
@@ -64,6 +107,7 @@ class AnnouncementRepository implements IAnnouncementRepository
     public function Add(Announcement $announcement)
     {
         $db = ServiceLocator::GetDatabase();
+<<<<<<< HEAD
         $announcementId = $db->ExecuteInsert(
             new AddAnnouncementCommand(
                 $announcement->Text(),
@@ -77,6 +121,17 @@ class AnnouncementRepository implements IAnnouncementRepository
         }
 
         foreach ($announcement->ResourceIds() as $resourceId) {
+=======
+        $announcementId = $db->ExecuteInsert(new AddAnnouncementCommand($announcement->Text(), $announcement->Start(), $announcement->End(), $announcement->Priority()));
+
+        foreach ($announcement->GroupIds() as $groupId)
+        {
+            $db->ExecuteInsert(new AddAnnouncementGroupCommand($announcementId, $groupId));
+        }
+
+        foreach ($announcement->ResourceIds() as $resourceId)
+        {
+>>>>>>> old/master
             $db->ExecuteInsert(new AddAnnouncementResourceCommand($announcementId, $resourceId));
         }
     }
@@ -98,11 +153,19 @@ class AnnouncementRepository implements IAnnouncementRepository
         $announcement = null;
         $reader = ServiceLocator::GetDatabase()->Query(new GetAnnouncementByIdCommand($announcementId));
 
+<<<<<<< HEAD
         if ($row = $reader->GetRow()) {
             $announcement = Announcement::FromRow($row);
         }
 
 		$reader->Free();
+=======
+        if ($row = $reader->GetRow())
+        {
+            $announcement = Announcement::FromRow($row);
+        }
+
+>>>>>>> old/master
         return $announcement;
     }
 
@@ -117,10 +180,16 @@ interface IAnnouncementRepository
 {
     /**
      * Gets all announcements to be displayed for the user
+<<<<<<< HEAD
      * @param int $page
      * @return Announcement[]
      */
     public function GetFuture($page);
+=======
+     * @return Announcement[]
+     */
+    public function GetFuture();
+>>>>>>> old/master
 
     /**
      * @param null|string $sortField

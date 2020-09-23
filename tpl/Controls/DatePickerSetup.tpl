@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -16,6 +20,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 *}
+<<<<<<< HEAD
 {function name=datePickerDateFormat}
 new Date({$date->Year()}, {$date->Month()-1}, {$date->Day()})
 {/function}
@@ -74,4 +79,53 @@ new Date({$date->Year()}, {$date->Month()-1}, {$date->Day()})
         {/if}
 
     });
+=======
+<script type="text/javascript">
+$(function(){
+  $("#{$ControlId}").{if $HasTimepicker}datetimepicker{else}datepicker{/if}({ldelim}
+		 numberOfMonths: {$NumberOfMonths},
+		 showButtonPanel: {$ShowButtonPanel},
+		 onSelect: {$OnSelect},
+		 dayNames: {$DayNames},
+		 dayNamesShort: {$DayNamesShort},
+		 dayNamesMin: {$DayNamesMin},
+		 dateFormat: '{$DateFormat}',
+		 {if $FirstDay >=0 && $FirstDay <= 6}
+	  		firstDay: {$FirstDay},
+		 {/if}
+		 monthNames: {$MonthNames},
+		 monthNamesShort: {$MonthNamesShort},
+		 currentText: "{{translate key='Today'}|escape:'javascript'}",
+		 timeFormat: "{$TimeFormat}",
+	  	 altFieldTimeOnly: false,
+	  	 controlType: 'select'
+	  	 {if $AltId neq ''}
+		   ,
+	  		altField: "#{$AltId}",
+	  	 	altFormat: '{$AltFormat}'
+		  {/if}
+		  {if $DefaultDate}
+			,
+	  		defaultDate: new Date('{$DefaultDate->Format('Y-m-d')}')
+		{/if}
+  {rdelim});
+
+  {if $AltId neq ''}
+	$("#{$ControlId}").change(function() {
+ 		if ($(this).val() == '') {
+			$("#{$AltId}").val('');
+		}
+		else{
+			var dateVal = $("#{$ControlId}").{if $HasTimepicker}datetimepicker{else}datepicker{/if}('getDate');
+			var dateString = dateVal.getFullYear() + '-' + ('0' + (dateVal.getMonth()+1)).slice(-2) + '-' + ('0' + dateVal.getDate()).slice(-2);
+			{if $HasTimepicker}
+				dateString = dateString + ' ' + dateVal.getHours() + ':' + dateVal.getMinutes();
+			{/if}
+			$("#{$AltId}").val(dateString);
+		}
+  	});
+  {/if}
+
+});
+>>>>>>> old/master
 </script>

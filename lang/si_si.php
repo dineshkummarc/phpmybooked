@@ -3,7 +3,11 @@
 Modified by Alenka Kavčič (alenka.kavcic@fri.uni-lj.si), UL FRI, July 2015
 Translated and adapted for Slovenian language
 
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -22,9 +26,15 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 require_once('Language.php');
+<<<<<<< HEAD
 require_once('en_gb.php');
 
 class si_si extends en_gb
+=======
+require_once('en_us.php');
+
+class si_si extends en_us
+>>>>>>> old/master
 {
     public function __construct()
     {
@@ -34,6 +44,32 @@ class si_si extends en_gb
     /**
      * @return array
      */
+<<<<<<< HEAD
+=======
+    protected function _LoadDates()
+    {
+        $dates = array();
+
+        $dates['general_date'] = 'd/m/Y';
+        $dates['general_datetime'] = 'd/m/Y H:i:s';
+        $dates['schedule_daily'] = 'l, d/m/Y';
+        $dates['reservation_email'] = 'd/m/Y @ H:i (e)';
+        $dates['res_popup'] = 'd/m/Y H:i';
+        $dates['dashboard'] = 'l, m/d/Y H:i';
+        $dates['period_time'] = 'H:i';
+		$dates['general_date_js'] = 'dd/mm/yyyy';
+		$dates['calendar_time'] = 'h:mmt';
+		$dates['calendar_dates'] = 'd/M';
+
+        $this->Dates = $dates;
+
+        return $this->Dates;
+    }
+	
+    /**
+     * @return array
+     */
+>>>>>>> old/master
     protected function _LoadStrings()
     {
         $strings = array();

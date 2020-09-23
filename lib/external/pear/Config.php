@@ -15,15 +15,25 @@
 // | Author: Bertrand Mansion <bmansion@mamasam.com>                      |
 // +----------------------------------------------------------------------+
 //
+<<<<<<< HEAD
 // $Id: Config.php 306597 2010-12-24 05:11:09Z aharvey $
 
 @define('PEAR_ROOT', ROOT_DIR . 'lib/external/pear/');
 set_include_path(PEAR_ROOT . PATH_SEPARATOR . get_include_path());
+=======
+// $Id: Config.php,v 1.22 2006/12/22 00:35:34 aashley Exp $
+
+define('PEAR_ROOT', ROOT_DIR . 'lib/external/pear/');
+>>>>>>> old/master
 
 require_once(PEAR_ROOT . 'PEAR.php');
 require_once(PEAR_ROOT . 'Config/Container.php');
 
+<<<<<<< HEAD
 $GLOBALS['CONFIG_TYPES'] =
+=======
+$GLOBALS['CONFIG_TYPES'] = 
+>>>>>>> old/master
         array(
             'apache'        => array(PEAR_ROOT . 'Config/Container/Apache.php', 'Config_Container_Apache'),
             'genericconf'   => array(PEAR_ROOT . 'Config/Container/GenericConf.php', 'Config_Container_GenericConf'),
@@ -78,7 +88,11 @@ class Config {
     *
     * @access public
     */
+<<<<<<< HEAD
     function __construct()
+=======
+    function Config()
+>>>>>>> old/master
     {
         $this->container = new Config_Container('section', 'root');
     } // end constructor
@@ -164,7 +178,11 @@ class Config {
     {
         if (is_object($rootContainer) && strtolower(get_class($rootContainer)) === 'config_container') {
             if ($rootContainer->getName() === 'root' && $rootContainer->getType() === 'section') {
+<<<<<<< HEAD
                 $this->container =& $rootContainer;
+=======
+                $this->container = $rootContainer;
+>>>>>>> old/master
             } else {
                 $this->container = new Config_Container('section', 'root');
                 $this->container->addItem($rootContainer);
@@ -231,4 +249,8 @@ class Config {
         return $this->container->writeDatasrc($datasrc, $configType, $options);
     } // end func writeConfig
 } // end class Config
+<<<<<<< HEAD
 ?>
+=======
+?>
+>>>>>>> old/master

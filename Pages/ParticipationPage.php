@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -82,11 +86,15 @@ class ParticipationPage extends SecurePage implements IParticipationPage
 	public function __construct()
 	{
 	    parent::__construct('OpenInvitations');
+<<<<<<< HEAD
 		$this->presenter = new ParticipationPresenter(
 		    $this,
             new ReservationRepository(),
             new ReservationViewRepository(),
             new ParticipationNotification(new UserRepository()));
+=======
+		$this->presenter = new ParticipationPresenter($this, new ReservationRepository(), new ReservationViewRepository());
+>>>>>>> old/master
 	}
 
 	public function PageLoad()

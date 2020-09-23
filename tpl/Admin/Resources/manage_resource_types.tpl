@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -110,7 +114,11 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 						<div class="form-group">
 							<label for="editDescription">{translate key='Description'}</label><br/>
 							<textarea class="form-control" rows="1" {formname key=RESOURCE_TYPE_DESCRIPTION}
+<<<<<<< HEAD
 									  id="editDescription"></textarea>
+=======
+									  id="resourceTypeDesc"></textarea>
+>>>>>>> old/master
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -149,7 +157,10 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
 	{csrf_token}
 
+<<<<<<< HEAD
     {include file="javascript-includes.tpl" InlineEdit=true}
+=======
+>>>>>>> old/master
 	{jsfile src="ajax-helpers.js"}
 	{jsfile src="admin/resource-types.js"}
 	{jsfile src="js/jquery.form-3.09.min.js"}

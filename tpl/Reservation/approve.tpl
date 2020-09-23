@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -31,7 +35,10 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 			{translate key=More} <span class="caret"></span>
 		</button>
+<<<<<<< HEAD
 
+=======
+>>>>>>> old/master
 		<ul class="dropdown-menu" role="menu">
 			<li>
 				{assign var=icsUrl value="{$Path}export/{Pages::CALENDAR_EXPORT}?{QueryStringKeys::REFERENCE_NUMBER}={$ReferenceNumber}"}
@@ -43,6 +50,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 					<span class="fa fa-print"></span>
 					{translate key='Print'}</a>
 			</li>
+<<<<<<< HEAD
 		</ul>
 	</div>
 
@@ -115,6 +123,49 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
         {translate key='Reject'}
     </button>
     <button type="button" class="btn btn-success" id="btnApprove">
+=======
+			<li class="divider"></li>
+			<li>
+				<a href="#" class="delete {if $IsRecurring}prompt{else}save{/if}">
+					<span class="fa fa-remove remove icon"></span>
+					{translate key='Delete'}
+				</a>
+			</li>
+		</ul>
+	</div>
+{/block}
+
+<div class="modal fade" id="updateButtons" tabindex="-1" role="dialog" aria-labelledby="updateButtonsLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="updateButtonsLabel">{translate key=ApplyUpdatesTo}</h4>
+			</div>
+			<div class="modal-body">
+				<button type="button" class="btn btn-success save btnUpdateThisInstance">
+					<span class="fa fa-check"></span>
+					{translate key='ThisInstance'}
+				</button>
+				<button type="button" class="btn btn-success save btnUpdateAllInstances">
+					<span class="fa fa-check-square"></span>
+					{translate key='AllInstances'}
+				</button>
+				<button type="button" class="btn btn-success save btnUpdateFutureInstances">
+					<span class="fa fa-check-square-o"></span>
+					{translate key='FutureInstances'}
+				</button>
+				<button type="button" class="btn btn-default">
+					{translate key='Cancel'}
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+{block name=submitButtons}
+	<button type="button" class="btn btn-success" id="btnApprove">
+>>>>>>> old/master
 		<span class="glyphicon glyphicon-ok-circle"></span>
 		{translate key='Approve'}
 	</button>

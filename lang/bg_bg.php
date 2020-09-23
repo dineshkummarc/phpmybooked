@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -19,9 +23,15 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 require_once('Language.php');
+<<<<<<< HEAD
 require_once('en_gb.php');
 
 class bg_bg extends en_gb
+=======
+require_once('en_us.php');
+
+class bg_bg extends en_us
+>>>>>>> old/master
 {
     public function __construct()
     {
@@ -31,6 +41,32 @@ class bg_bg extends en_gb
     /**
      * @return array
      */
+<<<<<<< HEAD
+=======
+    protected function _LoadDates()
+    {
+        $dates = parent::_LoadDates();
+
+        $dates['general_date'] = 'd/m/Y';
+        $dates['general_datetime'] = 'd/m/Y H:i:s';
+        $dates['schedule_daily'] = 'l, d/m/Y';
+        $dates['reservation_email'] = 'd/m/Y @ g:i A (e)';
+        $dates['res_popup'] = 'd/m/Y g:i A';
+        $dates['dashboard'] = 'l, d/m/Y g:i A';
+        $dates['period_time'] = 'g:i A';
+		$dates['general_date_js'] = 'dd/mm/yy';
+		$dates['calendar_time'] = 'h:mmt';
+		$dates['calendar_dates'] = 'M/d';
+
+        $this->Dates = $dates;
+
+        return $this->Dates;
+    }
+
+    /**
+     * @return array
+     */
+>>>>>>> old/master
     protected function _LoadStrings()
     {
         $strings = parent::_LoadStrings();

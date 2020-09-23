@@ -3,6 +3,7 @@ var TimeTickFormatter = function (format, val) {
 	var numhours = Math.floor((val % 86400) / 3600);
 	var numminutes = Math.floor(((val % 86400) % 3600) / 60);
 
+<<<<<<< HEAD
 	var hoursAndMinutes = numhours + "h " + numminutes + "m ";
 
 	if (numdays > 0) {
@@ -12,6 +13,17 @@ var TimeTickFormatter = function (format, val) {
 };
 
 function Chart(options) {
+=======
+	$hoursAndMinutes = numhours + "h " + numminutes + "m ";
+
+	if (numdays > 0) {
+		return numdays + "d " + $hoursAndMinutes;
+	}
+	return $hoursAndMinutes;
+};
+
+function Chart() {
+>>>>>>> old/master
 	var chartDiv = $('#chartdiv');
 	var chartIndicator = $('#chart-indicator');
 
@@ -35,19 +47,32 @@ function Chart(options) {
 			series = new TotalSeries();
 		}
 		else {
+<<<<<<< HEAD
 			series = new DateSeries(options);
+=======
+			series = new DateSeries();
+>>>>>>> old/master
 		}
 
 		$('#report-results>tbody>tr').not(':first').each(function () {
 			series.Add($(this));
 		});
 
+<<<<<<< HEAD
         var plot = $.jqplot('chartdiv', series.GetData(), {
 			axesDefaults:{
 				tickRenderer:$.jqplot.CanvasAxisTickRenderer,
 				// tickOptions:{
 				// 	fontSize:'10pt'
 				// }
+=======
+		var plot = $.jqplot('chartdiv', series.GetData(), {
+			axesDefaults:{
+				tickRenderer:$.jqplot.CanvasAxisTickRenderer,
+				tickOptions:{
+					fontSize:'10pt'
+				}
+>>>>>>> old/master
 			},
 			seriesDefaults:{
 				renderer:series.GetGraphRenderer(),
@@ -55,7 +80,11 @@ function Chart(options) {
 				pointLabels:{show:true}
 
 			},
+<<<<<<< HEAD
 			series: series.GetLabels(),
+=======
+			series:series.GetLabels(),
+>>>>>>> old/master
 			legend:series.GetLegendOptions(),
 			axes:{
 				xaxis:{
@@ -64,6 +93,7 @@ function Chart(options) {
 						angle:-30,
 						formatString:series.GetXAxisFormat(),
 						formatter:series.GetXAxisFormatter()
+<<<<<<< HEAD
 					}
 					// tickInterval:'1 day',
 					// min:series.GetXAxisMin()
@@ -84,6 +114,18 @@ function Chart(options) {
             cursor: {
                 show: true
             }
+=======
+					},
+					tickInterval:'1 day',
+					min:series.GetXAxisMin()
+				},
+				yaxis:{
+					pad:1.05,
+					tickOptions:{ formatString:'%d', formatter:series.GetTickFormatter()},
+					min:0
+				}
+			}
+>>>>>>> old/master
 		});
 		plot.replot({resetAxes:true});
 		chartIndicator.hide();
@@ -125,10 +167,13 @@ function Chart(options) {
 			return '';
 		};
 
+<<<<<<< HEAD
 		this.GetYAxisFormatString = function() {
             return '%d';
         };
 
+=======
+>>>>>>> old/master
 		this.GetLegendOptions = function () {
 			return {
 				show:false
@@ -137,8 +182,13 @@ function Chart(options) {
 	}
 
 	function TotalSeries() {
+<<<<<<< HEAD
 		this.series = [];
 		this.labels = [];
+=======
+		this.series = new Array();
+		this.labels = new Array();
+>>>>>>> old/master
 
 		this.Add = function (row) {
 			var itemLabel = row.find('td[chart-column-type="label"]').text();
@@ -159,8 +209,13 @@ function Chart(options) {
 
 	function TotalTimeSeries() {
 
+<<<<<<< HEAD
 		this.series = [];
 		this.labels = [];
+=======
+		this.series = new Array();
+		this.labels = new Array();
+>>>>>>> old/master
 
 		this.GetTickFormatter = function () {
 			return TimeTickFormatter;
@@ -169,19 +224,32 @@ function Chart(options) {
 
 	TotalTimeSeries.prototype = new TotalSeries();
 
+<<<<<<< HEAD
 	function DateSeries(options) {
 		this.labels = [];
+=======
+	function DateSeries() {
+		this.labels = new Array();
+>>>>>>> old/master
 		this.groups = [];
 		this.min = null;
 		this.first = true;
 
 		this.Add = function (row) {
+<<<<<<< HEAD
 			var date = new Date(row.find('td[chart-column-type="date"]').attr('chart-value'));
 			var groupCell = row.find('td[chart-group="r"],td[chart-group="a"]');
 			var groupId = groupCell.attr('chart-value');
 			var groupName = groupCell.text();
             var totalValue = row.find('td[chart-column-type="total"]').attr('chart-value');
 			var total = _.isEmpty(totalValue) ? 1 : parseInt(totalValue);
+=======
+			var date = row.find('td[chart-column-type="date"]').attr('chart-value');
+			var groupCell = row.find('td[chart-group="r"],td[chart-group="a"]');
+			var groupId = groupCell.attr('chart-value');
+			var groupName = groupCell.text();
+			var total = parseInt(row.find('td[chart-column-type="total"]').attr('chart-value'));
+>>>>>>> old/master
 
 			if (!this.groups[groupId]) {
 				this.groups[groupId] = new this.GroupSeries(groupName, groupId);
@@ -196,7 +264,11 @@ function Chart(options) {
 
 		this.dataLoaded = false;
 		this.GetData = function () {
+<<<<<<< HEAD
 			var data = [];
+=======
+			var data = new Array();
+>>>>>>> old/master
 			if (!this.dataLoaded)
 			{
 				for (var group in this.groups) {
@@ -230,6 +302,7 @@ function Chart(options) {
 
 		this.GroupSeries = function (label, groupId) {
 			var groupLabel = label;
+<<<<<<< HEAD
 			var series = [];
 			var id = groupId;
 
@@ -240,6 +313,18 @@ function Chart(options) {
 				}
 				if (series[date]) {
 					series[date] += count;
+=======
+			var series = new Array();
+			var id = groupId;
+
+			this.AddDate = function (date, count) {
+				if (!count)
+				{
+					count = 1;
+				}
+				if (series[date]) {
+					series[date ]+= count;
+>>>>>>> old/master
 				}
 				else {
 					series[date] = count;
@@ -251,17 +336,26 @@ function Chart(options) {
 			};
 
 			this.GetData = function () {
+<<<<<<< HEAD
 				var data = [];
 				for (var date in series) {
 					data.push([date, series[date]])
 				}
 				return data;
+=======
+				var foo = new Array();
+				for (var date in series) {
+					foo.push([date, series[date]])
+				}
+				return foo;
+>>>>>>> old/master
 			};
 
 			this.GetId = function () {
 				return id;
 			};
 		};
+<<<<<<< HEAD
 
         this.GetXAxisRenderer = function () {
             return $.jqplot.DateAxisRenderer;
@@ -275,6 +369,9 @@ function Chart(options) {
             return $.jqplot.LineRenderer;
         };
     }
+=======
+	}
+>>>>>>> old/master
 
 	DateSeries.prototype = new Series();
 }

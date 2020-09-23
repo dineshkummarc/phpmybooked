@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -16,7 +20,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 *}
+<<<<<<< HEAD
 {include file='globalheader.tpl' Qtip=true Owl=true}
+=======
+{include file='globalheader.tpl' cssFiles='css/dashboard.css' Qtip=true}
+>>>>>>> old/master
 
 <div id="page-dashboard">
 	<div id="dashboardList">
@@ -25,8 +33,11 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 		{/foreach}
 	</div>
 
+<<<<<<< HEAD
     {include file="javascript-includes.tpl" Qtip=true Owl=true}
 
+=======
+>>>>>>> old/master
 	{jsfile src="dashboard.js"}
 	{jsfile src="resourcePopup.js"}
 	{jsfile src="ajax-helpers.js"}

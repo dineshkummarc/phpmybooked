@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2011-2020 Nick Korbel
+=======
+ * Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -221,12 +225,16 @@ interface IManageBlackoutsPage extends IPageable, IActionPage, IRepeatOptionsCom
 	 */
 	public function SetRepeatWeekdays($repeatWeekdays);
 
+<<<<<<< HEAD
     /**
      * @param Date[] $customRepeatDates
      */
     public function SetCustomRepeatDates($customRepeatDates);
 
     /**
+=======
+	/**
+>>>>>>> old/master
 	 * @param Date $repeatTerminationDate
 	 */
 	public function SetRepeatTerminationDate($repeatTerminationDate);
@@ -249,11 +257,14 @@ interface IManageBlackoutsPage extends IPageable, IActionPage, IRepeatOptionsCom
 	 * @param bool $wasFound
 	 */
 	public function SetWasBlackoutFound($wasFound);
+<<<<<<< HEAD
 
 	/**
 	 * @return int[]
 	 */
 	public function GetDeletedBlackoutIds();
+=======
+>>>>>>> old/master
 }
 
 class ManageBlackoutsPage extends ActionPage implements IManageBlackoutsPage
@@ -295,7 +306,11 @@ class ManageBlackoutsPage extends ActionPage implements IManageBlackoutsPage
 		$this->Set('Timezone', $userTimezone);
 		$this->Set('AddStartDate', Date::Now()->ToTimezone($userTimezone));
 		$this->Set('AddEndDate', Date::Now()->ToTimezone($userTimezone));
+<<<<<<< HEAD
 		$this->Set('TimeFormat', Resources::GetInstance()->GetDateFormat('timepicker'));
+=======
+		$this->Set('TimeFormat', Resources::GetInstance()->GetDateFormat('general_time_js'));
+>>>>>>> old/master
 		$this->presenter->PageLoad($userTimezone);
 	}
 
@@ -615,6 +630,7 @@ class ManageBlackoutsPage extends ActionPage implements IManageBlackoutsPage
 		return $this->GetForm(FormKeys::END_REPEAT_DATE);
 	}
 
+<<<<<<< HEAD
     public function GetRepeatCustomDates()
     {
         $dates = $this->GetForm(FormKeys::REPEAT_CUSTOM_DATES);
@@ -625,6 +641,8 @@ class ManageBlackoutsPage extends ActionPage implements IManageBlackoutsPage
         return $dates;
     }
 
+=======
+>>>>>>> old/master
 	public function GetSeriesUpdateScope()
 	{
 		$scope = $this->GetForm(FormKeys::SERIES_UPDATE_SCOPE);
@@ -672,12 +690,16 @@ class ManageBlackoutsPage extends ActionPage implements IManageBlackoutsPage
 		$this->Set('RepeatTerminationDate', $repeatTerminationDate);
 	}
 
+<<<<<<< HEAD
 	public function SetCustomRepeatDates($customRepeatDates)
     {
         $this->Set('CustomRepeatDates', $customRepeatDates);
     }
 
     public function SetBlackoutId($blackoutId)
+=======
+	public function SetBlackoutId($blackoutId)
+>>>>>>> old/master
 	{
 		$this->Set('BlackoutId', $blackoutId);
 	}
@@ -724,6 +746,7 @@ class ManageBlackoutsPage extends ActionPage implements IManageBlackoutsPage
 	{
 		return $this->GetForm(FormKeys::BLACKOUT_INSTANCE_ID);
 	}
+<<<<<<< HEAD
 
 	public function GetDeletedBlackoutIds()
 	{
@@ -735,5 +758,7 @@ class ManageBlackoutsPage extends ActionPage implements IManageBlackoutsPage
 
 		return $ids;
 	}
+=======
+>>>>>>> old/master
 }
 

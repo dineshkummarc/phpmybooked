@@ -20,6 +20,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 *}
 
 	Dettagli prenotazione:
+<<<<<<< HEAD
 	<br />
 	<br />
 
@@ -32,12 +33,27 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 		{/foreach}
 		{else}
 		Risorsa: {$ResourceName}<br />
+=======
+	<br/>
+	<br/>
+
+	Inizio: {formatdate date=$StartDate key=reservation_email}<br/>
+	Fine: {formatdate date=$EndDate key=reservation_email}<br/>
+	{if $ResourceNames|count > 1}
+		Risorse:<br/>
+		{foreach from=$ResourceNames item=resourceName}
+			{$resourceName}<br/>
+		{/foreach}
+		{else}
+		Risorsa: {$ResourceName}<br/>
+>>>>>>> old/master
 	{/if}
 
 	{if $ResourceImage}
 		<div class="resource-image"><img src="{$ScriptUrl}/{$ResourceImage}"/></div>
 	{/if}
 
+<<<<<<< HEAD
 	Note: {$Title}<br />
 	Descrizione: {$Description|nl2br}<br />
 
@@ -55,10 +71,30 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 		<br />Accessori:<br />
 		{foreach from=$Accessories item=accessory}
 			({$accessory->QuantityReserved}) {$accessory->Name}<br />
+=======
+	Note: {$Title}<br/>
+	Descrizione: {$Description|nl2br}<br/>
+
+	{if count($RepeatDates) gt 0}
+		<br/>
+		La prenotazione si ripete nelle seguenti date:
+		<br/>
+	{/if}
+
+	{foreach from=$RepeatDates item=date name=dates}
+		{formatdate date=$date}<br/>
+	{/foreach}
+
+	{if $Accessories|count > 0}
+		<br/>Accessori:<br/>
+		{foreach from=$Accessories item=accessory}
+			({$accessory->QuantityReserved}) {$accessory->Name}<br/>
+>>>>>>> old/master
 		{/foreach}
 	{/if}
 
 	{if $RequiresApproval}
+<<<<<<< HEAD
 		<br />
 		E' stata inoltrata una prenotazione che prevede una approvazione. Questa prenotazione rimarrà in sospeso fino all'approvazione.
 	{/if}
@@ -67,6 +103,16 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 	Vuoi partecipare? <a href="{$ScriptUrl}/{$AcceptUrl}">Sì</a> <a href="{$ScriptUrl}/{$DeclineUrl}">No</a>
 	<br />
 	<br />
+=======
+		<br/>
+		Una o più risorse in cui è stata inserita la prenotazione richiedono un'approvazione prima dell'utilizzo. Questa prenotazione rimarrà in sospeso fino all'approvazione.
+	{/if}
+
+	<br/>
+	Vuoi partecipare? <a href="{$ScriptUrl}/{$AcceptUrl}">Sì</a> <a href="{$ScriptUrl}/{$DeclineUrl}">No</a>
+	<br/>
+	<br/>
+>>>>>>> old/master
 
 	<a href="{$ScriptUrl}/{$ReservationUrl}">Vedi questa prenotazione</a> |
 	<a href="{$ScriptUrl}/{$ICalUrl}">Aggiungi al calendario</a> |

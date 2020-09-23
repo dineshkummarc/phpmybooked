@@ -15,7 +15,11 @@
 // | Author: Bertrand Mansion <bmansion@mamasam.com>                      |
 // +----------------------------------------------------------------------+
 //
+<<<<<<< HEAD
 // $Id: Apache.php 203595 2005-12-24 02:34:39Z aashley $
+=======
+// $Id: Apache.php,v 1.11 2005/12/24 02:34:39 aashley Exp $
+>>>>>>> old/master
 
 /**
 * Simple config parser for apache httpd.conf files
@@ -41,7 +45,11 @@ class Config_Container_Apache {
     * @access public
     * @param    string  $options    (optional)Options to be used by renderer
     */
+<<<<<<< HEAD
     function __construct($options = array())
+=======
+    function Config_Container_Apache($options = array())
+>>>>>>> old/master
     {
         $this->options = $options;
     } // end constructor
@@ -166,4 +174,8 @@ class Config_Container_Apache {
         return $string;
     } // end func toString
 } // end class Config_Container_Apache
+<<<<<<< HEAD
 ?>
+=======
+?>
+>>>>>>> old/master

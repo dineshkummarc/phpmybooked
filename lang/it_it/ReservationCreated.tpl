@@ -21,6 +21,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
 
 Dettagli prenotazione:
+<<<<<<< HEAD
 <br />
 <br />
 
@@ -36,12 +37,30 @@ Fine: {formatdate date=$EndDate key=reservation_email}<br />
 {else}
 	Risorsa: {$ResourceName}
 	<br />
+=======
+<br/>
+<br/>
+
+Inizio: {formatdate date=$StartDate key=reservation_email}<br/>
+Fine: {formatdate date=$EndDate key=reservation_email}<br/>
+{if $ResourceNames|count > 1}
+	Risorse:
+	<br/>
+	{foreach from=$ResourceNames item=resourceName}
+		{$resourceName}
+		<br/>
+	{/foreach}
+{else}
+	Risorsa: {$ResourceName}
+	<br/>
+>>>>>>> old/master
 {/if}
 
 {if $ResourceImage}
 	<div class="resource-image"><img src="{$ScriptUrl}/{$ResourceImage}"/></div>
 {/if}
 
+<<<<<<< HEAD
 Note: {$Title}<br />
 Descrizione: {$Description|nl2br}<br />
 
@@ -49,10 +68,20 @@ Descrizione: {$Description|nl2br}<br />
 	<br />
 	La prenotazione si ripete nelle seguenti date:
 	<br />
+=======
+Note: {$Title}<br/>
+Descrizione: {$Description|nl2br}<br/>
+
+{if count($RepeatDates) gt 0}
+	<br/>
+	La prenotazione si ripete nelle seguenti date:
+	<br/>
+>>>>>>> old/master
 {/if}
 
 {foreach from=$RepeatDates item=date name=dates}
 	{formatdate date=$date}
+<<<<<<< HEAD
 	<br />
 {/foreach}
 
@@ -63,33 +92,67 @@ Descrizione: {$Description|nl2br}<br />
 	{foreach from=$Accessories item=accessory}
 		({$accessory->QuantityReserved}) {$accessory->Name}
 		<br />
+=======
+	<br/>
+{/foreach}
+
+{if $Accessories|count > 0}
+	<br/>
+	Accessori:
+	<br/>
+	{foreach from=$Accessories item=accessory}
+		({$accessory->QuantityReserved}) {$accessory->Name}
+		<br/>
+>>>>>>> old/master
 	{/foreach}
 {/if}
 
 {if $Attributes|count > 0}
+<<<<<<< HEAD
 	<br />
+=======
+	<br/>
+>>>>>>> old/master
 	{foreach from=$Attributes item=attribute}
 		<div>{control type="AttributeControl" attribute=$attribute readonly=true}</div>
 	{/foreach}
 {/if}
 
 {if $RequiresApproval}
+<<<<<<< HEAD
 	<br />
 	E' stata inoltrata una prenotazione che prevede una approvazione.
 {/if}
 
 {if !empty($ApprovedBy)}
 	<br />
+=======
+	<br/>
+	Una o più risorse in cui è stata inserita la prenotazione richiedono un'approvazione prima dell'utilizzo. Questa prenotazione rimarrà in sospeso fino all'approvazione.
+{/if}
+
+{if !empty($ApprovedBy)}
+	<br/>
+>>>>>>> old/master
 	Approvato da: {$ApprovedBy}
 {/if}
 
 {if !empty($CreatedBy)}
+<<<<<<< HEAD
 	<br />
 	Creato da: {$CreatedBy}
 {/if}
 
 <br />
 <br />
+=======
+	<br/>
+	Creato da: {$CreatedBy}
+{/if}
+
+<br/>
+<br/>
+>>>>>>> old/master
 <a href="{$ScriptUrl}/{$ReservationUrl}">Vedi questa prenotazione</a> |
 <a href="{$ScriptUrl}/{$ICalUrl}">Aggiungi al calendario</a> |
 <a href="{$ScriptUrl}">Accedi a Booked Scheduler</a>

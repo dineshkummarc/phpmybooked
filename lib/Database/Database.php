@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -25,9 +29,15 @@ class Database
 	 */
 	public $Connection = null;
 
+<<<<<<< HEAD
 	public function __construct(IDbConnection $dbConnection)
 	{
 		$this->Connection = $dbConnection;
+=======
+	public function __construct(IDbConnection &$dbConnection)
+	{
+		$this->Connection = &$dbConnection;
+>>>>>>> old/master
 	}
 
 	/**
@@ -36,7 +46,11 @@ class Database
 	 * @param ISqlCommand $command
 	 * @return IReader to iterate over
 	 */
+<<<<<<< HEAD
 	public function Query(ISqlCommand $command)
+=======
+	public function &Query(ISqlCommand &$command)
+>>>>>>> old/master
 	{
 		$this->Connection->Connect();
 
@@ -54,7 +68,11 @@ class Database
 	 * @param int $offset
 	 * @return IReader to iterate over
 	 */
+<<<<<<< HEAD
 	public function LimitQuery(ISqlCommand $command, $limit, $offset = null)
+=======
+	public function &LimitQuery(ISqlCommand $command, $limit, $offset = null)
+>>>>>>> old/master
 	{
 		$this->Connection->Connect();
 

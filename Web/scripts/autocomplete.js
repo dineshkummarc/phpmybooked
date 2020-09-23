@@ -85,6 +85,7 @@ $.fn.groupAutoComplete = function(url, selectionCallback)
 				return false;
 			}
 		});
+<<<<<<< HEAD
 };
 
 $.fn.orgAutoComplete = function(url, selectionCallback)
@@ -126,4 +127,6 @@ $.fn.orgAutoComplete = function(url, selectionCallback)
 				return false;
 			}
 		});
+=======
+>>>>>>> old/master
 };

@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -21,7 +25,11 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 {if $Enabled}
 
 	{if $ShowResetEmailSent}
+<<<<<<< HEAD
 		<div class="alert alert-success">
+=======
+		<div class="success">
+>>>>>>> old/master
 			{translate key=ForgotPasswordEmailSent}<br/>
 			<a href="{$Path}{Pages::LOGIN}">{translate key="LogIn"}</a>
 		</div>
@@ -50,5 +58,8 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 <div class="error">Disabled</div>
 {/if}
 
+<<<<<<< HEAD
 {include file="javascript-includes.tpl"}
+=======
+>>>>>>> old/master
 {include file='globalfooter.tpl'}

@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2014-2020 Nick Korbel
+=======
+ * Copyright 2014-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -52,15 +56,20 @@ class Drupal extends Authentication implements IAuthentication
 		return $this->_registration;
 	}
 
+<<<<<<< HEAD
 	private $db;
 
 	private $allowed_roles;
+=======
+	private $drupalDir;
+>>>>>>> old/master
 
 	/**
 	 * @param IAuthentication $authentication Authentication class to decorate
 	 */
 	public function __construct(IAuthentication $authentication)
 	{
+<<<<<<< HEAD
 		$drupal_config_path = dirname(__FILE__) . '/Drupal.config.php';
 		require_once($drupal_config_path);
 
@@ -74,6 +83,15 @@ class Drupal extends Authentication implements IAuthentication
 
                 $drupalRoles = $config->File('DRUPAL')->GetKey('drupal.allowed_roles');
                 $this->allowed_roles = $drupalRoles ? explode(',', $drupalRoles) : [];
+=======
+		require_once(dirname(__FILE__) . '/Drupal.config.php');
+
+		Configuration::Instance()->Register(
+				dirname(__FILE__) . '/Drupal.config.php',
+				'DRUPAL');
+
+		$this->drupalDir = Configuration::Instance()->File('DRUPAL')->GetKey('drupal.root.dir');
+>>>>>>> old/master
 
 		$this->authToDecorate = $authentication;
 	}
@@ -97,7 +115,11 @@ class Drupal extends Authentication implements IAuthentication
 			return false;
 		}
 
+<<<<<<< HEAD
 		Log::Debug('DRUPAL: User was found. user=%s, Drupal username=%s, Drupal email=%s, Booked admin email=%s', $username, $account->name, $account->mail, Configuration::Instance()->GetAdminEmail());
+=======
+		Log::Debug('DRUPAL: User was found. user=%s, Drupal username=%s, Drupal email=%s, Booked admin email=%s', $username, $account->name, $account->mail, Configuration::Instance()->GetKey(ConfigKeys::ADMIN_EMAIL));
+>>>>>>> old/master
 		return true;
 	}
 
@@ -135,7 +157,17 @@ class Drupal extends Authentication implements IAuthentication
 	 */
 	private function GetDrupalAccount($username)
 	{
+<<<<<<< HEAD
 	        $db = $this->db;
+=======
+		define(DRUPAL_ROOT, $this->drupalDir);
+		include_once(DRUPAL_ROOT . '/includes/bootstrap.inc');
+
+		drupal_bootstrap(DRUPAL_BOOTSTRAP_CONFIGURATION);
+		global $databases;
+
+		$db = $databases['default']['default'];
+>>>>>>> old/master
 
 		$dbname = $db['database'];
 		if (!empty($db['prefix']))
@@ -143,6 +175,7 @@ class Drupal extends Authentication implements IAuthentication
 			$dbname = "{$db['prefix']}$dbname";
 		}
 
+<<<<<<< HEAD
 		// $db['port'] should be passed as a separate argument, per http://php.net/manual/mysqli.construct.php
 		$drupalDb = new Database(new MySqlConnection($db['username'], $db['password'], $db['host'], $dbname));
 
@@ -168,6 +201,18 @@ class Drupal extends Authentication implements IAuthentication
 		                $command->AddParameter(new Parameter('@role' . $rid++, $role));
 		        }
 		}
+=======
+		$host = $db['host'];
+		if (!empty($db['port']))
+		{
+			$host .= ":{$db['port']}";
+		}
+
+		$drupalDb = new Database(new MySqlConnection($db['username'], $db['password'], $host, $dbname));
+
+		$command = new AdHocCommand('select * from users where name=@user or mail=@user');
+		$command->AddParameter(new Parameter('@user', $username));
+>>>>>>> old/master
 		$reader = $drupalDb->Query($command);
 
 		if ($row = $reader->GetRow())

@@ -20,6 +20,7 @@ function AnnouncementManagement(opts) {
 		editPriority: $('#editPriority'),
 		editUserGroups: $('#editUserGroups'),
 		editResourceGroups: $('#editResourceGroups'),
+<<<<<<< HEAD
         editUserGroupsDiv: $('#editUserGroupsDiv'),
         editResourceGroupsDiv: $('#editResourceGroupsDiv'),
 
@@ -27,6 +28,10 @@ function AnnouncementManagement(opts) {
 
         displayPage: $('#addPage'),
         moreOptions: $('#moreOptions')
+=======
+
+		emailCount: $('#emailCount')
+>>>>>>> old/master
 	};
 
 	var announcements = new Object();
@@ -48,6 +53,7 @@ function AnnouncementManagement(opts) {
 			deleteAnnouncement();
 		});
 
+<<<<<<< HEAD
 		elements.displayPage.change(function(e){
 		    if ($(this).val() == '5')
             {
@@ -58,6 +64,8 @@ function AnnouncementManagement(opts) {
             }
         });
 
+=======
+>>>>>>> old/master
 		$(".save").click(function () {
 			$(this).closest('form').submit();
 		});
@@ -98,6 +106,7 @@ function AnnouncementManagement(opts) {
 		elements.editEnd.trigger('change');
 		elements.editPriority.val(announcement.priority);
 
+<<<<<<< HEAD
 		if (announcement.displayPage == 5)
         {
             elements.editUserGroupsDiv.hide();
@@ -118,6 +127,17 @@ function AnnouncementManagement(opts) {
             }));
             elements.editResourceGroups.trigger('change');
         }
+=======
+		elements.editUserGroups.val($.map(announcement.groupIds, function(i){
+			return i + "";
+		}));
+		elements.editUserGroups.trigger('change');
+
+		elements.editResourceGroups.val($.map(announcement.resourceIds, function(i){
+			return i + "";
+		}));
+		elements.editResourceGroups.trigger('change');
+>>>>>>> old/master
 
 		elements.editDialog.modal('show');
 	};
@@ -139,7 +159,12 @@ function AnnouncementManagement(opts) {
 		return announcements[getActiveId()];
 	};
 
+<<<<<<< HEAD
 	AnnouncementManagement.prototype.addAnnouncement = function (id, text, start, end, priority, groupIds, resourceIds, displayPage) {
 		announcements[id] = {id: id, text: text, start: start, end: end, priority: priority, groupIds: groupIds, resourceIds: resourceIds, displayPage: displayPage};
+=======
+	AnnouncementManagement.prototype.addAnnouncement = function (id, text, start, end, priority, groupIds, resourceIds) {
+		announcements[id] = {id: id, text: text, start: start, end: end, priority: priority, groupIds: groupIds, resourceIds: resourceIds};
+>>>>>>> old/master
 	};
 }

@@ -11,7 +11,11 @@
 * @author    Benedikt Hallinger <beni@php.net>
 * @copyright 2009 Jan Wagner, Benedikt Hallinger
 * @license   http://www.gnu.org/licenses/lgpl-3.0.txt LGPLv3
+<<<<<<< HEAD
 * @version   SVN: $Id$
+=======
+* @version   SVN: $Id: Schema.php 296515 2010-03-22 14:46:41Z beni $
+>>>>>>> old/master
 * @link      http://pear.php.net/package/Net_LDAP2/
 * @todo see the comment at the end of the file
 */
@@ -19,7 +23,11 @@
 /**
 * Includes
 */
+<<<<<<< HEAD
 require_once 'PEAR.php';
+=======
+require_once ROOT_DIR . 'lib/external/pear/PEAR.php';
+>>>>>>> old/master
 
 /**
 * Syntax definitions
@@ -109,9 +117,15 @@ class Net_LDAP2_Schema extends PEAR
     *
     * @access protected
     */
+<<<<<<< HEAD
     public function __construct()
     {
         parent::__construct('Net_LDAP2_Error'); // default error class
+=======
+    protected function __construct()
+    {
+        $this->PEAR('Net_LDAP2_Error'); // default error class
+>>>>>>> old/master
     }
 
     /**
@@ -123,7 +137,11 @@ class Net_LDAP2_Schema extends PEAR
     * @access public
     * @return Net_LDAP2_Schema|NET_LDAP2_Error
     */
+<<<<<<< HEAD
     public static function fetch($ldap, $dn = null)
+=======
+    public function fetch($ldap, $dn = null)
+>>>>>>> old/master
     {
         if (!$ldap instanceof Net_LDAP2) {
             return PEAR::raiseError("Unable to fetch Schema: Parameter \$ldap must be a Net_LDAP2 object!");
@@ -342,13 +360,21 @@ class Net_LDAP2_Schema extends PEAR
                         $schema_entry['type'] = $type;
 
                         // save a ref in $_oids
+<<<<<<< HEAD
                         $this->_oids[$schema_entry['oid']] = &$schema_entry;
+=======
+                        $this->_oids[$schema_entry['oid']] =&$schema_entry;
+>>>>>>> old/master
 
                         // save refs for all names in type map
                         $names = $schema_entry['aliases'];
                         array_push($names, $schema_entry['name']);
                         foreach ($names as $name) {
+<<<<<<< HEAD
                             $this->{$type_var}[strtolower($name)] = &$schema_entry;
+=======
+                            $this->{$type_var}[strtolower($name)] =&$schema_entry;
+>>>>>>> old/master
                         }
                     }
                 }

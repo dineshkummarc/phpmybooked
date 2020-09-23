@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2012-2020 Nick Korbel
+=======
+Copyright 2012-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -63,6 +67,7 @@ class PreReservationExample implements IPreReservationFactory
     {
         return $this->factoryToDecorate->CreatePreApprovalService($userSession);
     }
+<<<<<<< HEAD
 
 	/**
 	 * @param UserSession $userSession
@@ -81,4 +86,6 @@ class PreReservationExample implements IPreReservationFactory
 	{
 		return $this->factoryToDecorate->CreatePreCheckoutService($userSession);
 	}
+=======
+>>>>>>> old/master
 }

@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -19,11 +23,16 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 require_once(ROOT_DIR . 'Pages/SchedulePage.php');
+<<<<<<< HEAD
 require_once(ROOT_DIR . 'Presenters/Schedule/SchedulePresenter.php');
+=======
+require_once(ROOT_DIR . 'Presenters/SchedulePresenter.php');
+>>>>>>> old/master
 require_once(ROOT_DIR . 'lib/Application/Authorization/GuestPermissionServiceFactory.php');
 
 class ViewSchedulePage extends SchedulePage
 {
+<<<<<<< HEAD
     private $userRepository;
 
 	private $_styles = array(
@@ -32,16 +41,26 @@ class ViewSchedulePage extends SchedulePage
 				ScheduleStyle::CondensedWeek => 'Schedule/schedule-week-condensed.tpl',
 		);
 
+=======
+>>>>>>> old/master
 	public function __construct()
 	{
 		parent::__construct();
 		$scheduleRepository = new ScheduleRepository();
+<<<<<<< HEAD
 		$this->userRepository = new UserRepository();
+=======
+		$userRepository = new UserRepository();
+>>>>>>> old/master
 		$resourceService = new ResourceService(
 				new ResourceRepository(),
 				new GuestPermissionService(),
 				new AttributeService(new AttributeRepository()),
+<<<<<<< HEAD
 				$this->userRepository,
+=======
+				$userRepository,
+>>>>>>> old/master
 				new AccessoryRepository());
 		$pageBuilder = new SchedulePageBuilder();
 		$reservationService = new ReservationService(new ReservationViewRepository(), new ReservationListingFactory());
@@ -65,6 +84,7 @@ class ViewSchedulePage extends SchedulePage
 
 		$this->Set('DisplaySlotFactory', new DisplaySlotFactory());
 		$this->Set('SlotLabelFactory', $viewReservations || $allowGuestBookings ? new SlotLabelFactory($user) : new NullSlotLabelFactory());
+<<<<<<< HEAD
         $this->Set('PopupMonths', $this->IsMobile ? 1 : 3);
         $this->Set('AllowGuestBooking', $allowGuestBookings);
 		$this->Set('CreateReservationPage', Pages::GUEST_RESERVATION);
@@ -93,11 +113,29 @@ class ViewSchedulePage extends SchedulePage
 				$this->Display('Schedule/schedule.tpl');
 			}
 		}
+=======
+		$this->Set('AllowGuestBooking', $allowGuestBookings);
+		$this->Set('CreateReservationPage', Pages::GUEST_RESERVATION);
+
+        if ($this->IsMobile && !$this->IsTablet)
+        {
+            $this->Set('ExtendViewPrefix', 'view-');
+            $this->Display('Schedule/schedule-mobile.tpl');
+        }
+        else
+        {
+            $this->Display('Schedule/view-schedule.tpl');
+        }
+>>>>>>> old/master
 	}
 
     public function ShowInaccessibleResources()
     {
+<<<<<<< HEAD
         return Configuration::Instance()->GetSectionKey(ConfigSection::PRIVACY, ConfigKeys::SCHEDULE_SHOW_INACCESSIBLE_RESOURCES, new BooleanConverter());
+=======
+        return true;
+>>>>>>> old/master
     }
 
 	protected function GetShouldAutoLogout()

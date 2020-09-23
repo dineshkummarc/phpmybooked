@@ -1,17 +1,30 @@
 <?php
 /**
  * Smarty Internal Plugin Nocache Insert
+<<<<<<< HEAD
  * Compiles the {insert} tag into the cache file
  *
  * @package    Smarty
  * @subpackage Compiler
  * @author     Uwe Tews
+=======
+ *
+ * Compiles the {insert} tag into the cache file
+ *
+ * @package Smarty
+ * @subpackage Compiler
+ * @author Uwe Tews
+>>>>>>> old/master
  */
 
 /**
  * Smarty Internal Plugin Compile Insert Class
  *
+<<<<<<< HEAD
  * @package    Smarty
+=======
+ * @package Smarty
+>>>>>>> old/master
  * @subpackage Compiler
  */
 class Smarty_Internal_Nocache_Insert
@@ -24,7 +37,10 @@ class Smarty_Internal_Nocache_Insert
      * @param  Smarty_Internal_Template $_template template object
      * @param  string                   $_script   script name to load or 'null'
      * @param  string                   $_assign   optional variable name
+<<<<<<< HEAD
      *
+=======
+>>>>>>> old/master
      * @return string                   compiled code
      */
     public static function compile($_function, $_attr, $_template, $_script, $_assign = null)
@@ -37,12 +53,17 @@ class Smarty_Internal_Nocache_Insert
         }
         // call insert
         if (isset($_assign)) {
+<<<<<<< HEAD
             $_output .= "\$_smarty_tpl->assign('{$_assign}' , {$_function} (" . var_export($_attr, true) .
                         ",\$_smarty_tpl), true);?>";
+=======
+            $_output .= "\$_smarty_tpl->assign('{$_assign}' , {$_function} (" . var_export($_attr, true) . ",\$_smarty_tpl), true);?>";
+>>>>>>> old/master
         } else {
             $_output .= "echo {$_function}(" . var_export($_attr, true) . ",\$_smarty_tpl);?>";
         }
         $_tpl = $_template;
+<<<<<<< HEAD
         while (isset($_tpl->parent) && $_tpl->parent->_objType == 2) {
             $_tpl = $_tpl->parent;
         }
@@ -50,4 +71,13 @@ class Smarty_Internal_Nocache_Insert
         return "/*%%SmartyNocache:{$_tpl->compiled->nocache_hash}%%*/" . $_output .
                "/*/%%SmartyNocache:{$_tpl->compiled->nocache_hash}%%*/";
     }
+=======
+        while ($_tpl->parent instanceof Smarty_Internal_Template) {
+            $_tpl = $_tpl->parent;
+        }
+
+        return "/*%%SmartyNocache:{$_tpl->properties['nocache_hash']}%%*/" . $_output . "/*/%%SmartyNocache:{$_tpl->properties['nocache_hash']}%%*/";
+    }
+
+>>>>>>> old/master
 }

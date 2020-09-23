@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -23,9 +27,12 @@ define('ROOT_DIR', '../../');
 require_once(ROOT_DIR . 'Pages/Export/CalendarSubscriptionPage.php');
 
 $page = new CalendarSubscriptionPage();
+<<<<<<< HEAD
 if (Configuration::Instance()->GetSectionKey('ics', 'require.login', new BooleanConverter()))
 {
     $page = new SecurePageDecorator($page);
 }
+=======
+>>>>>>> old/master
 $page->PageLoad();
 

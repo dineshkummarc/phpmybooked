@@ -1,17 +1,30 @@
 <?php
 /**
  * Smarty Internal Plugin Compile Function Plugin
+<<<<<<< HEAD
  * Compiles code for the execution of function plugin
  *
  * @package    Smarty
  * @subpackage Compiler
  * @author     Uwe Tews
+=======
+ *
+ * Compiles code for the execution of function plugin
+ *
+ * @package Smarty
+ * @subpackage Compiler
+ * @author Uwe Tews
+>>>>>>> old/master
  */
 
 /**
  * Smarty Internal Plugin Compile Function Plugin Class
  *
+<<<<<<< HEAD
  * @package    Smarty
+=======
+ * @package Smarty
+>>>>>>> old/master
  * @subpackage Compiler
  */
 class Smarty_Internal_Compile_Private_Function_Plugin extends Smarty_Internal_CompileBase
@@ -23,7 +36,10 @@ class Smarty_Internal_Compile_Private_Function_Plugin extends Smarty_Internal_Co
      * @see Smarty_Internal_CompileBase
      */
     public $required_attributes = array();
+<<<<<<< HEAD
 
+=======
+>>>>>>> old/master
     /**
      * Attribute definition: Overwrites base class.
      *
@@ -35,6 +51,7 @@ class Smarty_Internal_Compile_Private_Function_Plugin extends Smarty_Internal_Co
     /**
      * Compiles code for the execution of function plugin
      *
+<<<<<<< HEAD
      * @param  array                                $args      array with attributes from parser
      * @param \Smarty_Internal_TemplateCompilerBase $compiler  compiler object
      * @param  array                                $parameter array with compilation parameter
@@ -49,6 +66,26 @@ class Smarty_Internal_Compile_Private_Function_Plugin extends Smarty_Internal_Co
         $_attr = $this->getAttributes($compiler, $args);
 
         unset($_attr[ 'nocache' ]);
+=======
+     * @param  array  $args      array with attributes from parser
+     * @param  object $compiler  compiler object
+     * @param  array  $parameter array with compilation parameter
+     * @param  string $tag       name of function plugin
+     * @param  string $function  PHP function name
+     * @return string compiled code
+     */
+    public function compile($args, $compiler, $parameter, $tag, $function)
+    {
+        // This tag does create output
+        $compiler->has_output = true;
+
+        // check and get attributes
+        $_attr = $this->getAttributes($compiler, $args);
+        if ($_attr['nocache'] === true) {
+            $compiler->tag_nocache = true;
+        }
+        unset($_attr['nocache']);
+>>>>>>> old/master
         // convert attributes into parameter array string
         $_paramsArray = array();
         foreach ($_attr as $_key => $_value) {
@@ -60,6 +97,7 @@ class Smarty_Internal_Compile_Private_Function_Plugin extends Smarty_Internal_Co
         }
         $_params = 'array(' . implode(",", $_paramsArray) . ')';
         // compile code
+<<<<<<< HEAD
         $output = "{$function}({$_params},\$_smarty_tpl)";
         if (!empty($parameter[ 'modifierlist' ])) {
             $output = $compiler->compileTag('private_modifier', array(),
@@ -71,4 +109,11 @@ class Smarty_Internal_Compile_Private_Function_Plugin extends Smarty_Internal_Co
         $output = "<?php " . ($compiler->has_output ? "echo " : '') . "{$output};?>\n";
         return $output;
     }
+=======
+        $output = "<?php echo {$function}({$_params},\$_smarty_tpl);?>\n";
+
+        return $output;
+    }
+
+>>>>>>> old/master
 }

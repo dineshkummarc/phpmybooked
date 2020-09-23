@@ -1,7 +1,11 @@
 <?php
 /**
  * PHP LDAP CLASS FOR MANIPULATING ACTIVE DIRECTORY 
+<<<<<<< HEAD
  * Version 4.0.4
+=======
+ * Version 4.0.3
+>>>>>>> old/master
  * 
  * PHP Version 5 with SSL and LDAP support
  * 
@@ -9,7 +13,11 @@
  *   email: scott@wiggumworld.com, adldap@richardhyland.com
  *   http://adldap.sourceforge.net/
  * 
+<<<<<<< HEAD
  * Copyright (c) 2006-2012 Scott Barnett, Richard Hyland
+=======
+ * Copyright (c) 2006-2011 Scott Barnett, Richard Hyland
+>>>>>>> old/master
  * 
  * We'd appreciate any improvements or additions to be submitted back
  * to benefit the entire community :)
@@ -27,10 +35,17 @@
  * @category ToolsAndUtilities
  * @package adLDAP
  * @author Scott Barnett, Richard Hyland
+<<<<<<< HEAD
  * @copyright (c) 2006-2012 Scott Barnett, Richard Hyland
  * @license http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html LGPLv2.1
  * @revision $Revision: 169 $
  * @version 4.0.4
+=======
+ * @copyright (c) 2006-2011 Scott Barnett, Richard Hyland
+ * @license http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html LGPLv2.1
+ * @revision $Revision: 151 $
+ * @version 4.0.3
+>>>>>>> old/master
  * @link http://adldap.sourceforge.net/
  */
 
@@ -571,9 +586,16 @@ class adLDAP {
     * @throws Exception - if unable to bind to Domain Controller
     * @return bool
     */
+<<<<<<< HEAD
     function __construct($options = array()) {
         // You can specifically overide any of the default configuration options setup above
         if (count($options) > 0) {
+=======
+    function __construct($options = array()) 
+    {
+        // You can specifically overide any of the default configuration options setup above
+        if (count($options)>0){
+>>>>>>> old/master
             if (array_key_exists("account_suffix",$options)){ $this->accountSuffix = $options["account_suffix"]; }
             if (array_key_exists("base_dn",$options)){ $this->baseDn = $options["base_dn"]; }
             if (array_key_exists("domain_controllers",$options)){ 
@@ -589,7 +611,11 @@ class adLDAP {
             if (array_key_exists("use_tls",$options)){ $this->useTLS = $options["use_tls"]; }
             if (array_key_exists("recursive_groups",$options)){ $this->recursiveGroups = $options["recursive_groups"]; }
             if (array_key_exists("ad_port",$options)){ $this->setPort($options["ad_port"]); } 
+<<<<<<< HEAD
             if (array_key_exists("sso",$options)) { 
+=======
+            if (array_key_exists("sso",$options)){ 
+>>>>>>> old/master
                 $this->setUseSSO($options["sso"]);
                 if (!$this->ldapSaslSupported()) {
                     $this->setUseSSO(false);
@@ -611,7 +637,11 @@ class adLDAP {
     * 
     * @return void
     */
+<<<<<<< HEAD
     function __destruct() { 
+=======
+    function __destruct(){ 
+>>>>>>> old/master
         $this->close(); 
     }
 
@@ -676,9 +706,13 @@ class adLDAP {
     * @return void
     */
     public function close() {
+<<<<<<< HEAD
         if ($this->ldapConnection) {
             @ldap_close($this->ldapConnection);
         }
+=======
+        ldap_close($this->ldapConnection);
+>>>>>>> old/master
     }
     
     /**
@@ -720,7 +754,11 @@ class adLDAP {
                 // This should never happen in theory
                 throw new adLDAPException('Rebind to Active Directory failed. AD said: ' . $this->getLastError());
             } 
+<<<<<<< HEAD
         } 
+=======
+        }
+>>>>>>> old/master
         
         return $ret;
     }

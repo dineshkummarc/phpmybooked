@@ -142,8 +142,12 @@
 		else
 		{
 			$this->addElement('link','',array('href'=>$link));
+<<<<<<< HEAD
 			$writer = new FeedWriter();
 			$this->addElement('id', $writer->uuid($link,'urn:uuid:'));
+=======
+			$this->addElement('id', FeedWriter::uuid($link,'urn:uuid:'));
+>>>>>>> old/master
 		} 
 		
 	}

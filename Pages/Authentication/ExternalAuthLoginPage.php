@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Copyright 2017-2020 Nick Korbel
+=======
+ * Copyright 2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -30,7 +34,11 @@ class ExternalAuthLoginPage extends Page implements ILoginBasePage
 	public function __construct()
 	{
 		$this->presenter = new ExternalAuthLoginPresenter($this, new WebAuthentication(PluginManager::Instance()->LoadAuthentication()), new Registration());
+<<<<<<< HEAD
 		parent::__construct('Login');
+=======
+		parent::__construct();
+>>>>>>> old/master
 	}
 
 	public function PageLoad()
@@ -43,7 +51,11 @@ class ExternalAuthLoginPage extends Page implements ILoginBasePage
 	 */
 	public function GetResumeUrl()
 	{
+<<<<<<< HEAD
         return $this->GetQuerystring(QueryStringKeys::REDIRECT);
+=======
+		return null;
+>>>>>>> old/master
 	}
 
 	/**
@@ -53,10 +65,13 @@ class ExternalAuthLoginPage extends Page implements ILoginBasePage
 	{
 		return $this->GetQuerystring(QueryStringKeys::TYPE);
 	}
+<<<<<<< HEAD
 
 	public function ShowError($messages)
 	{
 		$this->Set('Errors', $messages);
 		$this->Display('ExternalAuth/external-login-error.tpl');
 	}
+=======
+>>>>>>> old/master
 }

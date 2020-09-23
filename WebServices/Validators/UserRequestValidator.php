@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2013-2020 Nick Korbel
+=======
+Copyright 2013-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -21,8 +25,13 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 require_once(ROOT_DIR . 'lib/Common/Validators/namespace.php');
 require_once(ROOT_DIR . 'lib/Application/Attributes/namespace.php');
 require_once(ROOT_DIR . 'WebServices/Validators/RequestRequiredValueValidator.php');
+<<<<<<< HEAD
 require_once(ROOT_DIR . 'WebServices/Requests/User/CreateUserRequest.php');
 require_once(ROOT_DIR . 'WebServices/Requests/User/UpdateUserRequest.php');
+=======
+require_once(ROOT_DIR . 'WebServices/Requests/CreateUserRequest.php');
+require_once(ROOT_DIR . 'WebServices/Requests/UpdateUserRequest.php');
+>>>>>>> old/master
 
 interface IUserRequestValidator
 {
@@ -38,6 +47,7 @@ interface IUserRequestValidator
 	 * @return array|string[]
 	 */
 	public function ValidateUpdateRequest($userId, $updateRequest);
+<<<<<<< HEAD
 
     /**
      * @param int $userId
@@ -45,6 +55,8 @@ interface IUserRequestValidator
      * @return string[]
      */
     public function ValidateUpdatePasswordRequest($userId, $password);
+=======
+>>>>>>> old/master
 }
 
 class UserRequestValidator implements IUserRequestValidator
@@ -65,6 +77,13 @@ class UserRequestValidator implements IUserRequestValidator
 		$this->userRepository = $userRepository;
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * @param CreateUserRequest $createRequest
+	 * @return array|string[]
+	 */
+>>>>>>> old/master
 	public function ValidateCreateRequest($createRequest)
 	{
 		if (empty($createRequest))
@@ -80,6 +99,14 @@ class UserRequestValidator implements IUserRequestValidator
 		return $this->Validate($createRequest, $validators);
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * @param int $userId
+	 * @param UpdateUserRequest $updateRequest
+	 * @return array|string[]
+	 */
+>>>>>>> old/master
 	public function ValidateUpdateRequest($userId, $updateRequest)
 	{
 		if (empty($updateRequest))
@@ -93,6 +120,7 @@ class UserRequestValidator implements IUserRequestValidator
 		return $this->Validate($updateRequest, $validators);
 	}
 
+<<<<<<< HEAD
 
     public function ValidateUpdatePasswordRequest($userId, $password)
     {
@@ -107,6 +135,8 @@ class UserRequestValidator implements IUserRequestValidator
         return array();
     }
 
+=======
+>>>>>>> old/master
 	/**
 	 * @param CreateUserRequest|UpdateUserRequest $request
 	 * @param IValidator[] $additionalValidators

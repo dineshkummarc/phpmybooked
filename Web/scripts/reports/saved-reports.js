@@ -39,6 +39,7 @@ function SavedReports(reportOptions) {
 			var url = opts.csvUrl + reportId;
 			window.open(url);
 		});
+<<<<<<< HEAD
         //
 		// $(document).on('click', '#btnChart', function(e) {
 		// 	e.preventDefault();
@@ -47,6 +48,16 @@ function SavedReports(reportOptions) {
 		// 	chart.generate();
 		// 	$('#report-results').hide();
 		// });
+=======
+
+		$(document).on('click', '#btnChart', function(e) {
+			e.preventDefault();
+
+			var chart = new Chart();
+			chart.generate();
+			$('#report-results').hide();
+		});
+>>>>>>> old/master
 
 		$('.save').on('click', function() {
 			$(this).closest('form').submit();

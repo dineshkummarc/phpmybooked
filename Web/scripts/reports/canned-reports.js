@@ -24,6 +24,7 @@ function CannedReports(reportOptions) {
 			window.open(url);
 		});
 
+<<<<<<< HEAD
 		// $(document).on('click', '#btnChart', function(e) {
 		// 	e.preventDefault();
         //
@@ -31,6 +32,15 @@ function CannedReports(reportOptions) {
 		// 	chart.generate();
 		// 	$('#report-results').hide();
 		// });
+=======
+		$(document).on('click', '#btnChart', function(e) {
+			e.preventDefault();
+
+			var chart = new Chart();
+			chart.generate();
+			$('#report-results').hide();
+		});
+>>>>>>> old/master
 
 		$('.cancel').click(function (e) {
 			e.preventDefault();

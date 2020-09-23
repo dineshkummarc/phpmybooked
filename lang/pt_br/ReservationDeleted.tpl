@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -30,9 +34,14 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 		<div class="resource-image"><img src="{$ScriptUrl}/{$ResourceImage}"/></div>
 	{/if}
 
+<<<<<<< HEAD
 	Tï¿½tulo: {$Title}<br/>
 	Descriï¿½ï¿½o: {$Description|nl2br}<br/>
 {$DeleteReason|nl2br}<br/>
+=======
+	Título: {$Title}<br/>
+	Descrição: {$Description|nl2br}<br/>
+>>>>>>> old/master
 
 	{if count($RepeatDates) gt 0}
 		<br/>

@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Copyright 2013-2020 Nick Korbel
+=======
+ * Copyright 2013-2016 Nick Korbel
+>>>>>>> old/master
  *
  * This file is part of Booked Scheduler.
  *
@@ -107,10 +111,14 @@ class ScheduleService implements IScheduleService
     public function GetDailyLayout($scheduleId, ILayoutFactory $layoutFactory, $reservationListing)
     {
         return $this->dailyLayoutFactory->Create($reservationListing, $this->GetLayout($scheduleId, $layoutFactory));
+<<<<<<< HEAD
     }
 
     public function GetSchedule($scheduleId)
     {
         return $this->scheduleRepository->LoadById($scheduleId);
+=======
+
+>>>>>>> old/master
     }
 }

@@ -1,7 +1,11 @@
 <?php
 /**
  * PHP LDAP CLASS FOR MANIPULATING ACTIVE DIRECTORY 
+<<<<<<< HEAD
  * Version 4.0.4
+=======
+ * Version 4.0.2
+>>>>>>> old/master
  * 
  * PHP Version 5 with SSL and LDAP support
  * 
@@ -9,7 +13,11 @@
  *   email: scott@wiggumworld.com, adldap@richardhyland.com
  *   http://adldap.sourceforge.net/
  * 
+<<<<<<< HEAD
  * Copyright (c) 2006-2012 Scott Barnett, Richard Hyland
+=======
+ * Copyright (c) 2006-2011 Scott Barnett, Richard Hyland
+>>>>>>> old/master
  * 
  * We'd appreciate any improvements or additions to be submitted back
  * to benefit the entire community :)
@@ -28,10 +36,17 @@
  * @package adLDAP
  * @subpackage Contacts
  * @author Scott Barnett, Richard Hyland
+<<<<<<< HEAD
  * @copyright (c) 2006-2012 Scott Barnett, Richard Hyland
  * @license http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html LGPLv2.1
  * @revision $Revision: 97 $
  * @version 4.0.4
+=======
+ * @copyright (c) 2006-2011 Scott Barnett, Richard Hyland
+ * @license http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html LGPLv2.1
+ * @revision $Revision: 97 $
+ * @version 4.0.2
+>>>>>>> old/master
  * @link http://adldap.sourceforge.net/
  */
 
@@ -264,7 +279,11 @@ class adLDAPContacts {
         for ($i=0; $i<$entries["count"]; $i++){
             if ($includeDescription && strlen($entries[$i]["displayname"][0])>0){
                 $usersArray[$entries[$i]["distinguishedname"][0]] = $entries[$i]["displayname"][0];
+<<<<<<< HEAD
             } elseif ($includeDescription){
+=======
+            } elseif ($include_desc){
+>>>>>>> old/master
                 $usersArray[$entries[$i]["distinguishedname"][0]] = $entries[$i]["distinguishedname"][0];
             } else {
                 array_push($usersArray, $entries[$i]["distinguishedname"][0]);
@@ -286,9 +305,17 @@ class adLDAPContacts {
     * @return bool
     */
     public function contactMailEnable($distinguishedName, $emailAddress, $mailNickname = NULL){
+<<<<<<< HEAD
         return $this->adldap->exchange()->contactMailEnable($distinguishedName, $emailAddress, $mailNickname);
+=======
+        return $this->adldap->exchange()->contactMailEnable($distinguishedName, $emailAddres, $mailNickname);
+>>>>>>> old/master
     }
     
     
 }
+<<<<<<< HEAD
 ?>
+=======
+?>
+>>>>>>> old/master

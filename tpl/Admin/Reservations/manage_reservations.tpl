@@ -1,5 +1,9 @@
 {*
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -20,6 +24,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 {include file='globalheader.tpl' Qtip=true InlineEdit=true}
 
 <div id="page-manage-reservations" class="admin-page">
+<<<<<<< HEAD
 	<div>
 		<div class="dropdown admin-header-more pull-right">
 			<button class="btn btn-default" type="button" id="moreReservationActions" data-toggle="dropdown">
@@ -57,18 +62,27 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 		</div>
 		<h1>{translate key=ManageReservations}</h1>
 	</div>
+=======
+	<h1>{translate key=ManageReservations}</h1>
+>>>>>>> old/master
 
 	<div class="panel panel-default filterTable" id="filter-reservations-panel">
 		<div class="panel-heading"><span class="glyphicon glyphicon-filter"></span> {translate key="Filter"} {showhide_icon}</div>
 		<div class="panel-body">
 			{assign var=groupClass value="col-xs-12 col-sm-4 col-md-3"}
+<<<<<<< HEAD
 			<form id="filterForm" role="form">
 				<div class="form-group filter-dates {$groupClass}">
                     <label for="startDate" class="no-show">{translate key=StartDate}</label>
+=======
+			<form id="filterForm" class="form-inline" role="form">
+				<div class="form-group filter-dates {$groupClass}">
+>>>>>>> old/master
 					<input id="startDate" type="text" class="form-control dateinput inline"
 						   value="{formatdate date=$StartDate}"/>
 					<input id="formattedStartDate" type="hidden" value="{formatdate date=$StartDate key=system}"/>
 					-
+<<<<<<< HEAD
                     <label for="endDate" class="no-show">{translate key=StartDate}</label>
                     <input id="endDate" type="text" class="form-control dateinput inline"
 						   value="{formatdate date=$EndDate}"/>
@@ -84,26 +98,48 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 				<div class="form-group filter-schedule {$groupClass}">
                     <label for="scheduleId" class="no-show">{translate key=Schedule}</label>
                     <select id="scheduleId" class="form-control">
+=======
+					<input id="endDate" type="text" class="form-control dateinput inline"
+						   value="{formatdate date=$EndDate}"/>
+					<input id="formattedEndDate" type="hidden" value="{formatdate date=$EndDate key=system}"/>
+				</div>
+				<div class="form-group filter-user {$groupClass}">
+					<input id="userFilter" type="text" class="form-control" value="{$UserNameFilter}"
+						   placeholder="{translate key=User}"/>
+					<input id="userId" type="hidden" value="{$UserIdFilter}"/>
+				</div>
+				<div class="form-group filter-schedule {$groupClass}">
+					<select id="scheduleId" class="form-control">
+>>>>>>> old/master
 						<option value="">{translate key=AllSchedules}</option>
 						{object_html_options options=$Schedules key='GetId' label="GetName" selected=$ScheduleId}
 					</select>
 				</div>
 				<div class="form-group filter-resource {$groupClass}">
+<<<<<<< HEAD
                     <label for="resourceId" class="no-show">{translate key=Resource}</label>
                     <select id="resourceId" class="form-control">
+=======
+					<select id="resourceId" class="form-control">
+>>>>>>> old/master
 						<option value="">{translate key=AllResources}</option>
 						{object_html_options options=$Resources key='GetId' label="GetName" selected=$ResourceId}
 					</select>
 				</div>
 				<div class="form-group filter-status {$groupClass}">
+<<<<<<< HEAD
                     <label for="statusId" class="no-show">{translate key=Status}</label>
                     <select id="statusId" class="form-control">
+=======
+					<select id="statusId" class="form-control">
+>>>>>>> old/master
 						<option value="">{translate key=AllReservations}</option>
 						<option value="{ReservationStatus::Pending}"
 								{if $ReservationStatusId eq ReservationStatus::Pending}selected="selected"{/if}>{translate key=PendingReservations}</option>
 					</select>
 				</div>
 				<div class="form-group filter-referenceNumber {$groupClass}">
+<<<<<<< HEAD
                     <label for="referenceNumber" class="no-show">{translate key=ReferenceNumber}</label>
                     <input id="referenceNumber" type="text" class="form-control" value="{$ReferenceNumber}"
 						   placeholder="{translate key=ReferenceNumber}"/>
@@ -124,6 +160,13 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 				<div class="form-group filter-resourceStatus {$groupClass}">
                     <label for="resourceStatusIdFilter" class="no-show">{translate key=ResourceStatus}</label>
                     <select id="resourceStatusIdFilter" class="form-control">
+=======
+					<input id="referenceNumber" type="text" class="form-control" value="{$ReferenceNumber}"
+						   placeholder="{translate key=ReferenceNumber}"/>
+				</div>
+				<div class="form-group filter-resourceStatus {$groupClass}">
+					<select id="resourceStatusIdFilter" class="form-control">
+>>>>>>> old/master
 						<option value="">{translate key=AllResourceStatuses}</option>
 						<option value="{ResourceStatus::AVAILABLE}">{translate key=Available}</option>
 						<option value="{ResourceStatus::UNAVAILABLE}">{translate key=Unavailable}</option>
@@ -131,6 +174,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 					</select>
 				</div>
 				<div class="form-group filter-resourceStatusReason {$groupClass}">
+<<<<<<< HEAD
                     <label for="resourceReasonIdFilter" class="no-show">{translate key=Reason}</label>
                     <select id="resourceReasonIdFilter" class="form-control"></select>
 				</div>
@@ -146,6 +190,10 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                         <label for="missedCheckout">{translate key=MissedCheckout}</label>
                     </div>
                 </div>
+=======
+					<select id="resourceReasonIdFilter" class="form-control"></select>
+				</div>
+>>>>>>> old/master
 				<div class="clearfix"></div>
 				{foreach from=$AttributeFilters item=attribute}
 					{control type="AttributeControl" attribute=$attribute searchmode=true class="customAttribute filter-customAttribute{$attribute->Id()} {$groupClass}"}
@@ -158,11 +206,19 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 		</div>
 	</div>
 
+<<<<<<< HEAD
 	<table class="table admin-panel" id="reservationTable">
 		{assign var=colCount value=11}
 		<thead>
 		<tr>
 			<th class="id hidden">ID</th>
+=======
+
+	<table class="table" id="reservationTable">
+		<thead>
+		<tr>
+			<th class="id hidden">&nbsp;</th>
+>>>>>>> old/master
 			<th>{sort_column key=User field=ColumnNames::OWNER_LAST_NAME}</th>
 			<th>{sort_column key=Resource field=ColumnNames::RESOURCE_NAME}</th>
 			<th>{sort_column key=Title field=ColumnNames::RESERVATION_TITLE}</th>
@@ -171,6 +227,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 			<th>{sort_column key=EndDate field=ColumnNames::RESERVATION_END}</th>
 			<th>{translate key='Duration'}</th>
 			<th>{translate key='ReferenceNumber'}</th>
+<<<<<<< HEAD
 			{if $CreditsEnabled}
 				<th>{translate key='Credits'}</th>
 				{assign var=colCount value=$colCount+1}
@@ -187,6 +244,13 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 					<label for="delete-all"></label>
 				</div>
 			</th>
+=======
+			<th class="action">{translate key='Delete'}</th>
+            {if !$IsDesktop}
+                <th class="action">{translate key='Edit'}</th>
+            {/if}
+			<th class="action">{translate key='Approve'}</th>
+>>>>>>> old/master
 		</tr>
 		</thead>
 		<tbody>
@@ -195,9 +259,14 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 			{if $reservation->RequiresApproval}
 				{assign var=rowCss value='pending'}
 			{/if}
+<<<<<<< HEAD
 			{assign var=reservationId value=$reservation->ReservationId}
 			<tr class="{$rowCss} {if $IsDesktop}editable{/if}" data-seriesId="{$reservation->SeriesId}" data-refnum="{$reservation->ReferenceNumber}">
 				<td class="id hidden">{$reservationId}</td>
+=======
+			<tr class="{$rowCss} {if $IsDesktop}editable{/if}" data-seriesId="{$reservation->SeriesId}" data-refnum="{$reservation->ReferenceNumber}">
+				<td class="id hidden">{$reservation->ReservationId}</td>
+>>>>>>> old/master
 				<td class="user">{fullname first=$reservation->FirstName last=$reservation->LastName ignorePrivacy=true}</td>
 				<td class="resource">{$reservation->ResourceName}
 					{if $reservation->ResourceStatusId == ResourceStatus::AVAILABLE}
@@ -214,12 +283,17 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 					{*<span class="reservationResourceStatusReason">{$StatusReasons[$reservation->ResourceStatusReasonId]->Description()}</span>*}
 					{*{/if}*}
 				</td>
+<<<<<<< HEAD
 				<td class="reservationTitle">{$reservation->Title}</td>
+=======
+				<td class="title">{$reservation->Title}</td>
+>>>>>>> old/master
 				<td class="description">{$reservation->Description}</td>
 				<td class="date">{formatdate date=$reservation->StartDate timezone=$Timezone key=short_reservation_date}</td>
 				<td class="date">{formatdate date=$reservation->EndDate timezone=$Timezone key=short_reservation_date}</td>
 				<td class="duration">{$reservation->GetDuration()->__toString()}</td>
 				<td class="referenceNumber">{$reservation->ReferenceNumber}</td>
+<<<<<<< HEAD
 				{if $CreditsEnabled}
 					<td class="credits">{$reservation->CreditsConsumed}</td>
 				{/if}
@@ -229,12 +303,24 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 					</td>
 				{/if}
 				<td class="action">
+=======
+				<td class="action">
+                    <a href="#" class="update delete"><span class="fa fa-trash icon remove fa-1x"></span></a>
+                </td>
+                {if !$IsDesktop}
+                    <td class="action">
+                        <a href="#" class="update edit"><span class="fa fa-pencil icon fa-1x"></span></a>
+                    </td>
+                {/if}
+                <td class="action">
+>>>>>>> old/master
 					{if $reservation->RequiresApproval}
 						<a href="#" class="update approve"><span class="fa fa-check icon add"></span></a>
 					{else}
 						-
 					{/if}
 				</td>
+<<<<<<< HEAD
 				<td class="action">
 					<a href="#" class="update delete">
                         <span class="fa fa-trash icon remove fa-1x"></span>
@@ -252,6 +338,11 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 			</tr>
 			<tr class="{$rowCss}" data-seriesId="{$reservation->SeriesId}" data-refnum="{$reservation->ReferenceNumber}">
 				<td colspan="{$colCount}">
+=======
+			</tr>
+			<tr class="{$rowCss}" data-seriesId="{$reservation->SeriesId}" data-refnum="{$reservation->ReferenceNumber}">
+				<td colspan="11">
+>>>>>>> old/master
 					<div class="reservation-list-dates">
 						<div>
 							<label>{translate key='Created'}</label> {formatdate date=$reservation->CreatedDate timezone=$Timezone key=short_datetime}
@@ -285,6 +376,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 			</tr>
 		{/foreach}
 		</tbody>
+<<<<<<< HEAD
 		<tfoot>
 		<tr>
 			<td colspan="{$colCount-1}"></td>
@@ -298,6 +390,14 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 		</tfoot>
 	</table>
 
+=======
+	</table>
+
+	<div id="csvExport">
+		<a href="{$CsvExportUrl}" download="{$CsvExportUrl}" class="btn btn-default btn-sm">{translate key=ExportToCSV}
+			<span class="glyphicon glyphicon-export"></span></a>
+	</div>
+>>>>>>> old/master
 	{pagination pageInfo=$PageInfo}
 
 	<div class="modal fade" id="deleteInstanceDialog" tabindex="-1" role="dialog"
@@ -359,13 +459,18 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 						<button type="button" class="btn btn-danger saveSeries btnUpdateFutureInstances" id="btnUpdateFutureInstances">
 							{translate key='FutureInstances'}
 						</button>
+<<<<<<< HEAD
 						{indicator}
+=======
+                        {indicator}
+>>>>>>> old/master
 					</div>
 				</div>
 			</form>
 		</div>
 	</div>
 
+<<<<<<< HEAD
 	<div id="deleteMultipleDialog" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteMultipleModalLabel"
 		 aria-hidden="true">
 		<form id="deleteMultipleForm" method="post" ajaxAction="{ManageReservationsActions::DeleteMultiple}">
@@ -394,6 +499,8 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 		</form>
 	</div>
 
+=======
+>>>>>>> old/master
 	<div id="inlineUpdateErrorDialog" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="inlineErrorLabel"
 		 aria-hidden="true">
 		<div class="modal-dialog">
@@ -414,6 +521,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 		</div>
 	</div>
 
+<<<<<<< HEAD
 	<div id="importReservationsDialog" class="modal" tabindex="-1" role="dialog" aria-labelledby="importReservationsModalLabel"
 		 aria-hidden="true">
 		<form id="importReservationsForm" class="form" role="form" method="post" enctype="multipart/form-data"
@@ -547,15 +655,22 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
     </div>
 
     {include file="javascript-includes.tpl" Qtip=true InlineEdit=true Clear=true}
+=======
+>>>>>>> old/master
 	{jsfile src="ajax-helpers.js"}
 	{jsfile src="admin/reservations.js"}
 
 	{jsfile src="autocomplete.js"}
 	{jsfile src="reservationPopup.js"}
 	{jsfile src="approval.js"}
+<<<<<<< HEAD
     {jsfile src="dropzone.js"}
 
     <script type="text/javascript">
+=======
+
+	<script type="text/javascript">
+>>>>>>> old/master
 
 		function hidePopoversWhenClickAway() {
 			$('body').on('click', function (e) {
@@ -570,7 +685,14 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
 		function setUpPopovers() {
 			$('[rel="popover"]').popover({
+<<<<<<< HEAD
 				container: 'body', html: true, placement: 'top', content: function () {
+=======
+				container: 'body',
+				html: true,
+				placement: 'top',
+				content: function () {
+>>>>>>> old/master
 					var popoverId = $(this).data('popover-content');
 					return $(popoverId).html();
 				}
@@ -599,7 +721,12 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 			var updateUrl = '{$smarty.server.SCRIPT_NAME}?action=';
 
 			$('.inlineAttribute').editable({
+<<<<<<< HEAD
 				url: updateUrl + '{ManageReservationsActions::UpdateAttribute}', emptytext: '-'
+=======
+				url: updateUrl + '{ManageReservationsActions::UpdateAttribute}',
+				emptytext: '-'
+>>>>>>> old/master
 			});
 		}
 
@@ -608,7 +735,10 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 			setUpPopovers();
 			hidePopoversWhenClickAway();
 			setUpEditables();
+<<<<<<< HEAD
             dropzone($("#termsOfServiceUpload"));
+=======
+>>>>>>> old/master
 
 			var updateScope = {};
 			updateScope['btnUpdateThisInstance'] = '{SeriesUpdateScope::ThisInstance}';
@@ -625,10 +755,14 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 				actions: actions,
 				deleteUrl: '{$Path}ajax/reservation_delete.php?{QueryStringKeys::RESPONSE_TYPE}=json',
 				resourceStatusUrl: '{$smarty.server.SCRIPT_NAME}?{QueryStringKeys::ACTION}=changeStatus',
+<<<<<<< HEAD
 				submitUrl: '{$smarty.server.SCRIPT_NAME}',
                 termsOfServiceUrl: '{$smarty.server.SCRIPT_NAME}?dr=tos',
                 updateTermsOfServiceAction: 'termsOfService',
                 deleteTermsOfServiceAction: 'deleteTerms'
+=======
+				submitUrl: '{$smarty.server.SCRIPT_NAME}'
+>>>>>>> old/master
 			};
 
 			var approvalOpts = {
@@ -642,6 +776,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
 			{foreach from=$reservations item=reservation}
 
+<<<<<<< HEAD
 			reservationManagement.addReservation({
 				id: '{$reservation->ReservationId}',
 				referenceNumber: '{$reservation->ReferenceNumber}',
@@ -650,6 +785,18 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 				resourceStatusReasonId: '{$reservation->ResourceStatusReasonId}',
 				resourceId: '{$reservation->ResourceId}'
 			});
+=======
+			reservationManagement.addReservation(
+					{
+						id: '{$reservation->ReservationId}',
+						referenceNumber: '{$reservation->ReferenceNumber}',
+						isRecurring: '{$reservation->IsRecurring}',
+						resourceStatusId: '{$reservation->ResourceStatusId}',
+						resourceStatusReasonId: '{$reservation->ResourceStatusReasonId}',
+						resourceId: '{$reservation->ResourceId}'
+					}
+			);
+>>>>>>> old/master
 			{/foreach}
 
 			{foreach from=$StatusReasons item=reason}

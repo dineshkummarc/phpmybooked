@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
 Copyright 2011-2020 Nick Korbel
+=======
+Copyright 2011-2016 Nick Korbel
+>>>>>>> old/master
 
 This file is part of Booked Scheduler.
 
@@ -21,7 +25,11 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 require_once(ROOT_DIR . 'Domain/Access/namespace.php' );
 require_once(ROOT_DIR . 'Pages/SecurePage.php');
 
+<<<<<<< HEAD
 class AutoCompletePage extends Page
+=======
+class AutoCompletePage extends SecurePage
+>>>>>>> old/master
 {
 	private $listMethods = array();
 
@@ -32,7 +40,10 @@ class AutoCompletePage extends Page
 	    $this->listMethods[AutoCompleteType::User] = 'GetUsers';
 	    $this->listMethods[AutoCompleteType::MyUsers] = 'GetMyUsers';
 	    $this->listMethods[AutoCompleteType::Group] = 'GetGroups';
+<<<<<<< HEAD
 	    $this->listMethods[AutoCompleteType::Organization] = 'GetOrganizations';
+=======
+>>>>>>> old/master
 	}
 
 	public function PageLoad()
@@ -40,7 +51,11 @@ class AutoCompletePage extends Page
 		$results = $this->GetResults($this->GetType(), $this->GetSearchTerm());
 
 		Log::Debug(sprintf('AutoComplete: %s results found for search type: %s, term: %s', count($results), $this->GetType(), $this->GetSearchTerm()));
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> old/master
 		$this->SetJson($results);
 	}
 
@@ -54,7 +69,11 @@ class AutoCompletePage extends Page
 
 		Log::Debug("AutoComplete for type: $type not defined");
 
+<<<<<<< HEAD
 		return array();
+=======
+		return '';
+>>>>>>> old/master
 	}
 
 	public function GetType()
@@ -77,6 +96,7 @@ class AutoCompletePage extends Page
 		{
 			return $this->GetGroupUsers($this->GetQuerystring(QueryStringKeys::GROUP_ID));
 		}
+<<<<<<< HEAD
 
         $onlyActive = false;
 		$activeQS = $this->GetQuerystring(QueryStringKeys::ACCOUNT_STATUS);
@@ -108,6 +128,21 @@ class AutoCompletePage extends Page
             {
                 $users[] = new AutocompleteUser($result->Id, $result->First, $result->Last, $result->Email, $result->Username, $result->CurrentCreditCount);
             }
+=======
+		$filter = new SqlFilterLike(ColumnNames::FIRST_NAME, $term);
+		$filter->_Or(new SqlFilterLike(ColumnNames::LAST_NAME, $term));
+		$filter->_Or(new SqlFilterLike(ColumnNames::EMAIL, $term));
+
+		$users = array();
+
+		$r = new UserRepository();
+		$results = $r->GetList(1, PageInfo::All, null, null, $filter, AccountStatus::ACTIVE)->Results();
+
+		/** @var $result UserItemView */
+		foreach($results as $result)
+		{
+			$users[] = new AutocompleteUser($result->Id, $result->First, $result->Last, $result->Email, $result->Username, $result->CurrentCreditCount);
+>>>>>>> old/master
 		}
 
 		return $users;
@@ -127,7 +162,11 @@ class AutoCompletePage extends Page
 	private function GetMyUsers($term)
 	{
 		$userSession = ServiceLocator::GetServer()->GetUserSession();
+<<<<<<< HEAD
 		if ($userSession->IsAdmin || $userSession->IsResourceAdmin || $userSession->IsScheduleAdmin)
+=======
+		if ($userSession->IsAdmin)
+>>>>>>> old/master
 		{
 			return $this->GetUsers($term);
 		}
@@ -177,6 +216,7 @@ class AutoCompletePage extends Page
 
 		return array_values($users);
 	}
+<<<<<<< HEAD
 
 	private function GetOrganizations($term) {
 
@@ -195,6 +235,8 @@ class AutoCompletePage extends Page
 
         return $organizations;
     }
+=======
+>>>>>>> old/master
 }
 
 class AutocompleteUser
@@ -206,9 +248,14 @@ class AutocompleteUser
 	public $Email;
 	public $UserName;
 	public $CurrentCreditCount;
+<<<<<<< HEAD
     public $DisplayName;
 
     public function __construct($userId, $firstName, $lastName, $email, $userName, $currentCreditCount = null)
+=======
+
+	public function __construct($userId, $firstName, $lastName, $email, $userName, $currentCreditCount = null)
+>>>>>>> old/master
 	{
 		$full = new FullName($firstName, $lastName);
 		$this->Id = $userId;
@@ -218,7 +265,11 @@ class AutocompleteUser
 		$this->Email = $email;
 		$this->UserName = $userName;
 		$this->DisplayName = "{$full} ($email)";
+<<<<<<< HEAD
         $this->CurrentCreditCount = floatval($currentCreditCount);
+=======
+        $this->CurrentCreditCount = $currentCreditCount;
+>>>>>>> old/master
 	}
 }
 
@@ -227,5 +278,9 @@ class AutoCompleteType
 	const User = 'user';
 	const Group = 'group';
 	const MyUsers = 'myUsers';
+<<<<<<< HEAD
 	const Organization = 'organization';
 }
+=======
+}
+>>>>>>> old/master

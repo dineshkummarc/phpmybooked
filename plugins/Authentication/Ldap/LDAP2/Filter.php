@@ -10,16 +10,25 @@
 * @author    Benedikt Hallinger <beni@php.net>
 * @copyright 2009 Benedikt Hallinger
 * @license   http://www.gnu.org/licenses/lgpl-3.0.txt LGPLv3
+<<<<<<< HEAD
 * @version   SVN: $Id$
+=======
+* @version   SVN: $Id: Filter.php 318470 2011-10-27 12:57:05Z beni $
+>>>>>>> old/master
 * @link      http://pear.php.net/package/Net_LDAP2/
 */
 
 /**
 * Includes
 */
+<<<<<<< HEAD
 require_once 'PEAR.php';
 require_once 'Util.php';
 require_once 'Entry.php';
+=======
+require_once ROOT_DIR . 'lib/external/pear/PEAR.php';
+require_once ROOT_DIR . 'plugins/Authentication/Ldap/LDAP2/Util.php';
+>>>>>>> old/master
 
 /**
 * Object representation of a part of a LDAP filter.
@@ -161,7 +170,11 @@ class Net_LDAP2_Filter extends PEAR
     *
     * @return Net_LDAP2_Filter|Net_LDAP2_Error
     */
+<<<<<<< HEAD
     public static function create($attr_name, $match, $value = '', $escape = true)
+=======
+    public static function &create($attr_name, $match, $value = '', $escape = true)
+>>>>>>> old/master
     {
         $leaf_filter = new Net_LDAP2_Filter();
         if ($escape) {
@@ -328,6 +341,7 @@ class Net_LDAP2_Filter extends PEAR
     public static function parse($FILTER)
     {
         if (preg_match('/^\((.+?)\)$/', $FILTER, $matches)) {
+<<<<<<< HEAD
             // Check for right bracket syntax: count of unescaped opening
             // brackets must match count of unescaped closing brackets.
             // At this stage we may have:
@@ -339,6 +353,8 @@ class Net_LDAP2_Filter extends PEAR
                 return PEAR::raiseError("Filter parsing error: invalid filter syntax - opening brackets do not match close brackets!");
             }
 
+=======
+>>>>>>> old/master
             if (in_array(substr($matches[1], 0, 1), array('!', '|', '&'))) {
                 // Subfilter processing: pass subfilters to parse() and combine
                 // the objects using the logical operator detected
@@ -423,7 +439,11 @@ class Net_LDAP2_Filter extends PEAR
                 if (stristr($matches[1], ')(')) {
                     return PEAR::raiseError("Filter parsing error: invalid filter syntax - multiple leaf components detected!");
                 } else {
+<<<<<<< HEAD
                     $filter_parts = Net_LDAP2_Util::split_attribute_string($matches[1], true, true);
+=======
+                    $filter_parts = preg_split('/(?<!\\\\)(=|=~|>|<|>=|<=)/', $matches[1], 2, PREG_SPLIT_DELIM_CAPTURE);
+>>>>>>> old/master
                     if (count($filter_parts) != 3) {
                         return PEAR::raiseError("Filter parsing error: invalid filter syntax - unknown matching rule used");
                     } else {
@@ -555,6 +575,7 @@ class Net_LDAP2_Filter extends PEAR
             return true; // Leaf!
         }
     }
+<<<<<<< HEAD
 
     /**
     * Filter entries using this filter or see if a filter matches
@@ -673,3 +694,7 @@ class Net_LDAP2_Filter extends PEAR
 
 }
 ?>
+=======
+}
+?>
+>>>>>>> old/master
