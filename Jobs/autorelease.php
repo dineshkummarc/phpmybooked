@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 Nick Korbel
+ * Copyright 2017-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -43,7 +43,7 @@ try
 	$resourceRepository = new ResourceRepository();
 	$reservationRepository = new ReservationRepository();
 
-	$onlyAutoReleasedResources = new SqlFilterFreeForm(sprintf("%s IS NOT NULL AND %s <> ''",
+	$onlyAutoReleasedResources = new SqlFilterFreeForm(sprintf("`%s` IS NOT NULL AND `%s` <> ''",
 															   ColumnNames::AUTO_RELEASE_MINUTES, ColumnNames::AUTO_RELEASE_MINUTES));
 	$autoReleasedResources = $resourceRepository->GetList(null, null, null, null, $onlyAutoReleasedResources)->Results();
 
@@ -58,10 +58,10 @@ try
 
 		$latestStartDate = Date::Now()->SubtractMinutes($autoReleaseMinutes)->ToDatabase();
 
-		$reservationsThatShouldHaveBeenCheckedIn = new SqlFilterFreeForm(sprintf("%s.%s = %s AND %s IS NULL AND %s < '%s'",
+		$reservationsThatShouldHaveBeenCheckedIn = new SqlFilterFreeForm(sprintf("`%s`.`%s` = %s AND `%s` IS NULL AND `%s`.`%s` < '%s'",
 																				 TableNames::RESOURCES, ColumnNames::RESOURCE_ID, $resource->GetId(),
 																				 ColumnNames::CHECKIN_DATE,
-																				 ColumnNames::RESERVATION_START, $latestStartDate));
+																				 TableNames::RESERVATION_INSTANCES_ALIAS, ColumnNames::RESERVATION_START, $latestStartDate));
 		$reservationItemViews = $reservationViewRepository->GetList(null, null, null, null, $reservationsThatShouldHaveBeenCheckedIn)->Results();
 
 		/** @var ReservationItemView $reservationItemView */
@@ -70,7 +70,7 @@ try
 			Log::Debug('Automatically releasing reservation. ReferenceNumber=%s, User=%s %s, Resource=%s',
 					   $reservationItemView->ReferenceNumber, $reservationItemView->OwnerFirstName, $reservationItemView->OwnerLastName, $reservationItemView->ResourceName);
 
-			$reservation = $reservationRepository->LoadById($reservationItemView->SeriesId);
+			$reservation = $reservationRepository->LoadByReferenceNumber($reservationItemView->ReferenceNumber);
 			$reservation->ApplyChangesTo(SeriesUpdateScope::ThisInstance);
 			$reservation->Delete($userSession);
 			$reservationRepository->Delete($reservation);

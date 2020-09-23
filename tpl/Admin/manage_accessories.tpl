@@ -1,5 +1,5 @@
 {*
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -28,7 +28,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 				<div class="col-xs-5">
 					<div class="form-group has-feedback">
 						<label for="accessoryName">{translate key=AccessoryName}</label>
-						<input {formname key=ACCESSORY_NAME} type="text" id="accessoryName" required class="form-control required"/>
+						<input {formname key=ACCESSORY_NAME} type="text" autofocus id="accessoryName" required class="form-control required"/>
 						<i class="glyphicon glyphicon-asterisk form-control-feedback" data-bv-icon-for="accessoryName"></i>
 					</div>
 				</div>
@@ -70,8 +70,12 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 					   class="update resources">{if $accessory->AssociatedResources == 0}{translate key=All}{else}{$accessory->AssociatedResources}{/if}</a>
 				</td>
 				<td class="action">
-					<a href="#" class="update edit"><span class="fa fa-pencil-square-o icon"></a> |
-					<a href="#" class="update delete"><span class="fa fa-trash icon remove"></span></a>
+					<a href="#" class="update edit"><span class="no-show"></span>
+                        <span class="no-show">{translate key=Edit}</span>
+                        <span class="fa fa-pencil-square-o icon"></a> |
+					<a href="#" class="update delete">
+                        <span class="no-show">{translate key=Delete}</span>
+                        <span class="fa fa-trash icon remove"></span></a>
 				</td>
 			</tr>
 		{/foreach}
@@ -115,7 +119,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 					<div class="modal-body">
 						<div class="form-group has-feedback col-xs-12">
 							<label for="editName">{translate key=AccessoryName}</label>
-							<input id="editName" type="text" class="form-control required" maxlength="85" {formname key=ACCESSORY_NAME} />
+							<input id="editName" type="text" class="form-control required" autofocus maxlength="85" {formname key=ACCESSORY_NAME} />
 						</div>
 						<div class="form-group col-xs-4">
 							<label for="editQuantity">{translate key='QuantityAvailable'}</label>
@@ -148,7 +152,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 						<h4 class="modal-title" id="resourcesDialogLabel">{translate key=Resources}</h4>
 					</div>
-					<div class="modal-body">
+					<div class="modal-body scrollable-modal-content">
 						{foreach from=$resources item=resource}
 							{assign var="resourceId" value="{$resource->GetId()}"}
 							<div resource-id="{$resourceId}">
@@ -181,6 +185,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
 	{csrf_token}
 
+    {include file="javascript-includes.tpl"}
 	{jsfile src="ajax-helpers.js"}
 	{jsfile src="admin/accessory.js"}
 	{jsfile src="js/jquery.form-3.09.min.js"}

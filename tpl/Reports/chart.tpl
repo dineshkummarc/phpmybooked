@@ -1,5 +1,5 @@
 {*
-Copyright 2012-2016 Nick Korbel
+Copyright 2012-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -22,7 +22,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 {html_image src="admin-ajax-indicator.gif"}
 </div>
 
-<div id="chartdiv" style="margin:auto;height:400px;width:80%"></div>
+<div id="chartdiv" style="display:none;margin:auto;height:400px;width:80%"></div>
 
 <!--[if lt IE 9]>{jsfile src="js/jqplot/excanvas.js"}<![endif]-->
 {jsfile src="js/jqplot/jquery.jqplot.min.js"}
@@ -32,12 +32,3 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 {jsfile src="js/jqplot/plugins/jqplot.canvasTextRenderer.min.js"}
 {jsfile src="js/jqplot/plugins/jqplot.pointLabels.min.js"}
 {jsfile src="js/jqplot/plugins/jqplot.dateAxisRenderer.min.js"}
-
-<script type="text/javascript">
-	$(document).ready(function () {
-		$(document).on('loaded', '#report-no-data, #report-results', function () {
-			var chart = new Chart();
-			chart.clear();
-		});
-	});
-</script>

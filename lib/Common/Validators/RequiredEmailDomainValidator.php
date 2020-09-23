@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2016 Nick Korbel
+ * Copyright 2017-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -39,20 +39,19 @@ class RequiredEmailDomainValidator extends ValidatorBase implements IValidator
 			return;
 		}
 
-		$allDomains = explode(',', $domains);
+		$allDomains = preg_split('/[\,\s;]/', $domains);
 
 		$trimmed = trim($this->value);
 
 		foreach ($allDomains as $d)
 		{
-			$d = str_replace('@', '', $d);
+			$d = str_replace('@', '', trim($d));
 			if (BookedStringHelper::EndsWith($trimmed, '@' . $d))
 			{
 				return;
 			}
-
-			$this->isValid = false;
-			break;
 		}
+
+		$this->isValid = false;
 	}
 }

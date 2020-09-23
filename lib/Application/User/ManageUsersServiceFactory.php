@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2013-2016 Nick Korbel
+ * Copyright 2013-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,6 @@ class ManageUsersServiceFactory implements IManageUsersServiceFactory
 	public function CreateAdmin()
 	{
 		$userRepository = new UserRepository();
-		return new ManageUsersService(new AdminRegistration(), $userRepository, new GroupRepository(), $userRepository);
+		return new ManageUsersService(new AdminRegistration(), $userRepository, new GroupRepository(), $userRepository, new PasswordEncryption());
 	}
 }

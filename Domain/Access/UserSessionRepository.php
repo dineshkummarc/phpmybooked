@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2012-2016 Nick Korbel
+Copyright 2012-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -65,8 +65,10 @@ class UserSessionRepository implements IUserSessionRepository
 		$reader = ServiceLocator::GetDatabase()->Query(new GetUserSessionByUserIdCommand($userId));
 		if ($row = $reader->GetRow())
 		{
+			$reader->Free();
 			return unserialize($row[ColumnNames::USER_SESSION]);
 		}
+		$reader->Free();
 		return null;
 	}
 
@@ -75,8 +77,10 @@ class UserSessionRepository implements IUserSessionRepository
 		$reader = ServiceLocator::GetDatabase()->Query(new GetUserSessionBySessionTokenCommand($sessionToken));
 		if ($row = $reader->GetRow())
 		{
+			$reader->Free();
 			return unserialize($row[ColumnNames::USER_SESSION]);
 		}
+		$reader->Free();
 		return null;
 	}
 

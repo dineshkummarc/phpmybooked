@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2012-2016 Nick Korbel
+Copyright 2012-2020 Nick Korbel
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -24,6 +24,14 @@ class ReservationDeletedEmail extends ReservationEmailMessage
     function Subject()
     {
         return $this->Translate('ReservationDeletedSubjectWithResource', array($this->primaryResource->GetName()));
+    }
+
+    public function PopulateTemplate()
+    {
+        if (method_exists($this->reservationSeries, 'GetDeleteReason')) {
+            $this->Set('DeleteReason', $this->reservationSeries->GetDeleteReason());
+        }
+        parent::PopulateTemplate();
     }
 
     protected function GetTemplateName()

@@ -1,5 +1,5 @@
 {*
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 *}
-{block name="header"}{include file='globalheader.tpl' Qtip=true printCssFiles='css/reservation.print.css'}
+{block name="header"}{include file='globalheader.tpl' Qtip=true Owl=true printCssFiles='css/reservation.print.css'}
 {/block}
 
 {function name="displayResource"}
@@ -39,12 +39,16 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                 </div>
 
                 <div class="col-md-6 col-xs-12 col-top">
-                    <div class="pull-right">
+                    <div class="pull-right-sm">
+                        {if $ShowParticipation && $AllowParticipation && $ShowReservationDetails}
+                        <a href="#" id="btnViewAvailability"><i class="fa fa-calendar"></i> {translate key="ViewAvailability"}</a>
+                        {/if}
                         <button type="button" class="btn btn-default" onclick="window.location='{$ReturnUrl}'">
-                            {translate key='Cancel'}
+                            <span class="hidden-xs">{translate key='Cancel'}</span>
+                            <span class="visible-xs"><i class="fa fa-arrow-circle-left"></i></span>
                         </button>
                         {block name="submitButtons"}
-                            <button type="button" class="btn btn-success save create">
+                            <button type="button" class="btn btn-success save create btnCreate">
                                 <span class="glyphicon glyphicon-ok-circle"></span>
                                 {translate key='Create'}
                             </button>
@@ -62,12 +66,12 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                     {assign var="participantCol" value="col-xs-12 col-sm-6"}
                 {/if}
 
-                <div id="reservationDetails" class="{$detailsCol}">
+                <div id="reservationDetails"
+                     class="{$detailsCol} {if $ShowParticipation && $AllowParticipation && $ShowReservationDetails}detailsBorder{/if}">
                     <div class="col-xs-12">
                         <div class="form-group">
                             {if $ShowUserDetails && $ShowReservationDetails}
                                 <a href="#" id="userName" data-userid="{$UserId}">{$ReservationUserName}</a>
-
                             {else}
                                 {translate key=Private}
                             {/if}
@@ -81,11 +85,12 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal"
-                                                        aria-hidden="true">&times;</button>
+                                                        aria-hidden="true">&times;
+                                                </button>
                                                 <h4 class="modal-title"
                                                     id="usersModalLabel">{translate key=ChangeUser}</h4>
                                             </div>
-                                            <div class="modal-body">
+                                            <div class="modal-body scrollable-modal-content">
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-default"
@@ -97,12 +102,19 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                                     </div>
                                 </div>
                             {/if}
-                            <div id="availableCredits" {if !$CreditsEnabled}style="display:none"}{/if}>{translate key=AvailableCredits} <span id="availableCreditsCount">{$CurrentUserCredits}</span></div>
+                            <div id="availableCredits" {if !$CreditsEnabled}style="display:none" }{/if}>
+                                {translate key=AvailableCredits}
+                                <span id="availableCreditsCount">{$CurrentUserCredits}</span> |
+                                {translate key=CreditsRequired}
+                                <span id="requiredCreditsCount"><span class="fa fa-spin fa-spinner"></span></span>
+                                <span id="creditCost"></span>
+                            </div>
                         </div>
                     </div>
 
                     <div class="col-xs-12" id="changeUsers">
                         <div class="form-group">
+                            <label for="changeUserAutocomplete" class="no-show">{translate key=User}</label>
                             <input type="text" id="changeUserAutocomplete"
                                    class="form-control inline-block user-search"/>
                             |
@@ -113,7 +125,77 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                         </div>
                     </div>
 
-                    <div class="col-xs-12" id="reservation-resources">
+                    <div class="col-xs-12 reservationDates">
+                        <div class="col-md-6 no-padding-left">
+                            <div class="form-group no-margin-bottom">
+                                <label for="BeginDate" class="reservationDate">{translate key='BeginDate'}</label>
+                                <input type="text" id="BeginDate"
+                                       class="form-control input-sm inline-block dateinput{if $LockPeriods} no-show{/if}"
+                                       value="{formatdate date=$StartDate}"/>
+                                <input type="hidden" id="formattedBeginDate" {formname key=BEGIN_DATE}
+                                       value="{formatdate date=$StartDate key=system}"/>
+                                <select id="BeginPeriod" {formname key=BEGIN_PERIOD}
+                                        class="form-control input-sm inline-block timeinput{if $LockPeriods} no-show{/if}"
+                                        title="Begin time">
+                                    {foreach from=$StartPeriods item=period}
+                                        {if $period->IsReservable()}
+                                            {assign var='selected' value=''}
+                                            {if $period eq $SelectedStart}
+                                                {assign var='selected' value=' selected="selected"'}
+                                                {assign var='startPeriod' value=$period}
+                                            {/if}
+                                            <option value="{$period->Begin()}"{$selected}>{$period->Label()}</option>
+                                        {/if}
+                                    {/foreach}
+                                </select>
+                                {if $LockPeriods}{formatdate date=$StartDate} {$startPeriod->Label()}{/if}
+                            </div>
+                        </div>
+                        <div class="col-md-6 no-padding-left">
+                            <div class="form-group no-margin-bottom">
+                                <label for="EndDate" class="reservationDate">{translate key='EndDate'}</label>
+                                <input type="text" id="EndDate"
+                                       class="form-control input-sm inline-block dateinput{if $LockPeriods} no-show{/if}"
+                                       value="{formatdate date=$EndDate}"/>
+                                <input type="hidden" id="formattedEndDate" {formname key=END_DATE}
+                                       value="{formatdate date=$EndDate key=system}"/>
+                                <select id="EndPeriod" {formname key=END_PERIOD}
+                                        class="form-control  input-sm inline-block timeinput{if $LockPeriods} no-show{/if}"
+                                        title="End time">
+                                    {foreach from=$EndPeriods item=period name=endPeriods}
+                                        {if $period->IsReservable()}
+                                            {assign var='selected' value=''}
+                                            {if $period eq $SelectedEnd}
+                                                {assign var='selected' value=' selected="selected"'}
+                                                {assign var='endPeriod' value=$period}
+                                            {/if}
+                                            <option value="{$period->End()}"{$selected}>{$period->LabelEnd()}</option>
+                                        {/if}
+                                    {/foreach}
+                                </select>
+                                {if $LockPeriods}{formatdate date=$EndDate} {$endPeriod->LabelEnd()}{/if}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 reservationLength">
+                        <div class="form-group">
+                            {*<span class="like-label">{translate key=ReservationLength}</span>*}
+                            <div class="durationText">
+                                <span id="durationDays">0</span> {translate key=days}
+                                <span id="durationHours">0</span> {translate key=hours}
+                                <span id="durationMinutes">0</span> {translate key=minutes}
+                            </div>
+                        </div>
+                    </div>
+
+                    {if !$HideRecurrence}
+                        <div class="col-xs-12">
+                            {control type="RecurrenceControl" RepeatTerminationDate=$RepeatTerminationDate}
+                        </div>
+                    {/if}
+
+                    <div class="col-xs-12 reservationResources" id="reservation-resources">
                         <div class="form-group">
                             <div class="pull-left">
                                 <div>
@@ -144,7 +226,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                                     {/foreach}
                                 </div>
                             </div>
-                            <div class="pull-right">
+                            <div class="accessoriesDiv">
                                 {if $ShowReservationDetails && $AvailableAccessories|count > 0}
                                     <label>{translate key="Accessories"}</label>
                                     <a href="#" id="addAccessoriesPrompt"
@@ -157,87 +239,40 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                         </div>
                     </div>
 
-                    <div class="col-xs-12 reservationDates">
-                        <div class="col-md-6 no-padding-left">
-                            <div class="form-group no-margin-bottom">
-                                <label for="BeginDate" class="reservationDate">{translate key='BeginDate'}</label>
-                                <input type="text" id="BeginDate" class="form-control input-sm inline-block dateinput"
-                                       value="{formatdate date=$StartDate}"/>
-                                <input type="hidden" id="formattedBeginDate" {formname key=BEGIN_DATE}
-                                       value="{formatdate date=$StartDate key=system}"/>
-                                <select id="BeginPeriod" {formname key=BEGIN_PERIOD}
-                                        class="form-control input-sm inline-block timeinput" title="Begin time">
-                                    {foreach from=$StartPeriods item=period}
-                                        {if $period->IsReservable()}
-                                            {assign var='selected' value=''}
-                                            {if $period eq $SelectedStart}
-                                                {assign var='selected' value=' selected="selected"'}
-                                            {/if}
-                                            <option value="{$period->Begin()}"{$selected}>{$period->Label()}</option>
-                                        {/if}
-                                    {/foreach}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6 no-padding-left">
-                            <div class="form-group no-margin-bottom">
-                                <label for="EndDate" class="reservationDate">{translate key='EndDate'}</label>
-                                <input type="text" id="EndDate" class="form-control input-sm inline-block dateinput"
-                                       value="{formatdate date=$EndDate}"/>
-                                <input type="hidden" id="formattedEndDate" {formname key=END_DATE}
-                                       value="{formatdate date=$EndDate key=system}"/>
-                                <select id="EndPeriod" {formname key=END_PERIOD}
-                                        class="form-control  input-sm inline-block timeinput" title="End time">
-                                    {foreach from=$EndPeriods item=period name=endPeriods}
-                                        {if $period->BeginDate()->IsMidnight()}
-                                            <option value="{$period->Begin()}"{$selected}>{$period->Label()}</option>
-                                        {/if}
-                                        {if $period->IsReservable()}
-                                            {assign var='selected' value=''}
-                                            {if $period eq $SelectedEnd}
-                                                {assign var='selected' value=' selected="selected"'}
-                                            {/if}
-                                            <option value="{$period->End()}"{$selected}>{$period->LabelEnd()}</option>
-                                        {/if}
-                                    {/foreach}
-                                </select>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="col-xs-12 reservationLength">
-                        <div class="form-group">
-                            <span class="like-label">{translate key=ReservationLength}</span>
-                            <div class="durationText">
-                                <span id="durationDays">0</span> {translate key=days}
-                                <span id="durationHours">0</span> {translate key=hours}
-                                <span id="durationMinutes">0</span> {translate key=minutes}
-                            </div>
-                        </div>
-                    </div>
-
-                    {if !$HideRecurrence}
-                        <div class="col-xs-12">
-                            {control type="RecurrenceControl" RepeatTerminationDate=$RepeatTerminationDate}
-                        </div>
-                    {/if}
-
                     <div class="col-xs-12 reservationTitle">
                         <div class="form-group has-feedback">
                             <label for="reservationTitle">{translate key="ReservationTitle"}</label>
-                            {textbox name="RESERVATION_TITLE" class="form-control" value="ReservationTitle" id="reservationTitle"}
-                            {*<i class="glyphicon glyphicon-asterisk form-control-feedback" data-bv-icon-for="reservationTitle"></i>*}
+                            {textbox name="RESERVATION_TITLE" class="form-control" value="ReservationTitle" id="reservationTitle" maxlength="300" required=$TitleRequired}
+                            {if $TitleRequired}
+                                <i class="glyphicon glyphicon-asterisk form-control-feedback"
+                                   data-bv-icon-for="reservationTitle"></i>
+                            {/if}
                         </div>
                     </div>
 
-                    <div class="col-xs-12">
-                        <div class="form-group">
-                            <label for="description">{translate key="ReservationDescription"}</label>
+                    <div class="col-xs-12 reservationDescription">
+                        <div class="form-group has-feedback">
+                            <label for="description">{translate key="ReservationDescription"}
+                            </label>
                             <textarea id="description" name="{FormKeys::DESCRIPTION}"
-                                      class="form-control">{$Description}</textarea>
+                                      class="form-control"
+                                      {if $DescriptionRequired}required="required"{/if}>{$Description}</textarea>
+                            {if $DescriptionRequired}
+                                <i class="glyphicon glyphicon-asterisk form-control-feedback"
+                                   data-bv-icon-for="description"></i>
+                            {/if}
+
                         </div>
                     </div>
+
+                    {if !empty($ReferenceNumber)}
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label>{translate key=ReferenceNumber}</label>
+                                {$ReferenceNumber}
+                            </div>
+                        </div>
+                    {/if}
                 </div>
 
                 <div class="{$participantCol}">
@@ -258,36 +293,45 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                 <div class="row col-xs-12">
                     <div class="col-xs-12 reservationReminders">
                         <div>
-                            <label for="startReminderEnabled">{translate key=SendReminder}</label>
+                            <label>{translate key=SendReminder}</label>
                         </div>
                         <div id="reminderOptionsStart">
                             <div class="checkbox">
                                 <input type="checkbox" id="startReminderEnabled"
                                        class="reminderEnabled" {formname key=START_REMINDER_ENABLED}/>
-                                <label for="startReminderEnabled">
-                                    <input type="number" min="0" max="999" size="3" maxlength="3" value="15"
-                                           class="reminderTime form-control input-sm inline-block" {formname key=START_REMINDER_TIME}/>
-                                    <select class="reminderInterval form-control input-sm inline-block" {formname key=START_REMINDER_INTERVAL}>
-                                        <option value="{ReservationReminderInterval::Minutes}">{translate key=minutes}</option>
-                                        <option value="{ReservationReminderInterval::Hours}">{translate key=hours}</option>
-                                        <option value="{ReservationReminderInterval::Days}">{translate key=days}</option>
-                                    </select>
-                                    <span class="reminderLabel">{translate key=ReminderBeforeStart}</span></label>
+                                <label for="startReminderEnabled" style="min-width:0;"></label>
+                                <label for="startReminderTime" class="no-show">Start Reminder Time</label>
+                                <label for="startReminderInterval" class="no-show">Start Reminder Interval</label>
+                                <input type="number" min="0" max="999" size="3" maxlength="3" value="15"
+                                       class="reminderTime form-control input-sm inline-block" {formname key=START_REMINDER_TIME}
+                                       id="startReminderTime"/>
+                                <select class="reminderInterval form-control input-sm inline-block" {formname key=START_REMINDER_INTERVAL}
+                                        id="startReminderInterval">
+                                    <option value="{ReservationReminderInterval::Minutes}">{translate key=minutes}</option>
+                                    <option value="{ReservationReminderInterval::Hours}">{translate key=hours}</option>
+                                    <option value="{ReservationReminderInterval::Days}">{translate key=days}</option>
+                                </select>
+
+                                <span class="reminderLabel">{translate key=ReminderBeforeStart}</span>
                             </div>
                         </div>
                         <div id="reminderOptionsEnd">
                             <div class="checkbox">
                                 <input type="checkbox" id="endReminderEnabled"
                                        class="reminderEnabled" {formname key=END_REMINDER_ENABLED}/>
-                                <label for="endReminderEnabled">
-                                    <input type="number" min="0" max="999" size="3" maxlength="3" value="15"
-                                           class="reminderTime form-control input-sm inline-block" {formname key=END_REMINDER_TIME}/>
-                                    <select class="reminderInterval form-control input-sm inline-block" {formname key=END_REMINDER_INTERVAL}>
-                                        <option value="{ReservationReminderInterval::Minutes}">{translate key=minutes}</option>
-                                        <option value="{ReservationReminderInterval::Hours}">{translate key=hours}</option>
-                                        <option value="{ReservationReminderInterval::Days}">{translate key=days}</option>
-                                    </select>
-                                    <span class="reminderLabel">{translate key=ReminderBeforeEnd}</span></label>
+                                <label for="endReminderEnabled" style="min-width:0;"></label>
+                                <label for="endReminderTime" class="no-show">End Reminder Time</label>
+                                <label for="endReminderInterval" class="no-show">End Reminder Interval</label>
+                                <input type="number" min="0" max="999" size="3" maxlength="3" value="15"
+                                       class="reminderTime form-control input-sm inline-block" {formname key=END_REMINDER_TIME}
+                                       id="endReminderTime"/>
+                                <select class="reminderInterval form-control input-sm inline-block" {formname key=END_REMINDER_INTERVAL}
+                                        id="endReminderInterval">
+                                    <option value="{ReservationReminderInterval::Minutes}">{translate key=minutes}</option>
+                                    <option value="{ReservationReminderInterval::Hours}">{translate key=hours}</option>
+                                    <option value="{ReservationReminderInterval::Days}">{translate key=days}</option>
+                                </select>
+                                <span class="reminderLabel">{translate key=ReminderBeforeEnd}</span>
                             </div>
 
                         </div>
@@ -306,11 +350,36 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
                         <div id="reservationAttachments">
                             <div class="attachment-item">
-                                <input type="file" {formname key=RESERVATION_FILE multi=true} />
+                                <label for="reservationUploadFile">Reservation Upload File</label>
+                                <input type="file" {formname key=RESERVATION_FILE multi=true}
+                                       id="reservationUploadFile"/>
                                 <a class="add-attachment" href="#">{translate key=Add} <i class="fa fa-plus-square"></i></a>
-                                <a class="remove-attachment" href="#"><i class="fa fa-minus-square"></i></a>
+                                <a class="remove-attachment" href="#"><span
+                                            class="no-show">{translate key=Delete}</span><i
+                                            class="fa fa-minus-square"></i></a>
                             </div>
                         </div>
+                    </div>
+                </div>
+            {/if}
+
+            {if $Terms != null}
+                <div class="row col-xs-12" id="termsAndConditions">
+                    <div class="col-xs-12">
+                        {if $TermsAccepted}
+                            <div class="margin-top-25">
+                            <i class="fa fa-check-square-o"></i> {translate key=IAccept}
+                            <a href="{$Terms->DisplayUrl()}" style="vertical-align: middle" target="_blank">{translate key=TheTermsOfService}</a>
+                            </div>
+                        {else}
+                            <div class="checkbox">
+                                <input type="checkbox"
+                                       id="termsAndConditionsAcknowledgement" {formname key=TOS_ACKNOWLEDGEMENT} {if $TermsAccepted}checked="checked"{/if}/>
+                                <label for="termsAndConditionsAcknowledgement">{translate key=IAccept}</label>
+                                <a href="{$Terms->DisplayUrl()}" style="vertical-align: middle"
+                                   target="_blank">{translate key=TheTermsOfService}</a>
+                            </div>
+                        {/if}
                     </div>
                 </div>
             {/if}
@@ -318,18 +387,20 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
             <input type="hidden" {formname key=RESERVATION_ID} value="{$ReservationId}"/>
             <input type="hidden" {formname key=REFERENCE_NUMBER} value="{$ReferenceNumber}" id="referenceNumber"/>
             <input type="hidden" {formname key=RESERVATION_ACTION} value="{$ReservationAction}"/>
+            <input type="hidden" {formname key=DELETE_REASON} value="" id="hdnDeleteReason"/>
 
             <input type="hidden" {formname key=SERIES_UPDATE_SCOPE} id="hdnSeriesUpdateScope"
                    value="{SeriesUpdateScope::FullSeries}"/>
 
             <div class="row">
-                <div class="reservationButtons col-m-6 col-m-offset-6 col-xs-12">
-                    <div class="reservationSubmitButtons">
+                <div class="reservationButtons col-md-6 col-md-offset-6 col-xs-12">
+                    <div class="pull-right-sm">
                         <button type="button" class="btn btn-default" onclick="window.location='{$ReturnUrl}'">
-                            {translate key='Cancel'}
+                            <span class="hidden-xs">{translate key='Cancel'}</span>
+                            <span class="visible-xs"><i class="fa fa-arrow-circle-left"></i></span>
                         </button>
                         {block name="submitButtons"}
-                            <button type="button" class="btn btn-success save create">
+                            <button type="button" class="btn btn-success save create btnCreate">
                                 <span class="glyphicon glyphicon-ok-circle"></span>
                                 {translate key='Create'}
                             </button>
@@ -357,10 +428,12 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title" id="resourcesModalLabel">{translate key=AddResources}</h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body scrollable-modal-content">
                     <div id="resourceGroups"></div>
                 </div>
                 <div class="modal-footer">
+                    <div id="checking-availability" class="pull-left">{translate key=CheckingAvailability} <i
+                                class="fa fa-spinner fa-spin" aria-hidden="true"></i></div>
                     <button type="button" class="btn btn-default btnClearAddResources"
                             data-dismiss="modal">{translate key='Cancel'}</button>
                     <button type="button" class="btn btn-primary btnConfirmAddResources">{translate key='Done'}</button>
@@ -377,7 +450,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title" id="accessoryModalLabel">{translate key=AddAccessories}</h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body scrollable-modal-content">
                     <table class="table table-condensed">
                         <thead>
                         <tr>
@@ -395,17 +468,24 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                                     <input type="hidden" class="id" value="{$accessory->GetId()}"/>
                                     <input type="hidden" class="resource-ids"
                                            value="{','|implode:$accessory->ResourceIds()}"/>
+                                    <label for="accessory{$accessory->GetId()}"
+                                           class="no-show">{$accessory->GetName()}</label>
                                     {if $accessory->GetQuantityAvailable() == 1}
-                                        <input type="checkbox" name="accessory{$accessory->GetId()}" value="1"
+                                        <input type="checkbox"
+                                               name="accessory{$accessory->GetId()}"
+                                               id="accessory{$accessory->GetId()}"
+                                               value="1"
                                                size="3"/>
                                     {else}
                                         <input type="number" min="0" max="999"
                                                class="form-control input-sm accessory-quantity"
                                                name="accessory{$accessory->GetId()}"
+                                               id="accessory{$accessory->GetId()}"
                                                value="0" size="3"/>
                                     {/if}
                                 </td>
-                                <td accessory-quantity-id="{$accessory->GetId()}" accessory-quantity-available="{$accessory->GetQuantityAvailable()}">{$accessory->GetQuantityAvailable()|default:'&infin;'}</td>
+                                <td accessory-quantity-id="{$accessory->GetId()}"
+                                    accessory-quantity-available="{$accessory->GetQuantityAvailable()}">{$accessory->GetQuantityAvailable()|default:'&infin;'}</td>
                             </tr>
                         {/foreach}
                         </tbody>
@@ -443,11 +523,20 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
         <div id="result"></div>
     </div>
 
+    <div id="user-availability-box">
+
+    </div>
+
 </div>
 
-{control type="DatePickerSetupControl" ControlId="BeginDate" AltId="formattedBeginDate" DefaultDate=$StartDate}
-{control type="DatePickerSetupControl" ControlId="EndDate" AltId="formattedEndDate" DefaultDate=$EndDate}
-{control type="DatePickerSetupControl" ControlId="EndRepeat" AltId="formattedEndRepeat" DefaultDate=$RepeatTerminationDate}
+{block name=extras}{/block}
+
+{include file="javascript-includes.tpl" Qtip=true Owl=true}
+
+{control type="DatePickerSetupControl" ControlId="BeginDate" AltId="formattedBeginDate" DefaultDate=$StartDate MinDate=$AvailabilityStart MaxDate=$AvailabilityEnd FirstDay=$FirstWeekday}
+{control type="DatePickerSetupControl" ControlId="EndDate" AltId="formattedEndDate" DefaultDate=$EndDate MinDate=$AvailabilityStart MaxDate=$AvailabilityEnd FirstDay=$FirstWeekday}
+{control type="DatePickerSetupControl" ControlId="EndRepeat" AltId="formattedEndRepeat" DefaultDate=$RepeatTerminationDate MinDate=$StartDate MaxDate=$AvailabilityEnd FirstDay=$FirstWeekday}
+{control type="DatePickerSetupControl" ControlId="RepeatDate" AltId="formattedRepeatDate" MaxDate=$AvailabilityEnd FirstDay=$FirstWeekday}
 
 {jsfile src="js/jquery.autogrow.js"}
 {jsfile src="js/moment.min.js"}
@@ -487,14 +576,13 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
             changeUserAutocompleteUrl: "ajax/autocomplete.php?type={AutoCompleteType::MyUsers}",
             maxConcurrentUploads: '{$MaxUploadCount}',
             guestLabel: '({translate key=Guest})',
-            accessoriesUrl: 'ajax/available_accessories.php?{QueryStringKeys::START_DATE}=[sd]&{QueryStringKeys::END_DATE}=[ed]&{QueryStringKeys::START_TIME}=[st]&{QueryStringKeys::END_TIME}=[et]&{QueryStringKeys::REFERENCE_NUMBER}=[rn]'
-        };
-
-        var recurOpts = {
-            repeatType: '{$RepeatType}',
-            repeatInterval: '{$RepeatInterval}',
-            repeatMonthlyType: '{$RepeatMonthlyType}',
-            repeatWeekdays: [{foreach from=$RepeatWeekdays item=day}{$day}, {/foreach}]
+            accessoriesUrl: 'ajax/available_accessories.php?{QueryStringKeys::START_DATE}=[sd]&{QueryStringKeys::END_DATE}=[ed]&{QueryStringKeys::START_TIME}=[st]&{QueryStringKeys::END_TIME}=[et]&{QueryStringKeys::REFERENCE_NUMBER}=[rn]',
+            resourcesUrl: 'ajax/unavailable_resources.php?{QueryStringKeys::START_DATE}=[sd]&{QueryStringKeys::END_DATE}=[ed]&{QueryStringKeys::START_TIME}=[st]&{QueryStringKeys::END_TIME}=[et]&{QueryStringKeys::REFERENCE_NUMBER}=[rn]',
+            creditsUrl: 'ajax/reservation_credits.php',
+            creditsEnabled: '{$CreditsEnabled}',
+            emailUrl: 'ajax/reservation_email.php?{QueryStringKeys::REFERENCE_NUMBER}={$ReferenceNumber}',
+            availabilityUrl: 'ajax/availability.php?{QueryStringKeys::SCHEDULE_ID}={$ScheduleId}',
+            maximumResources: {$MaximumResources|default:0}
         };
 
         var reminderOpts = {
@@ -503,9 +591,6 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
             reminderIntervalStart: '{$ReminderIntervalStart}',
             reminderIntervalEnd: '{$ReminderIntervalEnd}'
         };
-
-        var recurrence = new Recurrence(recurOpts);
-        recurrence.init();
 
         var reservation = new Reservation(reservationOpts);
         reservation.init('{$UserId}', '{format_date date=$StartDate key=system_datetime timezone=$Timezone}', '{format_date date=$EndDate key=system_datetime timezone=$Timezone}');
@@ -534,6 +619,24 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
         {/foreach}
 
         reservation.addResourceGroups({$ResourceGroupsAsJson});
+
+        var recurOpts = {
+            repeatType: '{$RepeatType}',
+            repeatInterval: '{$RepeatInterval}',
+            repeatMonthlyType: '{$RepeatMonthlyType}',
+            repeatWeekdays: [{foreach from=$RepeatWeekdays item=day}{$day}, {/foreach}],
+            autoSetTerminationDate: $('#referenceNumber').val() != '',
+            customRepeatExclusions: ['{formatdate date=$StartDate key=system}']
+        };
+
+        var recurrence = new Recurrence(recurOpts);
+        recurrence.init();
+
+        recurrence.onChange(reservation.repeatOptionsChanged);
+
+        {foreach from=$CustomRepeatDates item=date}
+            recurrence.addCustomDate('{format_date date=$date key=system timezone=$Timezone}', '{format_date date=$date timezone=$Timezone}');
+        {/foreach}
 
         var ajaxOptions = {
             target: '#result', // target element(s) to be updated with server response
@@ -568,6 +671,10 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                 }
             }
         });
+    });
+
+    $('.modal').on('shown.bs.modal', function () {
+        $(this).find('[autofocus]').focus();
     });
 </script>
 

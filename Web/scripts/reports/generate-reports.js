@@ -13,10 +13,11 @@ function GenerateReports(reportOptions) {
         $('#selectDiv input').click(function () {
             $('div.select-toggle').hide();
 
-            if ($(this).attr('id') == 'results_list') {
+            var selectedItem = $(this).attr('id');
+            if (selectedItem == 'results_list') {
                 $('#listOfDiv').show();
             }
-            else {
+            else if (selectedItem != 'results_utilization'){
                 $('#aggregateDiv').show();
             }
         });
@@ -62,19 +63,16 @@ function GenerateReports(reportOptions) {
             window.open(url);
         });
 
-        $(document).on('click', '#btnSaveReportPrompt', function (e) {
-            e.preventDefault();
-
-            elements.saveDialog.find(':text').val('');
-            elements.saveDialog.modal('show');
+        elements.saveDialog.on('shown.bs.modal', function () {
+            $('#saveReportName').focus();
         });
 
-        $(document).on('click', '#btnChart', function (e) {
+        $(document).on('click', '#btnSaveReportPrompt', function (e) {
             e.preventDefault();
+            e.stopPropagation();
+            elements.saveDialog.find(':text').val('');
+            elements.saveDialog.modal('show');
 
-            var chart = new Chart();
-            chart.generate();
-            $('#report-results').hide();
         });
 
         $('.save').on('click', function () {

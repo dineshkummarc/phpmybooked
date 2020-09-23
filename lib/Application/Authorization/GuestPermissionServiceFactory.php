@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2012-2016 Nick Korbel
+Copyright 2012-2020 Nick Korbel
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,6 +28,26 @@ class GuestPermissionService implements IPermissionService
 	{
 		return true;
 	}
+
+    /**
+     * @param IPermissibleResource $resource
+     * @param UserSession $user
+     * @return bool
+     */
+    public function CanBookResource(IPermissibleResource $resource, UserSession $user)
+    {
+        return false;
+    }
+
+    /**
+     * @param IPermissibleResource $resource
+     * @param UserSession $user
+     * @return bool
+     */
+    public function CanViewResource(IPermissibleResource $resource, UserSession $user)
+    {
+        return true;
+    }
 }
 
 class GuestPermissionServiceFactory implements IPermissionServiceFactory

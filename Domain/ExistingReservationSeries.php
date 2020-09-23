@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2011-2016 Nick Korbel
+ * Copyright 2011-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -57,6 +57,11 @@ class ExistingReservationSeries extends ReservationSeries
 	 * @var array|int[]
 	 */
 	protected $attachmentIds = array();
+
+	/**
+	 * @var string
+	 */
+	private $_deleteReason;
 
 	public function __construct()
 	{
@@ -137,6 +142,11 @@ class ExistingReservationSeries extends ReservationSeries
 	 */
 	public function WithCurrentInstance(Reservation $reservation)
 	{
+		if (!array_key_exists($this->GetNewKey($reservation), $this->instances))
+		{
+			$this->originalCreditsConsumed += $reservation->GetCreditsConsumed();
+		}
+
 		$this->AddInstance($reservation);
 		$this->SetCurrentInstance($reservation);
 	}
@@ -146,6 +156,10 @@ class ExistingReservationSeries extends ReservationSeries
 	 */
 	public function WithInstance(Reservation $reservation)
 	{
+		if (!array_key_exists($this->GetNewKey($reservation), $this->instances))
+		{
+			$this->originalCreditsConsumed += $reservation->GetCreditsConsumed();
+		}
 		$this->AddInstance($reservation);
 	}
 
@@ -184,18 +198,28 @@ class ExistingReservationSeries extends ReservationSeries
 		$this->attachmentIds[$fileId] = $extension;
 	}
 
-	/**
-	 * @internal
-	 * @return bool
-	 */
 	public function RemoveInstance(Reservation $reservation)
 	{
-		$removed = parent::RemoveInstance($reservation);
+		// todo: should this check to see if the instance is already marked for removal?
+		$toRemove = $reservation;
 
-		$this->AddEvent(new InstanceRemovedEvent($reservation, $this));
-		$this->_deleteRequestIds[] = $reservation->ReservationId();
+		foreach ($this->_Instances() as $instance)
+		{
+			if ($instance->ReferenceNumber() == $reservation->ReferenceNumber() ||
+					($instance->StartDate()->Equals($reservation->StartDate()) && $instance->EndDate()->Equals($reservation->EndDate())))
+			{
+				$toRemove = $instance;
+				break;
+			}
+		}
+		$removed = parent::RemoveInstance($toRemove);
 
-		return $removed;
+//		if ($removed) {
+		$this->AddEvent(new InstanceRemovedEvent($toRemove, $this));
+		$this->_deleteRequestIds[] = $toRemove->ReservationId();
+		$this->RemoveEvent(new InstanceAddedEvent($toRemove, $this));
+//        }
+		return true;
 	}
 
 	public function RequiresNewSeries()
@@ -259,6 +283,12 @@ class ExistingReservationSeries extends ReservationSeries
 
 		$currentBegin = $currentDuration->GetBegin();
 		$currentEnd = $currentDuration->GetEnd();
+
+		Log::Debug('duration %s', $currentDuration->ToString());
+		Log::Debug('current begin %s', $currentBegin->ToString());
+		Log::Debug('current end %s', $currentEnd->ToString());
+		Log::Debug('date begin %s', $reservationDate->GetBegin()->ToString());
+		Log::Debug('date end %s', $reservationDate->GetEnd()->ToString());
 
 		$startTimeAdjustment = $currentBegin->GetDifference($reservationDate->GetBegin());
 		$endTimeAdjustment = $currentEnd->GetDifference($reservationDate->GetEnd());
@@ -335,11 +365,13 @@ class ExistingReservationSeries extends ReservationSeries
 
 	/**
 	 * @param UserSession $deletedBy
+	 * @param string $reason
 	 * @return void
 	 */
-	public function Delete(UserSession $deletedBy)
+	public function Delete(UserSession $deletedBy, $reason = null)
 	{
 		$this->_bookedBy = $deletedBy;
+		$this->_deleteReason = $reason;
 
 		if (!$this->AppliesToAllInstances())
 		{
@@ -349,6 +381,7 @@ class ExistingReservationSeries extends ReservationSeries
 			foreach ($instances as $instance)
 			{
 				$this->RemoveInstance($instance);
+				$this->unusedCreditBalance += $instance->GetCreditsConsumed();
 			}
 		}
 		else
@@ -357,6 +390,10 @@ class ExistingReservationSeries extends ReservationSeries
 
 			$this->_seriesBeingDeleted = true;
 			$this->AddEvent(new SeriesDeletedEvent($this));
+			foreach ($this->instances as $instance)
+			{
+				$this->unusedCreditBalance += $instance->GetCreditsConsumed();
+			}
 		}
 	}
 
@@ -452,6 +489,14 @@ class ExistingReservationSeries extends ReservationSeries
 		return $this->seriesUpdateStrategy->Instances($this);
 	}
 
+	public function SortedInstances()
+	{
+		$instances = $this->Instances();
+		uasort($instances, array($this, 'SortReservations'));
+
+		return $instances;
+	}
+
 	/**
 	 * @internal
 	 */
@@ -463,6 +508,17 @@ class ExistingReservationSeries extends ReservationSeries
 	public function AddEvent(SeriesEvent $event)
 	{
 		$this->events[] = $event;
+	}
+
+	public function RemoveEvent(SeriesEvent $event)
+	{
+		foreach ($this->events as $i => $e)
+		{
+			if ($event == $e)
+			{
+				unset($this->events[$i]);
+			}
+		}
 	}
 
 	public function IsMarkedForDelete($reservationId)
@@ -820,5 +876,29 @@ class ExistingReservationSeries extends ReservationSeries
 		}
 
 		return $consumed;
+	}
+
+	/**
+	 * @var float
+	 */
+	protected $unusedCreditBalance = 0;
+
+	public function GetUnusedCreditBalance() {
+		return $this->unusedCreditBalance;
+	}
+
+	public function GetDeleteReason()
+	{
+		return $this->_deleteReason;
+	}
+
+	/**
+	 * @var int
+	 */
+	protected $originalCreditsConsumed = 0;
+
+	public function GetOriginalCreditsConsumed()
+	{
+		return $this->originalCreditsConsumed;
 	}
 }

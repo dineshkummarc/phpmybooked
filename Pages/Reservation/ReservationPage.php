@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2011-2016 Nick Korbel
+ * Copyright 2011-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -24,14 +24,13 @@ require_once(ROOT_DIR . 'Presenters/Reservation/ReservationPresenter.php');
 interface IReservationPage extends IPage
 {
 	/**
-	 * Set the schedule period items to be used when presenting reservations
 	 * @param $startPeriods array|SchedulePeriod[]
 	 * @param $endPeriods array|SchedulePeriod[]
+     * @parma $lockDates bool
 	 */
-	public function BindPeriods($startPeriods, $endPeriods);
+	public function BindPeriods($startPeriods, $endPeriods, $lockPeriods);
 
 	/**
-	 * Set the resources that can be reserved by this user
 	 * @param $resources array|ResourceDto[]
 	 */
 	public function BindAvailableResources($resources);
@@ -132,11 +131,56 @@ interface IReservationPage extends IPage
 	 * @param bool $allowParticipation
 	 */
 	function SetAllowParticipantsToJoin($allowParticipation);
+
+	/**
+	 * @param int $reminderValue
+	 * @param ReservationReminderInterval $reminderInterval
+	 */
+	public function SetStartReminder($reminderValue, $reminderInterval);
+
+	/**
+	 * @param int $reminderValue
+	 * @param ReservationReminderInterval $reminderInterval
+	 */
+	public function SetEndReminder($reminderValue, $reminderInterval);
+
+    /**
+     * @param DateRange $availability
+     */
+    public function SetAvailability(DateRange $availability);
+
+    /**
+     * @param int $weekday
+     */
+    public function SetFirstWeekday($weekday);
+
+    public function MakeUnavailable();
+
+    /**
+     * @return bool
+     */
+    public function IsUnavailable();
+
+    /**
+     * @param TermsOfService $termsOfService
+     */
+    public function SetTerms($termsOfService);
+
+    /**
+     * @param bool $accepted
+     */
+    public function SetTermsAccepted($accepted);
+
+	/**
+	 * @param int $maximum
+	 */
+    public function SetMaximumResources($maximum);
 }
 
 abstract class ReservationPage extends Page implements IReservationPage
 {
 	protected $presenter;
+	protected $available = true;
 
 	/**
 	 * @var PermissionServiceFactory
@@ -177,16 +221,12 @@ abstract class ReservationPage extends Page implements IReservationPage
 		$this->Set('ReservationAction', $this->GetReservationAction());
 		$this->Set('MaxUploadSize', UploadedFile::GetMaxSize());
 		$this->Set('MaxUploadCount', UploadedFile::GetMaxUploadCount());
-		$this->Set('UploadsEnabled',
-				   Configuration::Instance()->GetSectionKey(ConfigSection::UPLOADS, ConfigKeys::UPLOAD_ENABLE_RESERVATION_ATTACHMENTS, new BooleanConverter()));
-		$this->Set('AllowParticipation', !Configuration::Instance()->GetSectionKey(ConfigSection::RESERVATION, ConfigKeys::RESERVATION_PREVENT_PARTICIPATION,
-																				   new BooleanConverter()));
-		$this->Set('AllowGuestParticipation',
-				   Configuration::Instance()->GetSectionKey(ConfigSection::RESERVATION, ConfigKeys::RESERVATION_ALLOW_GUESTS, new BooleanConverter()));
-		$remindersEnabled = Configuration::Instance()
-										 ->GetSectionKey(ConfigSection::RESERVATION, ConfigKeys::RESERVATION_REMINDERS_ENABLED, new BooleanConverter());
-		$emailEnabled = Configuration::Instance()->GetKey(ConfigKeys::ENABLE_EMAIL,
-														  new BooleanConverter());
+        $config = Configuration::Instance();
+        $this->Set('UploadsEnabled', $config->GetSectionKey(ConfigSection::UPLOADS, ConfigKeys::UPLOAD_ENABLE_RESERVATION_ATTACHMENTS, new BooleanConverter()));
+		$this->Set('AllowParticipation', !$config->GetSectionKey(ConfigSection::RESERVATION, ConfigKeys::RESERVATION_PREVENT_PARTICIPATION,  new BooleanConverter()));
+		$this->Set('AllowGuestParticipation', $config->GetSectionKey(ConfigSection::RESERVATION, ConfigKeys::RESERVATION_ALLOW_GUESTS, new BooleanConverter()));
+		$remindersEnabled = $config->GetSectionKey(ConfigSection::RESERVATION, ConfigKeys::RESERVATION_REMINDERS_ENABLED, new BooleanConverter());
+		$emailEnabled = $config->GetKey(ConfigKeys::ENABLE_EMAIL, new BooleanConverter());
 		$this->Set('RemindersEnabled', $remindersEnabled && $emailEnabled);
 
 		$this->Set('RepeatEveryOptions', range(1, 20));
@@ -209,15 +249,25 @@ abstract class ReservationPage extends Page implements IReservationPage
 							 )
 		);
 
-        $this->Set('CreditsEnabled', Configuration::Instance()->GetSectionKey(ConfigSection::CREDITS, ConfigKeys::CREDITS_ENABLED, new BooleanConverter()));
+		$this->Set('TitleRequired', $config->GetSectionKey(ConfigSection::RESERVATION, ConfigKeys::RESERVATION_TITLE_REQUIRED, new BooleanConverter()));
+		$this->Set('DescriptionRequired', $config->GetSectionKey(ConfigSection::RESERVATION, ConfigKeys::RESERVATION_DESCRIPTION_REQUIRED, new BooleanConverter()));
+
+		$this->Set('CreditsEnabled', $config->GetSectionKey(ConfigSection::CREDITS, ConfigKeys::CREDITS_ENABLED, new BooleanConverter()));
+
+        if ($this->IsUnavailable())
+        {
+            $this->RedirectToError(ErrorMessages::RESERVATION_NOT_AVAILABLE);
+            return;
+        }
 
 		$this->Display($this->GetTemplateName());
 	}
 
-	public function BindPeriods($startPeriods, $endPeriods)
+	public function BindPeriods($startPeriods, $endPeriods, $lockPeriods)
 	{
 		$this->Set('StartPeriods', $startPeriods);
 		$this->Set('EndPeriods', $endPeriods);
+		$this->Set('LockPeriods', $lockPeriods);
 	}
 
 	public function BindAvailableResources($resources)
@@ -256,7 +306,7 @@ abstract class ReservationPage extends Page implements IReservationPage
 	{
 		$this->Set('ReservationUserName', $user->FullName());
 		$this->Set('UserId', $user->Id());
-        $this->Set('CurrentUserCredits', $user->CurrentCreditCount());
+		$this->Set('CurrentUserCredits', $user->CurrentCreditCount());
 	}
 
 	public function SetReservationResource($resource)
@@ -328,6 +378,11 @@ abstract class ReservationPage extends Page implements IReservationPage
 
 	protected function GetReturnUrl()
 	{
+		$redirect = $this->GetQuerystring(QueryStringKeys::REDIRECT);
+		if (!empty($redirect))
+		{
+			return $redirect;
+		}
 		return $this->GetLastPage(Pages::SCHEDULE);
 	}
 
@@ -342,5 +397,48 @@ abstract class ReservationPage extends Page implements IReservationPage
 																			   new AccessoryRepository()),
 				new ReservationAuthorization(AuthorizationServiceFactory::GetAuthorizationService())
 		);
+	}
+
+	public function SetStartReminder($reminderValue, $reminderInterval)
+	{
+		$this->Set('ReminderTimeStart', $reminderValue);
+		$this->Set('ReminderIntervalStart', $reminderInterval);
+	}
+
+	public function SetEndReminder($reminderValue, $reminderInterval)
+	{
+		$this->Set('ReminderTimeEnd', $reminderValue);
+		$this->Set('ReminderIntervalEnd', $reminderInterval);
+	}
+
+    public function SetAvailability(DateRange $availability)
+    {
+        $this->Set('AvailabilityStart', $availability->GetBegin());
+        $this->Set('AvailabilityEnd', $availability->GetEnd());
+    }
+
+    public function SetFirstWeekday($weekday)
+    {
+        $this->Set('FirstWeekday', $weekday);
+    }
+
+    public function MakeUnavailable()
+    {
+        $this->available = false;
+    }
+
+    public function IsUnavailable()
+    {
+        return !$this->available;
+    }
+
+    public function SetTerms($termsOfService)
+    {
+        $this->Set('Terms', $termsOfService);
+    }
+
+    public function SetMaximumResources($maximum)
+	{
+		$this->Set('MaximumResources', $this->server->GetUserSession()->IsAdmin ? 0 : $maximum);
 	}
 }

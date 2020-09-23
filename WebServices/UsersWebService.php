@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2012-2016 Nick Korbel
+Copyright 2012-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -99,7 +99,7 @@ class UsersWebService
 		$repository = $this->repositoryFactory->Create($userSession);
 		$user = $repository->LoadById($userId);
 
-		$loadedUserId = $user->Id();
+        $loadedUserId = $user->Id();
 		if (empty($loadedUserId))
 		{
 			$this->server->WriteResponse(RestResponse::NotFound(), RestResponse::NOT_FOUND_CODE);

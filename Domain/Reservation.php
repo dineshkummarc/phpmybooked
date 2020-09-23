@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2011-2016 Nick Korbel
+ * Copyright 2011-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -225,7 +225,7 @@ class Reservation
 
 		if (empty($referenceNumber))
 		{
-			$this->SetReferenceNumber(str_replace('.', '', uniqid('', true)));
+			$this->SetReferenceNumber(ReferenceNumberGenerator::Generate());
 		}
 
 		$this->checkinDate = new NullDate();
@@ -370,7 +370,15 @@ class Reservation
 		$this->unchangedParticipatingGuests[] = $guest;
 	}
 
-	/**
+    /**
+     * @return array|int[]
+     */
+    public function Invitees()
+    {
+        return $this->_inviteeIds;
+    }
+
+    /**
 	 * @return array|int[]
 	 */
 	public function AddedInvitees()
@@ -519,6 +527,14 @@ class Reservation
 		return $this->_participatingGuests;
 	}
 
+    /**
+     * @return string[]
+     */
+    public function InvitedGuests()
+    {
+        return $this->_invitedGuests;
+    }
+
 	/**
 	 * @return bool
 	 */
@@ -563,6 +579,7 @@ class Reservation
 		}
 
 		$this->addedParticipants[] = $userId;
+		$this->_participantIds[] = $userId;
 
 		return true;
 	}
@@ -624,6 +641,11 @@ class Reservation
 		if (in_array($participantId, $this->_participantIds))
 		{
 			$this->removedParticipants[] = $participantId;
+			$index = array_search($participantId, $this->_participantIds);
+			if ($index !== false)
+			{
+				array_splice($this->_participantIds, $index, 1);
+			}
 			return true;
 		}
 
@@ -725,5 +747,25 @@ class Reservation
 			return empty($this->creditsConsumed) ? 0 : $this->creditsConsumed;
 		}
 		return 0;
+	}
+}
+
+class ReferenceNumberGenerator
+{
+
+	/**
+	 * Just for testing
+	 * @var string
+	 */
+	public static $__referenceNumber = null;
+
+	public static function Generate()
+	{
+		if (self::$__referenceNumber == null)
+		{
+			return str_replace('.', '', uniqid('', true));
+		}
+
+		return self::$__referenceNumber;
 	}
 }

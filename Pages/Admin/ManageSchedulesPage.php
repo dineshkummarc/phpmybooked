@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2011-2016 Nick Korbel
+ * Copyright 2011-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -28,67 +28,87 @@ interface IUpdateSchedulePage
 	/**
 	 * @return int
 	 */
-	function GetScheduleId();
+	public function GetScheduleId();
 
 	/**
 	 * @return string
 	 */
-	function GetScheduleName();
+	public function GetScheduleName();
 
 	/**
 	 * @return string
 	 */
-	function GetStartDay();
+	public function GetStartDay();
 
 	/**
 	 * @return string
 	 */
-	function GetDaysVisible();
+	public function GetDaysVisible();
 
 	/**
 	 * @return string
 	 */
-	function GetReservableSlots();
+	public function GetReservableSlots();
 
 	/**
 	 * @return string
 	 */
-	function GetBlockedSlots();
+	public function GetBlockedSlots();
 
 	/**
 	 * @return string[]
 	 */
-	function GetDailyReservableSlots();
+	public function GetDailyReservableSlots();
 
 	/**
 	 * @return string[]
 	 */
-	function GetDailyBlockedSlots();
+	public function GetDailyBlockedSlots();
 
 	/**
 	 * @return string
 	 */
-	function GetLayoutTimezone();
+	public function GetLayoutTimezone();
 
 	/**
 	 * @return bool
 	 */
-	function GetUsingSingleLayout();
+	public function GetUsingSingleLayout();
 
 	/**
 	 * @return int
 	 */
-	function GetSourceScheduleId();
+	public function GetSourceScheduleId();
 
 	/**
 	 * @return int
 	 */
-	function GetTargetScheduleId();
+	public function GetTargetScheduleId();
 
 	/**
 	 * @return string
 	 */
-	function GetValue();
+	public function GetValue();
+
+	/**
+	 * @return int
+	 */
+	public function GetMaximumConcurrentReservations();
+
+	/**
+	 * @return bool
+	 */
+	public function GetIsUnlimitedConcurrentReservations();
+
+	/**
+	 * @return int
+	 */
+	public function GetMaximumResourcesPerReservation();
+
+	/**
+	 * @return bool
+	 */
+	public function GetIsUnlimitedMaximumResourcesPerReservation();
 }
 
 interface IManageSchedulesPage extends IUpdateSchedulePage, IActionPage, IPageable
@@ -161,13 +181,89 @@ interface IManageSchedulesPage extends IUpdateSchedulePage, IActionPage, IPageab
 	 * @return int
 	 */
 	public function GetPeakEndDMonth();
-	
+
 	public function DisplayPeakTimes(IScheduleLayout $layout);
 
 	/**
 	 * @return bool
 	 */
 	public function GetDeletePeakTimes();
+
+	/**
+	 * @param BookableResource[] $resources
+	 */
+	public function BindResources($resources);
+
+	/**
+	 * @return bool
+	 */
+	public function GetAvailableAllYear();
+
+	/**
+	 * @return string
+	 */
+	public function GetAvailabilityBegin();
+
+	/**
+	 * @return string
+	 */
+	public function GetAvailabilityEnd();
+
+	/**
+	 * @param Schedule $schedule
+	 * @param string $timezone
+	 */
+	public function DisplayAvailability($schedule, $timezone);
+
+	/**
+	 * @return int
+	 */
+	public function GetLayoutType();
+
+	/**
+	 * @return string
+	 */
+	public function GetLayoutStart();
+
+	/**
+	 * @return string
+	 */
+	public function GetLayoutEnd();
+
+	/**
+	 * @param array $events
+	 */
+	public function BindEvents($events);
+
+	/**
+	 * @return string
+	 */
+	public function GetSlotStart();
+
+	/**
+	 * @return string
+	 */
+	public function GetSlotEnd();
+
+	/**
+	 * @return string
+	 */
+	public function GetCustomLayoutStartRange();
+
+	/**
+	 * @return string
+	 */
+	public function GetCustomLayoutEndRange();
+
+	/**
+	 * @return string
+	 */
+	public function GetSlotId();
+
+	/**
+	 * @return int
+	 */
+	public function GetDefaultStyle();
 }
 
 class ManageSchedulesPage extends ActionPage implements IManageSchedulesPage
@@ -193,13 +289,20 @@ class ManageSchedulesPage extends ActionPage implements IManageSchedulesPage
 	{
 		$this->_presenter->PageLoad();
 
-		$this->Set('DayNames', Resources::GetInstance()->GetDays('full'));
+		$resources = Resources::GetInstance();
+		$this->Set('DayNames', $resources->GetDays('full'));
 		$this->Set('Today', Resources::GetInstance()->GetString('Today'));
-		$this->Set('TimeFormat', Resources::GetInstance()->GetDateFormat('general_time_js'));
+		$this->Set('TimeFormat', Resources::GetInstance()->GetDateFormat('timepicker_js'));
 		$this->Set('DefaultDate', Date::Now()->SetTimeString('08:00'));
 		$this->Set('Months', Resources::GetInstance()->GetMonths('full'));
 		$this->Set('DayList', range(1, 31));
-		$this->Display('Admin/manage_schedules.tpl');
+		$this->Set('StyleNames', array(
+				ScheduleStyle::Standard => $resources->GetString('Standard'),
+				ScheduleStyle::Wide => $resources->GetString('Wide'),
+				ScheduleStyle::Tall => $resources->GetString('Tall'),
+				ScheduleStyle::CondensedWeek => $resources->GetString('Week'),
+		));
+		$this->Display('Admin/Schedules/manage_schedules.tpl');
 	}
 
 	public function DisplayPeakTimes(IScheduleLayout $layout)
@@ -308,7 +411,7 @@ class ManageSchedulesPage extends ActionPage implements IManageSchedulesPage
 
 	public function ProcessDataRequest($dataRequest)
 	{
-		// no-op
+		$this->_presenter->ProcessDataRequest($dataRequest);
 	}
 
 	/**
@@ -470,5 +573,102 @@ class ManageSchedulesPage extends ActionPage implements IManageSchedulesPage
 	{
 		$delete = $this->GetForm(FormKeys::PEAK_DELETE);
 		return $delete == '1';
+	}
+
+	public function BindResources($resources)
+	{
+		$this->Set('Resources', $resources);
+	}
+
+	public function GetAvailableAllYear()
+	{
+		return $this->GetCheckbox(FormKeys::AVAILABLE_ALL_YEAR);
+	}
+
+	public function GetAvailabilityBegin()
+	{
+		return $this->GetForm(FormKeys::AVAILABLE_BEGIN_DATE);
+	}
+
+	public function GetAvailabilityEnd()
+	{
+		return $this->GetForm(FormKeys::AVAILABLE_END_DATE);
+	}
+
+	public function DisplayAvailability($schedule, $timezone)
+	{
+		$this->Set('schedule', $schedule);
+		$this->Set('timezone', $timezone);
+		$this->Display('Admin/Schedules/manage_availability.tpl');
+	}
+
+	public function GetLayoutType()
+	{
+		return $this->GetForm(FormKeys::LAYOUT_TYPE);
+	}
+
+	public function GetLayoutStart()
+	{
+		return $this->GetQuerystring(QueryStringKeys::START_DATE);
+	}
+
+	public function GetLayoutEnd()
+	{
+		return $this->GetQuerystring(QueryStringKeys::END_DATE);
+	}
+
+	public function GetSlotStart()
+	{
+		return $this->GetForm(FormKeys::BEGIN_DATE);
+	}
+
+	public function GetSlotEnd()
+	{
+		return $this->GetForm(FormKeys::END_DATE);
+	}
+
+	public function BindEvents($events)
+	{
+		$this->SetJson($events);
+	}
+
+	public function GetCustomLayoutStartRange()
+	{
+		return $this->GetQuerystring(QueryStringKeys::START);
+	}
+
+	public function GetCustomLayoutEndRange()
+	{
+		return $this->GetQuerystring(QueryStringKeys::END);
+	}
+
+	public function GetSlotId()
+	{
+		return $this->GetForm(FormKeys::LAYOUT_PERIOD_ID);
+	}
+
+	public function GetDefaultStyle()
+	{
+		return $this->GetForm(FormKeys::SCHEDULE_DEFAULT_STYLE);
+	}
+
+	public function GetMaximumConcurrentReservations()
+	{
+		return intval($this->GetForm(FormKeys::MAXIMUM_CONCURRENT_RESERVATIONS));
+	}
+
+	public function GetIsUnlimitedConcurrentReservations()
+	{
+		return $this->GetCheckbox(FormKeys::MAXIMUM_CONCURRENT_UNLIMITED);
+	}
+
+	public function GetMaximumResourcesPerReservation()
+	{
+		return intval($this->GetForm(FormKeys::MAXIMUM_RESOURCES_PER_RESERVATION));
+	}
+
+	public function GetIsUnlimitedMaximumResourcesPerReservation()
+	{
+		return $this->GetCheckbox(FormKeys::MAXIMUM_RESOURCES_PER_RESERVATION_UNLIMITED);
 	}
 }

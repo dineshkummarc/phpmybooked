@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 Nick Korbel
+ * Copyright 2017-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,16 +16,16 @@
 
 require_once(ROOT_DIR . 'lib/Email/Messages/ReservationEmailMessage.php');
 
-class GuestDeletedEmail extends ReservationEmailMessage
+class GuestDeletedEmail extends ReservationDeletedEmail
 {
 	/**
 	 * @var User
 	 */
 	private $participant;
 
-	public function __construct(User $reservationOwner, User $participant, ReservationSeries $reservationSeries, IAttributeRepository $attributeRepository)
+	public function __construct(User $reservationOwner, User $participant, ReservationSeries $reservationSeries, IAttributeRepository $attributeRepository, IUserRepository $userRepository)
 	{
-		parent::__construct($reservationOwner, $reservationSeries, $participant->Language(), $attributeRepository);
+		parent::__construct($reservationOwner, $reservationSeries, $participant->Language(), $attributeRepository, $userRepository);
 
 		$this->reservationOwner = $reservationOwner;
 		$this->reservationSeries = $reservationSeries;

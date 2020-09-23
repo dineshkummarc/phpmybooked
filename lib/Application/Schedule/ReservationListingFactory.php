@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -19,15 +19,16 @@ interface IReservationListingFactory
 {
 	/**
 	 * @param string $targetTimezone
-	 * @return IMutableReservationListing
+     * @param DateRange|null $acceptableDateRange
+     * @return IMutableReservationListing
 	 */
-	function CreateReservationListing($targetTimezone);
+	function CreateReservationListing($targetTimezone, $acceptableDateRange = null);
 }
 
 class ReservationListingFactory implements IReservationListingFactory
 {
-	public function CreateReservationListing($targetTimezone)
+	public function CreateReservationListing($targetTimezone, $acceptableDateRange = null)
 	{
-		return new ReservationListing($targetTimezone);
+		return new ReservationListing($targetTimezone, $acceptableDateRange);
 	}
 }

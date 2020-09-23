@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2011-2016 Nick Korbel
+ * Copyright 2011-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -18,6 +18,8 @@
  * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+@define('LDAP_OPT_DIAGNOSTIC_MESSAGE', 0x0032);
+@putenv('LDAPTLS_REQCERT=never');
 require_once(ROOT_DIR . 'lib/Application/Authentication/namespace.php');
 require_once(ROOT_DIR . 'plugins/Authentication/Ldap/namespace.php');
 
@@ -27,237 +29,235 @@ require_once(ROOT_DIR . 'plugins/Authentication/Ldap/namespace.php');
  */
 class Ldap extends Authentication implements IAuthentication
 {
-	/**
-	 * @var IAuthentication
-	 */
-	private $authToDecorate;
+    /**
+     * @var IAuthentication
+     */
+    private $authToDecorate;
 
-	/**
-	 * @var Ldap2Wrapper
-	 */
-	private $ldap;
+    /**
+     * @var Ldap2Wrapper
+     */
+    private $ldap;
 
-	/**
-	 * @var LdapOptions
-	 */
-	private $options;
+    /**
+     * @var LdapOptions
+     */
+    private $options;
 
-	/**
-	 * @var IRegistration
-	 */
-	private $_registration;
+    /**
+     * @var IRegistration
+     */
+    private $_registration;
 
-	/**
-	 * @var PasswordEncryption
-	 */
-	private $_encryption;
+    /**
+     * @var PasswordEncryption
+     */
+    private $_encryption;
 
-	/**
-	 * @var LdapUser
-	 */
-	private $user;
+    /**
+     * @var LdapUser
+     */
+    private $user;
 
-	/**
-	 * @var string
-	 */
-	private $password;
+    /**
+     * @var string
+     */
+    private $password;
 
-	public function SetRegistration($registration)
-	{
-		$this->_registration = $registration;
-	}
+    public function SetRegistration($registration)
+    {
+        $this->_registration = $registration;
+    }
 
-	private function GetRegistration()
-	{
-		if ($this->_registration == null)
-		{
-			$this->_registration = new Registration();
-		}
+    private function GetRegistration()
+    {
+        if ($this->_registration == null) {
+            $this->_registration = new Registration();
+        }
 
-		return $this->_registration;
-	}
+        return $this->_registration;
+    }
 
-	public function SetEncryption($passwordEncryption)
-	{
-		$this->_encryption = $passwordEncryption;
-	}
+    public function SetEncryption($passwordEncryption)
+    {
+        $this->_encryption = $passwordEncryption;
+    }
 
-	private function GetEncryption()
-	{
-		if ($this->_encryption == null)
-		{
-			$this->_encryption = new PasswordEncryption();
-		}
+    private function GetEncryption()
+    {
+        if ($this->_encryption == null) {
+            $this->_encryption = new PasswordEncryption();
+        }
 
-		return $this->_encryption;
-	}
+        return $this->_encryption;
+    }
 
 
-	/**
-	 * @param IAuthentication $authentication Authentication class to decorate
-	 * @param Ldap2Wrapper $ldapImplementation The actual LDAP implementation to work against
-	 * @param LdapOptions $ldapOptions Options to use for LDAP configuration
-	 */
-	public function __construct(IAuthentication $authentication, $ldapImplementation = null, $ldapOptions = null)
-	{
-		$this->authToDecorate = $authentication;
+    /**
+     * @param IAuthentication $authentication Authentication class to decorate
+     * @param Ldap2Wrapper $ldapImplementation The actual LDAP implementation to work against
+     * @param LdapOptions $ldapOptions Options to use for LDAP configuration
+     */
+    public function __construct(IAuthentication $authentication, $ldapImplementation = null, $ldapOptions = null)
+    {
+        if (!function_exists('ldap_connect')) {
+            echo 'No LDAP support for PHP.  See: http://www.php.net/ldap';
+        }
 
-		$this->options = $ldapOptions;
-		if ($ldapOptions == null)
-		{
-			$this->options = new LdapOptions();
-		}
+        $this->authToDecorate = $authentication;
 
-		if ($this->options->IsLdapDebugOn())
-		{
-			ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
-		}
+        $this->options = $ldapOptions;
+        if ($ldapOptions == null) {
+            $this->options = new LdapOptions();
+        }
 
-		$this->ldap = $ldapImplementation;
-		if ($ldapImplementation == null)
-		{
-			$this->ldap = new Ldap2Wrapper($this->options);
-		}
-	}
+        if ($this->options->IsLdapDebugOn()) {
+            ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
+        }
 
-	public function Validate($username, $password)
-	{
-		$this->password = $password;
+        $this->ldap = $ldapImplementation;
+        if ($ldapImplementation == null) {
+            $this->ldap = new Ldap2Wrapper($this->options);
+        }
+    }
 
-		$username = $this->CleanUsername($username);
-		$connected = $this->ldap->Connect();
+    public function Validate($username, $password)
+    {
+        $this->password = $password;
 
-		if (!$connected)
-		{
-			throw new Exception("Could not connect to LDAP server. Please check your LDAP configuration settings");
-		}
-		$filter = $this->options->Filter();
-		$isValid = $this->ldap->Authenticate($username, $password, $filter);
-		Log::Debug("Result of LDAP Authenticate for user %s: %d", $username, $isValid);
+        $username = $this->CleanUsername($username);
+        $connected = $this->ldap->Connect();
 
-		if ($isValid)
-		{
-			$this->user = $this->ldap->GetLdapUser($username);
-			$userLoaded = $this->LdapUserExists();
+        if (!$connected) {
+            throw new Exception("Could not connect to LDAP server. Please check your LDAP configuration settings");
+        }
+        $filter = $this->options->Filter();
+        $isValid = $this->ldap->Authenticate($username, $password, $filter);
+        Log::Debug("Result of LDAP Authenticate for user %s: %d", $username, $isValid);
 
-			if (!$userLoaded)
-			{
-				Log::Error("Could not load user details from LDAP. Check your ldap settings. User: %s", $username);
-			}
-			return $userLoaded;
-		}
-		else
-		{
-			if ($this->options->RetryAgainstDatabase())
-			{
-				return $this->authToDecorate->Validate($username, $password);
-			}
-		}
+        if ($isValid) {
+            $this->user = $this->ldap->GetLdapUser($username);
+            $userLoaded = $this->LdapUserExists();
 
-		return false;
-	}
+            if (!$userLoaded) {
+                Log::Error("Could not load user details from LDAP. Check your ldap settings. User: %s", $username);
+            }
+            return $userLoaded;
+        }
+        else {
+            if ($this->options->RetryAgainstDatabase()) {
+                return $this->authToDecorate->Validate($username, $password);
+            }
+        }
 
-	public function Login($username, $loginContext)
-	{
-		$username = $this->CleanUsername($username);
+        return false;
+    }
 
-		if ($this->LdapUserExists())
-		{
-			$this->Synchronize($username);
-		}
+    public function Login($username, $loginContext)
+    {
+        $username = $this->CleanUsername($username);
 
-		$repo = new UserRepository();
-		$user = $repo->LoadByUsername($username);
-		$user->Deactivate();
-		$user->Activate();
-		$repo->Update($user);
+        if ($this->LdapUserExists()) {
+            $this->Synchronize($username);
+        }
 
-		return $this->authToDecorate->Login($username, $loginContext);
-	}
+        $repo = new UserRepository();
+        $user = $repo->LoadByUsername($username);
+        $user->Deactivate();
+        $user->Activate();
+        $repo->Update($user);
 
-	public function Logout(UserSession $user)
-	{
-		$this->authToDecorate->Logout($user);
-	}
+        return $this->authToDecorate->Login($username, $loginContext);
+    }
 
-	public function AreCredentialsKnown()
-	{
-		return false;
-	}
+    public function Logout(UserSession $user)
+    {
+        $this->authToDecorate->Logout($user);
+    }
 
-	private function LdapUserExists()
-	{
-		return $this->user != null;
-	}
+    public function AreCredentialsKnown()
+    {
+        return false;
+    }
 
-	private function Synchronize($username)
-	{
-		$registration = $this->GetRegistration();
+    private function LdapUserExists()
+    {
+        return $this->user != null;
+    }
 
-		$registration->Synchronize(
-				new AuthenticatedUser(
-						$username,
-						$this->user->GetEmail(),
-						$this->user->GetFirstName(),
-						$this->user->GetLastName(),
-						$this->password,
-						Configuration::Instance()->GetKey(ConfigKeys::LANGUAGE),
-						Configuration::Instance()->GetDefaultTimezone(),
-						$this->user->GetPhone(), $this->user->GetInstitution(),
-						$this->user->GetTitle())
-		);
-	}
+    private function Synchronize($username)
+    {
+        $password = $this->options->RetryAgainstDatabase() ? $this->password : Password::GenerateRandom();
 
-	private function CleanUsername($username)
-	{
-		if (BookedStringHelper::Contains($username, '@'))
-		{
-			Log::Debug('LDAP - Username %s appears to be an email address. Cleaning...', $username);
-			$parts = explode('@', $username);
-			$username = $parts[0];
-		}
-		if (BookedStringHelper::Contains($username, '\\'))
-		{
-			Log::Debug('LDAP - Username %s appears contain a domain. Cleaning...', $username);
-			$parts = explode('\\', $username);
-			$username = $parts[1];
-		}
+        $registration = $this->GetRegistration();
 
-		return $username;
-	}
+        $registration->Synchronize(
+            new AuthenticatedUser(
+                $username,
+                $this->user->GetEmail(),
+                $this->user->GetFirstName(),
+                $this->user->GetLastName(),
+                $password,
+                Configuration::Instance()->GetKey(ConfigKeys::LANGUAGE),
+                Configuration::Instance()->GetDefaultTimezone(),
+                $this->user->GetPhone(), $this->user->GetInstitution(),
+                $this->user->GetTitle(),
+                $this->user->GetGroups())
+        );
+    }
 
-	public function AllowUsernameChange()
-	{
-		return false;
-	}
+    private function CleanUsername($username)
+    {
+        if (!$this->options->CleanUsername()) {
+            return $username;
+        }
 
-	public function AllowEmailAddressChange()
-	{
-		return false;
-	}
+        if (BookedStringHelper::Contains($username, '@')) {
+            Log::Debug('LDAP - Username %s appears to be an email address. Cleaning...', $username);
+            $parts = explode('@', $username);
+            $username = $parts[0];
+        }
+        if (BookedStringHelper::Contains($username, '\\')) {
+            Log::Debug('LDAP - Username %s appears contain a domain. Cleaning...', $username);
+            $parts = explode('\\', $username);
+            $username = $parts[1];
+        }
 
-	public function AllowPasswordChange()
-	{
-		return false;
-	}
+        return $username;
+    }
 
-	public function AllowNameChange()
-	{
-		return false;
-	}
+    public function AllowUsernameChange()
+    {
+        return false;
+    }
 
-	public function AllowPhoneChange()
-	{
-		return true;
-	}
+    public function AllowEmailAddressChange()
+    {
+        return false;
+    }
 
-	public function AllowOrganizationChange()
-	{
-		return true;
-	}
+    public function AllowPasswordChange()
+    {
+        return false;
+    }
 
-	public function AllowPositionChange()
-	{
-		return true;
-	}
+    public function AllowNameChange()
+    {
+        return false;
+    }
+
+    public function AllowPhoneChange()
+    {
+        return true;
+    }
+
+    public function AllowOrganizationChange()
+    {
+        return true;
+    }
+
+    public function AllowPositionChange()
+    {
+        return true;
+    }
 }

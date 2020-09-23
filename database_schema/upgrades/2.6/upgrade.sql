@@ -20,7 +20,7 @@ CREATE TABLE `reservation_color_rules` (
 		`color`                     VARCHAR(50),
   PRIMARY KEY (`reservation_color_rule_id`),
   FOREIGN KEY (`custom_attribute_id`)
-  REFERENCES custom_attributes (`custom_attribute_id`)
+  REFERENCES `custom_attributes` (`custom_attribute_id`)
     ON DELETE CASCADE
 )
 		ENGINE = InnoDB
@@ -36,10 +36,10 @@ CREATE TABLE `resource_accessories` (
 		`maximum_quantity`      SMALLINT              NULL,
 		PRIMARY KEY (`resource_accessory_id`),
 		FOREIGN KEY (`resource_id`)
-		REFERENCES resources (`resource_id`)
+		REFERENCES `resources` (`resource_id`)
 				ON DELETE CASCADE,
 		FOREIGN KEY (`accessory_id`)
-		REFERENCES accessories (`accessory_id`)
+		REFERENCES `accessories` (`accessory_id`)
 				ON DELETE CASCADE
 )
 		ENGINE = InnoDB
@@ -64,10 +64,10 @@ CREATE TABLE `resource_type_assignment` (
 		`resource_type_id` MEDIUMINT(8) UNSIGNED NOT NULL,
 		PRIMARY KEY (`resource_id`, `resource_type_id`),
 		FOREIGN KEY (`resource_id`)
-		REFERENCES resources (`resource_id`)
+		REFERENCES `resources` (`resource_id`)
 				ON DELETE CASCADE,
 		FOREIGN KEY (`resource_type_id`)
-		REFERENCES resource_types (`resource_type_id`)
+		REFERENCES `resource_types` (`resource_type_id`)
 				ON DELETE CASCADE
 )
 		ENGINE = InnoDB
@@ -79,19 +79,19 @@ CREATE TABLE `custom_attribute_entities` (
 		`entity_id`           MEDIUMINT(8) UNSIGNED NOT NULL,
 		PRIMARY KEY (`custom_attribute_id`, `entity_id`),
 		FOREIGN KEY (`custom_attribute_id`)
-		REFERENCES custom_attributes (`custom_attribute_id`)
+		REFERENCES `custom_attributes` (`custom_attribute_id`)
 				ON DELETE CASCADE
 )
 		ENGINE = InnoDB
 		DEFAULT CHARACTER SET utf8;
 
-INSERT INTO custom_attribute_entities (custom_attribute_id, entity_id) (SELECT
-																																						custom_attribute_id,
-																																						entity_id
-																																				FROM `custom_attributes`
-																																				WHERE entity_id IS NOT NULL AND entity_id <> 0);
+INSERT INTO `custom_attribute_entities` (`custom_attribute_id`, `entity_id`) (SELECT
+        `custom_attribute_id`,
+        `entity_id`
+FROM `custom_attributes`
+WHERE `entity_id` IS NOT NULL AND `entity_id` <> 0);
 
-ALTER TABLE custom_attributes
+ALTER TABLE `custom_attributes`
   DROP COLUMN `entity_id`;
 
 ALTER TABLE `quotas`
@@ -223,4 +223,4 @@ ALTER TABLE `custom_attribute_values`
   CHANGE `custom_attribute_value_id`  `custom_attribute_value_id` INT(8) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 
-insert into dbversion values('2.6', now());
+insert into `dbversion` values('2.6', now());

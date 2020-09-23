@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2011-2016 Nick Korbel
+ * Copyright 2011-2020 Nick Korbel
  * Copyright 2012-2014 Trustees of Columbia University in the City of New York
  *
  * This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
@@ -109,35 +109,35 @@ class Date
 			return NullDate::Instance();
 		}
 
-/*
- * This wasn't producing correct results. 
- * Parameter $datestring is provided in ISO 8601 format and therefore has the correct timezone
- * This then needs to be converted to UTC.
- * 
-		$offset = '';
-		$strLen = strlen($dateString);
-		$hourAdjustment = 0;
-		$minuteAdjustment = 0;
-		if ($strLen > 5)
-		{
-			$offset = substr($dateString, -5);
-			$hourAdjustment = substr($offset, 1, 2);
-			$minuteAdjustment = substr($offset, 3, 2);
-		}
+		/*
+		 * This wasn't producing correct results.
+		 * Parameter $datestring is provided in ISO 8601 format and therefore has the correct timezone
+		 * This then needs to be converted to UTC.
+		 *
+				$offset = '';
+				$strLen = strlen($dateString);
+				$hourAdjustment = 0;
+				$minuteAdjustment = 0;
+				if ($strLen > 5)
+				{
+					$offset = substr($dateString, -5);
+					$hourAdjustment = substr($offset, 1, 2);
+					$minuteAdjustment = substr($offset, 3, 2);
+				}
 
-		if (BookedStringHelper::Contains($offset, '+'))
-		{
-			$hourAdjustment *= -1;
-			$minuteAdjustment *= -1;
-		}
+				if (BookedStringHelper::Contains($offset, '+'))
+				{
+					$hourAdjustment *= -1;
+					$minuteAdjustment *= -1;
+				}
 
-		$parsed = date_parse($dateString);
+				$parsed = date_parse($dateString);
 
-		$d = Date::Create($parsed['year'], $parsed['month'], $parsed['day'], $parsed['hour'] + $hourAdjustment, $parsed['minute'] + $minuteAdjustment,						  $parsed['second'], 'UTC');
- */
-        
-        $dt = new DateTime($dateString);
-        $utc = $dt->setTimezone(new DateTimeZone('UTC'));
+				$d = Date::Create($parsed['year'], $parsed['month'], $parsed['day'], $parsed['hour'] + $hourAdjustment, $parsed['minute'] + $minuteAdjustment,						  $parsed['second'], 'UTC');
+		 */
+
+		$dt = new DateTime($dateString);
+		$utc = $dt->setTimezone(new DateTimeZone('UTC'));
 
 		$d = Date::Create($utc->format('Y'), $utc->format('m'), $utc->format('d'), $utc->format('H'), $utc->format('i'), $utc->format('s'), 'UTC');
 
@@ -799,6 +799,26 @@ class NullDate extends Date
 	{
 		return -1;
 	}
+
+	public function LessThan(Date $end)
+	{
+		return false;
+	}
+
+	public function GreaterThan(Date $end)
+	{
+		return false;
+	}
+
+	public function Timestamp()
+	{
+		return 0;
+	}
+
+	public function ToIso()
+	{
+		return '';
+	}
 }
 
 class DateDiff
@@ -977,6 +997,15 @@ class DateDiff
 
 	/**
 	 * @param DateDiff $diff
+	 * @return DateDiff
+	 */
+	public function Subtract(DateDiff $diff)
+	{
+		return new DateDiff($this->seconds - $diff->seconds);
+	}
+
+	/**
+	 * @param DateDiff $diff
 	 * @return bool
 	 */
 	public function GreaterThan(DateDiff $diff)
@@ -984,7 +1013,7 @@ class DateDiff
 		return $this->seconds > $diff->seconds;
 	}
 
-    /**
+	/**
 	 * @param DateDiff $diff
 	 * @return bool
 	 */
@@ -1002,6 +1031,24 @@ class DateDiff
 	}
 
 	/**
+	 * @param false $short
+	 * @return string
+	 */
+	public function ToString($short = false)
+	{
+		if ($short)
+		{
+			if ($this->TotalSeconds() > 0)
+			{
+				return $this->Days() . 'd' . $this->Hours() . 'h' . $this->Minutes() . 'm';
+			}
+			return '';
+		}
+
+		return $this->__toString();
+	}
+
+	/**
 	 * @return string
 	 */
 	public function __toString()
@@ -1010,15 +1057,15 @@ class DateDiff
 
 		if ($this->Days() > 0)
 		{
-			$str .= $this->Days() . ' days ';
+			$str .= $this->Days() . ' ' . Resources::GetInstance()->GetString('days') . ' ';
 		}
 		if ($this->Hours() > 0)
 		{
-			$str .= $this->Hours() . ' hours ';
+			$str .= $this->Hours() . ' ' . Resources::GetInstance()->GetString('hours') . ' ';
 		}
 		if ($this->Minutes() > 0)
 		{
-			$str .= $this->Minutes() . ' minutes';
+			$str .= $this->Minutes() . ' ' . Resources::GetInstance()->GetString('minutes') . ' ';
 		}
 
 		return trim($str);

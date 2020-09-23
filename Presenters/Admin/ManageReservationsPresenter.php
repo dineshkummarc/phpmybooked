@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2011-2016 Nick Korbel
+ * Copyright 2011-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -24,11 +24,18 @@ require_once(ROOT_DIR . 'Presenters/ActionPresenter.php');
 require_once(ROOT_DIR . 'lib/Application/Admin/namespace.php');
 require_once(ROOT_DIR . 'lib/Application/Attributes/namespace.php');
 require_once(ROOT_DIR . 'lib/Application/Reservation/namespace.php');
+require_once(ROOT_DIR . 'lib/Application/Admin/ReservationImportCsv.php');
+require_once(ROOT_DIR . 'lib/Application/Admin/CsvImportResult.php');
+require_once(ROOT_DIR . 'lib/FileSystem/namespace.php');
 
 class ManageReservationsActions
 {
     const UpdateAttribute = 'updateAttribute';
     const ChangeStatus = 'changeStatus';
+    const Import = 'Import';
+    const DeleteMultiple = 'DeleteMultiple';
+    const UpdateTermsOfService = 'termsOfService';
+    const DeleteTermsOfService = 'deleteTerms';
 }
 
 class ManageReservationsPresenter extends ActionPresenter
@@ -63,13 +70,19 @@ class ManageReservationsPresenter extends ActionPresenter
      */
     private $userRepository;
 
+    /**
+     * @var ITermsOfServiceRepository
+     */
+    private $termsOfServiceRepository;
+
     public function __construct(
         IManageReservationsPage $page,
         IManageReservationsService $manageReservationsService,
         IScheduleRepository $scheduleRepository,
         IResourceRepository $resourceRepository,
         IAttributeService $attributeService,
-        IUserRepository $userRepository)
+        IUserRepository $userRepository,
+        ITermsOfServiceRepository $termsOfServiceRepository)
     {
         parent::__construct($page);
 
@@ -79,9 +92,14 @@ class ManageReservationsPresenter extends ActionPresenter
         $this->resourceRepository = $resourceRepository;
         $this->attributeService = $attributeService;
         $this->userRepository = $userRepository;
+        $this->termsOfServiceRepository = $termsOfServiceRepository;
 
         $this->AddAction(ManageReservationsActions::UpdateAttribute, 'UpdateAttribute');
         $this->AddAction(ManageReservationsActions::ChangeStatus, 'UpdateResourceStatus');
+        $this->AddAction(ManageReservationsActions::Import, 'ImportReservations');
+        $this->AddAction(ManageReservationsActions::DeleteMultiple, 'DeleteMultiple');
+        $this->AddAction(ManageReservationsActions::UpdateTermsOfService, 'UpdateTermsOfService');
+        $this->AddAction(ManageReservationsActions::DeleteTermsOfService, 'DeleteTermsOfService');
     }
 
     public function PageLoad($userTimezone)
@@ -114,6 +132,10 @@ class ManageReservationsPresenter extends ActionPresenter
         $referenceNumber = $this->page->GetReferenceNumber();
         $resourceStatusId = $this->page->GetResourceStatusFilterId();
         $resourceReasonId = $this->page->GetResourceStatusReasonFilterId();
+        $title = $this->page->GetResourceFilterTitle();
+        $description = $this->page->GetResourceFilterDescription();
+        $missedCheckin = $this->page->GetMissedCheckin();
+        $missedCheckout = $this->page->GetMissedCheckout();
 
         if (!$this->page->FilterButtonPressed()) {
             // Get filter settings from db
@@ -125,6 +147,10 @@ class ManageReservationsPresenter extends ActionPresenter
             $reservationStatusId = $filterPreferences->GetFilterReservationStatusId();
             $resourceStatusId = $filterPreferences->GetFilterResourceStatusId();
             $resourceReasonId = $filterPreferences->GetFilterResourceReasonId();
+            $title = $filterPreferences->GetFilterTitle();
+            $description = $filterPreferences->GetFilterDescription();
+            $missedCheckin = $filterPreferences->GetMissedCheckin();
+            $missedCheckout = $filterPreferences->GetMissedCheckout();
             $filters = $filterPreferences->GetFilterCustomAttributes();
         }
         else {
@@ -147,6 +173,10 @@ class ManageReservationsPresenter extends ActionPresenter
             $filterPreferences->SetFilterReservationStatusId($reservationStatusId);
             $filterPreferences->SetFilterResourceStatusId($resourceStatusId);
             $filterPreferences->SetFilterResourceReasonId($resourceReasonId);
+            $filterPreferences->SetFilterTitle($title);
+            $filterPreferences->SetFilterDescription($description);
+            $filterPreferences->SetFilterMissedCheckin($missedCheckin);
+            $filterPreferences->SetFilterMissedCheckout($missedCheckout);
             $filterPreferences->SetFilterCustomAttributes($filters);
 
             $filterPreferences->Update();
@@ -175,9 +205,14 @@ class ManageReservationsPresenter extends ActionPresenter
         $this->page->SetResourceStatusReasonFilterId($resourceReasonId);
         $this->page->SetAttributeFilters($attributeFilters);
         $this->page->SetReservationAttributes($reservationAttributes);
+        $this->page->SetReservationTitle($title);
+        $this->page->SetReservationDescription($description);
+        $this->page->SetMissedCheckin($missedCheckin);
+        $this->page->SetMissedCheckout($missedCheckout);
 
         $filter = new ReservationFilter($startDate, $endDate, $referenceNumber, $scheduleId, $resourceId, $userId,
-            $reservationStatusId, $resourceStatusId, $resourceReasonId, $attributeFilters);
+            $reservationStatusId, $resourceStatusId, $resourceReasonId, $attributeFilters, $title, $description,
+            $missedCheckin, $missedCheckout);
 
         $reservations = $this->manageReservationsService->LoadFiltered($this->page->GetPageNumber(),
             $this->page->GetPageSize(),
@@ -297,6 +332,32 @@ class ManageReservationsPresenter extends ActionPresenter
                 ServiceLocator::GetServer()->GetUserSession());
             $this->page->SetReservationJson($rv);
         }
+        elseif ($dataRequest == 'template') {
+            $attributes = $this->attributeService->GetByCategory(CustomAttributeCategory::RESERVATION);
+            $importAttributes = array();
+            foreach ($attributes as $attribute) {
+                if (!$attribute->HasSecondaryEntities()) {
+                    $importAttributes[] = $attribute;
+                }
+            }
+            $this->page->ShowTemplateCSV($importAttributes);
+        }
+        elseif ($dataRequest == 'tos') {
+            $terms = $this->termsOfServiceRepository->Load();
+
+            if ($terms != null) {
+                $this->page->BindTerms(
+                    array(
+                        'text' => $terms->Text(),
+                        'url' => $terms->Url(),
+                        'filename' => $terms->FileName(),
+                        'applicability' => $terms->Applicability()));
+            }
+            else {
+                $this->page->BindTerms(null);
+            }
+        }
+
     }
 
     public function UpdateAttribute()
@@ -328,6 +389,153 @@ class ManageReservationsPresenter extends ActionPresenter
         return new AttributeValue($id, $value);
     }
 
+    public function ImportReservations()
+    {
+        $userSession = ServiceLocator::GetServer()->GetUserSession();
+        if (!$userSession->IsAdmin) {
+            $this->page->SetImportResult(new CsvImportResult(0, array(), 'User is not an admin'));
+            return;
+        }
+
+        ini_set('max_execution_time', 600);
+
+        $resources = $this->resourceRepository->GetResourceList();
+        /** @var BookableResource[] $resourcesIndexed */
+        $resourcesIndexed = array();
+        foreach ($resources as $resource) {
+            $resourcesIndexed[strtolower($resource->GetName())] = $resource;
+        }
+
+        $attributes = $this->attributeService->GetByCategory(CustomAttributeCategory::RESERVATION);
+        /** @var CustomAttribute[] $attributesIndexed */
+        $attributesIndexed = array();
+        /** @var CustomAttribute $attribute */
+        foreach ($attributes as $attribute) {
+            if (!$attribute->HasSecondaryEntities()) {
+                $attributesIndexed[strtolower($attribute->Label())] = $attribute;
+            }
+        }
+
+        $users = $this->userRepository->GetAll();
+        /** @var User[] $usersIndexed */
+        $usersIndexed = array();
+        foreach ($users as $user) {
+            $usersIndexed[strtolower($user->EmailAddress())] = $user;
+        }
+
+        $importFile = $this->page->GetImportFile();
+        $csv = new ReservationImportCsv($importFile, $attributesIndexed);
+
+        $importCount = 0;
+        $messages = array();
+
+        $rows = $csv->GetRows();
+
+        if (count($rows) == 0) {
+            $this->page->SetImportResult(new CsvImportResult(0, array(), 'Empty file or missing header row'));
+            return;
+        }
+
+        for ($i = 0; $i < count($rows); $i++) {
+            $rowNum = $i + 1;
+            $row = $rows[$i];
+            try {
+                $resources = array();
+                foreach ($row->resourceNames as $name) {
+                    $name = strtolower($name);
+                    if (array_key_exists($name, $resourcesIndexed)) {
+                        $resources[] = $resourcesIndexed[$name];
+                    }
+                }
+
+                $user = (!empty($row->email) && array_key_exists($row->email, $usersIndexed)) ? $usersIndexed[$row->email] : null;
+
+                $date = DateRange::Create($row->begin, $row->end, $userSession->Timezone);
+
+                if (!empty($resources) && !empty($user)) {
+                    $reservation = ReservationSeries::Create($user->Id(), $resources[0], $row->title, $row->description, $date, new RepeatNone(), $userSession);
+
+                    for ($r = 1; $r < count($resources); $r++) {
+                        $reservation->AddResource($resources[$r]);
+                    }
+
+                    foreach ($row->attributes as $label => $value) {
+                        if (!empty($value) && array_key_exists($label, $attributesIndexed)) {
+                            $attribute = $attributesIndexed[$label];
+                            $reservation->AddAttributeValue(new AttributeValue($attribute->Id(), $value));
+                        }
+
+                    }
+
+                    $this->manageReservationsService->UnsafeAdd($reservation);
+
+                    $importCount++;
+                }
+                else {
+                    $messages[] = 'Invalid data in row ' . $rowNum . '. Ensure the user and resource in this row exist.';
+                }
+            } catch (Exception $ex) {
+                $messages[] = 'Invalid data in row ' . $rowNum;
+                Log::Error('Error importing reservations. %s', $ex);
+            }
+        }
+
+        $this->page->SetImportResult(new CsvImportResult($importCount, $csv->GetSkippedRowNumbers(), $messages));
+    }
+
+    public function DeleteMultiple()
+    {
+        $ids = $this->page->GetDeletedReservationIds();
+        Log::Debug('Reservation multiple delete. Ids=%s', implode(',', $ids));
+        foreach ($ids as $id) {
+            $this->manageReservationsService->UnsafeDelete($id, ServiceLocator::GetServer()->GetUserSession());
+        }
+    }
+
+    public function UpdateTermsOfService()
+    {
+        Log::Debug('Updating terms of service');
+
+        $source = $this->page->GetTermsSource();
+
+        $filename = null;
+        $termsText = null;
+        $termsUrl = null;
+
+        if ($source == 'manual') {
+            $termsText = $this->page->GetTermsText();
+        }
+        elseif ($source == 'url') {
+            $termsUrl = $this->page->GetTermsUrl();
+        }
+        else {
+            $file = $this->page->GetTermsUpload();
+
+            if ($file != null && $file->Extension() == 'pdf') {
+                $filename = 'tos.pdf';
+                $fileSystem = new \Booked\FileSystem();
+                $fileSystem->Save(Paths::Terms(), $filename, $file->Contents());
+            }
+        }
+
+        $terms = TermsOfService::Create($termsText, $termsUrl, $filename, $this->page->GetTermsApplicability());
+        $this->termsOfServiceRepository->Add($terms);
+    }
+
+    public function DeleteTermsOfService()
+    {
+        Log::Debug('Deleting terms of service');
+        $this->termsOfServiceRepository->Delete();
+    }
+
+    protected function LoadValidators($action)
+    {
+        Log::Debug('Loading validators for %s', $action);
+
+        if ($action == ManageReservationsActions::Import) {
+            $this->page->RegisterValidator('fileExtensionValidator', new FileExtensionValidator('csv', $this->page->GetImportFile()));
+        }
+    }
 }
 
 class ReservationFilterPreferences
@@ -343,6 +551,10 @@ class ReservationFilterPreferences
     private $FilterResourceStatusId = '';
     private $FilterResourceReasonId = '';
     private $FilterCustomAttributes = '';
+    private $FilterTitle = '';
+    private $FilterDescription = '';
+    private $FilterMissedCheckin = 0;
+    private $FilterMissedCheckout = 0;
 
     /**
      * @var User
@@ -409,6 +621,26 @@ class ReservationFilterPreferences
         return $this->FilterResourceReasonId;
     }
 
+    public function GetFilterTitle()
+    {
+        return $this->FilterTitle;
+    }
+
+    public function GetFilterDescription()
+    {
+        return $this->FilterDescription;
+    }
+
+    public function GetMissedCheckin()
+    {
+        return $this->FilterMissedCheckin;
+    }
+
+    public function GetMissedCheckout()
+    {
+        return $this->FilterMissedCheckout;
+    }
+
     public function SetFilterStartDateDelta($FilterStartDateDelta)
     {
         $this->FilterStartDateDelta = $FilterStartDateDelta;
@@ -471,6 +703,26 @@ class ReservationFilterPreferences
         $this->FilterResourceReasonId = $reasonId;
     }
 
+    public function SetFilterTitle($title)
+    {
+        $this->FilterTitle = $title;
+    }
+
+    public function SetFilterDescription($description)
+    {
+        $this->FilterDescription = $description;
+    }
+
+    public function SetFilterMissedCheckin($missed)
+    {
+        $this->FilterMissedCheckin = intval($missed);
+    }
+
+    public function SetFilterMissedCheckout($missed)
+    {
+        $this->FilterMissedCheckout = intval($missed);
+    }
+
     /**
      * @return array
      */
@@ -502,6 +754,10 @@ class ReservationFilterPreferences
         'FilterResourceStatusId' => '',
         'FilterResourceReasonId' => '',
         'FilterCustomAttributes' => '',
+        'FilterTitle' => '',
+        'FilterDescription' => '',
+        'FilterMissedCheckin' => 0,
+        'FilterMissedCheckout' => 0,
     );
 
 

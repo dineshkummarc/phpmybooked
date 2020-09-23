@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2011-2016 Nick Korbel
+ * Copyright 2011-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -99,16 +99,19 @@ class ManageAnnouncementsPresenter extends ActionPresenter
     {
         $user = ServiceLocator::GetServer()->GetUserSession();
         $text = $this->page->GetText();
+		$text = str_replace('&lt;script&gt;', '', $text);
+		$text = str_replace('&lt;/script&gt;', '', $text);
         $start = Date::Parse($this->page->GetStart(), $user->Timezone);
         $end = Date::Parse($this->page->GetEnd(), $user->Timezone);
         $priority = $this->page->GetPriority();
         $groupIds = $this->page->GetGroups();
         $resourceIds = $this->page->GetResources();
         $sendAsEmail = $this->page->GetSendAsEmail();
+        $displayPage = $this->page->GetDisplayPage();
 
         Log::Debug('Adding new Announcement');
 
-        $announcement = Announcement::Create($text, $start, $end, $priority, $groupIds, $resourceIds);
+        $announcement = Announcement::Create($text, $start, $end, $priority, $groupIds, $resourceIds, $displayPage);
         $this->announcementRepository->Add($announcement);
 
         if ($sendAsEmail) {
@@ -125,6 +128,8 @@ class ManageAnnouncementsPresenter extends ActionPresenter
         $start = Date::Parse($this->page->GetStart(), $user->Timezone);
         $end = Date::Parse($this->page->GetEnd(), $user->Timezone);
         $priority = $this->page->GetPriority();
+        $groupIds = $this->page->GetGroups();
+        $resourceIds = $this->page->GetResources();
 
         Log::Debug('Changing Announcement with id %s', $id);
 
@@ -132,6 +137,8 @@ class ManageAnnouncementsPresenter extends ActionPresenter
         $announcement->SetText($text);
         $announcement->SetDates($start, $end);
         $announcement->SetPriority($priority);
+        $announcement->SetGroups($groupIds);
+        $announcement->SetResources($resourceIds);
 
         $this->announcementRepository->Update($announcement);
     }
@@ -221,9 +228,9 @@ class ManageAnnouncementsPresenter extends ActionPresenter
             $userList = $this->userViewRepository->GetList(null, null, null, null, null, AccountStatus::ACTIVE)->Results();
             foreach ($userList as $user) {
                 $allUsers[$user->Id] = $user;
-                $usersToSendTo[] = $user->Id;
+                $usersToSendTo[] = $user;
             }
-            return array($allUsers, $usersToSendTo);
+            return $usersToSendTo;
         }
         else {
             $groupUserIds = array();
@@ -245,11 +252,8 @@ class ManageAnnouncementsPresenter extends ActionPresenter
                 }
             }
 
-            //Log::Debug(var_export($groupUserIds, true));
-            //Log::Debug(var_export($resourceUserIds, true));
 			$usersToSendTo = array_unique(array_merge($groupUserIds, $resourceUserIds));
 
-           // Log::Debug(var_export($usersToSendTo, true));
             foreach ($usersToSendTo as $userId)
             {
                 $validUsers[] = $allUsers[$userId];

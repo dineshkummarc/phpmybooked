@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2016 Nick Korbel
+ * Copyright 2017-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -76,4 +76,9 @@ class AnnouncementEmail extends EmailMessage
         $this->Set('AnnouncementText', $this->announcement);
         return $this->FetchTemplate('AnnouncementEmail.tpl');
     }
+
+    public function From()
+	{
+		return new EmailAddress($this->sentBy->Email, new FullName($this->sentBy->FirstName, $this->sentBy->LastName));
+	}
 }

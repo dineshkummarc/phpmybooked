@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 Nick Korbel
+ * Copyright 2017-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -48,41 +48,41 @@ class GuestUpdatedEmailNotification extends GuestAddedEmailNotification
 
 		foreach ($instance->AddedInvitedGuests() as $guestEmail)
 		{
-			$message = new GuestAddedEmail($owner, $guestEmail, $reservationSeries, $this->attributeRepository);
+			$message = new GuestAddedEmail($owner, $guestEmail, $reservationSeries, $this->attributeRepository, $this->userRepository);
 			ServiceLocator::GetEmailService()->Send($message);
 		}
 
 		foreach ($instance->AddedParticipatingGuests() as $guestEmail)
 		{
-			$message = new GuestAddedEmail($owner, $guestEmail, $reservationSeries, $this->attributeRepository);
+			$message = new GuestAddedEmail($owner, $guestEmail, $reservationSeries, $this->attributeRepository, $this->userRepository);
 			ServiceLocator::GetEmailService()->Send($message);
 		}
 
 		foreach ($instance->UnchangedInvitedGuests() as $guestEmail)
 		{
 			$guestUser = $this->userRepository->LoadByUsername($guestEmail);
-			$message = new GuestUpdatedEmail($owner, $guestUser, $reservationSeries, $this->attributeRepository);
+			$message = new GuestUpdatedEmail($owner, $guestUser, $reservationSeries, $this->attributeRepository, $this->userRepository);
 			ServiceLocator::GetEmailService()->Send($message);
 		}
 
 		foreach ($instance->UnchangedParticipatingGuests() as $guestEmail)
 		{
 			$guestUser = $this->userRepository->LoadByUsername($guestEmail);
-			$message = new GuestUpdatedEmail($owner, $guestUser, $reservationSeries, $this->attributeRepository);
+			$message = new GuestUpdatedEmail($owner, $guestUser, $reservationSeries, $this->attributeRepository, $this->userRepository);
 			ServiceLocator::GetEmailService()->Send($message);
 		}
 
 		foreach ($instance->RemovedInvitedGuests() as $guestEmail)
 		{
 			$guestUser = $this->userRepository->LoadByUsername($guestEmail);
-			$message = new GuestDeletedEmail($owner, $guestUser, $reservationSeries, $this->attributeRepository);
+			$message = new GuestDeletedEmail($owner, $guestUser, $reservationSeries, $this->attributeRepository, $this->userRepository);
 			ServiceLocator::GetEmailService()->Send($message);
 		}
 
 		foreach ($instance->RemovedParticipatingGuests() as $guestEmail)
 		{
 			$guestUser = $this->userRepository->LoadByUsername($guestEmail);
-			$message = new GuestDeletedEmail($owner, $guestUser, $reservationSeries, $this->attributeRepository);
+			$message = new GuestDeletedEmail($owner, $guestUser, $reservationSeries, $this->attributeRepository, $this->userRepository);
 			ServiceLocator::GetEmailService()->Send($message);
 		}
 	}

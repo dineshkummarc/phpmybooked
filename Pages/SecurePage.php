@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -218,7 +218,7 @@ class SecurePageDecorator extends Page implements IPage
 		return $this->page->IsValid();
 	}
 
-	public function GetLastPage()
+	public function GetLastPage($defaultPage = '')
 	{
 		return $this->page->GetLastPage();
 	}

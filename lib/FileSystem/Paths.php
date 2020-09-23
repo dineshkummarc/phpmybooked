@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2012-2016 Nick Korbel
+Copyright 2012-2020 Nick Korbel
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -57,4 +57,30 @@ class Paths
 		}
 		return $uploadDir;
 	}
+
+    /**
+     * Filesystem directory for storing terms of service file. Always contains trailing slash
+     *
+     * @static
+     * @return string
+     */
+	public static function Terms()
+    {
+        return ROOT_DIR . 'Web/uploads/tos/';
+    }
+
+    /**
+     * Filesystem directory for storing terms of email templates for given language. Always contains trailing slash
+     *
+     * @static
+     * @param $language string
+     * @return string
+     */
+    public static function EmailTemplates($language)
+    {
+        if (AvailableLanguages::Contains($language)) {
+            return dirname(__FILE__) . '/' . ROOT_DIR . "lang/$language/";
+        }
+        return dirname(__FILE__) . '/' . ROOT_DIR . "lang/en_us/";
+    }
 }

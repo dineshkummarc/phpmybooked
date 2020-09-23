@@ -1,5 +1,5 @@
 {*
-Copyright 2012-2016 Nick Korbel
+Copyright 2012-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -20,4 +20,5 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 <div class="error">
 {translate key='AttachmentLoadingError'}
 </div>
+{include file="javascript-includes.tpl"}
 {include file='globalfooter.tpl'}

@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -83,10 +83,19 @@ class AttributeService implements IAttributeService
 	 * @var ResourceDto[] indexed by resourceId
 	 */
 	private $allowedResources;
+	/**
+	 * @var IPermissionService|null
+	 */
+	private $permissionService;
 
-	public function __construct(IAttributeRepository $attributeRepository)
+	/**
+	 * @param IAttributeRepository $attributeRepository
+	 * @param IPermissionService|null $permissionService
+	 */
+	public function __construct(IAttributeRepository $attributeRepository, $permissionService = null)
 	{
 		$this->attributeRepository = $attributeRepository;
+		$this->permissionService = $permissionService;
 	}
 
 	/**
@@ -114,7 +123,8 @@ class AttributeService implements IAttributeService
 	{
 		if ($this->resourceService == null)
 		{
-			$this->resourceService = new ResourceService(new ResourceRepository(), PluginManager::Instance()->LoadPermission(), $this, new UserRepository(),
+			$permissionService = empty($this->permissionService) ? PluginManager::Instance()->LoadPermission() : $this->permissionService;
+			$this->resourceService = new ResourceService(new ResourceRepository(), $permissionService, $this, new UserRepository(),
 														 new AccessoryRepository());
 		}
 
@@ -175,8 +185,9 @@ class AttributeService implements IAttributeService
 		$attributes = $this->attributeRepository->GetByCategory($category);
 		foreach ($attributes as $attribute)
 		{
-			if ( ($attribute->UniquePerEntity() && count(array_intersect($entityIds, $attribute->EntityIds())) == 0) ||
-					($attribute->HasSecondaryEntities() && !in_array($attribute->SecondaryEntityIds(), $entityIds)) )
+			if (!empty($entityIds) &&
+                (($attribute->UniquePerEntity() && count(array_intersect($entityIds, $attribute->EntityIds())) == 0) ||
+                ($attribute->HasSecondaryEntities() && count(array_intersect($entityIds, $attribute->SecondaryEntityIds())) == 0)))
 			{
 				continue;
 			}
@@ -230,6 +241,13 @@ class AttributeService implements IAttributeService
 		{
 			$requestedUserId = $reservationView->OwnerId;
 		}
+		if (empty($requestedResourceIds))
+        {
+            foreach ($reservationView->Resources as $resource)
+            {
+                $requestedResourceIds[] = $resource->Id();
+            }
+        }
 
 		$attributes = array();
 		$customAttributes = $this->GetByCategory(CustomAttributeCategory::RESERVATION);
@@ -328,7 +346,7 @@ class AttributeService implements IAttributeService
 			foreach ($resources as $resource)
 			{
 				$this->allowedResources[$resource->GetId()] = $resource;
-				}
+			}
 		}
 
 		return $this->allowedResources;

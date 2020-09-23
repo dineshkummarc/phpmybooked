@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2011-2016 Nick Korbel
+ * Copyright 2011-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -18,6 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 class UserSession
 {
 	public $UserId = '';
@@ -38,7 +39,7 @@ class UserSession
 	public $AdminGroups = array();
 	public $CSRFToken = '';
 
-	public function __construct($id)
+    public function __construct($id)
 	{
 		$this->UserId = $id;
 	}
@@ -85,6 +86,11 @@ class UserSession
 	{
 		return "{$this->FirstName} {$this->LastName} ({$this->Email})";
 	}
+
+    public function FullName()
+    {
+        return new FullName($this->FirstName, $this->LastName);
+    }
 }
 
 class NullUserSession extends UserSession

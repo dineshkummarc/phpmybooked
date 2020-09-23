@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2012-2016 Nick Korbel
+Copyright 2012-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -72,5 +72,19 @@ class ScheduleAdminManageScheduleService extends ManageScheduleService
 	{
 		return $this->scheduleRepo->GetAll();
 	}
+
+	public function GetResources()
+    {
+        $resources = array();
+
+        $all = $this->adminResourceRepo->GetResourceList();
+        /** @var BookableResource $resource */
+        foreach ($all as $resource)
+        {
+            $resources[$resource->GetScheduleId()][] = $resource;
+        }
+
+        return $resources;
+    }
 }
 

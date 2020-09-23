@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2016 Nick Korbel
+ * Copyright 2017-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -38,6 +38,11 @@ interface IGuestReservationPage extends INewReservationPage
 	 * @return bool
 	 */
 	public function IsCreatingAccount();
+
+    /**
+     * @return bool
+     */
+    public function GetTermsOfServiceAcknowledgement();
 }
 
 class GuestReservationPage extends NewReservationPage implements IGuestReservationPage
@@ -48,6 +53,7 @@ class GuestReservationPage extends NewReservationPage implements IGuestReservati
 		{
 			$this->presenter = $this->GetPresenter();
 			$this->presenter->PageLoad();
+			$this->Set('ReturnUrl', Pages::SCHEDULE);
 			$this->Display($this->GetTemplateName());
 		}
 		else {
@@ -85,11 +91,13 @@ class GuestReservationPage extends NewReservationPage implements IGuestReservati
 		return $this->GetForm(FormKeys::EMAIL);
 	}
 
-	/**
-	 * @return bool
-	 */
 	public function IsCreatingAccount()
 	{
 		return $this->IsPostBack() && !$this->GuestInformationCollected();
 	}
+
+    public function GetTermsOfServiceAcknowledgement()
+    {
+        return $this->GetCheckbox(FormKeys::TOS_ACKNOWLEDGEMENT);
+    }
 }

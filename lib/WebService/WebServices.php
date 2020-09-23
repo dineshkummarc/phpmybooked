@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2012-2016 Nick Korbel
+Copyright 2012-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -35,10 +35,12 @@ class WebServices
 	const CreateReservation = 'create_reservation';
 	const CreateResource = 'create_resource';
 	const CreateUser = 'create_user';
+	const CreateGroup = 'create_group';
 	const DeleteCustomAttribute = 'delete_custom_attribute';
 	const DeleteReservation = 'delete_reservation';
 	const DeleteResource = 'delete_resource';
 	const DeleteUser = 'delete_user';
+	const DeleteGroup = 'delete_group';
 	const Login = 'login';
 	const Logout = 'logout';
 	const GetAccessory = 'get_accessory';
@@ -55,7 +57,16 @@ class WebServices
 	const UpdateCustomAttribute = 'update_custom_attribute';
 	const UpdateReservation = 'update_reservation';
 	const UpdateResource = 'update_resource';
+	const UpdatePassword = 'update_password';
 	const UpdateUser = 'update_user';
+	const UpdateGroup = 'update_group';
+	const UpdateGroupRoles = 'update_group_roles';
+	const UpdateGroupPermissions = 'update_group_permissions';
+	const UpdateGroupUsers = 'update_group_users';
 	const GetStatuses = 'get_resource_statuses';
 	const GetStatusReasons = 'get_resource_status_reasons';
+	const GetAccount = 'get_user_account';
+	const CreateAccount = 'create_user_account';
+	const UpdateAccount = 'update_user_account';
+	const UpdateAccountPassword = 'update_user_account_password';
 }

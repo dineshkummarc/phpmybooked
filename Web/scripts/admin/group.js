@@ -13,7 +13,7 @@ function GroupManagement(opts) {
 		allUsersList: $('#allUsersList'),
 		permissionsDialog: $('#permissionsDialog'),
 		deleteDialog: $('#deleteDialog'),
-		renameDialog: $('#renameDialog'),
+		editDialog: $('#editDialog'),
 		browseUserDialog: $('#allUsers'),
 		rolesDialog: $('#rolesDialog'),
 		groupAdminDialog: $('#groupAdminDialog'),
@@ -21,7 +21,7 @@ function GroupManagement(opts) {
 		permissionsForm: $('#permissionsForm'),
 		addUserForm: $('#addUserForm'),
 		removeUserForm: $('#removeUserForm'),
-		renameGroupForm: $('#renameGroupForm'),
+		editGroupForm: $('#editGroupForm'),
 		deleteGroupForm: $('#deleteGroupForm'),
 		rolesForm: $('#rolesForm'),
 		groupAdminForm: $('#groupAdminForm'),
@@ -29,8 +29,19 @@ function GroupManagement(opts) {
 
 		addForm: $('#addGroupForm'),
 
-        checkAllResources: $('#checkAllResources'),
-        checkNoResources: $('#checkNoResources')
+        checkAllResourcesFull: $('#checkAllResourcesFull'),
+        checkAllResourcesView: $('#checkAllResourcesView'),
+        checkNoResources: $('#checkNoResources'),
+
+        editGroupName: $('#editGroupName'),
+        editGroupIsDefault: $('#editGroupIsDefault'),
+
+        changeAdminGroupsForm: $('#groupAdminGroupsForm'),
+        changeAdminResourcesForm: $('#resourceAdminForm'),
+        changeAdminSchedulesForm: $('#scheduleAdminForm'),
+        resourceAdminDialog: $('#resourceAdminDialog'),
+        groupAdminAllDialog: $('#groupAdminAllDialog'),
+        scheduleAdminDialog: $('#scheduleAdminDialog')
 	};
 
 	var allUserList = null;
@@ -43,7 +54,7 @@ function GroupManagement(opts) {
 		});
 
 		elements.groupList.delegate('.rename', 'click', function() {
-			renameGroup();
+			editGroup();
 		});
 
 		elements.groupList.delegate('.permissions', 'click', function() {
@@ -115,14 +126,29 @@ function GroupManagement(opts) {
 			changeGroupAdmin();
 		});
 
-        elements.checkAllResources.click(function(e){
+		elements.groupList.delegate('.changeAdminGroups', 'click', function() {
+			changeAdminGroups();
+		});
+		elements.groupList.delegate('.changeAdminResources', 'click', function() {
+			changeAdminResources();
+		});
+		elements.groupList.delegate('.changeAdminSchedules', 'click', function() {
+			changeAdminSchedules();
+		});
+
+        elements.checkAllResourcesFull.click(function(e){
             e.preventDefault();
-            elements.permissionsDialog.find('input:checkbox').prop('checked', true);
+            elements.permissionsDialog.find('.full').prop('selected', true)
+        });
+
+        elements.checkAllResourcesView.click(function(e){
+            e.preventDefault();
+            elements.permissionsDialog.find('.view').prop('selected', true)
         });
 
         elements.checkNoResources.click(function(e){
             e.preventDefault();
-            elements.permissionsDialog.find('input:checkbox').prop('checked', false);
+            elements.permissionsDialog.find('.none').prop('selected', true)
         });
 
 		$(".save").click(function() {
@@ -145,14 +171,23 @@ function GroupManagement(opts) {
 			showAllUsersToAdd();
 		});
 
+		$('.adminDialog').on('click', '.checkbox', function(e){
+            var $checkbox = $(e.target);
+            var modal = $checkbox.closest('.modal-body');
+            modal.find('.count').text(modal.find(':checked').length);
+        });
+
 		ConfigureAsyncForm(elements.addUserForm, getSubmitCallback(options.actions.addUser), changeMembers, error);
 		ConfigureAsyncForm(elements.removeUserForm, getSubmitCallback(options.actions.removeUser), changeMembers, error);
 		ConfigureAsyncForm(elements.permissionsForm, getSubmitCallback(options.actions.permissions), hidePermissionsDialog, error);
-		ConfigureAsyncForm(elements.renameGroupForm, getSubmitCallback(options.actions.renameGroup), null, error);
+		ConfigureAsyncForm(elements.editGroupForm, getSubmitCallback(options.actions.updateGroup), null, error);
 		ConfigureAsyncForm(elements.deleteGroupForm, getSubmitCallback(options.actions.deleteGroup), null, error);
 		ConfigureAsyncForm(elements.addForm, getSubmitCallback(options.actions.addGroup), null, error);
 		ConfigureAsyncForm(elements.rolesForm, getSubmitCallback(options.actions.roles), null, error);
 		ConfigureAsyncForm(elements.groupAdminForm, getSubmitCallback(options.actions.groupAdmin), null, error);
+		ConfigureAsyncForm(elements.changeAdminGroupsForm, getSubmitCallback(options.actions.adminGroups), function() {elements.groupAdminAllDialog.modal('hide');}, error);
+		ConfigureAsyncForm(elements.changeAdminResourcesForm, getSubmitCallback(options.actions.resourceGroups), function() {elements.resourceAdminDialog.modal('hide');}, error);
+		ConfigureAsyncForm(elements.changeAdminSchedulesForm, getSubmitCallback(options.actions.scheduleGroups), function() {elements.scheduleAdminDialog.modal('hide');}, error);
 	};
 
 	var showAllUsersToAdd = function() {
@@ -202,8 +237,11 @@ function GroupManagement(opts) {
 		return elements.activeId.val();
 	}
 
-	var renameGroup = function() {
-		elements.renameDialog.modal('show');
+	var editGroup = function() {
+        var activeRow = elements.groupList.find('[data-group-id="' + getActiveId() + '"]');
+        elements.editGroupName.val(activeRow.find('.dataGroupName').text());
+        elements.editGroupIsDefault.prop('checked', activeRow.data('group-default') == '1');
+		elements.editDialog.modal('show');
 	};
 
 	var changeMembers = function() {
@@ -229,31 +267,33 @@ function GroupManagement(opts) {
 	};
 
 	var addUserToGroup = function(userId) {
-
-
 		$('#addUserId').val(userId);
 		elements.addUserForm.submit();
 	};
 
 	var removeUserFromGroup = function(element, userId) {
-
         $('#removeUserId').val(userId);
 		elements.removeUserForm.submit();
 	};
 
-	var changePermissions = function () {
-		var groupId = getActiveId();
+    var changePermissions = function () {
+        var groupId = getActiveId();
 
-		var data = {dr: opts.dataRequests.permissions, gid: groupId};
-		$.get(opts.permissionsUrl, data, function(resourceIds) {
-			elements.permissionsForm.find(':checkbox').attr('checked', false);
-			$.each(resourceIds, function(index, value) {
-				elements.permissionsForm.find(':checkbox[value="' + value + '"]').prop('checked', true);
-			});
+        var data = {dr: opts.dataRequests.permissions, gid: groupId};
+        $.get(opts.permissionsUrl, data, function(permissions) {
+            elements.permissionsForm.find('.none').prop('selected', true);
 
-			elements.permissionsDialog.modal('show');
-		});
-	};
+            $.each(permissions.full, function(index, value) {
+                elements.permissionsForm.find('#permission_' + value).val(value + '_0');
+            });
+
+            $.each(permissions.view, function(index, value) {
+                elements.permissionsForm.find('#permission_' + value).val(value + '_1');
+            });
+
+            elements.permissionsDialog.modal('show');
+        });
+    };
 
 	var deleteGroup = function() {
 		elements.deleteDialog.modal('show');
@@ -264,7 +304,7 @@ function GroupManagement(opts) {
 
 		var data = {dr: opts.dataRequests.roles, gid: groupId};
 		$.get(opts.rolesUrl, data, function(roleIds) {
-			elements.rolesForm.find(':checkbox').attr('checked', false);
+			elements.rolesForm.find(':checkbox').prop('checked', false);
 			$.each(roleIds, function(index, value) {
 				elements.rolesForm.find(':checkbox[value="' + value + '"]').prop('checked', true);
 			});
@@ -280,4 +320,33 @@ function GroupManagement(opts) {
 		
 		elements.groupAdminDialog.modal('show');
 	};
+
+	var changeAdminGroups = function() {
+        populateAdminCheckboxes(opts.dataRequests.adminGroups, elements.changeAdminGroupsForm, elements.groupAdminAllDialog);
+    };
+
+	var changeAdminResources = function() {
+        populateAdminCheckboxes(opts.dataRequests.resourceGroups, elements.changeAdminResourcesForm, elements.resourceAdminDialog);
+	};
+
+	var changeAdminSchedules = function() {
+        populateAdminCheckboxes(opts.dataRequests.scheduleGroups, elements.changeAdminSchedulesForm, elements.scheduleAdminDialog);
+	};
+
+	var populateAdminCheckboxes = function(dr, $form, $dialog) {
+        var groupId = getActiveId();
+
+        $dialog.find('.count').text($dialog.find(':checked').length);
+
+        var data = {dr: dr, gid: groupId};
+        $.get(opts.submitUrl, data, function(groupIds) {
+            $form.find(':checkbox').prop('checked', false);
+            $.each(groupIds, function(index, value) {
+                $form.find(':checkbox[value="' + value + '"]').prop('checked', true);
+            });
+
+            $dialog.find('.count').text(groupIds.length);
+            $dialog.modal('show');
+        });
+    };
 }

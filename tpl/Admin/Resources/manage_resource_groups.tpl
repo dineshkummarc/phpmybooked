@@ -1,5 +1,5 @@
 {*
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -27,10 +27,12 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 	<div id="manage-resource-groups-container">
 		<div id="new-group">
 			<form method="post" id="addGroupForm" ajaxAction="{ManageResourceGroupsActions::AddGroup}">
-				<div class="form-group"><input type="text" name="{FormKeys::GROUP_NAME}" class="form-control new-group inline" size="30"
+				<div class="form-group">
+                    <label for="groupName" class="no-show">{translate key=AddNewGroup}</label>
+                    <input type="text" name="{FormKeys::GROUP_NAME}" class="form-control new-group inline" size="30"
 					   id="groupName" placeholder="{translate key=AddNewGroup}"/>
 				<input type="hidden" name="{FormKeys::PARENT_ID}"/>
-				<a href="#" class="fa fa-plus-circle icon add inline" id="btnAddGroup"></a>
+				<a href="#" class="fa fa-plus-circle icon add inline" id="btnAddGroup"><span class="no-show">{translate key=Add}</span></a>
 				</div>
 			</form>
 		</div>
@@ -46,12 +48,6 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 	</div>
 
 	<div class="clearfix"></div>
-
-	<div class="alert alert-warning" id="resourceGroupWarning" role="alert">
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-					aria-hidden="true">&times;</span></button>
-		{translate key=ResourceGroupWarning}
-	</div>
 
 	<input type="hidden" id="activeId" value=""/>
 
@@ -143,7 +139,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
 	{csrf_token}
 
-	{jsfile src="js/jquery.watermark.min.js"}
+    {include file="javascript-includes.tpl"}
 	{jsfile src="ajax-helpers.js"}
 	{jsfile src="admin/resource-groups.js"}
 	{jsfile src="js/jquery.form-3.09.min.js"}

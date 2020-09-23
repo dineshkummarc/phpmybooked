@@ -1,5 +1,5 @@
 {*
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -20,6 +20,12 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
 <div id="page-install">
 	<h1>{translate key=InstallApplication}</h1>
+
+    {if $ShowScriptUrlWarning}
+        <div class="alert alert-danger">
+            {translate key=ScriptUrlWarning args="$CurrentScriptUrl,$SuggestedScriptUrl"}
+        </div>
+    {/if}
 
 	<div>
 		<form class="register" method="post" action="{$smarty.server.SCRIPT_NAME}" role="form">
@@ -151,4 +157,5 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
 </div>
 
+{include file="javascript-includes.tpl"}
 {include file='globalfooter.tpl'}

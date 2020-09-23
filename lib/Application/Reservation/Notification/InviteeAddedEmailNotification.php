@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ class InviteeAddedEmailNotification implements IReservationNotification
 
 			$invitee = $this->userRepository->LoadById($userId);
 
-			$message = new InviteeAddedEmail($owner, $invitee, $reservationSeries, $this->attributeRepository);
+			$message = new InviteeAddedEmail($owner, $invitee, $reservationSeries, $this->attributeRepository, $this->userRepository);
 			ServiceLocator::GetEmailService()->Send($message);
 		}
 	}

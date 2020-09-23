@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -27,8 +27,10 @@ class ReservationEvent
 	const Created = 'created';
 	const Updated = 'updated';
 	const Deleted = 'deleted';
+    const SeriesEnding = 'series_ending';
+    const ParticipationChanged = 'participation_changed';
 
-	/**
+    /**
 	 * @static
 	 * @return array|IDomainEvent[]
 	 */
@@ -39,6 +41,8 @@ class ReservationEvent
 			new ReservationCreatedEvent(),
 			new ReservationUpdatedEvent(),
 			new ReservationDeletedEvent(),
+            new ReservationSeriesEndingEvent(),
+            new ParticipationChangedEvent(),
 		);
 	}
 }
@@ -93,4 +97,30 @@ class ReservationApprovedEvent implements IDomainEvent
 	{
 		return EventCategory::Reservation;
 	}
+}
+
+class ReservationSeriesEndingEvent implements IDomainEvent
+{
+	public function EventType()
+	{
+		return ReservationEvent::SeriesEnding;
+	}
+
+	public function EventCategory()
+	{
+		return EventCategory::Reservation;
+	}
+}
+
+class ParticipationChangedEvent implements IDomainEvent
+{
+    public function EventType()
+    {
+        return ReservationEvent::ParticipationChanged;
+    }
+
+    public function EventCategory()
+    {
+        return EventCategory::Reservation;
+    }
 }

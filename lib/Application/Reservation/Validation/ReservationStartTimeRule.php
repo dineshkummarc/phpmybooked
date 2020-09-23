@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,6 +18,11 @@ require_once(ROOT_DIR . 'Domain/Values/ReservationStartTimeConstraint.php');
 
 class ReservationStartTimeRule implements IReservationValidationRule
 {
+    /**
+     * @var IScheduleRepository
+     */
+    private $scheduleRepository;
+
     public function __construct(IScheduleRepository $scheduleRepository)
     {
         $this->scheduleRepository = $scheduleRepository;

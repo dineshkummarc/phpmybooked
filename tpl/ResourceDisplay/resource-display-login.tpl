@@ -1,5 +1,5 @@
 {*
-Copyright 2016 Nick Korbel
+Copyright 2017-2020 Nick Korbel
 
 This file is part of phpScheduleIt.
 
@@ -75,6 +75,7 @@ along with phpScheduleIt.  If not, see <http://www.gnu.org/licenses/>.
 	{indicator id="waitIndicator"}
 </div>
 
+{include file="javascript-includes.tpl"}
 {jsfile src="resourceDisplay.js"}
 {jsfile src="ajax-helpers.js"}
 

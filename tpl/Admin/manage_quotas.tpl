@@ -1,5 +1,5 @@
 {*
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -80,7 +80,9 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 					<div id='enforce-hours-times' class='inline no-show'>
 						<div class='form-group form-group-sm'>
 							<span>{translate key=Between}</span>
-							<input type='text' class='form-control time' id='enforce-time-start' size='6' value='12:00am' {formname key=BEGIN_TIME}/>
+                            <label for='enforce-time-start' class='no-show'>{translate key=StartTime}</label>
+                            <label for='enforce-time-end' class='no-show'>{translate key=EndTime}</label>
+                            <input type='text' class='form-control time' id='enforce-time-start' size='6' value='12:00am' {formname key=BEGIN_TIME}/>
 							-
 							<input type='text' class='form-control time' id='enforce-time-end' size='6' value='12:00am' {formname key=END_TIME}/>
 						</div>
@@ -131,7 +133,8 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
 				{capture name="scope" assign="scope"}
 					<div class='form-group'>
-						<select class='form-control' {formname key=QUOTA_SCOPE}>
+                        <label for="quoteScope" class="no-show">{translate key=IncludingCompletedReservations}</label>
+						<select class='form-control' {formname key=QUOTA_SCOPE} id="quoteScope">
 							<option value='{QuotaScope::IncludeCompleted}'>{translate key=IncludingCompletedReservations}</option>
 							<option value='{QuotaScope::ExcludeCompleted}'>{translate key=NotCountingCompletedReservations}</option>
 						</select>
@@ -253,7 +256,8 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 	</div>
 
 	{csrf_token}
-	{jsfile src="ajax-helpers.js"}
+    {include file="javascript-includes.tpl" Timepicker=true}
+    {jsfile src="ajax-helpers.js"}
 	{jsfile src="admin/quota.js"}
 	{jsfile src="js/jquery.form-3.09.min.js"}
 
@@ -272,10 +276,10 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 			};
 
 			$('#enforce-time-start').timepicker({
-				show24Hours: false
+				timeFormat: '{$TimeFormat}'
 			});
 			$('#enforce-time-end').timepicker({
-				show24Hours: false
+				timeFormat: '{$TimeFormat}'
 			});
 
 			var quotaManagement = new QuotaManagement(quotaOptions);

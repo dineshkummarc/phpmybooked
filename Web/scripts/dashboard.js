@@ -1,6 +1,24 @@
 function Dashboard(opts) {
 	var options = opts;
+	
+	var ShowReservationAjaxResponse = function () {
+        $('.blockUI').css('cursor', 'default');
 
+        $('#btnSaveSuccessful').unbind().click(function (e) {
+            window.location = options.returnUrl.replace(/&amp;/g, '&');
+        });
+
+        $('#btnSaveFailed').unbind().click(function () {
+            CloseSaveDialog();
+        });
+
+        $('#creatingNotification').hide();
+        $('#result').show();
+    };
+
+    var CloseSaveDialog = function () {
+        $.unblockUI();
+    };
 	Dashboard.prototype.init = function () {
 		function setIcon(dash, targetIcon) {
 			var iconSpan = dash.find('.dashboardHeader').find('a>.glyphicon');
@@ -44,9 +62,6 @@ function Dashboard(opts) {
 
 		$('.resourceNameSelector').each(function () {
 			$(this).bindResourceDetails($(this).attr('resource-id'));
-			$(this).click(function (e) {
-				e.preventDefault();
-			});
 		});
 
 		var reservations = $(".reservation");
@@ -113,9 +128,29 @@ function Dashboard(opts) {
 			var form = $('#form-checkin');
 			var refNum = $(this).attr('data-referencenumber');
 			$('#referenceNumber').val(refNum);
+			$.blockUI({message: $('#wait-box')});
+			ajaxPost(form, $(this).data('url'), null, function (data) {
+				$('button[data-referencenumber="' + refNum + '"]').addClass('no-show');
+				$('#result').html(data);
+                ShowReservationAjaxResponse();
+			});
+		});
 
+		$('.btnCheckout').click(function (e) {
+			e.preventDefault();
+			e.stopPropagation();
+			var button = $(this);
+			button.attr('disabled', 'disabled');
+			button.find('i').removeClass('fa-sign-in').addClass('fa-spinner');
+
+			var form = $('#form-checkout');
+			var refNum = $(this).attr('data-referencenumber');
+			$('#referenceNumber').val(refNum);
+			$.blockUI({message: $('#wait-box')});
 			ajaxPost(form, null, null, function (data) {
 				$('button[data-referencenumber="' + refNum + '"]').addClass('no-show');
+				$('#result').html(data);
+                ShowReservationAjaxResponse();
 			});
 		});
 	};

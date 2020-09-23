@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 Nick Korbel
+ * Copyright 2017-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -75,7 +75,7 @@ class AvailableAccessoriesPresenter
 			if ($available != null)
 			{
 				$reserved = $aggregation->GetQuantity($id);
-				$realAvailability[] = new AccessoryAvailability($id, $available - $reserved);
+				$realAvailability[] = new AccessoryAvailability($id, max(0,$available - $reserved));
 			}
 			else
 			{

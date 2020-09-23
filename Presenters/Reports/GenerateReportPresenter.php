@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2012-2016 Nick Korbel
+ * Copyright 2012-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -50,6 +50,10 @@ class GenerateReportPresenter extends ActionPresenter
 	 * @var IGroupRepository
 	 */
 	private $groupRepo;
+	/**
+	 * @var IUserRepository
+	 */
+	private $userRepository;
 
 	/**
 	 * @param IGenerateReportPage $page
@@ -58,6 +62,7 @@ class GenerateReportPresenter extends ActionPresenter
 	 * @param IResourceRepository $resourceRepo
 	 * @param IScheduleRepository $scheduleRepo
 	 * @param IGroupViewRepository $groupRepo
+	 * @param IUserRepository $userRepository
 	 */
 	public function __construct(
 			IGenerateReportPage $page,
@@ -65,7 +70,8 @@ class GenerateReportPresenter extends ActionPresenter
 			IReportingService $reportingService,
 			IResourceRepository $resourceRepo,
 			IScheduleRepository $scheduleRepo,
-			IGroupViewRepository $groupRepo)
+			IGroupViewRepository $groupRepo,
+			IUserRepository $userRepository)
 	{
 		parent::__construct($page);
 		$this->page = $page;
@@ -74,16 +80,19 @@ class GenerateReportPresenter extends ActionPresenter
 		$this->resourceRepo = $resourceRepo;
 		$this->scheduleRepo = $scheduleRepo;
 		$this->groupRepo = $groupRepo;
+		$this->userRepository = $userRepository;
 
 		$this->AddAction(ReportActions::Generate, 'GenerateCustomReport');
 		$this->AddAction(ReportActions::PrintReport, 'PrintReport');
 		$this->AddAction(ReportActions::Csv, 'ExportToCsv');
 		$this->AddAction(ReportActions::Save, 'SaveReport');
+		$this->AddAction(ReportActions::SaveColumns, 'SaveColumns');
 	}
 
 	public function PageLoad()
 	{
 		$this->page->BindResources($this->resourceRepo->GetResourceList());
+		$this->page->BindResourceTypes($this->resourceRepo->GetResourceTypes());
 		$this->page->BindAccessories($this->resourceRepo->GetAccessoryList());
 		$this->page->BindSchedules($this->scheduleRepo->GetAll());
 		$this->page->BindGroups($this->groupRepo->GetList()->Results());
@@ -133,6 +142,13 @@ class GenerateReportPresenter extends ActionPresenter
 		$this->reportingService->Save($reportName, $userId, $usage, $selection, $groupBy, $range, $filter);
 	}
 
+	public function SaveColumns()
+	{
+		$user = $this->userRepository->LoadById($this->user->UserId);
+		$user->ChangePreference(UserPreferences::REPORT_COLUMNS, $this->page->GetSelectedColumns());
+		$this->userRepository->Update($user);
+	}
+
 	private function BindReport()
 	{
 		$usage = $this->GetUsage();
@@ -141,10 +157,12 @@ class GenerateReportPresenter extends ActionPresenter
 		$range = $this->GetRange();
 		$filter = $this->GetFilter();
 
-		$report = $this->reportingService->GenerateCustomReport($usage, $selection, $groupBy, $range, $filter);
+		$report = $this->reportingService->GenerateCustomReport($usage, $selection, $groupBy, $range, $filter, $this->user->Timezone);
 		$reportDefinition = new ReportDefinition($report, $this->user->Timezone);
 
-		$this->page->BindReport($report, $reportDefinition);
+		$user = $this->userRepository->LoadById($this->user->UserId);
+
+		$this->page->BindReport($report, $reportDefinition, $user->GetPreference(UserPreferences::REPORT_COLUMNS));
 	}
 
 	/**
@@ -187,12 +205,13 @@ class GenerateReportPresenter extends ActionPresenter
 	 */
 	private function GetFilter()
 	{
-		return new Report_Filter($this->page->GetResourceId(),
-								 $this->page->GetScheduleId(),
+		return new Report_Filter($this->page->GetResourceIds(),
+								 $this->page->GetScheduleIds(),
 								 $this->page->GetUserId(),
-								 $this->page->GetGroupId(),
-								 $this->page->GetAccessoryId(),
+								 $this->page->GetGroupIds(),
+								 $this->page->GetAccessoryIds(),
 								 $this->page->GetParticipantId(),
-								 $this->page->GetIncludeDeleted());
+								 $this->page->GetIncludeDeleted(),
+								 $this->page->GetResourceTypeIds());
 	}
 }

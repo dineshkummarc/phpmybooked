@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2012-2016 Nick Korbel
+Copyright 2012-2020 Nick Korbel
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -56,20 +56,75 @@ class ReservationDateBinder implements IReservationComponentBinder
 		}
 
 		$layout = $this->scheduleRepository->GetLayout($requestedScheduleId, new ReservationLayoutFactory($timezone));
-		$startPeriods = $layout->GetLayout($startDate);
-		if (count($startPeriods) > 1 && $startPeriods[0]->Begin()->Compare($startPeriods[1]->Begin()) > 0)
+        $schedule = $this->scheduleRepository->LoadById($requestedScheduleId);
+
+        $startPeriods = $this->GetStartPeriods($layout, $startDate);
+        $endPeriods = $this->GetEndPeriods($layout, $startDate, $endDate);
+
+		$initializer->SetDates($startDate, $endDate, $startPeriods, $endPeriods, $schedule->GetWeekdayStart(), $layout->UsesCustomLayout());
+
+		$hideRecurrence = (!$initializer->CurrentUser()->IsAdmin &&
+            Configuration::Instance()->GetSectionKey(ConfigSection::RESERVATION, ConfigKeys::RESERVATION_PREVENT_RECURRENCE, new BooleanConverter())
+            || $layout->UsesCustomLayout());
+
+		$initializer->HideRecurrence($hideRecurrence);
+
+        if ($schedule->HasAvailability())
+        {
+            $initializer->SetAvailability($schedule->GetAvailability());
+        }
+    }
+
+    /**
+     * @param IScheduleLayout $layout
+     * @param Date $startDate
+     * @return SchedulePeriod[]
+     */
+    protected function GetStartPeriods($layout, &$startDate)
+    {
+        $startPeriods = $layout->GetLayout($startDate, true);
+
+        return $this->GetPeriods($startPeriods, $layout, $startDate);
+
+    }
+
+	/**
+	 * @param IScheduleLayout $layout
+	 * @param Date $startDate
+	 * @param Date $endDate
+	 * @return SchedulePeriod[]
+	 */
+	protected function GetEndPeriods($layout, $startDate, &$endDate)
+	{
+		$endPeriods = $layout->GetLayout($endDate, true);
+		if (count($endPeriods) == 0 && $startDate->AddDays(1)->Equals($endDate))
 		{
+			// no periods on the next day, return midnight to let the reservation end at the top of the hour
+			return array(new SchedulePeriod($endDate->SetTimeString('00:00'), $endDate->SetTimeString('00:00', true)));
+		}
+		return $this->GetPeriods($endPeriods, $layout, $endDate);
+	}
+
+	/**
+	 * @param SchedulePeriod[] $startPeriods
+	 * @param IScheduleLayout $layout
+	 * @param Date $startDate
+	 * @param int $iteration
+	 * @return array|SchedulePeriod[]
+	 */
+	private function GetPeriods($startPeriods, $layout, &$startDate, $iteration = 0)
+	{
+		if (count($startPeriods) > 1 && $startPeriods[0]->Begin()->Compare($startPeriods[1]->Begin()) > 0) {
 			$period = array_shift($startPeriods);
 			$startPeriods[] = $period;
 		}
-		$endPeriods = $layout->GetLayout($endDate);
 
-		$initializer->SetDates($startDate, $endDate, $startPeriods, $endPeriods);
-
-		$hideRecurrence = !$initializer->CurrentUser()->IsAdmin && Configuration::Instance()->GetSectionKey(ConfigSection::RESERVATION,
-																											ConfigKeys::RESERVATION_PREVENT_RECURRENCE,
-																											new BooleanConverter());
-		$initializer->HideRecurrence($hideRecurrence);
+		if (count($startPeriods) == 0 && $iteration < 7)
+		{
+			$startDate = $startDate->AddDays(1);
+			return $this->GetPeriods($layout->GetLayout($startDate, true), $layout, $startDate, ++$iteration);
+		}
+		return $startPeriods;
 	}
 }
 
@@ -122,10 +177,15 @@ class ReservationResourceBinder implements IReservationComponentBinder
 	 * @var IResourceService
 	 */
 	private $resourceService;
+	/**
+	 * @var IScheduleRepository
+	 */
+	private $scheduleRepository;
 
-	public function __construct(IResourceService $resourceService)
+	public function __construct(IResourceService $resourceService, IScheduleRepository $scheduleRepository)
 	{
 		$this->resourceService = $resourceService;
+		$this->scheduleRepository = $scheduleRepository;
 	}
 
 	public function Bind(IReservationComponentInitializer $initializer)
@@ -149,12 +209,14 @@ class ReservationResourceBinder implements IReservationComponentBinder
 			return;
 		}
 
+		$schedule = $this->scheduleRepository->LoadById($requestedScheduleId);
 		$initializer->BindResourceGroups($groups);
 		$initializer->BindAvailableResources($resources);
 		$accessories = $this->resourceService->GetAccessories();
 		$initializer->BindAvailableAccessories($accessories);
 		$initializer->ShowAdditionalResources($bindableResourceData->NumberAccessible > 0);
 		$initializer->SetReservationResource($bindableResourceData->ReservationResource);
+		$initializer->SetMaximumResources($schedule->GetMaxResourcesPerReservation());
 	}
 
 	/**
@@ -166,11 +228,16 @@ class ReservationResourceBinder implements IReservationComponentBinder
 	{
 		$bindableResourceData = new BindableResourceData();
 
+		if (count($resources) > 0)
+        {
+            $bindableResourceData->SetReservationResource(reset($resources));
+        }
+
 		/** @var $resource ResourceDto */
 		foreach ($resources as $resource)
 		{
 			$bindableResourceData->AddAvailableResource($resource);
-			if ($resource->Id == $requestedResourceId)
+			if ($resource->Id == $requestedResourceId && $resource->GetStatusId() == ResourceStatus::AVAILABLE)
 			{
 				$bindableResourceData->SetReservationResource($resource);
 			}
@@ -224,13 +291,16 @@ class ReservationDetailsBinder implements IReservationComponentBinder
 		$this->page->SetRepeatType($this->reservationView->RepeatType);
 		$this->page->SetRepeatInterval($this->reservationView->RepeatInterval);
 		$this->page->SetRepeatMonthlyType($this->reservationView->RepeatMonthlyType);
+		$this->page->SetCustomRepeatDates($this->reservationView->CustomRepeatDates);
 
-		if ($this->reservationView->RepeatTerminationDate != null)
+		if ($this->reservationView->RepeatTerminationDate != null && $this->reservationView->RepeatTerminationDate->Timestamp() != 0)
 		{
 			$this->page->SetRepeatTerminationDate($this->reservationView->RepeatTerminationDate->ToTimezone($initializer->GetTimezone()));
 		}
+		else {
+			$this->page->SetRepeatTerminationDate($this->reservationView->EndDate);
+		}
 		$this->page->SetRepeatWeekdays($this->reservationView->RepeatWeekdays);
-
 
 		$participants = $this->reservationView->Participants;
 		$invitees = $this->reservationView->Invitees;
@@ -254,6 +324,7 @@ class ReservationDetailsBinder implements IReservationComponentBinder
 		$canBeEdited = $this->reservationAuthorization->CanEdit($this->reservationView, $currentUser);
 		$this->page->SetIsEditable($canBeEdited);
 		$this->page->SetIsApprovable($this->reservationAuthorization->CanApprove($this->reservationView, $currentUser));
+		$this->page->SetRequiresApproval($this->reservationView->RequiresApproval());
 
 		$this->page->SetAttachments($this->reservationView->Attachments);
 
@@ -277,9 +348,13 @@ class ReservationDetailsBinder implements IReservationComponentBinder
 		$this->page->SetCheckInRequired(false);
 		$this->page->SetCheckOutRequired(false);
 		$this->page->SetAutoReleaseMinutes(null);
-		$this->SetCheckinRequired();
-		$this->SetCheckoutRequired();
-		$this->SetAutoReleaseMinutes();
+		if ($canBeEdited) {
+            $this->SetCheckinRequired();
+            $this->SetCheckoutRequired();
+            $this->SetAutoReleaseMinutes();
+        }
+
+        $this->page->SetTermsAccepted($this->reservationView->HasAcceptedTerms);
 	}
 
 	private function IsCurrentUserParticipating($currentUserId)

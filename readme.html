@@ -6,21 +6,214 @@
 <body>
 <h1>Welcome to Booked Scheduler!</h1>
 
+<h2>Hosting</h2>
+<div>We offer professional Booked hosting direct from the authors. Let us handle the installation and maintenance of Booked.</div>
+<div><a href="https://www.bookedscheduler.com/free-trial-signup">Start a 30 day free trial now!</a></div>
+
 <h2>Prerequisites</h2>
 <ul>
-	<li>PHP 5.3 or greater</li>
-	<li>MySQL 5.0 or greater</li>
+	<li>PHP 7.0 or greater</li>
+	<li>MySQL 5.5 or greater</li>
 	<li>Web server (Apache, IIS)</li>
 </ul>
 
 <h2>Installation instructions</h2>
-<a href="readme_installation.html">Full install instructions</a><br/>
-<a href="readme_installation.html#upgrading">Upgrading</a>
+<a href="https://www.bookedscheduler.com/help/installation">Full install instructions</a><br/>
 
 <h2>General Application Help</h2>
 Booked application help is available from the Help menu item.
 
 <h2>Release Notes</h2>
+
+<h4>2.8.4</h4>
+<ul>
+    <li>Allow reservations on the schedule to be filtered by owner or participant</li>
+    <li>Include participant list in reports output</li>
+    <li>Add resource concurrency to resource import and export</li>
+    <li>Bugfixes</li>
+</ul>
+
+<h4>2.8.3</h4>
+<ul>
+    <li>Do not require logging in to set up resource tablet display</li>
+    <li>Bugfixes</li>
+</ul>
+
+<h4>2.8.2</h4>
+<ul>
+    <li>Added the ability to set a limit on the number of concurrent reservations per resource</li>
+    <li>Removed the ability to set a schedule as allowing unlimited concurrent reservations per resource</li>
+    <li>Bugfixes</li>
+</ul>
+
+<h4>2.8.1</h4>
+<ul>
+    <li>Added ability to limit the total number of concurrent reservations for a schedule</li>
+    <li>Added ability to limit the number of resources per reservation for a schedule</li>
+</ul>
+
+<h4>2.7.8</h4>
+<ul>
+    <li>Added ability to repeat a reservation on non-sequential dates</li>
+    <li>Updated PayPal API to version 2</li>
+    <li>Added option to sync group membership when logging in via SAML</li>
+    <li>Updated Portuguese, German, and Spanish translations</li>
+    <li>Updated PhpCAS to 1.3.8</li>
+    <li>MySQL 8+ compatibility</li>
+    <li>Bugfixes</li>
+</ul>
+
+<h4>2.7.7</h4>
+<ul>
+    <li>Added a configuration option to show whether a reservation is new or updated for a period of time</li>
+    <li>Added Hungarian translation</li>
+    <li>Bugfixes</li>
+</ul>
+
+<h4>2.7.6</h4>
+<ul>
+    <li>Added email notifications when participants of a reservation accept or decline invites</li>
+    <li>Added reservation waitlist signup on view reservation page</li>
+    <li>Added ability to restrict guests from using tablet view</li>
+    <li>Notify users if the creation of a blackout time deletes their reservation</li>
+    <li>Updated Portuguese and Finnish translations</li>
+    <li>Bugfixes</li>
+</ul>
+
+<h4>2.7.5</h4>
+<ul>
+    <li>Added utilization reports</li>
+    <li>Added ability to find a specific time</li>
+    <li>Added recurring reservation series ending emails</li>
+    <li>Added credits to reservation emails</li>
+    <li>Added link to add to Google Calendar to reservation emails</li>
+    <li>Bugfixes</li>
+</ul>
+
+<h4>2.7.4</h4>
+<ul>
+    <li>Added availability view to reservation page</li>
+    <li>Added participant list to reservation emails</li>
+    <li>Redesign of resource tablet display</li>
+    <li>Added ability to search for reservations that missed checkin/checkout</li>
+    <li>Bugfixes</li>
+</ul>
+
+<h4>2.7.3</h4>
+<ul>
+    <li>Added ability to set user status on CSV import</li>
+    <li>Added ability to share reservation details via email</li>
+    <li>Added ability set the resources, groups, and schedules a group can administer from Groups tool</li>
+    <li>Bugfixes</li>
+</ul>
+
+<h4>2.7.2</h4>
+<ul>
+    <li>Added monitor display view</li>
+    <li>Resolved accessibility issues</li>
+    <li>Added Serbian</li>
+    <li>Bugfixes</li>
+</ul>
+
+<h4>2.7.1</h4>
+<ul>
+    <li>Added ability to purchase credits</li>
+    <li>Added credit usage to the reservation page</li>
+    <li>Added ability to set comma or semicolon delimited admin.email configuration setting to allow multiple admin emails</li>
+    <li>Added ability to send a reservation to Google Calendar</li>
+    <li>Added ability to select a resource image while adding</li>
+    <li>Added ability to begin a reservation directly from Slack</li>
+    <li>Added ability to set default group membership</li>
+    <li>Added ability to require terms of service acknowledgment</li>
+    <li>Added ability to set login page announcements</li>
+    <li>Added ability to set schedule availability dates</li>
+    <li>Added ability to configure different minimum notice rules for reservation add, edit and delete</li>
+    <li>Added ability to allow multiple reservations on the same resource at the same time for a schedule</li>
+    <li>Added ability to set multiple resource images</li>
+    <li>Added ability to set view-only resource permissions</li>
+    <li>Added ability to sync group membership from LDAP and CAS</li>
+    <li>Added ability to set fully custom layout slots</li>
+    <li>Added blackouts to schedule and resource calendar view</li>
+    <li>Added view calendar page</li>
+    <li>Added ability to embed a Booked calendar view on an external website</li>
+    <li>Added ability to require reservation title and description</li>
+    <li>Added user groups to report output</li>
+    <li>Added ability to set custom favicon</li>
+    <li>Added ability to customize email messages</li>
+    <li>Added ability to bulk delete resources</li>
+    <li>Resource QR code will open ongoing reservation if it requires check in</li>
+    <li>Added ability to find an open recurring time</li>
+    <li>Upgraded jQuery to latest</li>
+    <li>Bugfixes</li>
+</ul>
+
+<h4>2.6.8</h4>
+<ul>
+    <li>Added ability to see real time availability when selecting additional resources</li>
+    <li>Added the ability to set a delete/reject reason</li>
+    <li>Added the ability to update users and resources on import from CSV</li>
+    <li>Allow setting phone, organization and position when creating a user from the admin section</li>
+    <li>Better highlight pending reservations on Dashboard and popups</li>
+    <li>Optimize JavaScript file loading for better page rendering times</li>
+    <li>Bugfixes</li>
+</ul>
+
+<h4>2.6.7</h4>
+<ul>
+    <li>Added real-time indication of additional resource availability in reservation screen</li>
+    <li>Added ability to search for reservations</li>
+    <li>Added ability to send user an email when an account is created for them</li>
+    <li>Added option to show captcha on login</li>
+    <li>Updated reCaptcha to use nocaptcha</li>
+    <li>If recurring start and end dates are not the same, then include both in the emails</li>
+    <li>Added Basque language</li>
+    <li>Added Thai language</li>
+    <li>Bugfixes</li>
+</ul>
+
+<h4>2.6.6</h4>
+<ul>
+    <li>Added ability to set default start and end reminders</li>
+    <li>Added ability to import resources from CSV</li>
+    <li>Added ability to export resources to CSV</li>
+    <li>Added ability to export users to CSV</li>
+    <li>Added ability to include custom attributes in user CSV import</li>
+    <li>Added ability to import reservations from CSV</li>
+    <li>Added ability to bulk delete users</li>
+    <li>Added ability to bulk delete reservations</li>
+    <li>Added ability to bulk delete blackouts</li>
+    <li>Added ability to drag and drop reservations from calendar views</li>
+    <li>Added ability to select multiple options for most report filters</li>
+    <li>Added password update API</li>
+    <li>Added ability to set number of past and future days to include for Atom and iCalendar subscriptions</li>
+    <li>Added ability to apply configured default homepage to existing users</li>
+    <li>Saved reports and exported reports will use same columns</li>
+    <li>Added credits to manage reservations and reports</li>
+    <li>Show if a reservation is pending approval on popups and edit page</li>
+    <li>Added config option to notify users if they missed their reservation check in time</li>
+    <li>Numerous security fixes</li>
+    <li>Bugfixes</li>
+</ul>
+
+<h4>2.6.5</h4>
+<ul>
+    <li>Ensure only one reminder email is sent per reservation when multiple resources are booked</li>
+    <li>Added Vietnamese</li>
+    <li>Added ability to automatically fill in blocked time slots based on gaps in available slots</li>
+    <li>Added ability to update a reservation before approving it</li>
+    <li>Added resource type filter to reports</li>
+    <li>Bugfixes</li>
+</ul>
+
+<h4>2.6.4</h4>
+<ul>
+    <li>Use resource color on availability dashboard</li>
+    <li>Display reservations for multiple resources as one item on dashboard</li>
+    <li>Better handling of dates on the reservation page when an entire day is unavailable</li>
+    <li>Allow view schedule to be changed to alternate schedule views</li>
+    <li>Upgrade PHPMailer</li>
+    <li>Bugfixes</li>
+</ul>
 
 <h4>2.6.3</h4>
 <ul>

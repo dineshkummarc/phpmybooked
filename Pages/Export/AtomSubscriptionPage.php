@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2013-2016 Nick Korbel
+Copyright 2013-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -56,9 +56,6 @@ class AtomSubscriptionPage extends Page implements ICalendarSubscriptionPage
 		return $this->GetQuerystring(QueryStringKeys::SUBSCRIPTION_KEY);
 	}
 
-	/**
-	 * @return string
-	 */
 	public function GetUserId()
 	{
 		return $this->GetQuerystring(QueryStringKeys::USER_ID);
@@ -73,11 +70,11 @@ class AtomSubscriptionPage extends Page implements ICalendarSubscriptionPage
 
 		$feed = new FeedWriter(ATOM);
 		$title = $config->GetKey(ConfigKeys::APP_TITLE);
-		$feed->setTitle("$title Reservations");
+		$feed->setTitle(Resources::GetInstance()->GetString('AtomFeedTitle', array($title)));
 		$url = $config->GetScriptUrl();
 		$feed->setLink($url);
 
-		$feed->setChannelElement('updated', date(DATE_ATOM , time()));
+		$lastUpdated = Date::Min();
 		$feed->setChannelElement('author', array('name'=>$title));
 
 		foreach ($this->reservations as $reservation)
@@ -89,56 +86,41 @@ class AtomSubscriptionPage extends Page implements ICalendarSubscriptionPage
 			$item->setDate($reservation->DateCreated->Timestamp());
 			$item->setDescription($this->FormatReservationDescription($reservation, ServiceLocator::GetServer()->GetUserSession()));
 
-//			sprintf('<div><span>Start</span> %s</div>
-//										  <div><span>End</span> %s</div>
-//										  <div><span>Organizer</span> %s</div>
-//										  <div><span>Description</span> %s</div>',
-//										  $reservation->DateStart->ToString(),
-//										  $reservation->DateEnd->ToString(),
-//										  $reservation->Organizer,
-//										  $reservation->Description));
 			$feed->addItem($item);
+
+			if ($reservation->DateCreated->GreaterThan($lastUpdated)) {
+                $lastUpdated = $reservation->DateCreated;
+            }
+            if ($reservation->LastModified != null && $reservation->LastModified->GreaterThan($lastUpdated)){
+			    $lastUpdated = $reservation->LastModified;
+            }
 		}
 
-		$feed->genarateFeed();
+        $feed->setChannelElement('updated', $lastUpdated->Format(DATE_ATOM));
+        $feed->genarateFeed();
 	}
 
-	/**
-	 * @param array|iCalendarReservationView[] $reservations
-	 */
 	public function SetReservations($reservations)
 	{
 		$this->reservations = $reservations;
 	}
 
-	/**
-	 * @return int
-	 */
 	public function GetScheduleId()
 	{
 		return $this->GetQuerystring(QueryStringKeys::SCHEDULE_ID);
 	}
 
-	/**
-	 * @return int
-	 */
 	public function GetResourceId()
 	{
 		return $this->GetQuerystring(QueryStringKeys::RESOURCE_ID);
 	}
 
-	/**
-	 * @return int
-	 */
 	public function GetAccessoryIds()
 	{
 		// no op
 	}
 
-	/**
-	 * @return string
-	 */
-	function GetResourceGroupId()
+    public function GetResourceGroupId()
 	{
 		return $this->GetQuerystring(QueryStringKeys::RESOURCE_GROUP_ID);
 	}
@@ -148,4 +130,14 @@ class AtomSubscriptionPage extends Page implements ICalendarSubscriptionPage
 		$factory = new SlotLabelFactory($user);
 		return $factory->Format($reservation->ReservationItemView, Configuration::Instance()->GetSectionKey(ConfigSection::RESERVATION_LABELS, ConfigKeys::RESERVATION_LABELS_RSS_DESCRIPTION));
 	}
+
+	public function GetPastNumberOfDays()
+    {
+        return $this->GetQuerystring(QueryStringKeys::SUBSCRIPTION_DAYS_PAST);
+    }
+
+    public function GetFutureNumberOfDays()
+    {
+        return $this->GetQuerystring(QueryStringKeys::SUBSCRIPTION_DAYS_FUTURE);
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2012-2016 Nick Korbel
+ * Copyright 2012-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -51,8 +51,9 @@ class ReportCell
 	 * @var ChartType|string|null
 	 */
 	private $chartColumnType;
+    private $chartGroup;
 
-	/**
+    /**
 	 * @param string $value
 	 * @param string|null $chartValue
 	 * @param ChartColumnType|string|null $chartColumnType
@@ -231,13 +232,27 @@ class ReportDateColumn extends ReportColumn
 
 	public function GetData($data)
 	{
-		return Date::FromDatabase($data)->ToTimezone($this->timezone)->Format($this->format);
+	    if (is_a($data, 'Date'))
+        {
+            $date = $data;
+        }
+        else{
+	        $date = Date::FromDatabase($data);
+        }
+		return $date->ToTimezone($this->timezone)->Format($this->format);
 	}
 
 	public function GetChartData($row, $key)
 	{
-		$format = Resources::GetInstance()->GetDateFormat(ResourceKeys::DATE_GENERAL);
-		return Date::FromDatabase($row[$key])->ToTimezone($this->timezone)->GetDate()->Format($format);
+        if (is_a($row[$key], 'Date'))
+        {
+            $date = $row[$key];
+        }
+        else{
+            $date = Date::FromDatabase($row[$key]);
+        }
+//		$format = Resources::GetInstance()->GetDateFormat(ResourceKeys::DATE_GENERAL);
+		return $date->ToTimezone($this->timezone)->GetDate()->ToIso();
 	}
 }
 
@@ -256,4 +271,22 @@ class ReportTimeColumn extends ReportColumn
 		$interval = new TimeInterval($data);
 		return $interval->ToString($this->includeTotalHours);
 	}
+}
+
+class ReportUtilizationColumn extends ReportColumn
+{
+	public function __construct($titleKey, ChartColumnDefinition $chartColumnDefinition)
+	{
+		parent::__construct($titleKey, $chartColumnDefinition);
+	}
+
+    public function GetData($data)
+    {
+       return "$data%";
+    }
+
+    public function GetChartData($row, $key)
+    {
+        return $row[$key];
+    }
 }

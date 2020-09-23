@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -21,7 +21,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 require_once(ROOT_DIR . 'Domain/Access/namespace.php' );
 require_once(ROOT_DIR . 'Pages/SecurePage.php');
 
-class AutoCompletePage extends SecurePage
+class AutoCompletePage extends Page
 {
 	private $listMethods = array();
 
@@ -32,6 +32,7 @@ class AutoCompletePage extends SecurePage
 	    $this->listMethods[AutoCompleteType::User] = 'GetUsers';
 	    $this->listMethods[AutoCompleteType::MyUsers] = 'GetMyUsers';
 	    $this->listMethods[AutoCompleteType::Group] = 'GetGroups';
+	    $this->listMethods[AutoCompleteType::Organization] = 'GetOrganizations';
 	}
 
 	public function PageLoad()
@@ -39,7 +40,7 @@ class AutoCompletePage extends SecurePage
 		$results = $this->GetResults($this->GetType(), $this->GetSearchTerm());
 
 		Log::Debug(sprintf('AutoComplete: %s results found for search type: %s, term: %s', count($results), $this->GetType(), $this->GetSearchTerm()));
-
+        
 		$this->SetJson($results);
 	}
 
@@ -53,7 +54,7 @@ class AutoCompletePage extends SecurePage
 
 		Log::Debug("AutoComplete for type: $type not defined");
 
-		return '';
+		return array();
 	}
 
 	public function GetType()
@@ -76,19 +77,37 @@ class AutoCompletePage extends SecurePage
 		{
 			return $this->GetGroupUsers($this->GetQuerystring(QueryStringKeys::GROUP_ID));
 		}
+
+        $onlyActive = false;
+		$activeQS = $this->GetQuerystring(QueryStringKeys::ACCOUNT_STATUS);
+		if ($activeQS == AccountStatus::ACTIVE) {
+		    $onlyActive = true;
+        }
 		$filter = new SqlFilterLike(ColumnNames::FIRST_NAME, $term);
 		$filter->_Or(new SqlFilterLike(ColumnNames::LAST_NAME, $term));
 		$filter->_Or(new SqlFilterLike(ColumnNames::EMAIL, $term));
-
-		$users = array();
+		$filter->_Or(new SqlFilterLike(ColumnNames::USERNAME, $term));
 
 		$r = new UserRepository();
-		$results = $r->GetList(1, PageInfo::All, null, null, $filter, AccountStatus::ACTIVE)->Results();
+		$currentUser = ServiceLocator::GetServer()->GetUserSession();
+		$user = $r->LoadById($currentUser->UserId);
 
+        $status = AccountStatus::ACTIVE;
+		if (!$onlyActive && ($currentUser->IsAdmin || $currentUser->IsGroupAdmin))
+        {
+            $status = AccountStatus::ALL;
+        }
+		$results = $r->GetList(1, PageInfo::All, null, null, $filter, $status)->Results();
+
+        $hideUserDetails = Configuration::Instance()->GetSectionKey(ConfigSection::PRIVACY, ConfigKeys::PRIVACY_HIDE_USER_DETAILS, new BooleanConverter());
+		$users = array();
 		/** @var $result UserItemView */
 		foreach($results as $result)
 		{
-			$users[] = new AutocompleteUser($result->Id, $result->First, $result->Last, $result->Email, $result->Username, $result->CurrentCreditCount);
+		    if (!$hideUserDetails || $result->Id == $currentUser->UserId || $user->IsGroupAdminFor($result->GroupIds) || $currentUser->IsAdmin)
+            {
+                $users[] = new AutocompleteUser($result->Id, $result->First, $result->Last, $result->Email, $result->Username, $result->CurrentCreditCount);
+            }
 		}
 
 		return $users;
@@ -108,7 +127,7 @@ class AutoCompletePage extends SecurePage
 	private function GetMyUsers($term)
 	{
 		$userSession = ServiceLocator::GetServer()->GetUserSession();
-		if ($userSession->IsAdmin)
+		if ($userSession->IsAdmin || $userSession->IsResourceAdmin || $userSession->IsScheduleAdmin)
 		{
 			return $this->GetUsers($term);
 		}
@@ -158,6 +177,24 @@ class AutoCompletePage extends SecurePage
 
 		return array_values($users);
 	}
+
+	private function GetOrganizations($term) {
+
+        $filter = new SqlFilterLike(ColumnNames::ORGANIZATION, $term);
+
+        $r = new UserRepository();
+        $results = $r->GetList(1, PageInfo::All, null, null, $filter)->Results();
+
+        $organizations = array();
+        /** @var $result UserItemView */
+        foreach($results as $result)
+        {
+
+            $organizations[] = $result->Organization;
+        }
+
+        return $organizations;
+    }
 }
 
 class AutocompleteUser
@@ -169,8 +206,9 @@ class AutocompleteUser
 	public $Email;
 	public $UserName;
 	public $CurrentCreditCount;
+    public $DisplayName;
 
-	public function __construct($userId, $firstName, $lastName, $email, $userName, $currentCreditCount = null)
+    public function __construct($userId, $firstName, $lastName, $email, $userName, $currentCreditCount = null)
 	{
 		$full = new FullName($firstName, $lastName);
 		$this->Id = $userId;
@@ -180,7 +218,7 @@ class AutocompleteUser
 		$this->Email = $email;
 		$this->UserName = $userName;
 		$this->DisplayName = "{$full} ($email)";
-        $this->CurrentCreditCount = $currentCreditCount;
+        $this->CurrentCreditCount = floatval($currentCreditCount);
 	}
 }
 
@@ -189,4 +227,5 @@ class AutoCompleteType
 	const User = 'user';
 	const Group = 'group';
 	const MyUsers = 'myUsers';
+	const Organization = 'organization';
 }

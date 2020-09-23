@@ -15,7 +15,7 @@
 // | Author: Bertrand Mansion <bmansion@mamasam.com>                     |
 // +---------------------------------------------------------------------+
 //
-// $Id: Container.php,v 1.41 2006/05/30 06:37:28 aashley Exp $
+// $Id: Container.php 306597 2010-12-24 05:11:09Z aharvey $
 
 //require_once 'Config.php';
 
@@ -82,7 +82,7 @@ class Config_Container {
     * @param  string  $content    Content of container object
     * @param  array   $attributes Array of attributes for container object
     */
-    function Config_Container($type = 'section', $name = '', $content = '', $attributes = null)
+    function __construct($type = 'section', $name = '', $content = '', $attributes = null)
     {
         $this->type       = $type;
         $this->name       = $name;
@@ -694,7 +694,7 @@ class Config_Container {
         $array[$this->name] = array();
         switch ($this->type) {
             case 'directive':
-                if ($useAttr && count($this->attributes) > 0) {
+                if ($useAttr && is_array($this->attributes) && count($this->attributes) > 0) {
                     $array[$this->name]['#'] = $this->content;
                     $array[$this->name]['@'] = $this->attributes;
                 } else {
@@ -702,7 +702,7 @@ class Config_Container {
                 }
                 break;
             case 'section':
-                if ($useAttr && count($this->attributes) > 0) {
+                if ($useAttr && is_array($this->attributes) && count($this->attributes) > 0) {
                     $array[$this->name]['@'] = $this->attributes;
                 }
                 if ($count = count($this->children)) {
@@ -750,7 +750,7 @@ class Config_Container {
         }
         $includeFile = $GLOBALS['CONFIG_TYPES'][$configType][0];
         $className = $GLOBALS['CONFIG_TYPES'][$configType][1];
-        require_once($includeFile);
+        include_once($includeFile);
 
         $writeMethodName = (version_compare(phpversion(), '5', '<')) ? 'writedatasrc' : 'writeDatasrc';
         if (in_array($writeMethodName, get_class_methods($className))) {

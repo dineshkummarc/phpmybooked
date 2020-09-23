@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2011-2016 Nick Korbel
+ * Copyright 2011-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -18,173 +18,163 @@
  * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 require_once(ROOT_DIR . 'Pages/ParticipationPage.php');
 require_once(ROOT_DIR . 'Domain/Access/namespace.php');
 require_once(ROOT_DIR . 'lib/Application/Reservation/Validation/namespace.php');
+require_once(ROOT_DIR . 'lib/Application/Reservation/Notification/namespace.php');
 
 class ParticipationPresenter
 {
-	/**
-	 * @var IParticipationPage
-	 */
-	private $page;
+    /**
+     * @var IParticipationPage
+     */
+    private $page;
 
-	/**
-	 * @var IReservationRepository
-	 */
-	private $reservationRepository;
+    /**
+     * @var IReservationRepository
+     */
+    private $reservationRepository;
 
-	/**
-	 * @var IReservationViewRepository
-	 */
-	private $reservationViewRepository;
+    /**
+     * @var IReservationViewRepository
+     */
+    private $reservationViewRepository;
+    /**
+     * @var IParticipationNotification
+     */
+    private $participationNotification;
 
-	public function __construct(IParticipationPage $page,
-								IReservationRepository $reservationRepository,
-								IReservationViewRepository $reservationViewRepository)
-	{
-		$this->page = $page;
-		$this->reservationRepository = $reservationRepository;
-		$this->reservationViewRepository = $reservationViewRepository;
-	}
+    public function __construct(IParticipationPage $page,
+                                IReservationRepository $reservationRepository,
+                                IReservationViewRepository $reservationViewRepository,
+                                IParticipationNotification $participationNotification)
+    {
+        $this->page = $page;
+        $this->reservationRepository = $reservationRepository;
+        $this->reservationViewRepository = $reservationViewRepository;
+        $this->participationNotification = $participationNotification;
+    }
 
-	public function PageLoad()
-	{
-		$invitationAction = $this->page->GetInvitationAction();
+    public function PageLoad()
+    {
+        $invitationAction = $this->page->GetInvitationAction();
 
-		if (!empty($invitationAction))
-		{
-			$resultString = $this->HandleInvitationAction($invitationAction);
+        if (!empty($invitationAction)) {
+            $resultString = $this->HandleInvitationAction($invitationAction);
 
-			if ($this->page->GetResponseType() == 'json')
-			{
-				$this->page->DisplayResult($resultString);
-				return;
-			}
+            if ($this->page->GetResponseType() == 'json') {
+                $this->page->DisplayResult($resultString);
+                return;
+            }
 
-			$this->page->SetResult($resultString);
-		}
+            $this->page->SetResult($resultString);
+        }
 
-		$startDate = Date::Now();
-		$endDate = $startDate->AddDays(30);
-		$user = ServiceLocator::GetServer()->GetUserSession();
-		$userId = $user->UserId;
+        $startDate = Date::Now();
+        $endDate = $startDate->AddDays(30);
+        $user = ServiceLocator::GetServer()->GetUserSession();
+        $userId = $user->UserId;
 
-		$reservations = $this->reservationViewRepository->GetReservations($startDate, $endDate, $userId, ReservationUserLevel::INVITEE);
+        $reservations = $this->reservationViewRepository->GetReservations($startDate, $endDate, $userId, ReservationUserLevel::INVITEE);
 
-		$this->page->SetTimezone($user->Timezone);
-		$this->page->BindReservations($reservations);
-		$this->page->DisplayParticipation();
-	}
+        $this->page->SetTimezone($user->Timezone);
+        $this->page->BindReservations($reservations);
+        $this->page->DisplayParticipation();
+    }
 
-	/**
-	 * @param $invitationAction
-	 * @return string|null
-	 */
-	private function HandleInvitationAction($invitationAction)
-	{
-		$referenceNumber = $this->page->GetInvitationReferenceNumber();
-		$userId = $this->page->GetUserId();
+    /**
+     * @param $invitationAction
+     * @return string|null
+     */
+    private function HandleInvitationAction($invitationAction)
+    {
+        $user = ServiceLocator::GetServer()->GetUserSession();
 
-		Log::Debug('Invitation action %s for user %s and reference number %s', $invitationAction, $userId, $referenceNumber);
+        $referenceNumber = $this->page->GetInvitationReferenceNumber();
+        $userId = $this->page->GetUserId();
 
-		$series = $this->reservationRepository->LoadByReferenceNumber($referenceNumber);
+        Log::Debug('Invitation action %s for user %s and reference number %s', $invitationAction, $userId, $referenceNumber);
 
-		if ($invitationAction == InvitationAction::Join || $invitationAction == InvitationAction::CancelInstance)
-		{
-			$rules = array(new ReservationStartTimeRule(new ScheduleRepository()), new ResourceMinimumNoticeCurrentInstanceRule(), new ResourceMaximumNoticeCurrentInstanceRule());
-		}
-		else
-		{
-			$rules = array(new ReservationStartTimeRule(new ScheduleRepository()), new ResourceMinimumNoticeRule(), new ResourceMaximumNoticeRule());
-		}
+        $series = $this->reservationRepository->LoadByReferenceNumber($referenceNumber);
 
-		/** @var IReservationValidationRule $rule */
-		foreach ($rules as $rule)
-		{
-			$ruleResult = $rule->Validate($series, null);
+        if ($invitationAction == InvitationAction::Join || $invitationAction == InvitationAction::CancelInstance) {
+            $rules = array(new ReservationStartTimeRule(new ScheduleRepository()), new ResourceMinimumNoticeCurrentInstanceRuleUpdate($user), new ResourceMaximumNoticeCurrentInstanceRule($user));
+        }
+        else {
+            $rules = array(new ReservationStartTimeRule(new ScheduleRepository()), new ResourceMinimumNoticeRuleAdd($user), new ResourceMaximumNoticeRule($user));
+        }
 
-			if (!$ruleResult->IsValid())
-			{
-				return $ruleResult->ErrorMessage();
-			}
-		}
+        /** @var IReservationValidationRule $rule */
+        foreach ($rules as $rule) {
+            $ruleResult = $rule->Validate($series, null);
 
-		$error = null;
-		if ($invitationAction == InvitationAction::Accept)
-		{
-			$series->AcceptInvitation($userId);
+            if (!$ruleResult->IsValid()) {
+                return $ruleResult->ErrorMessage();
+            }
+        }
 
-			$error = $this->CheckCapacityAndReturnAnyError($series);
-		}
-		if ($invitationAction == InvitationAction::Decline)
-		{
-			$series->DeclineInvitation($userId);
-		}
-		if ($invitationAction == InvitationAction::CancelInstance)
-		{
-			$series->CancelInstanceParticipation($userId);
-		}
-		if ($invitationAction == InvitationAction::CancelAll)
-		{
-			$series->CancelAllParticipation($userId);
-		}
-		if ($invitationAction == InvitationAction::Join)
-		{
-			if (!$series->GetAllowParticipation())
-			{
-				$error = Resources::GetInstance()->GetString('ParticipationNotAllowed');
-			}
-			else
-			{
-				$series->JoinReservation($userId);
-				$error = $this->CheckCapacityAndReturnAnyError($series);
-			}
-		}
-		if ($invitationAction == InvitationAction::JoinAll)
-		{
-			if (!$series->GetAllowParticipation())
-			{
-				$error = Resources::GetInstance()->GetString('ParticipationNotAllowed');
-			}
-			else
-			{
-				$series->JoinReservationSeries($userId);
-				$error = $this->CheckCapacityAndReturnAnyError($series);
-			}
-		}
+        $error = null;
+        if ($invitationAction == InvitationAction::Accept) {
+            $series->AcceptInvitation($userId);
 
-		$this->reservationRepository->Update($series);
+            $error = $this->CheckCapacityAndReturnAnyError($series);
+        }
+        if ($invitationAction == InvitationAction::Decline) {
+            $series->DeclineInvitation($userId);
+        }
+        if ($invitationAction == InvitationAction::CancelInstance) {
+            $series->CancelInstanceParticipation($userId);
+        }
+        if ($invitationAction == InvitationAction::CancelAll) {
+            $series->CancelAllParticipation($userId);
+        }
+        if ($invitationAction == InvitationAction::Join) {
+            if (!$series->GetAllowParticipation()) {
+                $error = Resources::GetInstance()->GetString('ParticipationNotAllowed');
+            }
+            else {
+                $series->JoinReservation($userId);
+                $error = $this->CheckCapacityAndReturnAnyError($series);
+            }
+        }
+        if ($invitationAction == InvitationAction::JoinAll) {
+            if (!$series->GetAllowParticipation()) {
+                $error = Resources::GetInstance()->GetString('ParticipationNotAllowed');
+            }
+            else {
+                $series->JoinReservationSeries($userId);
+                $error = $this->CheckCapacityAndReturnAnyError($series);
+            }
+        }
 
-		return $error;
-	}
+        if (empty($error)) {
+            $this->reservationRepository->Update($series);
+            $this->participationNotification->Notify($series, $userId, $invitationAction);
+        }
 
-	/**
-	 * @param ExistingReservationSeries $series
-	 * @return mixed|null|string
-	 */
-	private function CheckCapacityAndReturnAnyError($series)
-	{
-		foreach ($series->AllResources() as $resource)
-		{
-			if (!$resource->HasMaxParticipants())
-			{
-				continue;
-			}
+        return $error;
+    }
 
-			/** @var $instance Reservation */
-			foreach ($series->Instances() as $instance)
-			{
-				$numberOfParticipants = count($instance->Participants()) + count($instance->ParticipatingGuests());
+    /**
+     * @param ExistingReservationSeries $series
+     * @return mixed|null|string
+     */
+    private function CheckCapacityAndReturnAnyError($series)
+    {
+        foreach ($series->AllResources() as $resource) {
+            if (!$resource->HasMaxParticipants()) {
+                continue;
+            }
 
-				if ($numberOfParticipants > $resource->GetMaxParticipants())
-				{
-					return Resources::GetInstance()->GetString('MaxParticipantsError', array($resource->GetName(), $resource->GetMaxParticipants()));
-				}
-			}
-		}
+            /** @var $instance Reservation */
+            foreach ($series->Instances() as $instance) {
+                $numberOfParticipants = count($instance->Participants()) + count($instance->ParticipatingGuests());
+                if ($numberOfParticipants > $resource->GetMaxParticipants()) {
+                    return Resources::GetInstance()->GetString('MaxParticipantsError', array($resource->GetName(), $resource->GetMaxParticipants()));
+                }
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 }

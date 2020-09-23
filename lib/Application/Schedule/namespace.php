@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -41,3 +41,5 @@ require_once(ROOT_DIR . 'lib/Application/Schedule/ScheduleLayoutSerializable.php
 require_once(ROOT_DIR . 'lib/Application/Schedule/DailyReservationSummary.php');
 require_once(ROOT_DIR . 'lib/Application/Schedule/ScheduleResourceFilter.php');
 require_once(ROOT_DIR . 'lib/Application/Schedule/ScheduleService.php');
+require_once(ROOT_DIR . 'lib/Application/Schedule/SchedulePermissionService.php');
+require_once(ROOT_DIR . 'lib/Application/Schedule/DisplaySlotFactory.php');

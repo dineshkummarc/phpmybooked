@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2012-2016 Nick Korbel
+ * Copyright 2012-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -58,45 +58,36 @@ class CustomReport implements IReport
 						$this->cols->AddAttribute(CustomAttributeCategory::RESERVATION, $attribute->Id(), $attribute->Label());
 					}
 				}
+				elseif ($columnName == ColumnNames::USER_ATTRIBUTE_LIST)
+				{
+					$attributes = $attributeRepository->GetByCategory(CustomAttributeCategory::USER);
+
+					foreach ($attributes as $attribute)
+					{
+						$this->cols->AddAttribute(CustomAttributeCategory::USER, $attribute->Id(), $attribute->Label());
+					}
+				}
+				elseif ($columnName == ColumnNames::RESOURCE_ATTRIBUTE_LIST)
+				{
+					$attributes = $attributeRepository->GetByCategory(CustomAttributeCategory::RESOURCE);
+
+					foreach ($attributes as $attribute)
+					{
+						$this->cols->AddAttribute(CustomAttributeCategory::RESOURCE, $attribute->Id(), $attribute->Label());
+					}
+				}
+				elseif ($columnName == ColumnNames::RESOURCE_TYPE_ATTRIBUTE_LIST)
+				{
+					$attributes = $attributeRepository->GetByCategory(CustomAttributeCategory::RESOURCE_TYPE);
+
+					foreach ($attributes as $attribute)
+					{
+						$this->cols->AddAttribute(CustomAttributeCategory::RESOURCE_TYPE, $attribute->Id(), $attribute->Label());
+					}
+				}
 				else
 				{
-					if ($columnName == ColumnNames::USER_ATTRIBUTE_LIST)
-					{
-						$attributes = $attributeRepository->GetByCategory(CustomAttributeCategory::USER);
-
-						foreach ($attributes as $attribute)
-						{
-							$this->cols->AddAttribute(CustomAttributeCategory::USER, $attribute->Id(), $attribute->Label());
-						}
-					}
-					else
-					{
-						if ($columnName == ColumnNames::RESOURCE_ATTRIBUTE_LIST)
-						{
-							$attributes = $attributeRepository->GetByCategory(CustomAttributeCategory::RESOURCE);
-
-							foreach ($attributes as $attribute)
-							{
-								$this->cols->AddAttribute(CustomAttributeCategory::RESOURCE, $attribute->Id(), $attribute->Label());
-							}
-						}
-						else
-						{
-							if ($columnName == ColumnNames::RESOURCE_TYPE_ATTRIBUTE_LIST)
-							{
-								$attributes = $attributeRepository->GetByCategory(CustomAttributeCategory::RESOURCE_TYPE);
-
-								foreach ($attributes as $attribute)
-								{
-									$this->cols->AddAttribute(CustomAttributeCategory::RESOURCE_TYPE, $attribute->Id(), $attribute->Label());
-								}
-							}
-							else
-							{
-								$this->cols->Add($columnName);
-							}
-						}
-					}
+					$this->cols->Add($columnName);
 				}
 			}
 		}

@@ -1,5 +1,5 @@
 /**
- Copyright 2012-2016 Nick Korbel
+ Copyright 2012-2020 Nick Korbel
 
  This file is part of Booked Scheduler.
 
@@ -18,106 +18,111 @@
  */
 
 $.fn.bindResourceDetails = function (resourceId, options) {
-	var opts = $.extend({preventClick: false, position:'left top'}, options);
+    var opts = $.extend({preventClick: false, position: 'left bottom'}, options);
 
-	$(this).removeAttr('resource-details-bound');
-	bindResourceDetails($(this));
+    var owl;
 
-	function getDiv() {
-		if ($('#resourceDetailsDiv').length <= 0)
-		{
-			return $('<div id="resourceDetailsDiv"/>').appendTo('body');
-		}
-		else
-		{
-			return $('#resourceDetailsDiv');
-		}
-	}
+    var showEvent = $(this).data('show-event');
+    if (!showEvent) {
+        showEvent = 'mouseenter';
+    }
 
-	function hideDiv() {
-		var tag = getDiv();
-		var timeoutId = setTimeout(function () {
-			tag.hide();
-		}, 500);
-		tag.data('timeoutId', timeoutId);
-	}
+    $(this).removeAttr('resource-details-bound');
+    bindResourceDetails($(this));
 
-	function bindResourceDetails(resourceNameElement) {
-		if (resourceNameElement.attr('resource-details-bound') === '1')
-		{
-			return;
-		}
+    function getDiv() {
+        if ($('#resourceDetailsDiv').length <= 0) {
+            return $('<div id="resourceDetailsDiv"/>').appendTo('body');
+        }
+        else {
+            return $('#resourceDetailsDiv');
+        }
+    }
 
-		if (opts.preventClick)
-		{
-			resourceNameElement.click(function (e) {
-				e.preventDefault();
-			});
-		}
+    function hideDiv() {
+        var tag = getDiv();
+        var timeoutId = setTimeout(function () {
+            tag.hide();
+        }, 500);
+        tag.data('timeoutId', timeoutId);
+    }
 
-		var tag = getDiv();
+    function bindResourceDetails(resourceNameElement) {
+        if (resourceNameElement.attr('resource-details-bound') === '1') {
+            return;
+        }
 
-		tag.mouseenter(function () {
-			clearTimeout(tag.data('timeoutId'));
-		}).mouseleave(function () {
-			hideDiv();
-		});
+        if (opts.preventClick) {
+            resourceNameElement.click(function (e) {
+                e.preventDefault();
+            });
+        }
 
-		var hoverTimer;
+        var tag = getDiv();
 
-		resourceNameElement.mouseenter(function () {
-			if (hoverTimer)
-			{
-				clearTimeout(hoverTimer);
-				hoverTimer = null;
-			}
+        tag.mouseenter(function () {
+            clearTimeout(tag.data('timeoutId'));
+        }).mouseleave(function () {
+            hideDiv();
+        });
 
-			hoverTimer = setTimeout(function () {
+        var hoverTimer;
 
-				var tag = getDiv();
-				clearTimeout(tag.data('timeoutId'));
+        resourceNameElement.on(showEvent, function () {
+            if (hoverTimer) {
+                clearTimeout(hoverTimer);
+                hoverTimer = null;
+            }
 
-				var data = tag.data('resourcePopup' + resourceId);
-				if (data != null)
-				{
-					showData(data);
-				}
-				else
-				{
-					$.ajax({
-						url: 'ajax/resource_details.php?rid=' + resourceId,
-						type: 'GET',
-						cache: true,
-						beforeSend: function () {
-							tag.html('Loading...').show();
-							tag.position({my: 'left bottom', at: opts.position, of: resourceNameElement});
-						},
-						error: tag.html('Error loading resource data!').show(),
-						success: function (data, textStatus, jqXHR) {
-							tag.data('resourcePopup' + resourceId, data);
-							showData(data);
-						}
-					});
-				}
+            hoverTimer = setTimeout(function () {
 
-				function showData(data) {
-					tag.html(data).show();
-					tag.find('.hideResourceDetailsPopup').click(function (e) {
-						e.preventDefault();
-						hideDiv();
-					});
-					tag.position({my: 'left bottom', at: opts.position, of: resourceNameElement});
-				}
-			}, 500);
-		}).mouseleave(function () {
-			if (hoverTimer)
-			{
-				clearTimeout(hoverTimer);
-				hoverTimer = null;
-			}
-			hideDiv();
-		});
+                var tag = getDiv();
+                clearTimeout(tag.data('timeoutId'));
 
-		resourceNameElement.attr('resource-details-bound', '1');
-	}
+                var data = tag.data('resourcePopup' + resourceId);
+                if (data != null) {
+                    showData(data);
+                }
+                else {
+                    $.ajax({
+                        url: 'ajax/resource_details.php?rid=' + resourceId,
+                        type: 'GET',
+                        cache: true,
+                        beforeSend: function () {
+                            tag.html('Loading...').show();
+                            tag.position({my: 'left top', at: opts.position, of: resourceNameElement});
+                        },
+                        error: tag.html('Error loading resource data!').show(),
+                        success: function (data, textStatus, jqXHR) {
+                            tag.data('resourcePopup' + resourceId, data);
+                            showData(data);
+                        }
+                    });
+                }
+
+                function showData(data) {
+                    tag.html(data).show();
+                    tag.find('.hideResourceDetailsPopup').click(function (e) {
+                        e.preventDefault();
+                        hideDiv();
+                    });
+                    tag.position({my: 'left top', at: opts.position, of: resourceNameElement});
+                    if (typeof '' !== "owlCarousel") {
+                        owl = $(".owl-carousel");
+                        owl.owlCarousel({
+                            items: 1
+                        });
+                    }
+                }
+            }, 500);
+        }).mouseleave(function () {
+            if (hoverTimer) {
+                clearTimeout(hoverTimer);
+                hoverTimer = null;
+            }
+            hideDiv();
+        });
+
+        resourceNameElement.attr('resource-details-bound', '1');
+    }
 };

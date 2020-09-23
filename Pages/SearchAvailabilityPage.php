@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2016 Nick Korbel
+ * Copyright 2017-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -25,7 +25,7 @@ require_once(ROOT_DIR . 'Pages/ActionPage.php');
 require_once(ROOT_DIR . 'lib/Application/Schedule/namespace.php');
 require_once(ROOT_DIR . 'Domain/Access/namespace.php');
 
-interface ISearchAvailabilityPage extends IActionPage
+interface ISearchAvailabilityPage extends IActionPage, IRepeatOptionsComposite
 {
     /**
      * @param ResourceDto[] $resources
@@ -101,6 +101,21 @@ interface ISearchAvailabilityPage extends IActionPage
      * @param Attribute[] $attributes
      */
     public function SetResourceTypeAttributes($attributes);
+
+    /**
+     * @return string|null
+     */
+    public function GetStartTime();
+
+    /**
+     * @return string|null
+     */
+    public function GetEndTime();
+
+    /**
+     * @return bool
+     */
+    public function SearchingSpecificTime();
 }
 
 class SearchAvailabilityPage extends ActionPage implements ISearchAvailabilityPage
@@ -124,6 +139,7 @@ class SearchAvailabilityPage extends ActionPage implements ISearchAvailabilityPa
 
         $this->Set('Today', Date::Now()->ToTimezone($user->Timezone));
         $this->Set('Tomorrow', Date::Now()->AddDays(1)->ToTimezone($user->Timezone));
+        $this->Set('TimeFormat', Resources::GetInstance()->GetDateFormat('timepicker'));
     }
 
     public function ProcessAction()
@@ -222,5 +238,99 @@ class SearchAvailabilityPage extends ActionPage implements ISearchAvailabilityPa
     public function SetResourceTypeAttributes($attributes)
     {
         $this->Set('ResourceTypeAttributes', $attributes);
+    }
+
+    public function GetRepeatType()
+    {
+        return $this->GetForm(FormKeys::REPEAT_OPTIONS);
+    }
+
+    public function GetRepeatInterval()
+    {
+        return $this->GetForm(FormKeys::REPEAT_EVERY);
+    }
+
+    public function GetRepeatWeekdays()
+    {
+        $days = array();
+
+        $sun = $this->GetForm(FormKeys::REPEAT_SUNDAY);
+        if (!empty($sun))
+        {
+            $days[] = 0;
+        }
+
+        $mon = $this->GetForm(FormKeys::REPEAT_MONDAY);
+        if (!empty($mon))
+        {
+            $days[] = 1;
+        }
+
+        $tue = $this->GetForm(FormKeys::REPEAT_TUESDAY);
+        if (!empty($tue))
+        {
+            $days[] = 2;
+        }
+
+        $wed = $this->GetForm(FormKeys::REPEAT_WEDNESDAY);
+        if (!empty($wed))
+        {
+            $days[] = 3;
+        }
+
+        $thu = $this->GetForm(FormKeys::REPEAT_THURSDAY);
+        if (!empty($thu))
+        {
+            $days[] = 4;
+        }
+
+        $fri = $this->GetForm(FormKeys::REPEAT_FRIDAY);
+        if (!empty($fri))
+        {
+            $days[] = 5;
+        }
+
+        $sat = $this->GetForm(FormKeys::REPEAT_SATURDAY);
+        if (!empty($sat))
+        {
+            $days[] = 6;
+        }
+
+        return $days;
+    }
+
+    public function GetRepeatMonthlyType()
+    {
+        return $this->GetForm(FormKeys::REPEAT_MONTHLY_TYPE);
+    }
+
+    public function GetRepeatTerminationDate()
+    {
+        return $this->GetForm(FormKeys::END_REPEAT_DATE);
+    }
+
+    public function GetRepeatCustomDates()
+    {
+        $dates = $this->GetForm(FormKeys::REPEAT_CUSTOM_DATES);
+        if(!is_array($dates) || empty($dates)) {
+            return [];
+        }
+
+        return $dates;
+    }
+
+    public function GetStartTime()
+    {
+        return $this->GetForm(FormKeys::BEGIN_TIME);
+    }
+
+    public function GetEndTime()
+    {
+        return $this->GetForm(FormKeys::END_TIME);
+    }
+
+    public function SearchingSpecificTime()
+    {
+       return $this->GetCheckbox(FormKeys::SPECIFIC_TIME);
     }
 }

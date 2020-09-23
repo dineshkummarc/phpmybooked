@@ -45,8 +45,17 @@ function UserManagement(opts) {
 		invitationForm: $('#invitationForm'),
 		inviteEmails: $('#inviteEmails'),
 
-        checkAllResources: $('#checkAllResources'),
-        checkNoResources: $('#checkNoResources')
+        checkAllResourcesFull: $('#checkAllResourcesFull'),
+        checkAllResourcesView: $('#checkAllResourcesView'),
+        checkNoResources: $('#checkNoResources'),
+
+		deleteMultiplePrompt: $('#delete-selected'),
+		deleteMultipleDialog: $('#deleteMultipleDialog'),
+		deleteMultipleUserForm: $('#deleteMultipleUserForm'),
+		deleteMultipleCheckboxes: $('.delete-multiple'),
+		deleteMultipleSelectAll: $('#delete-all'),
+		deleteMultipleCount: $('#deleteMultipleCount'),
+		deleteMultiplePlaceHolder: $('#deleteMultiplePlaceHolder')
 	};
 
 	var users = {};
@@ -96,7 +105,6 @@ function UserManagement(opts) {
 		});
 
 		elements.userList.delegate('.changeAttribute', 'click', function (e) {
-			//e.preventDefault();
 			e.stopPropagation();
 			$(e.target).closest('.updateCustomAttribute').find('.inlineAttribute').editable('toggle');
 		});
@@ -140,14 +148,19 @@ function UserManagement(opts) {
 			$(this).appendTo(elements.addedGroups);
 		});
 
-        elements.checkAllResources.click(function(e){
+        elements.checkAllResourcesFull.click(function(e){
             e.preventDefault();
-            elements.permissionsDialog.find('input:checkbox').prop('checked', true);
+            elements.permissionsDialog.find('.full').prop('selected', true)
+        });
+
+        elements.checkAllResourcesView.click(function(e){
+            e.preventDefault();
+            elements.permissionsDialog.find('.view').prop('selected', true)
         });
 
         elements.checkNoResources.click(function(e){
             e.preventDefault();
-            elements.permissionsDialog.find('input:checkbox').prop('checked', false);
+            elements.permissionsDialog.find('.none').prop('selected', true)
         });
 
 		$(".save").click(function () {
@@ -175,7 +188,32 @@ function UserManagement(opts) {
 		$('#import-users').click(function (e) {
 			e.preventDefault();
             $('#importErrors').empty().addClass('no-show');
+			$('#importResults').addClass('no-show');
 			elements.importUsersDialog.modal('show');
+		});
+
+		elements.deleteMultiplePrompt.click(function(e){
+			e.preventDefault();
+			var checked = elements.userList.find('.delete-multiple:checked');
+			elements.deleteMultipleCount.text(checked.length);
+			elements.deleteMultiplePlaceHolder.empty();
+			elements.deleteMultiplePlaceHolder.append(checked.clone());
+			elements.deleteMultipleDialog.modal('show');
+		});
+
+		elements.deleteMultipleSelectAll.click(function(e) {
+			e.stopPropagation();
+			var isChecked = elements.deleteMultipleSelectAll.is(":checked");
+			elements.deleteMultipleCheckboxes.prop('checked', isChecked);
+			elements.deleteMultiplePrompt.toggleClass('no-show', !isChecked);
+		});
+
+		elements.deleteMultipleCheckboxes.click(function(e){
+			e.stopPropagation();
+			var numberChecked = elements.userList.find('.delete-multiple:checked').length;
+			var allSelected = numberChecked == elements.userList.find('.delete-multiple').length;
+			elements.deleteMultipleSelectAll.prop('checked', allSelected);
+			elements.deleteMultiplePrompt.toggleClass('no-show', numberChecked == 0);
 		});
 
 		var hidePermissionsDialog = function () {
@@ -225,6 +263,9 @@ function UserManagement(opts) {
 			elements.invitationDialog.modal('hide');
 		};
 
+		$('#addOrganization').orgAutoComplete(options.orgAutoCompleteUrl);
+		$('#organization').orgAutoComplete(options.orgAutoCompleteUrl);
+
 		ConfigureAsyncForm(elements.permissionsForm, defaultSubmitCallback(elements.permissionsForm), hidePermissionsDialog, error);
 		ConfigureAsyncForm(elements.passwordForm, defaultSubmitCallback(elements.passwordForm), hidePasswordDialog, error);
 		ConfigureAsyncForm(elements.userForm, defaultSubmitCallback(elements.userForm), hideDialogCallback(elements.userDialog));
@@ -235,6 +276,7 @@ function UserManagement(opts) {
 		ConfigureAsyncForm(elements.addGroupForm, changeGroupUrlCallback(elements.addGroupForm), function(){});
 		ConfigureAsyncForm(elements.removeGroupForm, changeGroupUrlCallback(elements.removeGroupForm), function(){});
 		ConfigureAsyncForm(elements.invitationForm, defaultSubmitCallback(elements.invitationForm), inviteHandler);
+		ConfigureAsyncForm(elements.deleteMultipleUserForm, defaultSubmitCallback(elements.deleteMultipleUserForm));
 	};
 
 	UserManagement.prototype.addUser = function (user) {
@@ -327,14 +369,19 @@ function UserManagement(opts) {
 	var changePermissions = function () {
 		var user = getActiveUser();
 		var data = {dr: 'permissions', uid: user.id};
-		$.get(opts.permissionsUrl, data, function (resourceIds) {
-			elements.permissionsForm.find(':checkbox').prop('checked', false);
-			$.each(resourceIds, function (index, value) {
-				elements.permissionsForm.find(':checkbox[value="' + value + '"]').prop('checked', true);
-			});
+        $.get(opts.permissionsUrl, data, function(permissions) {
+            elements.permissionsForm.find('.none').prop('selected', true);
 
-			elements.permissionsDialog.modal('show');
-		});
+            $.each(permissions.full, function(index, value) {
+                elements.permissionsForm.find('#permission_' + value).val(value + '_0');
+            });
+
+            $.each(permissions.view, function(index, value) {
+                elements.permissionsForm.find('#permission_' + value).val(value + '_1');
+            });
+
+            elements.permissionsDialog.modal('show');
+        });
 	};
 
 	var changeColor = function () {
@@ -347,18 +394,23 @@ function UserManagement(opts) {
 
 	var changeUserInfo = function () {
 		var user = getActiveUser();
+		var data = {dr: 'update', uid: user.id};
+		$.get(opts.submitUrl, data, (response) => {
+			$('#update-user-placeholder').html(response);
+		});
+		// var user = getActiveUser();
 
-		ClearAsyncErrors(elements.userDialog);
-
-		$('#username').val(user.username);
-		$('#fname').val(user.first);
-		$('#lname').val(user.last);
-		$('#email').val(user.email);
-		$('#timezone').val(user.timezone);
-
-		$('#phone').val(user.phone);
-		$('#organization').val(user.organization);
-		$('#position').val(user.position);
+		// ClearAsyncErrors(elements.userDialog);
+		//
+		// $('#username').val(user.username);
+		// $('#fname').val(user.first);
+		// $('#lname').val(user.last);
+		// $('#email').val(user.email);
+		// $('#timezone').val(user.timezone);
+		//
+		// $('#phone').val(user.phone);
+		// $('#organization').val(user.organization);
+		// $('#position').val(user.position);
 
 		elements.userDialog.modal('show');
 	};

@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -141,4 +141,25 @@ interface IReservationSlot
 	 * @return string
 	 */
 	public function Id();
+
+    /**
+     * @return int|null
+     */
+    public function OwnerId();
+
+    /**
+     * @return int[]
+     */
+    public function OwnerGroupIds();
+
+    /**
+     * @return bool
+     */
+    public function IsNew();
+
+    /**
+     * @return bool
+     */
+    public function IsUpdated();
+
 }

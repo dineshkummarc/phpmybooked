@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2012-2016 Nick Korbel
+Copyright 2012-2020 Nick Korbel
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@ class Report_ResultSelection
 	const COUNT = 'COUNT';
 	const TIME = 'TIME';
 	const FULL_LIST = 'LIST';
+	const UTILIZATION = 'UTILIZATION';
 
 	/**
 	 * @var Report_ResultSelection|string
@@ -47,6 +48,10 @@ class Report_ResultSelection
 		{
 			$builder->SelectTime();
 		}
+		if ($this->selection == self::UTILIZATION)
+        {
+            $builder->SelectDuration()->IncludingBlackouts()->OfResources();
+        }
 	}
 
 	/**

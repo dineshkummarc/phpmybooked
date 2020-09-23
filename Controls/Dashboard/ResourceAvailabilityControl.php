@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 Nick Korbel
+ * Copyright 2017-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -86,6 +86,43 @@ class AvailableDashboardItem
 
         return null;
     }
+
+    /**
+     * @return bool
+     */
+    public function HasColor()
+    {
+        if ($this->resource != null) {
+            $color = $this->resource->GetColor();
+            return !empty($color);
+        }
+
+        return false;
+    }
+
+    /**
+     * @return string
+     */
+    public function GetTextColor()
+    {
+        if ($this->resource != null) {
+            return $this->resource->GetTextColor();
+        }
+
+        return '';
+    }
+
+    /**
+     * @return string
+     */
+    public function GetColor()
+    {
+        if ($this->resource != null) {
+            return $this->resource->GetColor();
+        }
+
+        return '';
+    }
 }
 
 class UnavailableDashboardItem
@@ -129,6 +166,16 @@ class UnavailableDashboardItem
     {
         return $this->currentReservation->EndDate;
     }
+
+    public function GetColor()
+    {
+        return $this->currentReservation->GetColor();
+    }
+
+    public function GetTextColor()
+    {
+        return $this->currentReservation->GetTextColor();
+    }
 }
 
 class ResourceAvailabilityControl extends DashboardItem implements IResourceAvailabilityControl
@@ -144,7 +191,7 @@ class ResourceAvailabilityControl extends DashboardItem implements IResourceAvai
 
         $this->presenter = new ResourceAvailabilityControlPresenter($this,
             new ResourceService(new ResourceRepository(),
-                PluginManager::Instance()->LoadPermission(),
+                new SchedulePermissionService(PluginManager::Instance()->LoadPermission()),
                 new AttributeService(new AttributeRepository()),
                 new UserRepository(),
                 new AccessoryRepository()

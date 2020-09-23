@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -19,6 +19,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 require_once(ROOT_DIR . 'Pages/SecurePage.php');
+require_once(ROOT_DIR . 'Pages/Ajax/AutoCompletePage.php');
 require_once(ROOT_DIR . 'Presenters/ProfilePresenter.php');
 
 interface IProfilePage extends IPage, IActionPage
@@ -91,8 +92,7 @@ class ProfilePage extends ActionPage implements IProfilePage
 		parent::__construct('EditProfile');
 		$this->presenter = new ProfilePresenter($this,
 												new UserRepository(),
-												new AttributeService(new AttributeRepository()),
-												new ScheduleRepository());
+												new AttributeService(new AttributeRepository()));
 	}
 
 	public function ProcessPageLoad()

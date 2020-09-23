@@ -41,7 +41,7 @@ CREATE TABLE `time_blocks` (
  PRIMARY KEY (`block_id`),
  INDEX (`layout_id`),
  FOREIGN KEY (`layout_id`) 
-	REFERENCES layouts(`layout_id`)
+	REFERENCES `layouts`(`layout_id`)
 	ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
@@ -61,7 +61,7 @@ CREATE TABLE `schedules` (
  PRIMARY KEY (`schedule_id`),
  INDEX (`layout_id`),
  FOREIGN KEY (`layout_id`)
-	REFERENCES layouts(`layout_id`)
+	REFERENCES `layouts`(`layout_id`)
 	ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
@@ -78,7 +78,7 @@ CREATE TABLE `groups` (
  `legacyid` char(16),
  PRIMARY KEY (`group_id`),
  FOREIGN KEY (`admin_group_id`)
-	REFERENCES groups(`group_id`)
+	REFERENCES `groups`(`group_id`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
 
@@ -104,12 +104,12 @@ CREATE TABLE `group_roles` (
  `role_id` tinyint(2) unsigned NOT NULL,
  PRIMARY KEY (`group_id`, `role_id`),
  INDEX (`group_id`),
- FOREIGN KEY (`group_id`)
-	REFERENCES groups(`group_id`)
-	ON UPDATE CASCADE ON DELETE CASCADE,
  INDEX (`role_id`),
+ FOREIGN KEY (`group_id`)
+	REFERENCES `groups`(`group_id`)
+	ON UPDATE CASCADE ON DELETE CASCADE,
  FOREIGN KEY (`role_id`)
-	REFERENCES roles(`role_id`)
+	REFERENCES `roles`(`role_id`)
 	ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
@@ -152,7 +152,7 @@ CREATE TABLE `users` (
  PRIMARY KEY (`user_id`),
  INDEX (`status_id`),
  FOREIGN KEY (`status_id`) 
-	REFERENCES user_statuses(`status_id`)
+	REFERENCES `user_statuses`(`status_id`)
 	ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
@@ -166,12 +166,12 @@ CREATE TABLE `user_groups` (
  `group_id` smallint(5) unsigned NOT NULL,
  PRIMARY KEY (`group_id`, `user_id`),
  INDEX (`user_id`),
+ INDEX (`group_id`),
  FOREIGN KEY (`user_id`) 
 	REFERENCES users(`user_id`)
 	ON UPDATE CASCADE ON DELETE CASCADE,
- INDEX (`group_id`),
  FOREIGN KEY (`group_id`) 
-	REFERENCES groups(`group_id`)
+	REFERENCES `groups`(`group_id`)
 	ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
@@ -205,7 +205,7 @@ CREATE TABLE `resources` (
  PRIMARY KEY (`resource_id`),
  INDEX (`schedule_id`),
  FOREIGN KEY (`schedule_id`)
-	REFERENCES schedules(`schedule_id`)
+	REFERENCES `schedules`(`schedule_id`)
 	ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
@@ -220,12 +220,12 @@ CREATE TABLE `user_resource_permissions` (
  `permission_id` tinyint(2) unsigned NOT NULL default '1',
  PRIMARY KEY (`user_id`, `resource_id`),
  INDEX (`user_id`),
+ INDEX (`resource_id`),
  FOREIGN KEY (`user_id`) 
 	REFERENCES users(`user_id`)
 	ON UPDATE CASCADE ON DELETE CASCADE,
- INDEX (`resource_id`),
  FOREIGN KEY (`resource_id`) 
-	REFERENCES resources(`resource_id`)
+	REFERENCES `resources`(`resource_id`)
 	ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
@@ -239,12 +239,12 @@ CREATE TABLE `group_resource_permissions` (
  `resource_id` smallint(5) unsigned NOT NULL,
  PRIMARY KEY (`group_id`, `resource_id`),
  INDEX (`group_id`),
+ INDEX (`resource_id`),
  FOREIGN KEY (`group_id`) 
-	REFERENCES groups(`group_id`) 
+	REFERENCES `groups`(`group_id`) 
 	ON UPDATE CASCADE ON DELETE CASCADE,
-INDEX (`resource_id`),
-FOREIGN KEY (`resource_id`) 
-	REFERENCES resources(`resource_id`) 
+ FOREIGN KEY (`resource_id`) 
+	REFERENCES `resources`(`resource_id`) 
 	ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
@@ -344,12 +344,12 @@ CREATE TABLE `reservation_resources` (
  `resource_level_id` tinyint(2) unsigned NOT NULL,
  PRIMARY KEY (`series_id`, `resource_id`),
  INDEX (`resource_id`),
+ INDEX (`series_id`),
  FOREIGN KEY (`resource_id`) 
 	REFERENCES resources(`resource_id`)
 	ON UPDATE CASCADE ON DELETE CASCADE,
- INDEX (`series_id`),
  FOREIGN KEY (`series_id`) 
-	REFERENCES reservation_series(`series_id`)
+	REFERENCES `reservation_series`(`series_id`)
 	ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
@@ -399,7 +399,7 @@ CREATE TABLE `user_email_preferences` (
   `event_type` varchar(45) NOT NULL,
  PRIMARY KEY (`user_id`, `event_category`, `event_type`),
  FOREIGN KEY (`user_id`)
-	REFERENCES users(`user_id`)
+	REFERENCES `users`(`user_id`)
 	ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -419,13 +419,13 @@ CREATE TABLE `quotas` (
  `schedule_id` smallint(5) unsigned,
  PRIMARY KEY (`quota_id`),
  FOREIGN KEY (`resource_id`)
-	REFERENCES resources(`resource_id`)
+	REFERENCES `resources`(`resource_id`)
 	ON UPDATE CASCADE ON DELETE CASCADE,
  FOREIGN KEY (`group_id`)
-	REFERENCES groups(`group_id`)
+	REFERENCES `groups`(`group_id`)
 	ON UPDATE CASCADE ON DELETE CASCADE,
  FOREIGN KEY (`schedule_id`)
-	REFERENCES schedules(`schedule_id`)
+	REFERENCES `schedules`(`schedule_id`)
 	ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
@@ -453,12 +453,12 @@ CREATE TABLE `reservation_accessories` (
  `quantity` tinyint(2) unsigned NOT NULL,
  PRIMARY KEY (`series_id`, `accessory_id`),
  INDEX (`accessory_id`),
+ INDEX (`series_id`),
  FOREIGN KEY (`accessory_id`)
 	REFERENCES accessories(`accessory_id`)
 	ON UPDATE CASCADE ON DELETE CASCADE,
- INDEX (`series_id`),
  FOREIGN KEY (`series_id`)
-	REFERENCES reservation_series(`series_id`)
+	REFERENCES `reservation_series`(`series_id`)
 	ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
@@ -475,7 +475,7 @@ CREATE TABLE `dbversion` (
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
 ALTER TABLE `resources` ADD COLUMN `admin_group_id` SMALLINT(5) unsigned;
-ALTER TABLE `resources` ADD CONSTRAINT `admin_group_id` FOREIGN KEY (`admin_group_id`) REFERENCES groups(`group_id`) ON DELETE SET NULL;
+ALTER TABLE `resources` ADD CONSTRAINT `admin_group_id` FOREIGN KEY (`admin_group_id`) REFERENCES `groups`(`group_id`) ON DELETE SET NULL;
 
 ALTER TABLE `users` ADD COLUMN `public_id` VARCHAR(20);
 CREATE UNIQUE INDEX `public_id` ON `users` (`public_id`);
@@ -532,7 +532,7 @@ CREATE TABLE `account_activation` (
   INDEX (`activation_code`),
   UNIQUE KEY (`activation_code`),
   FOREIGN KEY (`user_id`)
-	REFERENCES users(`user_id`)
+	REFERENCES `users`(`user_id`)
 	ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
@@ -546,7 +546,7 @@ CREATE TABLE IF NOT EXISTS `reservation_files` (
   `file_extension` varchar(10) NOT NULL,
   PRIMARY KEY  (`file_id`),
   FOREIGN KEY (`series_id`)
-  	REFERENCES reservation_series(`series_id`)
+  	REFERENCES `reservation_series`(`series_id`)
   	ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
@@ -555,7 +555,7 @@ CREATE TABLE IF NOT EXISTS `reservation_files` (
 
 
 ALTER TABLE `schedules` ADD COLUMN `admin_group_id` SMALLINT(5) unsigned;
-ALTER TABLE `schedules` ADD CONSTRAINT `schedules_groups_admin_group_id` FOREIGN KEY (`admin_group_id`) REFERENCES groups(`group_id`) ON DELETE SET NULL;
+ALTER TABLE `schedules` ADD CONSTRAINT `schedules_groups_admin_group_id` FOREIGN KEY (`admin_group_id`) REFERENCES `groups`(`group_id`) ON DELETE SET NULL;
 
 DROP TABLE IF EXISTS `saved_reports`;
 CREATE TABLE `saved_reports` (
@@ -566,7 +566,7 @@ CREATE TABLE `saved_reports` (
  `report_details` varchar(500) NOT NULL,
   PRIMARY KEY (`saved_report_id`),
   FOREIGN KEY (`user_id`)
-	REFERENCES users(`user_id`)
+	REFERENCES `users`(`user_id`)
 	ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
@@ -587,7 +587,7 @@ CREATE TABLE `user_session` (
   INDEX `user_session_user_id` (`user_id`),
   INDEX `user_session_session_token` (`session_token`),
   FOREIGN KEY (`user_id`)
-	REFERENCES users(`user_id`)
+	REFERENCES `users`(`user_id`)
 	ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
@@ -604,7 +604,7 @@ CREATE TABLE `reminders` (
  PRIMARY KEY (`reminder_id`),
  INDEX `reminders_user_id` (`user_id`),
  FOREIGN KEY (`user_id`)
- 	REFERENCES users(`user_id`)
+ 	REFERENCES `users`(`user_id`)
  	ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
@@ -616,7 +616,7 @@ CREATE TABLE `reservation_reminders` (
  `reminder_type` tinyint(2) unsigned NOT NULL,
  PRIMARY KEY (`reminder_id`),
  FOREIGN KEY (`series_id`)
-  	REFERENCES reservation_series(`series_id`)
+  	REFERENCES `reservation_series`(`series_id`)
   	ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
@@ -640,7 +640,7 @@ CREATE TABLE `resource_groups` (
   PRIMARY KEY (`resource_group_id`),
   INDEX `resource_groups_parent_id` (`parent_id`),
   FOREIGN KEY (`parent_id`)
-	REFERENCES resource_groups(`resource_group_id`)
+	REFERENCES `resource_groups`(`resource_group_id`)
 	ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
@@ -652,7 +652,7 @@ CREATE TABLE `resource_types` (
   PRIMARY KEY (`resource_type_id`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
-ALTER TABLE `resources` ADD FOREIGN KEY (`resource_type_id`) REFERENCES resource_types(`resource_type_id`) ON DELETE SET NULL;
+ALTER TABLE `resources` ADD FOREIGN KEY (`resource_type_id`) REFERENCES `resource_types`(`resource_type_id`) ON DELETE SET NULL;
 
 DROP TABLE IF EXISTS `resource_group_assignment`;
 CREATE TABLE `resource_group_assignment` (
@@ -665,7 +665,7 @@ CREATE TABLE `resource_group_assignment` (
 		REFERENCES resource_groups(`resource_group_id`)
 		ON DELETE CASCADE,
 	FOREIGN KEY (`resource_id`)
-		REFERENCES resources(`resource_id`)
+		REFERENCES `resources`(`resource_id`)
 	ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
@@ -675,19 +675,19 @@ CREATE TABLE `blackout_series_resources` (
  `resource_id` smallint(5) unsigned NOT NULL,
   PRIMARY KEY (`blackout_series_id`, `resource_id`),
 	FOREIGN KEY (`blackout_series_id`)
-		REFERENCES blackout_series(`blackout_series_id`)
+		REFERENCES `blackout_series`(`blackout_series_id`)
 		ON DELETE CASCADE,
 	FOREIGN KEY (`resource_id`)
-		REFERENCES resources(`resource_id`)
+		REFERENCES `resources`(`resource_id`)
 	ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
-DELETE blackout_series
-FROM blackout_series
-LEFT JOIN resources ON blackout_series.resource_id = resources.resource_id
-WHERE resources.resource_id IS NULL;
+DELETE `blackout_series`
+FROM `blackout_series`
+LEFT JOIN `resources` ON `blackout_series`.`resource_id` = `resources`.`resource_id`
+WHERE `resources`.`resource_id` IS NULL;
 
-INSERT INTO blackout_series_resources SELECT blackout_series_id, resource_id FROM blackout_series;
+INSERT INTO `blackout_series_resources` SELECT `blackout_series_id`, `resource_id` FROM `blackout_series`;
 
 ALTER TABLE `blackout_series` DROP COLUMN `resource_id`;
 ALTER TABLE `blackout_series` ADD COLUMN `repeat_type` varchar(10) default NULL;
@@ -702,12 +702,12 @@ CREATE TABLE `user_preferences` (
  PRIMARY KEY (`user_preferences_id`),
  INDEX (`user_id`),
  FOREIGN KEY (`user_id`)
-    REFERENCES users(`user_id`)
+    REFERENCES `users`(`user_id`)
     ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8;
 
-ALTER TABLE `accessories` MODIFY COLUMN accessory_quantity smallint(5) unsigned;
-ALTER TABLE `reservation_accessories` MODIFY COLUMN quantity smallint(5) unsigned;
+ALTER TABLE `accessories` MODIFY COLUMN `accessory_quantity` smallint(5) unsigned;
+ALTER TABLE `reservation_accessories` MODIFY COLUMN `quantity` smallint(5) unsigned;
 
 DROP TABLE IF EXISTS `resource_status_reasons`;
 CREATE TABLE `resource_status_reasons` (
@@ -720,8 +720,8 @@ CREATE TABLE `resource_status_reasons` (
 
 ALTER TABLE `resources` ADD COLUMN `status_id` tinyint unsigned NOT NULL DEFAULT 1;
 ALTER TABLE `resources` ADD COLUMN `resource_status_reason_id` smallint(5) unsigned;
-ALTER TABLE `resources` ADD FOREIGN KEY (`resource_status_reason_id`) REFERENCES resource_status_reasons(`resource_status_reason_id`) ON DELETE SET NULL;
-UPDATE resources SET status_id = isactive;
+ALTER TABLE `resources` ADD FOREIGN KEY (`resource_status_reason_id`) REFERENCES `resource_status_reasons`(`resource_status_reason_id`) ON DELETE SET NULL;
+UPDATE `resources` SET `status_id` = `isactive`;
 ALTER TABLE `resources` DROP COLUMN `isactive`;
 ALTER TABLE `resources` ADD COLUMN `buffer_time` int unsigned;
 
@@ -749,7 +749,7 @@ CREATE TABLE `reservation_color_rules` (
 		`color`                     VARCHAR(50),
   PRIMARY KEY (`reservation_color_rule_id`),
   FOREIGN KEY (`custom_attribute_id`)
-  REFERENCES custom_attributes (`custom_attribute_id`)
+  REFERENCES `custom_attributes` (`custom_attribute_id`)
     ON DELETE CASCADE
 )
 		ENGINE = InnoDB
@@ -765,10 +765,10 @@ CREATE TABLE `resource_accessories` (
 		`maximum_quantity`      SMALLINT              NULL,
 		PRIMARY KEY (`resource_accessory_id`),
 		FOREIGN KEY (`resource_id`)
-		REFERENCES resources (`resource_id`)
+		REFERENCES `resources` (`resource_id`)
 				ON DELETE CASCADE,
 		FOREIGN KEY (`accessory_id`)
-		REFERENCES accessories (`accessory_id`)
+		REFERENCES `accessories` (`accessory_id`)
 				ON DELETE CASCADE
 )
 		ENGINE = InnoDB
@@ -793,10 +793,10 @@ CREATE TABLE `resource_type_assignment` (
 		`resource_type_id` MEDIUMINT(8) UNSIGNED NOT NULL,
 		PRIMARY KEY (`resource_id`, `resource_type_id`),
 		FOREIGN KEY (`resource_id`)
-		REFERENCES resources (`resource_id`)
+		REFERENCES `resources` (`resource_id`)
 				ON DELETE CASCADE,
 		FOREIGN KEY (`resource_type_id`)
-		REFERENCES resource_types (`resource_type_id`)
+		REFERENCES `resource_types` (`resource_type_id`)
 				ON DELETE CASCADE
 )
 		ENGINE = InnoDB
@@ -808,19 +808,19 @@ CREATE TABLE `custom_attribute_entities` (
 		`entity_id`           MEDIUMINT(8) UNSIGNED NOT NULL,
 		PRIMARY KEY (`custom_attribute_id`, `entity_id`),
 		FOREIGN KEY (`custom_attribute_id`)
-		REFERENCES custom_attributes (`custom_attribute_id`)
+		REFERENCES `custom_attributes` (`custom_attribute_id`)
 				ON DELETE CASCADE
 )
 		ENGINE = InnoDB
 		DEFAULT CHARACTER SET utf8;
 
-INSERT INTO custom_attribute_entities (custom_attribute_id, entity_id) (SELECT
-																																						custom_attribute_id,
-																																						entity_id
-																																				FROM `custom_attributes`
-																																				WHERE entity_id IS NOT NULL AND entity_id <> 0);
+INSERT INTO `custom_attribute_entities` (`custom_attribute_id`, `entity_id`) (SELECT
+        `custom_attribute_id`,
+        `entity_id`
+FROM `custom_attributes`
+WHERE `entity_id` IS NOT NULL AND `entity_id` <> 0);
 
-ALTER TABLE custom_attributes
+ALTER TABLE `custom_attributes`
   DROP COLUMN `entity_id`;
 
 ALTER TABLE `quotas`
@@ -950,3 +950,209 @@ CREATE TABLE `reservation_waitlist_requests` (
 
 ALTER TABLE `custom_attribute_values`
   CHANGE `custom_attribute_value_id`  `custom_attribute_value_id` INT(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+
+-- UPGRADE TO VERSION 2.7
+
+
+
+# noinspection SqlNoDataSourceInspectionForFile
+
+ALTER TABLE `users` CHANGE `credit_count` `credit_count` DECIMAL(7,2) NULL DEFAULT '0';
+UPDATE users SET credit_count = 0 WHERE credit_count IS NULL;
+
+ALTER TABLE `resources`
+  CHANGE COLUMN `sort_order` `sort_order` SMALLINT UNSIGNED;
+
+DROP TABLE IF EXISTS `payment_configuration`;
+CREATE TABLE `payment_configuration` (
+  `payment_configuration_id` TINYINT UNSIGNED       NOT NULL AUTO_INCREMENT,
+  `credit_cost`              DECIMAL(7, 2) UNSIGNED NOT NULL,
+  `credit_currency`          VARCHAR(10)            NOT NULL,
+  PRIMARY KEY (`payment_configuration_id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET utf8;
+
+DROP TABLE IF EXISTS `payment_gateway_settings`;
+CREATE TABLE `payment_gateway_settings` (
+  `gateway_type`  VARCHAR(255)  NOT NULL,
+  `setting_name`  VARCHAR(255)  NOT NULL,
+  `setting_value` VARCHAR(1000) NOT NULL,
+  PRIMARY KEY (`gateway_type`, `setting_name`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET utf8;
+
+DROP TABLE IF EXISTS `credit_log`;
+CREATE TABLE `credit_log` (
+  `credit_log_id`  INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id`  MEDIUMINT(8) UNSIGNED NOT NULL,
+  `original_credit_count`  DECIMAL(7, 2),
+  `credit_count`  DECIMAL(7, 2),
+  `credit_note` VARCHAR(1000),
+  `date_created` DATETIME NOT NULL,
+  PRIMARY KEY (`credit_log_id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET utf8;
+
+DROP TABLE IF EXISTS `payment_transaction_log`;
+CREATE TABLE `payment_transaction_log` (
+  `payment_transaction_log_id`  INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id`  MEDIUMINT(8) UNSIGNED NOT NULL,
+  `status` VARCHAR(255) NOT NULL,
+  `invoice_number` VARCHAR(50),
+  `transaction_id` VARCHAR(50) NOT NULL,
+  `subtotal_amount`  DECIMAL(7, 2) NOT NULL,
+  `tax_amount`  DECIMAL(7, 2) NOT NULL,
+  `total_amount`  DECIMAL(7, 2) NOT NULL,
+  `transaction_fee`  DECIMAL(7, 2),
+  `currency` VARCHAR(3) NOT NULL,
+  `transaction_href` VARCHAR(500),
+  `refund_href` VARCHAR(500),
+  `date_created` DATETIME NOT NULL,
+  `gateway_name` VARCHAR(100) NOT NULL,
+  `gateway_date_created` VARCHAR(25) NOT NULL,
+  `payment_response` TEXT,
+  PRIMARY KEY (`payment_transaction_log_id`),
+  KEY `user_id` (`user_id`),
+  KEY `invoice_number` (`invoice_number`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET utf8;
+
+DROP TABLE IF EXISTS `refund_transaction_log`;
+CREATE TABLE `refund_transaction_log` (
+  `refund_transaction_log_id`  INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `payment_transaction_log_id`  INT(10) UNSIGNED NOT NULL,
+  `status` VARCHAR(255) NOT NULL,
+  `transaction_id` VARCHAR(50),
+  `total_refund_amount`  DECIMAL(7, 2) NOT NULL,
+  `payment_refund_amount`  DECIMAL(7, 2),
+  `fee_refund_amount`  DECIMAL(7, 2),
+  `transaction_href` VARCHAR(500),
+  `date_created` DATETIME NOT NULL,
+  `gateway_date_created` VARCHAR(25) NOT NULL,
+  `refund_response` TEXT,
+  PRIMARY KEY (`refund_transaction_log_id`),
+  FOREIGN KEY (`payment_transaction_log_id`)
+  REFERENCES `payment_transaction_log` (`payment_transaction_log_id`)
+  ON DELETE CASCADE
+)
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET utf8;
+
+ALTER TABLE `groups`
+  ADD COLUMN `isdefault` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0;
+ALTER TABLE `groups` ADD INDEX(`isdefault`);
+
+DROP TABLE IF EXISTS `terms_of_service`;
+CREATE TABLE `terms_of_service` (
+  `terms_of_service_id`  INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `terms_text` TEXT,
+  `terms_url` VARCHAR(255),
+  `terms_file` VARCHAR(50),
+  `applicability` VARCHAR(50),
+  `date_created` DATETIME NOT NULL,
+  PRIMARY KEY (`terms_of_service_id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET utf8;
+
+ALTER TABLE `reservation_series`
+  ADD COLUMN `terms_date_accepted` DATETIME;
+
+ALTER TABLE `users`
+  ADD COLUMN `terms_date_accepted` DATETIME;
+
+ALTER TABLE `announcements`
+  ADD COLUMN `display_page` TINYINT(1) UNSIGNED NOT NULL DEFAULT 1;
+ALTER TABLE `announcements` ADD INDEX (`start_date`);
+ALTER TABLE `announcements` ADD INDEX (`end_date`);
+ALTER TABLE `announcements` ADD INDEX (`display_page`);
+
+ALTER TABLE `resources` CHANGE COLUMN `min_notice_time` `min_notice_time_add` INT;
+
+ALTER TABLE `resources`
+  ADD COLUMN `min_notice_time_update` INT;
+
+ALTER TABLE `resources`
+  ADD COLUMN `min_notice_time_delete` INT;
+
+UPDATE resources SET min_notice_time_update = min_notice_time_add, min_notice_time_delete = min_notice_time_add;
+
+ALTER TABLE `schedules` ADD COLUMN `start_date` DATETIME;
+ALTER TABLE `schedules` ADD COLUMN `end_date` DATETIME;
+ALTER TABLE `schedules` ADD COLUMN `allow_concurrent_bookings` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0;
+
+
+ALTER TABLE `reservation_series`
+  CHANGE COLUMN `title` `title` VARCHAR(300);
+
+DROP TABLE IF EXISTS `resource_images`;
+CREATE TABLE `resource_images` (
+  `resource_image_id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `resource_id` SMALLINT UNSIGNED NOT NULL,
+  `image_name` VARCHAR(50),
+  PRIMARY KEY (`resource_image_id`),
+  FOREIGN KEY (`resource_id`)
+ 	REFERENCES `resources` (`resource_id`)
+ 	ON UPDATE CASCADE ON DELETE CASCADE
+)
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET utf8;
+
+ALTER TABLE `group_resource_permissions` ADD COLUMN `permission_type` TINYINT UNSIGNED NOT NULL DEFAULT 0;
+ALTER TABLE `group_resource_permissions` DROP PRIMARY KEY, ADD PRIMARY KEY(`group_id`, `resource_id`);
+ALTER TABLE `group_resource_permissions` ADD INDEX(`group_id`);
+ALTER TABLE `group_resource_permissions` ADD INDEX(`resource_id`);
+
+ALTER TABLE `user_resource_permissions` ADD COLUMN `permission_type` TINYINT UNSIGNED NOT NULL DEFAULT 0;
+ALTER TABLE `user_resource_permissions` DROP PRIMARY KEY, ADD PRIMARY KEY(`user_id`, `resource_id`);
+ALTER TABLE `user_resource_permissions` ADD INDEX(`user_id`);
+ALTER TABLE `user_resource_permissions` ADD INDEX(`resource_id`);
+
+ALTER TABLE `resources` ADD COLUMN `date_created` DATETIME;
+ALTER TABLE `resources` ADD COLUMN `last_modified` DATETIME;
+
+ALTER TABLE `custom_attribute_values` DROP INDEX `entity_category`;
+ALTER TABLE `custom_attribute_values` DROP INDEX `entity_attribute`;
+ALTER TABLE `custom_attribute_values` ADD INDEX(`entity_id`);
+ALTER TABLE `custom_attribute_values` ADD INDEX(`attribute_category`);
+ALTER TABLE `reservation_reminders` ADD INDEX(`reminder_type`);
+
+ALTER TABLE `layouts` ADD COLUMN `layout_type` TINYINT UNSIGNED NOT NULL DEFAULT 0;
+DROP TABLE IF EXISTS `custom_time_blocks`;
+CREATE TABLE `custom_time_blocks` (
+  `custom_time_block_id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `start_time` DATETIME NOT NULL,
+  `end_time` DATETIME NOT NULL,
+  `layout_id` MEDIUMINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`custom_time_block_id`),
+  FOREIGN KEY (`layout_id`)
+ 	REFERENCES `layouts` (`layout_id`)
+ 	ON UPDATE CASCADE ON DELETE CASCADE
+)
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET utf8;
+
+ALTER TABLE `schedules` ADD COLUMN `default_layout` TINYINT NOT NULL DEFAULT 0;
+
+-- UPGRADE TO VERSION 2.8
+
+
+
+# noinspection SqlNoDataSourceInspectionForFile
+
+ALTER TABLE `schedules`
+  ADD COLUMN `total_concurrent_reservations` SMALLINT UNSIGNED NOT NULL DEFAULT 0;
+
+ALTER TABLE `schedules`
+  ADD COLUMN `max_resources_per_reservation` SMALLINT UNSIGNED NOT NULL DEFAULT 0;
+
+ALTER TABLE `schedules`
+  ADD COLUMN `additional_properties` TEXT;
+
+ALTER TABLE `resources`
+  ADD COLUMN `additional_properties` TEXT;

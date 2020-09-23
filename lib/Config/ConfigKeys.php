@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ class ConfigKeys
     const ADMIN_EMAIL_NAME = 'admin.email.name';
     const ALLOW_REGISTRATION = 'allow.self.registration';
 	const CREDITS_ENABLED = 'enabled';
+	const CREDITS_ALLOW_PURCHASE = 'allow.purchase';
 	const CSS_EXTENSION_FILE = 'css.extension.file';
 	const DEFAULT_HOMEPAGE = 'default.homepage';
     const DEFAULT_PAGE_SIZE = 'default.page.size';
@@ -43,6 +44,7 @@ class ConfigKeys
     const SCHEDULE_SHOW_INACCESSIBLE_RESOURCES = 'show.inaccessible.resources';
     const SCHEDULE_RESERVATION_LABEL = 'reservation.label';
     const SCHEDULE_HIDE_BLOCKED_PERIODS = 'hide.blocked.periods';
+    const SCHEDULE_UPDATE_HIGHLIGHT_MINUTES = 'update.highlight.minutes';
 
     const DATABASE_TYPE = 'type';
     const DATABASE_USER = 'user';
@@ -65,17 +67,23 @@ class ConfigKeys
 	const RESERVATION_ALLOW_GUESTS = 'allow.guest.participation';
 	const RESERVATION_ALLOW_WAITLIST = 'allow.wait.list';
 	const RESERVATION_CHECKIN_MINUTES = 'checkin.minutes.prior';
+	const RESERVATION_START_REMINDER = 'default.start.reminder';
+	const RESERVATION_END_REMINDER = 'default.end.reminder';
+	const RESERVATION_TITLE_REQUIRED = 'title.required';
+	const RESERVATION_DESCRIPTION_REQUIRED = 'description.required';
 
     const IMAGE_UPLOAD_DIRECTORY = 'image.upload.directory';
     const IMAGE_UPLOAD_URL = 'image.upload.url';
 
     const CACHE_TEMPLATES = 'cache.templates';
 
-    const USE_LOCAL_JQUERY = 'use.local.jquery';
+    const USE_LOCAL_JS = 'use.local.js.libs';
 
     const INSTALLATION_PASSWORD = 'install.password';
 
     const ICS_SUBSCRIPTION_KEY = 'subscription.key';
+    const ICS_FUTURE_DAYS = 'future.days';
+    const ICS_PAST_DAYS = 'past.days';
 
     const PRIVACY_HIDE_USER_DETAILS = 'hide.user.details';
     const PRIVACY_HIDE_RESERVATION_DETAILS = 'hide.reservation.details';
@@ -139,8 +147,18 @@ class ConfigKeys
 
     const GOOGLE_ANALYTICS_TRACKING_ID = 'tracking.id';
 
-    const AUTHENTICATION_ALLOW_SOCIAL = 'allow.social.login';
+    const AUTHENTICATION_ALLOW_FACEBOOK = 'allow.facebook.login';
+    const AUTHENTICATION_ALLOW_GOOGLE = 'allow.google.login';
 	const AUTHENTICATION_REQUIRED_EMAIL_DOMAINS = 'required.email.domains';
+	const AUTHENTICATION_HIDE_BOOKED_LOGIN_PROMPT = 'hide.booked.login.prompt';
+	const AUTHENTICATION_CAPTCHA_ON_LOGIN = 'captcha.on.login';
+
+	const SLACK_TOKEN = 'token';
+
+	const TABLET_VIEW_ALLOW_GUESTS = 'allow.guest.reservations';
+	const TABLET_VIEW_AUTOCOMPLETE = 'auto.suggest.emails';
+
+	const USE_DATABASE_SESSION = 'use.database.session';
 }
 
 class ConfigSection
@@ -165,4 +183,7 @@ class ConfigSection
 	const RECAPTCHA = 'recaptcha';
 	const USERS = 'users';
     const GOOGLE_ANALYTICS = 'google.analytics';
+    const PAYMENTS = 'payments';
+    const SLACK = 'slack';
+    const TABLET_VIEW = 'tablet.view';
 }

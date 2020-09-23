@@ -1,5 +1,5 @@
 {*
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -24,7 +24,8 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 		<div class="pull-right">
 			<a href="#" title="{translate key=ShowHide} {translate key="UpcomingReservations"}">
 				<i class="glyphicon"></i>
-			</a>
+                <span class="no-show">Expand/Collapse</span>
+            </a>
 		</div>
 		<div class="clearfix"></div>
 	</div>
@@ -65,8 +66,13 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 		{/if}
 	</div>
 
-	<form id="form-checkin" method="post" action="ajax/reservation_checkin.php?action={ReservationAction::Checkin}">
+	<form id="form-checkin" method="post">
 		<input type="hidden" id="referenceNumber" {formname key=REFERENCE_NUMBER} />
 		{csrf_token}
 	</form>
+
+    {*<form id="form-checkout" method="post" action="ajax/reservation_checkin.php?action={ReservationAction::Checkout}">*}
+		{*<input type="hidden" id="referenceNumber" {formname key=REFERENCE_NUMBER} />*}
+		{*{csrf_token}*}
+	{*</form>*}
 </div>

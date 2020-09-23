@@ -1,5 +1,5 @@
 {*
-Copyright 2012-2016 Nick Korbel
+Copyright 2012-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 *}
 <div class="form-group {if !$searchmode && $attribute->Required()}has-feedback{/if} {$class}">
-	<label class="customAttribute" for="{$attributeId}">{$attribute->Label()}</label>
+	<label class="customAttribute {if $readonly}readonly{elseif $searchmode}search{else}standard{/if}" for="{$attributeId}">{$attribute->Label()}</label>
 	{if $readonly}
 		<span class="attributeValue {$class}">{$attribute->Value()}</span>
 	{else}
@@ -26,5 +26,8 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 		{if $attribute->Required() && !$searchmode}
 		<i class="glyphicon glyphicon-asterisk form-control-feedback" data-bv-icon-for="{$attributeId}"></i>
 		{/if}
+        {if $searchmode}
+            <span class="searchclear searchclear-label glyphicon glyphicon-remove-circle" ref="{$attributeId}"></span>
+        {/if}
 	{/if}
 </div>

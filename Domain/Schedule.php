@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2011-2016 Nick Korbel
+ * Copyright 2011-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -41,6 +41,31 @@ interface ISchedule
     public function GetPublicId();
 
     public function GetAdminGroupId();
+
+    /**
+     * @return Date
+     */
+    public function GetAvailabilityBegin();
+
+    /**
+     * @return Date
+     */
+    public function GetAvailabilityEnd();
+
+    /**
+     * @return DateRange
+     */
+    public function GetAvailability();
+
+    /**
+     * @return bool
+     */
+    public function HasAvailability();
+
+    /**
+     * @return int
+     */
+    public function GetDefaultStyle();
 }
 
 class Schedule implements ISchedule
@@ -55,6 +80,12 @@ class Schedule implements ISchedule
     protected $_isCalendarSubscriptionAllowed = false;
     protected $_publicId;
     protected $_adminGroupId;
+    protected $_availabilityBegin;
+    protected $_availabilityEnd;
+    protected $_defaultStyle;
+    protected $_layoutType;
+    protected $_totalConcurrentReservations = 0;
+    protected $_maxResourcesPerReservation = 0;
 
     const Today = 100;
 
@@ -72,8 +103,14 @@ class Schedule implements ISchedule
         $this->_isDefault = $isDefault;
         $this->_weekdayStart = $weekdayStart;
         $this->_daysVisible = $daysVisible;
-        $this->_timezone = $timezone;
+        $this->_timezone = empty($timezone) ? Configuration::Instance()->GetDefaultTimezone() : $timezone;
         $this->_layoutId = $layoutId;
+        $this->_availabilityBegin = new NullDate();
+        $this->_availabilityEnd = new NullDate();
+        $this->_defaultStyle = ScheduleStyle::Standard;
+        $this->_layoutType = ScheduleLayout::Standard;
+        $this->_totalConcurrentReservations = 0;
+        $this->_maxResourcesPerReservation = 0;
     }
 
     public function GetId()
@@ -165,7 +202,7 @@ class Schedule implements ISchedule
     {
         $this->SetIsCalendarSubscriptionAllowed(true);
         if (empty($this->_publicId)) {
-            $this->SetPublicId(uniqid());
+            $this->SetPublicId(BookedStringHelper::Random(20));
         }
     }
 
@@ -179,6 +216,9 @@ class Schedule implements ISchedule
      */
     public function SetAdminGroupId($adminGroupId)
     {
+    	if (empty($adminGroupId)) {
+    		$adminGroupId = null;
+		}
         $this->_adminGroupId = $adminGroupId;
     }
 
@@ -196,6 +236,74 @@ class Schedule implements ISchedule
     public function HasAdminGroup()
     {
         return !empty($this->_adminGroupId);
+    }
+
+    public function SetAvailableAllYear()
+    {
+        $this->_availabilityBegin = new NullDate();
+        $this->_availabilityEnd = new NullDate();
+    }
+
+    public function SetAvailability(Date $start, Date $end)
+    {
+        $this->_availabilityBegin = $start->ToTimezone($this->_timezone);
+        $this->_availabilityEnd = $end->ToTimezone($this->_timezone);
+    }
+
+    /**
+     * @return Date
+     */
+    public function GetAvailabilityBegin()
+    {
+        if ($this->_availabilityBegin == null) {
+            return new NullDate();
+        }
+
+        return $this->_availabilityBegin;
+    }
+
+    /**
+     * @return Date
+     */
+    public function GetAvailabilityEnd()
+    {
+        if ($this->_availabilityEnd == null) {
+            return new NullDate();
+        }
+
+        return $this->_availabilityEnd;
+    }
+
+    /**
+     * @return DateRange
+     */
+    public function GetAvailability()
+    {
+        return new DateRange($this->GetAvailabilityBegin(), $this->GetAvailabilityEnd());
+    }
+
+    /**
+     * @return bool
+     */
+    public function HasAvailability()
+    {
+        return $this->GetAvailabilityBegin()->ToString() != '' && $this->GetAvailabilityEnd()->ToString() != '';
+    }
+
+    /**
+     * @return int|ScheduleStyle
+     */
+    public function GetDefaultStyle()
+    {
+        return $this->_defaultStyle;
+    }
+
+    /**
+     * @param $defaultDisplay int|ScheduleStyle
+     */
+    public function SetDefaultStyle($defaultDisplay)
+    {
+        $this->_defaultStyle = $defaultDisplay;
     }
 
     /**
@@ -225,7 +333,11 @@ class Schedule implements ISchedule
         $schedule->WithSubscription($row[ColumnNames::ALLOW_CALENDAR_SUBSCRIPTION]);
         $schedule->WithPublicId($row[ColumnNames::PUBLIC_ID]);
         $schedule->SetAdminGroupId($row[ColumnNames::SCHEDULE_ADMIN_GROUP_ID]);
-
+        $schedule->SetAvailability(Date::FromDatabase($row[ColumnNames::SCHEDULE_AVAILABLE_START_DATE]), Date::FromDatabase($row[ColumnNames::SCHEDULE_AVAILABLE_END_DATE]));
+        $schedule->SetDefaultStyle($row[ColumnNames::SCHEDULE_DEFAULT_STYLE]);
+        $schedule->SetLayoutType($row[ColumnNames::LAYOUT_TYPE]);
+        $schedule->SetTotalConcurrentReservations($row[ColumnNames::TOTAL_CONCURRENT_RESERVATIONS]);
+        $schedule->SetMaxResourcesPerReservation($row[ColumnNames::MAX_RESOURCES_PER_RESERVATION]);
         return $schedule;
     }
 
@@ -251,6 +363,74 @@ class Schedule implements ISchedule
     {
         return new CalendarSubscriptionUrl(null, $this->GetPublicId(), null);
     }
+
+	/**
+	 * @param $layoutType int
+	 */
+    public function SetLayoutType($layoutType)
+    {
+        $this->_layoutType = $layoutType;
+    }
+
+	/**
+	 * @return int
+	 */
+    public function GetLayoutType()
+    {
+        return $this->_layoutType;
+    }
+
+	/**
+	 * @return bool
+	 */
+    public function HasCustomLayout()
+    {
+        return $this->_layoutType == ScheduleLayout::Custom;
+    }
+
+	/**
+	 * @param $totalConcurrent int
+	 */
+    public function SetTotalConcurrentReservations($totalConcurrent) {
+    	$total = intval($totalConcurrent);
+    	$this->_totalConcurrentReservations = min(65535, max($total, 0));
+	}
+
+	/**
+	 * @return int
+	 */
+	public function GetTotalConcurrentReservations() {
+    	return $this->_totalConcurrentReservations;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function EnforceConcurrentReservationMaximum() {
+    	return $this->_totalConcurrentReservations > 0;
+	}
+
+	/**
+	 * @param $max int
+	 */
+    public function SetMaxResourcesPerReservation($max) {
+    	$total = intval($max);
+    	$this->_maxResourcesPerReservation = min(65535, max($total, 0));
+	}
+
+	/**
+	 * @return int
+	 */
+	public function GetMaxResourcesPerReservation() {
+    	return $this->_maxResourcesPerReservation;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function EnforceMaxResourcesPerReservation() {
+    	return $this->_maxResourcesPerReservation > 0;
+	}
 }
 
 class NullSchedule extends Schedule
@@ -259,4 +439,13 @@ class NullSchedule extends Schedule
     {
         parent::__construct(0, null, false, 0, 7);
     }
+}
+
+
+class ScheduleStyle
+{
+    const Standard = 0;
+    const Wide = 1;
+    const Tall = 2;
+    const CondensedWeek = 3;
 }

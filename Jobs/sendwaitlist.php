@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 Nick Korbel
+ * Copyright 2017-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -39,7 +39,13 @@ JobCop::EnsureCommandLine();
 
 try
 {
-	$reservationViewRepository = new ReservationViewRepository();
+    $emailEnabled = Configuration::Instance()->GetKey(ConfigKeys::ENABLE_EMAIL, new BooleanConverter());
+    if (!$emailEnabled)
+    {
+        return;
+    }
+
+    $reservationViewRepository = new ReservationViewRepository();
 	$resourceRepository = new ResourceRepository();
 	$waitlistRepository = new ReservationWaitlistRepository();
     $userRepository = new UserRepository();

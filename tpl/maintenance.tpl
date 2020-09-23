@@ -1,5 +1,5 @@
 {*
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -19,5 +19,5 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 {include file='globalheader.tpl'}
 
 <div style="text-align:center;margin-top:100px;font-size:30pt;">Currently performing maintenance. We'll be back soon.</div>
-
+{include file="javascript-includes.tpl"}
 {include file='globalfooter.tpl'}

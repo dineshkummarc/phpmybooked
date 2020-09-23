@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2012-2016 Nick Korbel
+Copyright 2012-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -34,6 +34,6 @@ class LdapConfig
 	const ATTRIBUTE_MAPPING = 'attribute.mapping';
 	const USER_ID_ATTRIBUTE = 'user.id.attribute';
 	const REQUIRED_GROUP = 'required.group';
+	const SYNC_GROUPS = 'sync.groups';
+	const PREVENT_CLEAN_USERNAME = 'prevent.clean.username';
 }
-
-?>

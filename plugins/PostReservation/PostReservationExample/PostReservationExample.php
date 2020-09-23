@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2014-2016 Nick Korbel
+Copyright 2014-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -69,6 +69,24 @@ class PostReservationExample implements IPostReservationFactory
 	{
 		// showing how to not add custom behavior during the post approval stage
 		return $this->factoryToDecorate->CreatePostAddService($userSession);
+	}
+
+	/**
+	 * @param UserSession $userSession
+	 * @return IReservationNotificationService
+	 */
+	public function CreatePostCheckinService(UserSession $userSession)
+	{
+		return $this->factoryToDecorate->CreatePostCheckinService($userSession);
+	}
+
+	/**
+	 * @param UserSession $userSession
+	 * @return IReservationNotificationService
+	 */
+	public function CreatePostCheckoutService(UserSession $userSession)
+	{
+		return $this->factoryToDecorate->CreatePostCheckoutService($userSession);
 	}
 }
 

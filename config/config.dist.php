@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -26,7 +26,7 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
  * Application configuration
  */
 $conf['settings']['app.title'] = 'Booked Scheduler';			// application title
-$conf['settings']['default.timezone'] = 'America/Chicago';      // look up here http://php.net/manual/en/timezones.php
+$conf['settings']['default.timezone'] = 'America/New_York';      // look up here http://php.net/manual/en/timezones.php
 $conf['settings']['allow.self.registration'] = 'true';         	// if users can register themselves
 $conf['settings']['admin.email'] = 'admin@example.com';         // email address of admin user
 $conf['settings']['admin.email.name'] = 'Booked Administrator';	// name to be used in From: field when sending automatic emails
@@ -37,7 +37,7 @@ $conf['settings']['script.url'] = 'http://localhost/Web';   	// public URL to th
 $conf['settings']['image.upload.directory'] = 'Web/uploads/images'; // full or relative path to where images will be stored
 $conf['settings']['image.upload.url'] = 'uploads/images';       // full or relative path to show uploaded images from
 $conf['settings']['cache.templates'] = 'true';                  // true recommended, caching template files helps web pages render faster
-$conf['settings']['use.local.jquery'] = 'false';                // false recommended, delivers jQuery from Google CDN, uses less bandwidth
+$conf['settings']['use.local.js.libs'] = 'false';                // false recommended, delivers jQuery from Google CDN, uses less bandwidth
 $conf['settings']['registration.captcha.enabled'] = 'true';     // recommended. unless using recaptcha this requires php_gd2 enabled in php.ini
 $conf['settings']['registration.require.email.activation'] = 'false';		// requires enable.email = true
 $conf['settings']['registration.auto.subscribe.email'] = 'false';			// requires enable.email = true
@@ -54,21 +54,21 @@ $conf['settings']['schedule']['use.per.user.colors'] = 'false'; 		// color reser
 $conf['settings']['schedule']['show.inaccessible.resources'] = 'true';  // whether or not resources that are inaccessible to the user are visible
 $conf['settings']['schedule']['reservation.label'] = '{name}';    		// format for what to display on the reservation slot label.  Available properties are: {name}, {title}, {description}, {email}, {phone}, {organization}, {position}, {startdate}, {enddate} {resourcename} {participants} {invitees} {reservationAttributes}. Custom attributes can be added using att with the attribute id. For example {att1}
 $conf['settings']['schedule']['hide.blocked.periods'] = 'false';    	// if blocked periods should be hidden or shown
+$conf['settings']['schedule']['update.highlight.minutes'] = '0';    // if set, will show reservations as 'updated' for a certain amount of time
 
 /**
  * ical integration configuration
  */
-$conf['settings']['ics']['require.login'] = 'true';             // recommended, if the user must be logged in to access ics files
 $conf['settings']['ics']['subscription.key'] = '';              // must be set to allow webcal subscriptions
-$conf['settings']['ics']['import'] = 'false';					// enable iCal import
-$conf['settings']['ics']['import.key'] = '';					// it's recommended  to set this key when iCal import is enabled
+$conf['settings']['ics']['future.days'] = 30;
+$conf['settings']['ics']['past.days'] = 0;
 /**
  * Privacy configuration
  */
 $conf['settings']['privacy']['view.schedules'] = 'true';       			// if unauthenticated users can view schedules
 $conf['settings']['privacy']['view.reservations'] = 'false';    			// if unauthenticated users can view reservations
 $conf['settings']['privacy']['hide.user.details'] = 'false';    			// if personal user details should be displayed to non-administrators
-$conf['settings']['privacy']['hide.reservation.details'] = 'false';			// if reservation details should be displayed to non-administrators
+$conf['settings']['privacy']['hide.reservation.details'] = 'false';			// if reservation details should be displayed to non-administrators. options are true, false, current, future, past
 $conf['settings']['privacy']['allow.guest.reservations'] = 'false';			// if reservations can be made by users without a Booked account, if true this overrides schedule and resource visibility
 /**
  * Reservation specific configuration
@@ -81,6 +81,10 @@ $conf['settings']['reservation']['enable.reminders'] = 'false';				// if reminde
 $conf['settings']['reservation']['allow.guest.participation'] = 'false';
 $conf['settings']['reservation']['allow.wait.list'] = 'false';
 $conf['settings']['reservation']['checkin.minutes.prior'] = '5';
+$conf['settings']['reservation']['default.start.reminder'] = '';			// the default start reservation reminder. format is ## interval. for example, 10 minutes, 2 hours, 6 days.
+$conf['settings']['reservation']['default.end.reminder'] = '';				// the default end reservation reminder. format is ## interval. for example, 10 minutes, 2 hours, 6 days.
+$conf['settings']['reservation']['title.required'] = 'false';
+$conf['settings']['reservation']['description.required'] = 'false';
 /**
  * Email notification configuration
  */
@@ -143,6 +147,7 @@ $conf['settings']['pages']['enable.configuration'] = 'true';
  * API
  */
 $conf['settings']['api']['enabled'] = 'false';
+$conf['settings']['api']['allow.self.registration'] = 'false';
 /**
  * ReCaptcha
  */
@@ -172,7 +177,7 @@ $conf['settings']['reservation.labels']['ics.my.summary'] = '{title}';
 $conf['settings']['reservation.labels']['rss.description'] = '<div><span>Start</span> {startdate}</div><div><span>End</span> {enddate}</div><div><span>Organizer</span> {name}</div><div><span>Description</span> {description}</div>';
 $conf['settings']['reservation.labels']['my.calendar'] = '{resourcename} {title}';
 $conf['settings']['reservation.labels']['resource.calendar'] = '{name}';
-$conf['settings']['reservation.labels']['reservation.popup'] = ''; // Format for what to display in reservation popups. Possible values: {name} {dates} {title} {resources} {participants} {accessories} {description} {attributes}. Custom attributes can be added using att with the attribute id. For example {att1}
+$conf['settings']['reservation.labels']['reservation.popup'] = ''; // Format for what to display in reservation popups. Possible values: {name} {dates} {title} {resources} {participants} {accessories} {description} {attributes} {pending} {duration}. Custom attributes can be added using att with the attribute id. For example {att1}
 /**
  * Security header settings
  */
@@ -181,15 +186,28 @@ $conf['settings']['security']['security.strict-transport'] = 'true';
 $conf['settings']['security']['security.x-frame'] = 'deny';
 $conf['settings']['security']['security.x-xss'] = '1; mode=block';
 $conf['settings']['security']['security.x-content-type'] = 'nosniff';
-$conf['settings']['security']['security.content-security-policy'] = "default-src 'self'"; // Requires careful tuning (know what your doing)
+$conf['settings']['security']['security.content-security-policy'] = ""; // Requires careful tuning (know what your doing)
 /**
  * Google Analytics settings
  */
 $conf['settings']['google.analytics']['tracking.id'] = ''; // if set, Google Analytics tracking code will be added to every page in Booked
 
-$conf['settings']['authentication']['allow.social.login'] = 'false';
+$conf['settings']['authentication']['allow.facebook.login'] = 'true';
+$conf['settings']['authentication']['allow.google.login'] = 'true';
 $conf['settings']['authentication']['required.email.domains'] = '';
+$conf['settings']['authentication']['hide.booked.login.prompt'] = 'false';
+$conf['settings']['authentication']['captcha.on.login'] = 'false';
 /**
- * Credits functionality
+ * Credits
  */
 $conf['settings']['credits']['enabled'] = 'false';
+$conf['settings']['credits']['allow.purchase'] = 'false';
+/**
+ * Slack integration
+ */
+$conf['settings']['slack']['token'] = '';
+/**
+ * Tablet view
+ */
+$conf['settings']['tablet.view']['allow.guest.reservations'] = 'false';
+$conf['settings']['tablet.view']['auto.suggest.emails'] = 'false';

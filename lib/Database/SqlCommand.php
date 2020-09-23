@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -35,7 +35,7 @@ class SqlCommand implements ISqlCommand
 		$this->Parameters = new Parameters();
 	}
 
-	public function SetParameters(Parameters &$parameters)
+	public function SetParameters(Parameters $parameters)
 	{
 		$this->_paramNames = array(); // Clean out contents
 		$this->_values = array();
@@ -50,7 +50,7 @@ class SqlCommand implements ISqlCommand
 		}
 	}
 
-	public function AddParameter(Parameter &$parameter)
+	public function AddParameter(Parameter $parameter)
 	{
 		$this->Parameters->Add($parameter);
 	}
@@ -84,6 +84,11 @@ class SqlCommand implements ISqlCommand
 	{
 		return false;
 	}
+
+	public function IsMultiQuery()
+    {
+        return false;
+    }
 }
 
 class AdHocCommand extends SqlCommand
@@ -119,7 +124,7 @@ class CountCommand extends SqlCommand
 
 	public function GetQuery()
 	{
-		return 'SELECT COUNT(*) as total FROM (' . $this->baseCommand->GetQuery() . ') results';
+		return 'SELECT COUNT(*) as `total` FROM (' . $this->baseCommand->GetQuery() . ') `results`';
 	}
 }
 
@@ -135,13 +140,16 @@ class SortCommand extends SqlCommand
         {
             $sortDirection = 'asc';
         }
+        else {
+            $sortDirection = 'desc';
+        }
 
         $this->Parameters = $baseCommand->Parameters;
-        $this->AddParameter(new ParameterRaw('@sort_params', "$sortField $sortDirection"));
+        $sortField = preg_replace("/[^a-zA-Z0-9_]+/", "", $sortField);
+        $this->AddParameter(new ParameterRaw('@sort_params', $sortField));
 
         $query = $baseCommand->GetQuery();
-        $this->query = preg_replace('/ORDER BY\\s+[a-zA-Z0-9_,\\s\\-\\.]+$/', 'ORDER BY @sort_params', $query, 1);
-    }
+        $this->query = preg_replace('/ORDER BY\\s+[`a-zA-Z0-9_,\\s\\-\\.]+$/', "ORDER BY @sort_params $sortDirection", $query, 1);    }
 
     public function GetQuery()
     {
@@ -232,4 +240,9 @@ class FilterCommand extends SqlCommand
 
 		return $query;
 	}
+
+	public function ContainsGroupConcat()
+    {
+        return $this->baseCommand->ContainsGroupConcat();
+    }
 }

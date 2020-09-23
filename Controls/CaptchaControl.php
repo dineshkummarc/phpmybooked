@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2013-2016 Nick Korbel
+Copyright 2013-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -42,10 +42,11 @@ class CaptchaControl extends Control
 		Log::Debug('CaptchaControl using Recaptcha');
 		require_once(ROOT_DIR . 'lib/external/recaptcha/recaptchalib.php');
 
-		$isHttps = ServiceLocator::GetServer()->GetIsHttps();
+        $publicKey = Configuration::Instance()->GetSectionKey(ConfigSection::RECAPTCHA,ConfigKeys::RECAPTCHA_PUBLIC_KEY);
 
-		$response = recaptcha_get_html(Configuration::Instance()->GetSectionKey(ConfigSection::RECAPTCHA,
-																				ConfigKeys::RECAPTCHA_PUBLIC_KEY), null, $isHttps);
+        $response = '<script src=\'https://www.google.com/recaptcha/api.js\'></script>';
+        $response .='<div class="g-recaptcha" data-sitekey="' . $publicKey . '"></div>';
+
 		echo $response;
 	}
 
@@ -55,9 +56,16 @@ class CaptchaControl extends Control
 		$url = CaptchaService::Create()->GetImageUrl();
 
 		$label = Resources::GetInstance()->GetString('SecurityCode');
+		$message = Resources::GetInstance()->GetString('Required');
 		$formName = FormKeys::CAPTCHA;
 
-		echo "<div class=\"form-group\"><div><img src='$url' alt='captcha' id='captchaImg'/></div>";
-		echo "<label for=\"captchaValue\">$label</label><input type=\"text\" class=\"form-control\" name=\"$formName\" size=\"20\" id=\"captchaValue\"/></div>";
+		echo "<div id=\"captchaDiv\">
+                <div><img src=\"$url\" alt=\"captcha\" id=\"captchaImg\"/></div>
+		        <label for=\"captchaValue\">$label</label>
+                <input type=\"text\" class=\"form-control\" name=\"$formName\" size=\"20\" id=\"$formName\" 
+                required=\"required\"
+                data-bv-notempty=\"true\"
+                data-bv-notempty-message=\"$message\"/>
+            </div>";
 	}
 }

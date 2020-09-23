@@ -150,7 +150,7 @@ class Saml extends Authentication implements IAuthentication
 	public function Login($username, $loginContext)
 	{
 		$this->username = $username;
-		if ($this->username == null)
+		if (empty($this->username))
 		{
 			$this->username = $this->user->GetUserName();
 		}
@@ -164,12 +164,13 @@ class Saml extends Authentication implements IAuthentication
 
 	public function Logout(UserSession $user)
 	{
-		$this->authToDecorate->Logout($user);
+        $this->authToDecorate->Logout($user);
+	    $this->saml->Logout();
 	}
 
 	public function AreCredentialsKnown()
 	{
-		return false;
+		return true;
 	}
 
 	private function SamlUserExists()
@@ -191,7 +192,8 @@ class Saml extends Authentication implements IAuthentication
 				Configuration::Instance()->GetKey(ConfigKeys::LANGUAGE),
 				Configuration::Instance()->GetDefaultTimezone(),
 				$this->user->GetPhone(), $this->user->GetInstitution(),
-				$this->user->GetTitle())
+				$this->user->GetTitle(),
+                $this->user->GetGroups())
 		);
 	}
 
@@ -214,6 +216,40 @@ class Saml extends Authentication implements IAuthentication
 	{
 		return true;
 	}
-}
 
-?>
+
+    public function AllowUsernameChange()
+    {
+        return false;
+    }
+
+    public function AllowEmailAddressChange()
+    {
+        return false;
+    }
+
+    public function AllowPasswordChange()
+    {
+        return false;
+    }
+
+    public function AllowNameChange()
+    {
+        return false;
+    }
+
+    public function AllowPhoneChange()
+    {
+        return false;
+    }
+
+    public function AllowOrganizationChange()
+    {
+        return false;
+    }
+
+    public function AllowPositionChange()
+    {
+        return false;
+    }
+}

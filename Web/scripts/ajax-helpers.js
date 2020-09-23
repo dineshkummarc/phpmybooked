@@ -44,29 +44,29 @@ function HasResponseText(responseText) {
 }
 
 function ConfigureAsyncForm(formElement, urlCallback, successHandler, responseHandler, options) {
-	var validationSummary = formElement.find('.validationSummary');
+
 	var beforeSerialize = (options ? options.onBeforeSerialize : null);
 	var opts = $.extend(
 			{
 				dataType: null,
 				onBeforeSubmit: BeforeFormSubmit,
 				target: null,
-				validationSummary: validationSummary.length > 0 ? validationSummary : null
+				validationSummary: null
 			}, options);
 
 	opts.onBeforeSerialize = BeforeSerializeDecorator(beforeSerialize);
 
     var getAction = function(form) {
         var action = $(form).attr('action');
-        var ajaxAction = $(form).attr('ajax-action');
+        var ajaxAction = $(form).attr('ajaxAction');
 
-        return _.isEmpty(action) ? ajaxAction : action;
+        return _.isEmpty(action) ? (window.location.href.split('?')[0] + '?action=' + ajaxAction) : action;
     };
 
 	formElement.submit(function () {
 
 		var submitOptions = {
-			url: urlCallback ? urlCallback(formElement) : getAction(formElement) ,
+			url: urlCallback ? urlCallback(formElement) : getAction(formElement),
 			beforeSubmit: opts.onBeforeSubmit,
 			beforeSerialize: opts.onBeforeSerialize,
 			dataType: opts.dataType,
@@ -75,7 +75,8 @@ function ConfigureAsyncForm(formElement, urlCallback, successHandler, responseHa
 				formElement.find('.indicator').addClass('no-show');
 				formElement.find('button').removeClass('no-show');
 
-				var validationSummary = opts.validationSummary;
+				var formValidationSummary = formElement.find('.validationSummary');
+				var validationSummary = opts.validationSummary || formValidationSummary;
 				var hasValidationSummary = validationSummary && validationSummary.length > 0;
 				var hasResponseText = HasResponseText(responseText);
 
@@ -109,7 +110,7 @@ function ConfigureAsyncForm(formElement, urlCallback, successHandler, responseHa
 							}
 							else
 							{
-								validationSummary.find('ul').append($('<li/>', {text: responseText.Messages[errorId]}))
+								validationSummary.find('ul').empty().append($('<li/>', {text: responseText.Messages[errorId]}));
 							}
 						}
 						errorElement.removeClass('no-show');
@@ -190,7 +191,7 @@ function ConfigureUploadForm(buttonElement, urlCallback, preSubmitCallback, succ
 function BeforeFormSubmit(formData, jqForm, opts) {
 	var isValid = true;
 	$(jqForm).find('.required').each(function (index, ele) {
-		if ($(ele).is(':visible') && $(ele).val() == '')
+		if ($(ele).is(':visible') && $(ele).val() == '' && $(ele).attr('disabled')!='disabled' )
 		{
 			isValid = false;
 			$(ele).closest('.form-group').addClass('has-error');
@@ -302,4 +303,12 @@ function ClearAsyncErrors(element) {
 
 function HtmlDecode(encoded) {
 	return $('<textarea/>').html(encoded).val();
+}
+
+function ajaxPagination(element, callback){
+    element.find('a.page').on('click', function(e){
+        e.preventDefault();
+        var a = $(e.target);
+        callback(a.data('page'), a.data('page-size'));
+    });
 }

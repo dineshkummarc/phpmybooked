@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2011-2016 Nick Korbel
+ * Copyright 2011-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -99,7 +99,7 @@ class ReservationCheckinPage extends Page implements IReservationCheckinPage
 
 	public function SetErrors($errors)
 	{
-        // no-op
+        $this->Set('Errors', $errors);
 	}
 
 	public function SetWarnings($warnings)

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2011-2016 Nick Korbel
+ * Copyright 2011-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 class CalendarReservation
 {
     /**
@@ -30,6 +31,11 @@ class CalendarReservation
      * @var string
      */
     public $ResourceName;
+
+     /**
+     * @var int
+     */
+    public $ResourceId;
 
     /**
      * @var string
@@ -96,6 +102,16 @@ class CalendarReservation
      */
     public $Class;
 
+    /**
+     * @var bool
+     */
+    public $IsEditable;
+
+    /**
+     * @var int
+     */
+    public $ScheduleId;
+
     private function __construct(Date $startDate, Date $endDate, $resourceName, $referenceNumber)
     {
         $this->StartDate = $startDate;
@@ -132,14 +148,17 @@ class CalendarReservation
      * @param $reservation ReservationItemView
      * @param $timezone string
      * @param $user UserSession
+     * @param $factory SlotLabelFactory|null
      * @return CalendarReservation
      */
-    public static function FromView($reservation, $timezone, $user)
+    public static function FromView($reservation, $timezone, $user, $factory = null)
     {
-        $factory = new SlotLabelFactory($user);
+        if ($factory == null) {
+            $factory = new SlotLabelFactory($user);
+        }
         $start = $reservation->StartDate->ToTimezone($timezone);
         $end = $reservation->EndDate->ToTimezone($timezone);
-        $resourceName = $reservation->ResourceName;
+        $resourceName = implode(', ', $reservation->ResourceNames);
         $referenceNumber = $reservation->ReferenceNumber;
 
         $res = new CalendarReservation($start, $end, $resourceName, $referenceNumber);
@@ -152,8 +171,12 @@ class CalendarReservation
         $res->Participant = $reservation->UserLevelId == ReservationUserLevel::PARTICIPANT;
         $res->Owner = $reservation->UserLevelId == ReservationUserLevel::OWNER;
 
-        $res->Color = $reservation->GetColor();
-        $res->TextColor = $reservation->GetTextColor();
+        $color = $reservation->GetColor();
+        if (!empty($color)) {
+            $res->Color = $reservation->GetColor() . ' !important';
+            $res->TextColor = $reservation->GetTextColor() . ' !important';
+        }
+        $res->IsEditable = $user->IsAdmin || $user->UserId == $reservation->OwnerId;
 
         $res->Class = self::GetClass($reservation);
 
@@ -163,15 +186,21 @@ class CalendarReservation
     /**
      * @static
      * @param array|ReservationItemView[] $reservations
+     * @param array|BlackoutItemView[] $blackouts
+     * @param array|ReservableCalendarSlot[] $availablePeriods
      * @param array|ResourceDto[] $resources
      * @param UserSession $userSession
      * @param bool $groupSeriesByResource
+     * @param SlotLabelFactory|null $factory
      * @return CalendarReservation[]
      */
-    public static function FromScheduleReservationList($reservations, $resources, UserSession $userSession, $groupSeriesByResource = false)
+    public static function FromScheduleReservationList($reservations, $blackouts, $availablePeriods, $resources, UserSession $userSession, $groupSeriesByResource = false, $factory = null)
     {
+        if ($factory == null) {
+            $factory = new SlotLabelFactory($userSession);
+        }
+
         $knownSeries = array();
-        $factory = new SlotLabelFactory($userSession);
 
         $resourceMap = array();
         /** @var $resource ResourceDto */
@@ -204,12 +233,46 @@ class CalendarReservation
             $cr->OwnerLast = $reservation->LastName;
             $cr->DisplayTitle = $factory->Format($reservation, Configuration::Instance()->GetSectionKey(ConfigSection::RESERVATION_LABELS,
                 ConfigKeys::RESERVATION_LABELS_RESOURCE_CALENDAR));
+            $color = $reservation->GetColor();
+            if (!empty($color)) {
+                $cr->Color = $reservation->GetColor() . ' !important';
+                $cr->TextColor = $reservation->GetTextColor() . ' !important';
+            }
 
-            $cr->Color = $reservation->GetColor();
-            $cr->TextColor = $reservation->GetTextColor();
+            $cr->IsEditable = $userSession->IsAdmin || $userSession->UserId == $reservation->OwnerId;
 
             $cr->Class = self::GetClass($reservation);
 
+            $res[] = $cr;
+        }
+
+        foreach ($blackouts as $blackout) {
+            if (!array_key_exists($blackout->ResourceId, $resourceMap)) {
+                continue;
+            }
+
+            $timezone = $userSession->Timezone;
+            $start = $blackout->StartDate->ToTimezone($timezone);
+            $end = $blackout->EndDate->ToTimezone($timezone);
+
+            $cr = new CalendarReservation($start, $end, $resourceMap[$blackout->ResourceId], null);
+            $cr->Title = $blackout->Title;
+            $cr->DisplayTitle = $blackout->Title;
+            $cr->IsEditable = false;
+            $cr->Class = 'unreservable';
+            $res[] = $cr;
+        }
+
+        foreach ($availablePeriods as $period) {
+            $timezone = $userSession->Timezone;
+            $start = $period->BeginDate()->ToTimezone($timezone);
+            $end = $period->EndDate()->ToTimezone($timezone);
+
+            $cr = new CalendarReservation($start, $end, null, null);
+            $cr->IsEditable = false;
+            $cr->Class = 'reservable';
+            $cr->ResourceId = $period->ResourceId;
+            $cr->ScheduleId = $period->ScheduleId;
             $res[] = $cr;
         }
 
@@ -238,17 +301,76 @@ class CalendarReservation
 
     public function AsFullCalendarEvent()
     {
+
         $dateFormat = Resources::GetInstance()->GetDateFormat('fullcalendar');
         return array(
             'id' => $this->ReferenceNumber,
             'title' => $this->DisplayTitle,
             'start' => $this->StartDate->Format($dateFormat),
             'end' => $this->EndDate->Format($dateFormat),
-            'url' => sprintf('%s?rn=%s', Pages::RESERVATION, $this->ReferenceNumber),
+            'url' => $this->GetUrl(),
             'allDay' => false,
             'backgroundColor' => $this->Color,
             'textColor' => $this->TextColor,
-            'className' => $this->Class
+            'className' => $this->Class,
+            'startEditable' => $this->IsEditable
         );
+    }
+
+    /**
+     * @return string
+     */
+    private function GetUrl()
+    {
+        if (!empty($this->ReferenceNumber)) {
+            return sprintf('%s?rn=%s&redirect=[redirect]', Pages::RESERVATION, $this->ReferenceNumber);
+        }
+
+        if (!empty($this->ResourceId)) {
+            $format = Resources::GetInstance()->GetDateFormat('url_full');
+            return  sprintf('%s?rid=%s&sd=%s&ed=%s', Pages::RESERVATION, $this->ResourceId, $this->StartDate->Format($format), $this->EndDate->Format($format));
+        }
+
+        if (!empty($this->ScheduleId)) {
+            $format = Resources::GetInstance()->GetDateFormat('url_full');
+            return  sprintf('%s?sid=%s&sd=%s&ed=%s', Pages::RESERVATION, $this->ScheduleId, $this->StartDate->Format($format), $this->EndDate->Format($format));
+        }
+
+        return '';
+    }
+}
+
+class ReservableCalendarSlot
+{
+    /**
+     * @var SchedulePeriod
+     */
+    public $Period;
+
+    /**
+     * @var int
+     */
+    public $ResourceId;
+
+    /**
+     * @var int
+     */
+    public $ScheduleId;
+
+    public function __construct(SchedulePeriod $period, $resourceId, $scheduleId)
+    {
+        $this->Period = $period;
+        $this->ResourceId = $resourceId;
+        $this->ScheduleId = $scheduleId;
+    }
+
+    public function BeginDate()
+    {
+        return $this->Period->BeginDate();
+    }
+
+    public function EndDate()
+    {
+        return $this->Period->EndDate();
     }
 }

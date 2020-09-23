@@ -1,5 +1,5 @@
 {*
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -41,16 +41,49 @@ Ending: {formatdate date=$EndDate key=reservation_email}<br/>
 Title: {$Title}<br/>
 Description: {$Description|nl2br}
 
-{if count($RepeatDates) gt 0}
+{if count($RepeatRanges) gt 0}
 	<br/>
 	The reservation occurs on the following dates:
 	<br/>
 {/if}
 
-{foreach from=$RepeatDates item=date name=dates}
-	{formatdate date=$date}
+{foreach from=$RepeatRanges item=date name=dates}
+	{formatdate date=$date->GetBegin()}
+    {if !$date->IsSameDate()} - {formatdate date=$date->GetEnd()}{/if}
 	<br/>
 {/foreach}
+
+{if $Participants|count >0}
+    <br/>
+    Participants:
+    {foreach from=$Participants item=user}
+        {$user->FullName()} <a href="mailto:{$user->EmailAddress()}">{$user->EmailAddress()}</a>
+        <br/>
+    {/foreach}
+{/if}
+
+{if $ParticipatingGuests|count >0}
+    {foreach from=$ParticipatingGuests item=email}
+        <a href="mailto:{$email}">{$email}</a>
+        <br/>
+    {/foreach}
+{/if}
+
+{if $Invitees|count >0}
+    <br/>
+    Invitees:
+    {foreach from=$Invitees item=user}
+        {$user->FullName()} <a href="mailto:{$user->EmailAddress()}">{$user->EmailAddress()}</a>
+        <br/>
+    {/foreach}
+{/if}
+
+{if $InvitedGuests|count >0}
+    {foreach from=$InvitedGuests item=email}
+        <a href="mailto:{$email}">{$email}</a>
+        <br/>
+    {/foreach}
+{/if}
 
 {if $Accessories|count > 0}
 	<br/>
@@ -60,6 +93,14 @@ Description: {$Description|nl2br}
 		({$accessory->QuantityReserved}) {$accessory->Name}
 		<br/>
 	{/foreach}
+{/if}
+
+{if $CreditsCurrent > 0}
+    <br/>
+    This reservation costs {$CreditsCurrent} credits.
+    {if $CreditsCurrent != $CreditsTotal}
+        This series costs {$CreditsTotal} credits.
+    {/if}
 {/if}
 
 {if $Attributes|count > 0}
@@ -94,7 +135,12 @@ Description: {$Description|nl2br}
 {/if}
 
 <br/>
+Reference Number: {$ReferenceNumber}
+
+<br/>
 <br/>
 <a href="{$ScriptUrl}/{$ReservationUrl}">View this reservation</a> |
 <a href="{$ScriptUrl}/{$ICalUrl}">Add to Calendar</a> |
-<a href="{$ScriptUrl}">Log in to Booked Scheduler</a>
+<a href="http://www.google.com/calendar/event?action=TEMPLATE&text={$Title|escape:'url'}&dates={formatdate date=$StartDate->ToUtc() key=google}/{formatdate date=$EndDate->ToUtc() key=google}&ctz={$StartDate->Timezone()}&details={$Description|escape:'url'}&location={$ResourceName|escape:'url'}&trp=false&sprop=&sprop=name:"
+   target="_blank" rel="nofollow">Add to Google Calendar</a> |
+<a href="{$ScriptUrl}">Log in to {$AppTitle}</a>

@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -21,13 +21,11 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 interface IDomainEvent
 {
     /**
-     * @abstract
      * @return string
      */
     function EventType();
 
     /**
-     * @abstract
      * @return EventCategory|string
      */
     function EventCategory();

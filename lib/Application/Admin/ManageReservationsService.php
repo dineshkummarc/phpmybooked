@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -49,6 +49,19 @@ interface IManageReservationsService
 	 * @return string[] Any errors that were returned during reservation update
 	 */
 	public function UpdateAttribute($referenceNumber, $attributeId, $attributeValue, $userSession);
+
+	/**
+	 * Adds a reservation without any validation or notification
+	 * @param ReservationSeries $series
+	 */
+	public function UnsafeAdd(ReservationSeries $series);
+
+	/**
+	 * Deletes a reservation instance without any validation or notification
+	 * @param int $reservationId
+	 * @param UserSession $userSession
+	 */
+	public function UnsafeDelete($reservationId, $userSession);
 }
 
 class ManageReservationsService implements IManageReservationsService
@@ -74,21 +87,28 @@ class ManageReservationsService implements IManageReservationsService
 	private $persistenceService;
 
 	/**
+	 * @var IReservationRepository
+	 */
+	private $reservationRepository;
+
+	/**
 	 * @param IReservationViewRepository $reservationViewRepository
 	 * @param IReservationAuthorization|null $authorization
 	 * @param IReservationHandler|null $reservationHandler
 	 * @param IUpdateReservationPersistenceService|null $persistenceService
+	 * @param IReservationRepository|null $reservationRepository
 	 */
 	public function __construct(IReservationViewRepository $reservationViewRepository,
 								$authorization = null,
-								$reservationHandler= null,
-								$persistenceService= null)
+								$reservationHandler = null,
+								$persistenceService = null,
+								$reservationRepository = null)
 	{
 		$this->reservationViewRepository = $reservationViewRepository;
 		$this->reservationAuthorization = $authorization == null ?  new ReservationAuthorization(PluginManager::Instance()->LoadAuthorization()) : $authorization;
 		$this->persistenceService = $persistenceService == null ? new UpdateReservationPersistenceService(new ReservationRepository()) : $persistenceService;
 		$this->reservationHandler = $reservationHandler == null ? ReservationHandler::Create(ReservationAction::Update, $this->persistenceService, ServiceLocator::GetServer()->GetUserSession()) : $reservationHandler;
-
+		$this->reservationRepository = $reservationRepository == null ? new ReservationRepository() : $reservationRepository;
 	}
 
 	public function LoadFiltered($pageNumber, $pageSize, $sortField, $sortDirection, $filter, $user)
@@ -108,13 +128,6 @@ class ManageReservationsService implements IManageReservationsService
 		return null;
 	}
 
-	/**
-	 * @param string $referenceNumber
-	 * @param int $attributeId
-	 * @param string $attributeValue
-	 * @param UserSession $userSession
-	 * @return string[] Any errors that were returned during reservation update
-	 */
 	public function UpdateAttribute($referenceNumber, $attributeId, $attributeValue, $userSession)
 	{
 		$reservation = $this->persistenceService->LoadByReferenceNumber($referenceNumber);
@@ -127,6 +140,20 @@ class ManageReservationsService implements IManageReservationsService
 		$this->reservationHandler->Handle($reservation, $collector);
 
 		return $collector->errors;
+	}
+
+	public function UnsafeAdd(ReservationSeries $series)
+	{
+		$this->reservationRepository->Add($series);
+	}
+
+	public function UnsafeDelete($reservationId, $userSession)
+	{
+		$existingSeries = $this->reservationRepository->LoadById($reservationId);
+		$existingSeries->ApplyChangesTo(SeriesUpdateScope::ThisInstance);
+
+		$existingSeries->Delete($userSession);
+		$this->reservationRepository->Delete($existingSeries);
 	}
 }
 

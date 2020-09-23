@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2013-2016 Nick Korbel
+Copyright 2013-2020 Nick Korbel
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ class DailyReservationSummary
 	 */
 	private $_first = null;
 
-	private $_count = 0;
+	private $_reservationCount = 0;
 
 	/**
 	 * @var ReservationListItem[]
@@ -33,8 +33,16 @@ class DailyReservationSummary
 	 */
 	public function NumberOfReservations()
 	{
-		return $this->_count;
+		return $this->_reservationCount;
 	}
+
+    /**
+     * @return int
+     */
+	public function NumberOfItems()
+    {
+        return count($this->_reservations);
+    }
 
 	/**
 	 * @return ReservationListItem
@@ -56,7 +64,9 @@ class DailyReservationSummary
 			$this->_first = $item;
 		}
 
-		$this->_count++;
-		$this->_reservations[] = $item;
+		if ($item->IsReservation()) {
+            $this->_reservationCount++;
+        }
+        $this->_reservations[] = $item;
 	}
 }

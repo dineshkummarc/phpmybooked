@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2013-2016 Nick Korbel
+Copyright 2013-2020 Nick Korbel
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -39,4 +39,43 @@ class ContrastingColor
 	{
 		return $this->GetHex();
 	}
+}
+
+class AdjustedColor
+{
+    /**
+     * @var string|null
+     */
+    private $sourceColor;
+
+    /**
+     * @var string|null
+     */
+    private $steps;
+
+    public function __construct($sourceColor, $steps = 50)
+    {
+        $this->sourceColor = str_replace('#', '', $sourceColor);
+        $this->steps = $steps;
+    }
+
+    public function GetHex(){
+        if(!preg_match('/^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i', $this->sourceColor, $parts))
+        {
+            return '';
+        }
+        $out = ""; // Prepare to fill with the results
+        for($i = 1; $i <= 3; $i++) {
+            $parts[$i] = hexdec($parts[$i]);
+            $parts[$i] = round($parts[$i] * $this->steps/100); // 80/100 = 80%, i.e. 20% darker
+            // Increase or decrease it to fit your needs
+            $out .= str_pad(dechex($parts[$i]), 2, '0', STR_PAD_LEFT);
+        }
+        return '#' . $out;
+    }
+
+    public function __toString()
+    {
+        return $this->GetHex();
+    }
 }

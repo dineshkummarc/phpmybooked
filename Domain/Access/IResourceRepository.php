@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -187,7 +187,7 @@ interface IResourceRepository
 	 * @param int|null $pageSize
 	 * @param ISqlFilter|null $filter
 	 * @param int $accountStatus
-	 * @return PageableData|UserItemView[]
+	 * @return PageableData|UserPermissionItemView[]
 	 */
 	public function GetUsersWithPermission($resourceId, $pageNumber = null, $pageSize = null, $filter = null, $accountStatus = AccountStatus::ACTIVE);
 
@@ -197,7 +197,7 @@ interface IResourceRepository
 	 * @param int|null $pageSize
 	 * @param ISqlFilter|null $filter
 	 * @param int $accountStatus
-	 * @return PageableData|UserItemView[]
+	 * @return PageableData|UserPermissionItemView[]
 	 */
 	public function GetUsersWithPermissionsIncludingGroups($resourceId, $pageNumber = null, $pageSize = null, $filter = null, $accountStatus = AccountStatus::ACTIVE);
 
@@ -206,32 +206,27 @@ interface IResourceRepository
 	 * @param int|null $pageNumber
 	 * @param int|null $pageSize
 	 * @param ISqlFilter|null $filter
-	 * @return PageableData|GroupItemView[]
+	 * @return PageableData|GroupPermissionItemView[]
 	 */
 	public function GetGroupsWithPermission($resourceId, $pageNumber = null, $pageSize = null, $filter = null);
 
 	/**
 	 * @param int $resourceId
 	 * @param int $userId
+     * @param int $type
 	 */
-	public function AddResourceUserPermission($resourceId, $userId);
+	public function ChangeResourceUserPermission($resourceId, $userId, $type);
 
 	/**
 	 * @param int $resourceId
-	 * @param int $userId
+	 * @param int $groupId
+     * @param int $type
 	 */
-	public function RemoveResourceUserPermission($resourceId, $userId);
+	public function ChangeResourceGroupPermission($resourceId, $groupId, $type);
 
-	/**
-	 * @param $resourceId
-	 * @param $groupId
-	 */
-	public function AddResourceGroupPermission($resourceId, $groupId);
-
-	/**
-	 * @param $resourceId
-	 * @param $groupId
-	 */
-	public function RemoveResourceGroupPermission($resourceId, $groupId);
+    /**
+     * @return array all public resource ids in key value id=>publicid
+     */
+    public function GetPublicResourceIds();
 
 }

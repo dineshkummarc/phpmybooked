@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2012-2016 Nick Korbel
+Copyright 2012-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -30,7 +30,7 @@ class GroupAdminManageGroupsPage extends ManageGroupsPage
 		$this->CanChangeRoles = false;
 		$this->presenter = new ManageGroupsPresenter($this,
 					new GroupAdminGroupRepository(new UserRepository(), ServiceLocator::GetServer()->GetUserSession()),
-					new ResourceRepository());
+					new ResourceRepository(), new ScheduleRepository());
 	}
 
 	public function ProcessPageLoad()

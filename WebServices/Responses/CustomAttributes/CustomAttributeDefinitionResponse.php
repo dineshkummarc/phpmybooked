@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2012-2016 Nick Korbel
+ * Copyright 2012-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -73,7 +73,17 @@ class CustomAttributeDefinitionResponse extends RestResponse
 	 */
 	public $isPrivate;
 
-	public function __construct(IRestServer $server, CustomAttribute $attribute)
+    /**
+     * @var int
+     */
+    public $secondaryCategoryId;
+
+    /**
+     * @var int[]
+     */
+    public $secondaryEntityIds;
+
+    public function __construct(IRestServer $server, CustomAttribute $attribute)
 	{
 		$this->id = $attribute->Id();
 		$this->categoryId = $attribute->Category();
@@ -85,6 +95,9 @@ class CustomAttributeDefinitionResponse extends RestResponse
 		$this->sortOrder = $attribute->SortOrder();
 		$this->appliesToIds = $attribute->EntityIds();
 		$this->isPrivate = $attribute->IsPrivate();
+		$this->adminOnly = $attribute->AdminOnly();
+		$this->secondaryCategoryId = $attribute->SecondaryCategory();
+		$this->secondaryEntityIds = $attribute->SecondaryEntityIds();
 
 		$this->AddService($server, WebServices::AllCustomAttributes, array(WebServiceParams::AttributeCategoryId => $this->categoryId));
 		$this->AddService($server, WebServices::GetCustomAttribute, array(WebServiceParams::AttributeId => $this->id));
@@ -122,5 +135,7 @@ class ExampleCustomAttributeDefinitionResponse extends CustomAttributeDefinition
 		$this->appliesToIds = array(10);
 		$this->adminOnly = true;
 		$this->isPrivate = true;
+		$this->secondaryCategoryId = 1;
+		$this->secondaryEntityIds = [1,2];
 	}
 }

@@ -1,10 +1,30 @@
 function Calendar(opts) {
     var _options = opts;
     var _fullCalendar;
+    var dateVar = null;
 
     var dayDialog = $('#dayDialog');
 
+    var elements = {
+        loadingIndicator: $('#loadingIndicator'),
+        moveReservationForm: $('#moveReservationForm'),
+        moveReferenceNumber: $('#moveReferenceNumber'),
+        moveStartDate: $('#moveStartDate'),
+        moveErrorOk: $('#moveErrorOk'),
+        moveErrorDialog: $('#moveErrorDialog'),
+        moveErrorsList: $('#moveErrorsList')
+    };
+
     Calendar.prototype.init = function () {
+
+        function showLoadingIndicator() {
+            elements.loadingIndicator.removeClass('no-show');
+        }
+
+        function hideLoadingIndicator() {
+            elements.loadingIndicator.addClass('no-show');
+        }
+
         _fullCalendar = $('#calendar').fullCalendar({
             header: {
                 left: 'prev,next,today',
@@ -18,7 +38,6 @@ function Calendar(opts) {
                 day: _options.dayText
             },
             allDaySlot: false,
-            editable: false,
             defaultView: _options.view,
             defaultDate: _options.defaultDate,
             eventSources: [{
@@ -27,7 +46,15 @@ function Calendar(opts) {
                 data: _options.eventsData
             }],
             eventRender: function (event, element, view) {
-                element.attachReservationPopup(event.id);
+                if (!_.isEmpty(event.id)) {
+                    element.attachReservationPopup(event.id);
+                    var moment = view.start;
+                    if (view.type == "month") {
+                        moment = view.currentRange.start;
+                    }
+                    var redirect = _options.returnTo + encodeURIComponent('?ct=' + view.name + '&start=' + moment.year() + '-' + (moment.month() + 1) + '-' + moment.date())
+                    element.attr('href', event.url.replace('[redirect]', redirect));
+                }
             },
             dayClick: dayClick,
             dayNames: _options.dayNames,
@@ -36,13 +63,36 @@ function Calendar(opts) {
             monthNamesShort: _options.monthNamesShort,
             timeFormat: _options.timeFormat,
             firstDay: _options.firstDay,
+            views: {
+                agendaDay: {slotLabelFormat: _options.timeFormat},
+                agendaWeek: {slotLabelFormat: _options.timeFormat}
+            },
+            slotLabelFormat: _options.timeFormat,
             loading: function (isLoading) {
                 if (isLoading) {
-                    $('#loadingIndicator').removeClass('no-show');
+                    showLoadingIndicator();
                 }
                 else {
-                    $('#loadingIndicator').addClass('no-show');
+                    hideLoadingIndicator();
                 }
+            },
+            eventDrop: function(event, delta, revertFunc) {
+                var handleMoveResponse = function(result) {
+                    hideLoadingIndicator();
+                    if (result.errors.length > 0)
+                    {
+                        revertFunc();
+
+                        var messages = result.errors.join('</li><li>');
+                        messages = '<li>' + messages + '</li>';
+                        elements.moveErrorsList.empty().append(messages);
+                        elements.moveErrorDialog.modal('show');
+                    }
+                };
+
+                elements.moveReferenceNumber.val(event.id);
+                elements.moveStartDate.val(event.start.format('YYYY-MM-DD HH:mm'));
+                ajaxPost(elements.moveReservationForm, _options.moveReservationUrl, showLoadingIndicator, handleMoveResponse);
             }
         });
 
@@ -64,6 +114,7 @@ function Calendar(opts) {
         $('#calendarFilter').on('change', function () {
             var sid = '';
             var rid = '';
+            var gid = getQueryStringValue('gid');
 
             if ($(this).find(':selected').hasClass('schedule')) {
                 sid = $(this).val().replace('s', '');
@@ -75,11 +126,12 @@ function Calendar(opts) {
 
             _options.eventsData.sid = sid;
             _options.eventsData.rid = rid;
-            _options.dayClickUrl = _options.dayClickUrlTemplate.replace('[sid]', sid).replace('[rid]', rid);
-            _options.reservationUrl = _options.reservationUrlTemplate.replace('[sid]', sid).replace('[rid]', rid);
+            _options.eventsData.gid = gid;
+            _options.dayClickUrl = _options.dayClickUrlTemplate.replace('[sid]', sid).replace('[rid]', rid).replace('[gid]', gid);
+            _options.reservationUrl = _options.reservationUrlTemplate.replace('[sid]', sid).replace('[rid]', rid).replace('[gid]', gid);
             _fullCalendar.fullCalendar('refetchEvents');
 
-            rebindSubscriptionData(rid, sid);
+            rebindSubscriptionData(rid, sid, gid);
         });
 
         $('#subscriptionContainer').on('click', '#turnOffSubscription', function (e) {
@@ -90,7 +142,7 @@ function Calendar(opts) {
                 },
                 null,
                 function () {
-                    return rebindSubscriptionData('', '')
+                    return rebindSubscriptionData('', '', '')
                 }
             );
         });
@@ -102,7 +154,7 @@ function Calendar(opts) {
                 },
                 null,
                 function () {
-                    return rebindSubscriptionData('', '')
+                    return rebindSubscriptionData('', '', '');
                 }
             );
         });
@@ -138,7 +190,45 @@ function Calendar(opts) {
                 resourceGroupsContainer.data('positionSet', true);
                 resourceGroupsContainer.show();
             }
-        })
+        });
+
+        elements.moveErrorOk.click(function(e) {
+            e.preventDefault();
+            elements.moveErrorDialog.modal('hide');
+        });
+
+
+
+        function selectOwner(ui, textbox) {
+            textbox.val(ui.item.label);
+            _options.eventsData.uid = ui.item.value;
+            _fullCalendar.fullCalendar('refetchEvents');
+        }
+
+        function selectParticipant(ui, textbox) {
+            textbox.val(ui.item.label);
+            _options.eventsData.pid = ui.item.value;
+            _fullCalendar.fullCalendar('refetchEvents');
+        }
+
+        const ownerFilter = $("#ownerFilter");
+        const participantFilter = $("#participantFilter");
+
+        if (ownerFilter.length !== 0) {
+            ownerFilter.userAutoComplete(opts.autocompleteUrl, selectOwner);
+        }
+
+        if (participantFilter.length !== 0) {
+            participantFilter.userAutoComplete(opts.autocompleteUrl, selectParticipant);
+        }
+
+        $("#clearUserFilter").on('click', function(e) {
+            _options.eventsData.uid = null;
+            _options.eventsData.pid = null;
+            ownerFilter.val('');
+            participantFilter.val('');
+            _fullCalendar.fullCalendar('refetchEvents');
+        });
     };
 
     Calendar.prototype.bindResourceGroups = function (resourceGroups, selectedNode) {
@@ -199,7 +289,7 @@ function Calendar(opts) {
 
             onCreateLi: function (node, $li) {
                 if (node.type == 'resource') {
-                    $li.addClass('group-resource')
+                    $li.addClass('group-resource');
                 }
             }
         });
@@ -223,8 +313,6 @@ function Calendar(opts) {
         }
     };
 
-    var dateVar = null;
-
     var dayClick = function (date, jsEvent, view) {
         dateVar = date;
 
@@ -244,8 +332,6 @@ function Calendar(opts) {
                 at: 'left top',
                 of: jsEvent
             });
-
-
         }
     };
 
@@ -253,8 +339,8 @@ function Calendar(opts) {
         openNewReservation();
     };
 
-    var rebindSubscriptionData = function (rid, sid) {
-        var url = _options.getSubscriptionUrl + '&rid=' + rid + '&sid=' + sid;
+    var rebindSubscriptionData = function (rid, sid, gid) {
+        var url = _options.getSubscriptionUrl + '&rid=' + rid + '&sid=' + sid + '&gid=' + gid;
         ajaxGet(url, function () {
         }, function (response) {
             $('#calendarSubscription').html(response);
@@ -270,8 +356,17 @@ function Calendar(opts) {
     };
 
     var openNewReservation = function () {
-        var end = dateVar.add(30, 'minutes');
-        var url = _options.reservationUrl + "&sd=" + getUrlFormattedDate(dateVar) + "&ed=" + getUrlFormattedDate(end);
+        var view = _fullCalendar.fullCalendar('getView');
+        var end = moment(dateVar).add(30, 'minutes');
+        var year = dateVar.year();
+        var month = dateVar.month() + 1;
+        var day = dateVar.date();
+
+        var url = _options.reservationUrl +
+            "&sd=" + getUrlFormattedDate(dateVar) +
+            "&ed=" + getUrlFormattedDate(end) +
+            "&redirect=" + _options.returnTo + encodeURIComponent('?ct=' + view.name + '&start=' + year + '-' + month + '-' + day)
+        ;
 
         window.location = url;
     };
@@ -279,6 +374,5 @@ function Calendar(opts) {
     var getUrlFormattedDate = function (d) {
         var month = d.month() + 1;
         return encodeURI(d.year() + "-" + month + "-" + d.date() + " " + d.hour() + ":" + d.minute());
-    }
-
+    };
 }

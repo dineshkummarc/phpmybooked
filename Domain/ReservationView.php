@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 Nick Korbel
+ * Copyright 2017-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -146,6 +146,21 @@ class ReservationView
      * @var int
      */
     public $CreditsConsumed;
+
+    /**
+     * @var bool
+     */
+    public $HasAcceptedTerms = false;
+
+    /**
+     * @var Date|null
+     */
+    public $TermsAcceptanceDate;
+
+    /**
+     * @var Date[]
+     */
+    public $CustomRepeatDates = [];
 
     public function __construct()
     {

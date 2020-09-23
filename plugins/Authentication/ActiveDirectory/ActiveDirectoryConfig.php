@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -35,4 +35,5 @@ class ActiveDirectoryConfig
 	const REQUIRED_GROUPS = 'required.groups';
 	const SYNC_GROUPS = 'sync.groups';
 	const USE_SSO = 'use.sso';
+    const PREVENT_CLEAN_USERNAME = 'prevent.clean.username';
 }

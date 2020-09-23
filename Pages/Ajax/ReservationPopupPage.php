@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -19,7 +19,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 require_once(ROOT_DIR . 'Pages/SecurePage.php');
-require_once(ROOT_DIR . 'Presenters/SchedulePresenter.php');
+require_once(ROOT_DIR . 'Presenters/Schedule/SchedulePresenter.php');
 require_once(ROOT_DIR . 'Domain/Access/namespace.php');
 require_once(ROOT_DIR . 'lib/Application/Reservation/namespace.php');
 
@@ -64,21 +64,18 @@ interface IReservationPopupPage
 	function SetDates($startDate, $endDate);
 
 	/**
-	 * @abstract
 	 * @param $accessories ReservationAccessory[]
 	 * @return mixed
 	 */
 	public function SetAccessories($accessories);
 
 	/**
-	 * @abstract
 	 * @param bool $hideReservationDetails
 	 * @return void
 	 */
 	public function SetHideDetails($hideReservationDetails);
 
 	/**
-	 * @abstract
 	 * @param bool $hideUserInfo
 	 * @return void
 	 */
@@ -98,6 +95,16 @@ interface IReservationPopupPage
 	 * @param string $phone
 	 */
 	public function SetPhone($phone);
+
+	/**
+	 * @param bool $requiresApproval
+	 */
+	public function SetRequiresApproval($requiresApproval);
+
+    /**
+     * @param DateDiff $duration
+     */
+    public function SetDuration($duration);
 }
 
 class PopupFormatter
@@ -125,9 +132,10 @@ class PopupFormatter
 
 		if (empty($label))
 		{
-			$label = "{name} {dates} {title} {resources} {participants} {accessories} {description} {attributes}";
+			$label = "{pending} {name} {email} {dates} {duration} {title} {resources} {participants} {accessories} {description} {attributes}";
 		}
 		$label = str_replace('{name}', $this->GetValue('name'), $label);
+		$label = str_replace('{email}', $this->GetValue('email'), $label);
 		$label = str_replace('{dates}', $this->GetValue('dates'), $label);
 		$label = str_replace('{title}', $this->GetValue('title'), $label);
 		$label = str_replace('{resources}', $this->GetValue('resources'), $label);
@@ -135,7 +143,8 @@ class PopupFormatter
 		$label = str_replace('{accessories}', $this->GetValue('accessories'), $label);
 		$label = str_replace('{description}', $this->GetValue('description'), $label);
 		$label = str_replace('{phone}', $this->GetValue('phone'), $label);
-		$label = str_replace('{email}', $this->GetValue('email'), $label);
+		$label = str_replace('{pending}', $this->GetValue('pending'), $label);
+		$label = str_replace('{duration}', $this->GetValue('duration'), $label);
 
 		if (strpos($label, '{attributes}') !== false)
 		{
@@ -275,6 +284,16 @@ class ReservationPopupPage extends Page implements IReservationPopupPage
 	{
 		$this->Set('phone', $phone);
 	}
+
+	public function SetRequiresApproval($requiresApproval)
+	{
+		$this->Set('requiresApproval', $requiresApproval);
+	}
+
+    public function SetDuration($duration)
+    {
+        $this->Set('duration', $duration);
+    }
 }
 
 
@@ -357,6 +376,9 @@ class ReservationPopupPresenter
 		$this->_page->SetSummary($reservation->Description);
 		$this->_page->SetTitle($reservation->Title);
 		$this->_page->SetAccessories($reservation->Accessories);
+		$this->_page->SetRequiresApproval($reservation->RequiresApproval());
+		$duration = $reservation->StartDate->GetDifference($reservation->EndDate);
+		$this->_page->SetDuration($duration);
 
 		$this->_page->SetDates($startDate, $endDate);
 

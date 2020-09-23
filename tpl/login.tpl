@@ -1,5 +1,5 @@
 {*
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -25,14 +25,27 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 		</div>
 	{/if}
 
-	<div class="col-md-offset-3 col-md-6 col-xs-12 ">
-		<div id="login-header" class="default-box-header">
-			<span class="sign-in">{translate key=SignIn}</span>
+    {if $EnableCaptcha}
+        {validation_group class="alert alert-danger"}
+        {validator id="captcha" key="CaptchaMustMatch"}
+        {/validation_group}
+    {/if}
 
-		</div>
+    {if $Announcements|count > 0}
+        <div id="announcements" class="col-sm-8 col-sm-offset-2 col-xs-12">
+        {foreach from=$Announcements item=each}
+            <div class="announcement">{$each->Text()|html_entity_decode|url2link|nl2br}</div>
+        {/foreach}
+        </div>
+    {/if}
+
+	<div class="col-md-offset-3 col-md-6 col-xs-12 ">
 		<form role="form" name="login" id="login" class="form-horizontal" method="post"
 			  action="{$smarty.server.SCRIPT_NAME}">
-			<div id="login-box" class="col-xs-12 default-box straight-top">
+			<div id="login-box" class="col-xs-12 default-box">
+				<div class="col-xs-12 login-icon">
+					{html_image src="$LogoUrl?2.6" alt="$Title"}
+				</div>
 				{if $ShowUsernamePrompt}
 					<div class="col-xs-12">
 						<div class="input-group margin-bottom-25">
@@ -57,18 +70,32 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 					</div>
 				{/if}
 
+                {if $EnableCaptcha}
+                    <div class="col-xs-12">
+                        <div class="margin-bottom-25">
+                        {control type="CaptchaControl"}
+                        </div>
+                    </div>
+                {else}
+                    <input type="hidden" {formname key=CAPTCHA} value=""/>
+                {/if}
+
+				{if $ShowUsernamePrompt &&  $ShowPasswordPrompt}
 				<div class="col-xs-12">
 					<button type="submit" class="btn btn-large btn-primary  btn-block" name="{Actions::LOGIN}"
 							value="submit">{translate key='LogIn'}</button>
 					<input type="hidden" {formname key=RESUME} value="{$ResumeUrl}"/>
 				</div>
+				{/if}
 
+				{if $ShowUsernamePrompt &&  $ShowPasswordPrompt}
 				<div class="col-xs-12 {if $ShowRegisterLink}col-sm-6{/if}">
 					<div class="checkbox">
 						<input id="rememberMe" type="checkbox" {formname key=PERSIST_LOGIN}>
 						<label for="rememberMe">{translate key=RememberMe}</label>
 					</div>
 				</div>
+				{/if}
 
                 {if $ShowRegisterLink}
                     <div class="col-xs-12 col-sm-6 register">
@@ -79,15 +106,24 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                     </div>
                 {/if}
 
-				{if $AllowSocialLogin}
-					<div class="col-lg-6 col-md-12">
-						<a href="https://accounts.google.com/o/oauth2/v2/auth?scope=email%20profile&state={$GoogleState}&redirect_uri=http://www.social.twinkletoessoftware.com/googleresume.php&response_type=code&client_id=531675809673-3sfvrchh6svd9bfl7m55dao8n4s6cqpc.apps.googleusercontent.com"
-						   class="pull-left-lg">
+				<div class="clearfix"></div>
+
+				{if $AllowGoogleLogin && $AllowFacebookLogin}
+					{assign var=socialClass value="col-sm-12 col-md-6"}
+				{else}
+					{assign var=socialClass value="col-sm-12"}
+				{/if}
+
+				{if $AllowGoogleLogin}
+					<div class="{$socialClass} social-login" id="socialLoginGoogle">
+						<a href="https://accounts.google.com/o/oauth2/v2/auth?scope=email%20profile&state={$GoogleState}&redirect_uri=https://www.social.twinkletoessoftware.com/googleresume.php&response_type=code&client_id=531675809673-3sfvrchh6svd9bfl7m55dao8n4s6cqpc.apps.googleusercontent.com">
 							<img src="img/external/btn_google_signin_dark_normal_web.png" alt="Sign in with Google"/>
 						</a>
 					</div>
-					<div class="col-lg-6 col-md-12">
-						<a href="http://www.social.twinkletoessoftware.com/fblogin.php?protocol={$Protocol}&resume={$ScriptUrlNoProtocol}/external-auth.php%3Ftype%3Dfb" class="pull-right-lg">
+				{/if}
+				{if $AllowFacebookLogin}
+					<div class="{$socialClass} social-login" id="socialLoginFacebook">
+						<a href="https://www.social.twinkletoessoftware.com/fblogin.php?protocol={$Protocol}&resume={$ScriptUrlNoProtocol}/external-auth.php%3Ftype%3Dfb%26redirect%3D{$ResumeUrl}">
 							<img style="max-height:42px" src="img/external/btn_facebook_login.png" alt="Sign in with Facebook"/>
 						</a>
 					</div>
@@ -120,6 +156,8 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
 {setfocus key='EMAIL'}
 
+{include file="javascript-includes.tpl"}
+
 <script type="text/javascript">
 	var url = 'index.php?{QueryStringKeys::LANGUAGE}=';
 	$(document).ready(function () {
@@ -131,6 +169,15 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
 		if (!langCode)
 		{
+			langCode = (navigator.language+"").replace("-", "_").toLowerCase();
+
+			var availableLanguages = [{foreach from=$Languages item=lang}"{$lang->GetLanguageCode()}",{/foreach}];
+			if (langCode !== "" && langCode != '{$SelectedLanguage|lower}') {
+				if (availableLanguages.indexOf(langCode) !== -1)
+				{
+					window.location.href = url + langCode;
+				}
+			}
 		}
 	});
 </script>

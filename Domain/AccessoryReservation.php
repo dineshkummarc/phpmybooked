@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 Nick Korbel
+ * Copyright 2017-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -100,4 +100,12 @@ class AccessoryReservation
     {
         return $this->quantityReserved;
     }
+
+	/**
+	 * @return DateRange
+	 */
+	public function GetDuration()
+	{
+    	return new DateRange($this->GetStartDate(), $this->GetEndDate());
+	}
 }

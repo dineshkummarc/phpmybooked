@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -241,6 +241,11 @@ class ReservationSlot implements IReservationSlot
 		return $this->_reservation->GetTextColor();
 	}
 
+	public function BorderColor()
+	{
+		return $this->_reservation->GetBorderColor();
+	}
+
 	/**
 	 * @return ReservationItemView
 	 */
@@ -253,4 +258,34 @@ class ReservationSlot implements IReservationSlot
 	{
 		return $this->_reservation->CollidesWith($date);
 	}
+
+    public function OwnerId()
+    {
+        return $this->_reservation->UserId;
+    }
+
+    public function OwnerGroupIds()
+    {
+        return $this->_reservation->OwnerGroupIds();
+    }
+
+    public function IsNew()
+    {
+        $newMinutes = Configuration::Instance()->GetSectionKey(ConfigSection::SCHEDULE, ConfigKeys::SCHEDULE_UPDATE_HIGHLIGHT_MINUTES, new IntConverter());
+        $modifiedDate = $this->_reservation->ModifiedDate;
+        return
+            ($newMinutes > 0) &&
+            (empty($modifiedDate)) &&
+            ($this->_reservation->CreatedDate->AddMinutes($newMinutes)->GreaterThanOrEqual(Date::Now()));
+    }
+
+    public function IsUpdated()
+    {
+        $newMinutes = Configuration::Instance()->GetSectionKey(ConfigSection::SCHEDULE, ConfigKeys::SCHEDULE_UPDATE_HIGHLIGHT_MINUTES, new IntConverter());
+        $modifiedDate = $this->_reservation->ModifiedDate;
+        return
+            ($newMinutes > 0) &&
+            (!empty($modifiedDate)) &&
+            ($this->_reservation->ModifiedDate->AddMinutes($newMinutes)->GreaterThanOrEqual(Date::Now()));
+    }
 }

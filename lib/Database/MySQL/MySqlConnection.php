@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -49,14 +49,22 @@ class MySqlConnection implements IDbConnection
 			return;
 		}
 
-		$this->_db = mysqli_connect($this->_hostSpec, $this->_dbUser, $this->_dbPassword,$this->_dbName);
-		$selected = mysqli_select_db($this->_db, $this->_dbName);
-		mysqli_set_charset($this->_db, 'utf8');
+		$port = null;
+		if (BookedStringHelper::Contains($this->_hostSpec, ':'))
+        {
+            $parts = explode(':', $this->_hostSpec);
+            $this->_hostSpec = $parts[0];
+            $port = intval($parts[1]);
+        }
+
+		$this->_db = @mysqli_connect($this->_hostSpec, $this->_dbUser, $this->_dbPassword, $this->_dbName, $port);
+		$selected = @mysqli_select_db($this->_db, $this->_dbName);
+		@mysqli_set_charset($this->_db, 'utf8');
 
 		if (!$this->_db || !$selected)
 		{
-			Log::Error("Error connecting to database\n%s",  mysqli_error($this->_db));
-			throw new Exception("Error connecting to database\nError: " . mysqli_error($this->_db));
+			Log::Error("Error connecting to database\nCheck your database settings in the config file\n%s", @mysqli_error($this->_db));
+			throw new Exception("Error connecting to database\nError: " . @mysqli_error($this->_db));
 		}
 
 		$this->_connected = true;
@@ -71,7 +79,6 @@ class MySqlConnection implements IDbConnection
 
 	public function Query(ISqlCommand $sqlCommand)
 	{
-		mysqli_set_charset($this->_db, Resources::GetInstance()->Charset);
 		$mysqlCommand = new MySqlCommandAdapter($sqlCommand, $this->_db);
 
 		if (Log::DebugEnabled())
@@ -100,7 +107,6 @@ class MySqlConnection implements IDbConnection
 
 	public function Execute(ISqlCommand $sqlCommand)
 	{
-		mysqli_set_charset($this->_db, Resources::GetInstance()->Charset);
 		$mysqlCommand = new MySqlCommandAdapter($sqlCommand, $this->_db);
 
 		if (Log::DebugEnabled())
@@ -110,8 +116,12 @@ class MySqlConnection implements IDbConnection
 
 		mysqli_query($this->_db, "SET SESSION sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'");
 
-		$result = mysqli_query($this->_db, $mysqlCommand->GetQuery());
-
+        if ($sqlCommand->IsMultiQuery()) {
+            $result = mysqli_multi_query($this->_db, $mysqlCommand->GetQuery());
+        }
+        else {
+            $result = mysqli_query($this->_db, $mysqlCommand->GetQuery());
+        }
 		$this->_handleError($result);
 	}
 
@@ -120,15 +130,10 @@ class MySqlConnection implements IDbConnection
 		return mysqli_insert_id($this->_db);
 	}
 
-	private function _handleError($result, $sqlCommand = null)
+	private function _handleError($result)
 	{
 		if (!$result)
 		{
-			if ($sqlCommand != null)
-			{
-				echo $sqlCommand->GetQuery();
-			}
-
 			Log::Error("Error executing MySQL query %s",  mysqli_error($this->_db));
 
 			throw new Exception('There was an error executing your query\n' .  mysqli_error($this->_db));
@@ -163,4 +168,8 @@ class MySqlLimitCommand extends SqlCommand
 		return $this->baseCommand->GetQuery() . sprintf(" LIMIT %s OFFSET %s",  $this->limit, $this->offset);
 	}
 
+    public function ContainsGroupConcat()
+    {
+        return $this->baseCommand->ContainsGroupConcat();
+    }
 }

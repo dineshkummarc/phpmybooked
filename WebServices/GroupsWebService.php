@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2012-2016 Nick Korbel
+Copyright 2012-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -19,8 +19,8 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 require_once(ROOT_DIR . 'lib/WebService/namespace.php');
-require_once(ROOT_DIR . 'WebServices/Responses/GroupResponse.php');
-require_once(ROOT_DIR . 'WebServices/Responses/GroupsResponse.php');
+require_once(ROOT_DIR . 'WebServices/Responses/Group/GroupResponse.php');
+require_once(ROOT_DIR . 'WebServices/Responses/Group/GroupsResponse.php');
 
 class GroupsWebService
 {

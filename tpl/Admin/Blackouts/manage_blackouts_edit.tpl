@@ -1,5 +1,5 @@
 {*
-Copyright 2013-2016 Nick Korbel
+Copyright 2013-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -34,7 +34,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 			<label for="updateEndDate">{translate key=EndDate}</label>
 			<input type="text" id="updateEndDate" class="form-control dateinput inline-block " size="10"
 				   value="{formatdate date=$BlackoutEndDate}"/>
-			<input {formname key=END_DATE} type="hidden" id="formattedAddEndDate"
+			<input {formname key=END_DATE} type="hidden" id="formattedUpdateEndDate"
 										   value="{formatdate date=$BlackoutEndDate key=system}"/>
 			<input {formname key=END_TIME} type="text" id="updateEndTime"
 										   class="form-control dateinput inline-block timepicker"
@@ -132,14 +132,19 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 			repeatType: '{$RepeatType}',
 			repeatInterval: '{$RepeatInterval}',
 			repeatMonthlyType: '{$RepeatMonthlyType}',
-			repeatWeekdays: [{foreach from=$RepeatWeekdays item=day}{$day}, {/foreach}]
+			repeatWeekdays: [{foreach from=$RepeatWeekdays item=day}{$day}, {/foreach}],
+            customRepeatExclusions: ['{formatdate date=$BlackoutStartDate key=system}']
 		};
 
 		var recurrence = new Recurrence(recurOpts, {}, 'edit');
 		recurrence.init();
+        {foreach from=$CustomRepeatDates item=date}
+        recurrence.addCustomDate('{format_date date=$date key=system timezone=$Timezone}', '{format_date date=$date timezone=$Timezone}');
+        {/foreach}
 	});
 </script>
 
 {control type="DatePickerSetupControl" ControlId="updateStartDate" AltId="formattedUpdateStartDate"}
 {control type="DatePickerSetupControl" ControlId="updateEndDate" AltId="formattedUpdateEndDate"}
 {control type="DatePickerSetupControl" ControlId="editEndRepeat" AltId="editformattedEndRepeat"}
+{control type="DatePickerSetupControl" ControlId="editRepeatDate" AltId="editformattedRepeatDate"}

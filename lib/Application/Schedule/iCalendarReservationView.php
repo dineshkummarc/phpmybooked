@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2012-2016 Nick Korbel
+ * Copyright 2012-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 class iCalendarReservationView
 {
 	public $DateCreated;
@@ -28,6 +29,9 @@ class iCalendarReservationView
 	public $Location;
 	public $StartReminder;
 	public $EndReminder;
+	public $LastModified;
+	public $IsPending;
+
 	/**
 	 * @var ReservationItemView
 	 */
@@ -55,19 +59,21 @@ class iCalendarReservationView
 		$this->DateCreated = $res->DateCreated;
 		$this->DateEnd = $res->EndDate;
 		$this->DateStart = $res->StartDate;
-		$this->Description = $canViewDetails ? $res->Description : $privateNotice;
+		$this->Description =  $canViewDetails ? $factory->Format($res, $summaryFormat) : $privateNotice;
 		$fullName = new FullName($res->OwnerFirstName, $res->OwnerLastName);
 		$this->Organizer = $canViewUser ? $fullName->__toString() : $privateNotice;
 		$this->OrganizerEmail = $canViewUser ? $res->OwnerEmailAddress : $privateNotice;
 		$this->RecurRule = $this->CreateRecurRule($res);
 		$this->ReferenceNumber = $res->ReferenceNumber;
-		$this->Summary = $canViewDetails ? $factory->Format($res, $summaryFormat) : $privateNotice;
+		$this->Summary = $canViewDetails ? $res->Title : $privateNotice;
 		$this->ReservationUrl = sprintf("%s/%s?%s=%s", Configuration::Instance()->GetScriptUrl(), Pages::RESERVATION, QueryStringKeys::REFERENCE_NUMBER,
 										$res->ReferenceNumber);
 		$this->Location = $res->ResourceName;
 
 		$this->StartReminder = $res->StartReminder;
 		$this->EndReminder = $res->EndReminder;
+		$this->LastModified = empty($res->ModifiedDate) || $res->ModifiedDate->ToString() == '' ? $res->DateCreated : $res->ModifiedDate;
+		$this->IsPending = $res->RequiresApproval;
 
 		if ($res->OwnerId == $currentUser->UserId)
 		{
@@ -83,7 +89,7 @@ class iCalendarReservationView
 	{
 		if (is_a($res, 'ReservationItemView'))
 		{
-			// don't populate the recurrance rule when a list of reservation is being exported
+			// don't populate the recurrence rule when a list of reservation is being exported
 			return null;
 		}
 		### !!!  THIS DOES NOT WORK BECAUSE EXCEPTIONS TO RECURRENCE RULES ARE NOT PROPERLY HANDLED !!!

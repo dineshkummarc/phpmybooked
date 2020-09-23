@@ -1,5 +1,5 @@
 {*
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -20,7 +20,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 <div id="{$divId|default:'reservation-created'}" class="reservationResponseMessage">
 	<div id="reservation-response-image">
 	{if $RequiresApproval}
-		<span class="fa fa-warning fa-5x warning"></span>
+		<span class="fa fa-flag fa-5x warning"></span>
 	{else}
 		<span class="fa fa-check fa-5x success"></span>
 	{/if}
@@ -29,7 +29,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 	<div id="created-message" class="reservation-message">{translate key=$messageKey|default:"ReservationCreated"}</div>
 	<div id="reference-number">{translate key=YourReferenceNumber args=$ReferenceNumber}</div>
 
-	<div class="dates">
+	<div class="dates" style="max-height: 15em;display: block;overflow-y: auto;margin: 0.5em 0;">
 		<span class="bold">{translate key=Dates}:</span>
 		{foreach from=$Instances item=instance name=date_list}
 			<span class="date">{format_date date=$instance->StartDate() timezone=$Timezone}{if !$smarty.foreach.date_list.last}, {/if}</span>

@@ -1,5 +1,5 @@
 {*
-Copyright 2012-2016 Nick Korbel
+Copyright 2012-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -27,7 +27,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 		<div class="panel-body no-padding">
 			{if $ReportList|count == 0}
 				<h2 class="no-data" style="text-align: center;">{translate key=NoSavedReports}</h2>
-				<a href="{$Path}reports/{Pages::REPORTS_GENERATE}">{translate key=GenerateReport}</a>
+                <div style="text-align:center;"><a href="{$Path}reports/{Pages::REPORTS_GENERATE}">{translate key=GenerateReport}</a></div>
 			{else}
 				<div id="report-list">
 					<table class="table">
@@ -86,7 +86,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 					<div class="modal-body">
 						<div class="form-group">
 							<label for="emailTo">{translate key=Email}</label>
-							<input id="emailTo" value="{$UserEmail}" class="form-control"/>
+							<input id="emailTo" {formname key=EMAIL} value="{$UserEmail}" class="form-control"/>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default cancel"
@@ -187,7 +187,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 		</div>
 	</div>
 	*}
-
+    {include file="javascript-includes.tpl"}
 	{jsfile src="ajax-helpers.js"}
 	{jsfile src="reports/saved-reports.js"}
 	{jsfile src="reports/chart.js"}
@@ -208,7 +208,10 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
 			var common = new ReportsCommon(
 					{
-						scriptUrl: '{$ScriptUrl}'
+						scriptUrl: '{$ScriptUrl}',
+                        chartOpts: {
+                            dateAxisFormat: '{$DateAxisFormat}'
+                        }
 					}
 			);
 			common.init();

@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -160,12 +160,15 @@ class ReservationSavePresenter implements IReservationSavePresenter
 			$reservationSeries->CalculateCredits($layout);
 		}
 
+		$reservationSeries->AcceptTerms($this->page->GetTermsOfServiceAcknowledgement());
+
 		return $reservationSeries;
 	}
 
-	/**
-	 * @param ReservationSeries $reservationSeries
-	 */
+    /**
+     * @param ReservationSeries $reservationSeries
+     * @throws Exception
+     */
 	public function HandleReservation($reservationSeries)
 	{
 		$successfullySaved = $this->handler->Handle(

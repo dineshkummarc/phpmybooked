@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2013-2016 Nick Korbel, Paul Menchini
+Copyright 2013-2020 Nick Korbel, Paul Menchini
 
 This file is part of Booked Scheduler.
 
@@ -63,6 +63,7 @@ class UserPreferenceRepository implements IUserPreferenceRepository
 			$rv[$row[ColumnNames::PREFERENCE_NAME]] = $row[ColumnNames::PREFERENCE_VALUE];
 		}
 
+		$reader->Free();
 		return $rv;
 	}
 
@@ -77,9 +78,11 @@ class UserPreferenceRepository implements IUserPreferenceRepository
 
 		if ($row = $reader->GetRow())
 		{
+			$reader->Free();
 			return $row[ColumnNames::PREFERENCE_VALUE];
 		}
 
+		$reader->Free();
 		return null;
 	}
 

@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ class ServiceLocator
     private static $_emailService = null;
 
 	/**
-	 * @var IFileSystem
+	 * @var \Booked\IFileSystem
 	 */
 	private static $_fileSystem = null;
 
@@ -104,7 +104,7 @@ class ServiceLocator
 
 	/**
 	 * @static
-	 * @return IFileSystem
+	 * @return \Booked\FileSystem
 	 */
 	public static function GetFileSystem()
 	{
@@ -112,13 +112,13 @@ class ServiceLocator
 
 		if (self::$_fileSystem == null)
 		{
-			self::$_fileSystem = new FileSystem();
+			self::$_fileSystem = new \Booked\FileSystem();
 		}
 
 		return self::$_fileSystem;
 	}
 
-	public static function SetFileSystem(IFileSystem $fileSystem)
+	public static function SetFileSystem(\Booked\IFileSystem $fileSystem)
 	{
 		self::$_fileSystem = $fileSystem;
 	}

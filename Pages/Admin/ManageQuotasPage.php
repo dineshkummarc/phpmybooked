@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2011-2016 Nick Korbel
+ * Copyright 2011-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -25,71 +25,60 @@ require_once(ROOT_DIR . 'Domain/Access/namespace.php');
 interface IManageQuotasPage extends IActionPage
 {
 	/**
-	 * @abstract
 	 * @param array|BookableResource[] $resources
 	 * @return void
 	 */
 	public function BindResources($resources);
 
 	/**
-	 * @abstract
 	 * @param array|GroupItemView[] $groups
 	 * @return void
 	 */
 	public function BindGroups($groups);
 
 	/**
-	 * @abstract
 	 * @param array|Schedule[] $schedules
 	 * @return void
 	 */
 	public function BindSchedules($schedules);
 
 	/**
-	 * @abstract
 	 * @param array|QuotaItemView[] $quotas
 	 * @return void
 	 */
 	public function BindQuotas($quotas);
 
 	/**
-	 * @abstract
 	 * @return string
 	 */
 	public function GetDuration();
 
 	/**
-	 * @abstract
-	 * @return decimal
+	 * @return float
 	 */
 	public function GetLimit();
 
 	/**
-	 * @abstract
 	 * @return int
 	 */
 	public function GetResourceId();
 
 	/**
-	 * @abstract
 	 * @return int
 	 */
 	public function GetGroupId();
 
 	/**
-	 * @abstract
 	 * @return string
 	 */
 	public function GetUnit();
 
 	/**
-	 * @abstract
 	 * @return int
 	 */
 	public function GetQuotaId();
 
 	/**
-	 * @abstract
 	 * @return int
 	 */
 	public function GetScheduleId();
@@ -156,6 +145,7 @@ class ManageQuotasPage extends ActionPage implements IManageQuotasPage
 				5 => 'DayFridayAbbr',
 				6 => 'DaySaturdayAbbr',
 		));
+		$this->Set('TimeFormat', Resources::GetInstance()->GetDateFormat('timepicker'));
 
 		$this->Display('Admin/manage_quotas.tpl');
 	}

@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -30,7 +30,7 @@ interface IPage {
 
     public function IsValid();
 
-    public function GetLastPage();
+    public function GetLastPage($defaultPage = '');
 
     public function RegisterValidator($validatorId, $validator);
 

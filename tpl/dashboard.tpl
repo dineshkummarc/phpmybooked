@@ -1,5 +1,5 @@
 {*
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 *}
-{include file='globalheader.tpl' cssFiles='css/dashboard.css' Qtip=true}
+{include file='globalheader.tpl' Qtip=true Owl=true}
 
 <div id="page-dashboard">
 	<div id="dashboardList">
@@ -24,6 +24,8 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 			<div>{$dashboardItem->PageLoad()}</div>
 		{/foreach}
 	</div>
+
+    {include file="javascript-includes.tpl" Qtip=true Owl=true}
 
 	{jsfile src="dashboard.js"}
 	{jsfile src="resourcePopup.js"}

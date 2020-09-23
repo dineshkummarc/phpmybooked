@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -32,21 +32,24 @@ class HelpPage extends Page
 		$this->Set('RemindersPath', realpath(ROOT_DIR . 'Jobs/sendreminders.php'));
 		$this->Set('AutoReleasePath', realpath(ROOT_DIR . 'Jobs/autorelease.php'));
 		$this->Set('WaitListPath', realpath(ROOT_DIR . 'Jobs/sendwaitlist.php'));
+		$this->Set('MissedCheckinPath', realpath(ROOT_DIR . 'Jobs/sendmissedcheckin.php'));
 		$this->Set('ServerTimezone', date_default_timezone_get());
 
-		$helpType = $this->GetQuerystring('ht');
+		$this->DisplayLocalized('support-and-credits.tpl');
 
-		if ($helpType == 'about')
-		{
-			$this->DisplayLocalized('support-and-credits.tpl');
-		}
-		else if ($helpType == 'admin')
-		{
-			$this->DisplayLocalized('help-admin.tpl');
-		}
-		else
-		{
-			$this->DisplayLocalized('help.tpl');
-		}
+//		$helpType = $this->GetQuerystring('ht');
+//
+//		if ($helpType == 'about')
+//		{
+//
+//		}
+//		else if ($helpType == 'admin')
+//		{
+//			$this->DisplayLocalized('help-admin.tpl');
+//		}
+//		else
+//		{
+//			$this->DisplayLocalized('help.tpl');
+//		}
 	}
 }

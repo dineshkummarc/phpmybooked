@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -19,21 +19,29 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 require_once(ROOT_DIR . 'Pages/SchedulePage.php');
-require_once(ROOT_DIR . 'Presenters/SchedulePresenter.php');
+require_once(ROOT_DIR . 'Presenters/Schedule/SchedulePresenter.php');
 require_once(ROOT_DIR . 'lib/Application/Authorization/GuestPermissionServiceFactory.php');
 
 class ViewSchedulePage extends SchedulePage
 {
+    private $userRepository;
+
+	private $_styles = array(
+				ScheduleStyle::Wide => 'Schedule/schedule-days-horizontal.tpl',
+				ScheduleStyle::Tall => 'Schedule/schedule-flipped.tpl',
+				ScheduleStyle::CondensedWeek => 'Schedule/schedule-week-condensed.tpl',
+		);
+
 	public function __construct()
 	{
 		parent::__construct();
 		$scheduleRepository = new ScheduleRepository();
-		$userRepository = new UserRepository();
+		$this->userRepository = new UserRepository();
 		$resourceService = new ResourceService(
 				new ResourceRepository(),
 				new GuestPermissionService(),
 				new AttributeService(new AttributeRepository()),
-				$userRepository,
+				$this->userRepository,
 				new AccessoryRepository());
 		$pageBuilder = new SchedulePageBuilder();
 		$reservationService = new ReservationService(new ReservationViewRepository(), new ReservationListingFactory());
@@ -57,23 +65,39 @@ class ViewSchedulePage extends SchedulePage
 
 		$this->Set('DisplaySlotFactory', new DisplaySlotFactory());
 		$this->Set('SlotLabelFactory', $viewReservations || $allowGuestBookings ? new SlotLabelFactory($user) : new NullSlotLabelFactory());
-		$this->Set('AllowGuestBooking', $allowGuestBookings);
+        $this->Set('PopupMonths', $this->IsMobile ? 1 : 3);
+        $this->Set('AllowGuestBooking', $allowGuestBookings);
 		$this->Set('CreateReservationPage', Pages::GUEST_RESERVATION);
+		$this->Set('LoadViewOnly', true);
+		$this->Set('ShowSubscription', true);
 
-        if ($this->IsMobile && !$this->IsTablet)
-        {
-            $this->Set('ExtendViewPrefix', 'view-');
-            $this->Display('Schedule/schedule-mobile.tpl');
-        }
-        else
-        {
-            $this->Display('Schedule/view-schedule.tpl');
-        }
+		if ($this->IsMobile && !$this->IsTablet)
+		{
+			if ($this->ScheduleStyle == ScheduleStyle::Tall)
+			{
+				$this->Display('Schedule/schedule-flipped.tpl');
+			}
+			else
+			{
+				$this->Display('Schedule/schedule-mobile.tpl');
+			}
+		}
+		else
+		{
+			if (array_key_exists($this->ScheduleStyle, $this->_styles))
+			{
+				$this->Display($this->_styles[$this->ScheduleStyle]);
+			}
+			else
+			{
+				$this->Display('Schedule/schedule.tpl');
+			}
+		}
 	}
 
     public function ShowInaccessibleResources()
     {
-        return true;
+        return Configuration::Instance()->GetSectionKey(ConfigSection::PRIVACY, ConfigKeys::SCHEDULE_SHOW_INACCESSIBLE_RESOURCES, new BooleanConverter());
     }
 
 	protected function GetShouldAutoLogout()

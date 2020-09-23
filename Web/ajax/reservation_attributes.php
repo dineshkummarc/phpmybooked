@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2014-2016 Nick Korbel
+Copyright 2014-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -23,5 +23,5 @@ define('ROOT_DIR', '../../');
 require_once(ROOT_DIR . 'Pages/SecurePage.php');
 require_once(ROOT_DIR . 'Pages/Ajax/ReservationAttributesPage.php');
 
-$page = new SecurePageDecorator(new ReservationAttributesPage());
+$page = new ReservationAttributesPage();
 $page->PageLoad();

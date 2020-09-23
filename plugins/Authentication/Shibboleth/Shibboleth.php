@@ -75,7 +75,9 @@ class Shibboleth extends Authentication {
                 null,
                 Configuration::Instance()->GetKey(ConfigKeys::LANGUAGE),
                 Configuration::Instance()->GetDefaultTimezone(),
-                $user->GetPhone(), null, null
+                $user->GetPhone(),
+                $user->GetOrganization(),
+                null
             )
         );
 
@@ -90,10 +92,10 @@ class Shibboleth extends Authentication {
     }
 
     /*
-     * @override Authentication::Logout()
+     * @override Authentication::AreCredentialsKnown()
     */
     public function AreCredentialsKnown () {
-        return false;
+        return true;
     }
 
     /*

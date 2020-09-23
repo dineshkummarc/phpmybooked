@@ -1,17 +1,17 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
-
-This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
+ * Copyright 2011-2020 Nick Korbel
+ *
+ * This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 require_once(ROOT_DIR . 'lib/Application/Attributes/namespace.php');
@@ -33,10 +33,12 @@ interface IResourceService
 	 * Gets resource list
 	 * @param bool $includeInaccessibleResources
 	 * @param UserSession $user
-     * @param ScheduleResourceFilter|null $filter
+	 * @param ScheduleResourceFilter|null $filter
+	 * @param null $pageNumber
+	 * @param null $pageSize
 	 * @return array|ResourceDto[]
 	 */
-	public function GetAllResources($includeInaccessibleResources, UserSession $user, $filter = null);
+	public function GetAllResources($includeInaccessibleResources, UserSession $user, $filter = null, $pageNumber = null, $pageSize = null);
 
 	/**
 	 * @return Accessory[]
@@ -64,6 +66,12 @@ interface IResourceService
 	 * @return Attribute[]
 	 */
 	public function GetResourceTypeAttributes();
+
+	/**
+	 * @param int $resourceId
+	 * @return BookableResource
+	 */
+	public function GetResource($resourceId);
 }
 
 class ResourceService implements IResourceService
@@ -106,18 +114,18 @@ class ResourceService implements IResourceService
 		$this->_accessoryRepository = $accessoryRepository;
 	}
 
-    /**
-     * @return ResourceService
-     */
-    public static function Create()
-    {
-        return new ResourceService(new ResourceRepository(),
-            PluginManager::Instance()->LoadPermission(),
-            new AttributeService(new AttributeRepository()),
-            new UserRepository(), new AccessoryRepository());
-    }
+	/**
+	 * @return ResourceService
+	 */
+	public static function Create()
+	{
+		return new ResourceService(new ResourceRepository(),
+								   PluginManager::Instance()->LoadPermission(),
+								   new AttributeService(new AttributeRepository()),
+								   new UserRepository(), new AccessoryRepository());
+	}
 
-    public function GetScheduleResources($scheduleId, $includeInaccessibleResources, UserSession $user, $filter = null)
+	public function GetScheduleResources($scheduleId, $includeInaccessibleResources, UserSession $user, $filter = null)
 	{
 		if ($filter == null)
 		{
@@ -130,18 +138,25 @@ class ResourceService implements IResourceService
 		return $this->Filter($resources, $user, $includeInaccessibleResources, $resourceIds);
 	}
 
-	public function GetAllResources($includeInaccessibleResources, UserSession $user, $filter = null)
+	public function GetAllResources($includeInaccessibleResources, UserSession $user, $filter = null, $pageNumber = null, $pageSize = null)
 	{
-        if ($filter == null)
-        {
-            $filter = new ScheduleResourceFilter();
-        }
+		if ($filter == null)
+		{
+			$filter = new ScheduleResourceFilter();
+		}
 
-		$resources = $this->_resourceRepository->GetResourceList();
+		if ($pageNumber != null || $pageSize != null)
+		{
+			$resources = $this->_resourceRepository->GetList($pageNumber, $pageSize);
+			$resources = $resources->Results();
+		}
+		else
+		{
+			$resources = $this->_resourceRepository->GetResourceList();
+		}
+		$resourceIds = $filter->FilterResources($resources, $this->_resourceRepository, $this->_attributeService);
 
-        $resourceIds = $filter->FilterResources($resources, $this->_resourceRepository, $this->_attributeService);
-
-        return $this->Filter($resources, $user, $includeInaccessibleResources, $resourceIds);
+		return $this->Filter($resources, $user, $includeInaccessibleResources, $resourceIds);
 	}
 
 	/**
@@ -173,7 +188,6 @@ class ResourceService implements IResourceService
 
 			if ($canAccess)
 			{
-
 				$canAccess = $statusFilter->ShouldInclude($resource);
 				if (!$includeInaccessibleResources && !$canAccess)
 				{
@@ -184,6 +198,7 @@ class ResourceService implements IResourceService
 			$resourceDtos[] = new ResourceDto($resource->GetResourceId(),
 											  $resource->GetName(),
 											  $canAccess,
+											  $canAccess && $filter->CanBook($resource),
 											  $resource->GetScheduleId(),
 											  $resource->GetMinLength(),
 											  $resource->GetResourceTypeId(),
@@ -194,7 +209,8 @@ class ResourceService implements IResourceService
 											  $resource->IsCheckInEnabled(),
 											  $resource->IsAutoReleased(),
 											  $resource->GetAutoReleaseMinutes(),
-											  $resource->GetColor());
+											  $resource->GetColor(),
+											  $resource->GetMaxConcurrentReservations());
 		}
 
 		return $resourceDtos;
@@ -208,7 +224,10 @@ class ResourceService implements IResourceService
 	public function GetResourceGroups($scheduleId, UserSession $user)
 	{
 		$filter = new CompositeResourceFilter();
-		$filter->Add(new ResourcePermissionFilter($this->_permissionService, $user));
+		if (!Configuration::Instance()->GetSectionKey(ConfigSection::SCHEDULE, ConfigKeys::SCHEDULE_SHOW_INACCESSIBLE_RESOURCES, new BooleanConverter()))
+		{
+			$filter->Add(new ResourcePermissionFilter($this->_permissionService, $user));
+		}
 		$filter->Add(new ResourceStatusFilter($this->_userRepository, $user));
 
 		$groups = $this->_resourceRepository->GetResourceGroups($scheduleId, $filter);
@@ -249,5 +268,10 @@ class ResourceService implements IResourceService
 		}
 
 		return $attributes;
+	}
+
+	public function GetResource($resourceId)
+	{
+		return $this->_resourceRepository->LoadById($resourceId);
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2012-2016 Nick Korbel
+Copyright 2012-2020 Nick Korbel
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ class ParticipantDeletedEmailNotification implements IReservationNotification
         {
             $participant = $this->userRepository->LoadById($userId);
 
-            $message = new ParticipantDeletedEmail($owner, $participant, $reservationSeries, $this->attributeRepository);
+            $message = new ParticipantDeletedEmail($owner, $participant, $reservationSeries, $this->attributeRepository, $this->userRepository);
             ServiceLocator::GetEmailService()->Send($message);
         }
     }

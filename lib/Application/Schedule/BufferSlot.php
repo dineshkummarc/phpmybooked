@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2013-2016 Nick Korbel
+ * Copyright 2013-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -215,5 +215,25 @@ class BufferSlot implements IReservationSlot
     public function AutoReleaseMinutesRemaining()
     {
         return null;
+    }
+
+    public function OwnerId()
+    {
+        return null;
+    }
+
+    public function OwnerGroupIds()
+    {
+        return $this->_reservation->OwnerGroupIds();
+    }
+
+    public function IsNew()
+    {
+        return false;
+    }
+
+    public function IsUpdated()
+    {
+        return false;
     }
 }

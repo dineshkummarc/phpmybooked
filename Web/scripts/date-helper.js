@@ -1,5 +1,5 @@
 /**
- Copyright 2012-2016 Nick Korbel
+ Copyright 2012-2020 Nick Korbel
 
  This file is part of Booked Scheduler.
 
@@ -25,7 +25,7 @@ var dateHelper = function ()
 	{
 		var difference = end.getTime() - begin.getTime();
         var duration = moment.duration(difference);
-		return {RoundedHours: duration.hours(), RoundedDays: duration.days(), RoundedMinutes: duration.minutes()};
+		return {RoundedHours: duration.hours(), RoundedDays: Math.floor(duration.asDays()), RoundedMinutes: duration.minutes()};
 	};
 
 	var parse = function(time)

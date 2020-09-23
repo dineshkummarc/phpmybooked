@@ -1,5 +1,5 @@
 {*
-Copyright 2013-2016 Nick Korbel
+Copyright 2013-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -22,6 +22,12 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 <div id="page-manage-configuration" class="admin-page">
 
     <h1>{translate key=ManageConfiguration}</h1>
+
+    {if $ShowScriptUrlWarning}
+        <div class="alert alert-danger">
+            {translate key=ScriptUrlWarning args="$CurrentScriptUrl,$SuggestedScriptUrl"}
+        </div>
+    {/if}
 
     <form id="frmConfigFile" method="GET" action="{$SCRIPT_NAME}" role="form">
         <div class="form-group">
@@ -52,8 +58,33 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                             {object_html_options options=$Languages key='GetLanguageCode' label='GetDisplayName' selected=$setting->Value|strtolower}
                         </select>
                     {elseif $setting->Key == ConfigKeys::DEFAULT_HOMEPAGE}
-                        <select id="{$name}" name="{$name}" class="form-control">
+                        <label for="default__homepage" class="no-show">Homepage</label>
+                        <select id="default__homepage" name="{$name}" class="form-control">
                             {html_options values=$HomepageValues output=$HomepageOutput selected=$setting->Value|strtolower}
+                        </select> <a href="#" id="applyHomepage">{translate key=ApplyToCurrentUsers}</a>
+                    {elseif $setting->Key == ConfigKeys::PLUGIN_AUTHENTICATION}
+                        <select id="{$name}" name="{$name}" class="form-control">
+                            {html_options values=$AuthenticationPluginValues output=$AuthenticationPluginValues selected=$setting->Value}
+                        </select>
+                    {elseif $setting->Key == ConfigKeys::PLUGIN_AUTHORIZATION}
+                        <select id="{$name}" name="{$name}" class="form-control">
+                            {html_options values=$AuthorizationPluginValues output=$AuthorizationPluginValues selected=$setting->Value}
+                        </select>
+                    {elseif $setting->Key == ConfigKeys::PLUGIN_PERMISSION}
+                        <select id="{$name}" name="{$name}" class="form-control">
+                            {html_options values=$PermissionPluginValues output=$PermissionPluginValues selected=$setting->Value}
+                        </select>
+                    {elseif $setting->Key == ConfigKeys::PLUGIN_POSTREGISTRATION}
+                        <select id="{$name}" name="{$name}" class="form-control">
+                            {html_options values=$PostRegistrationPluginValues output=$PostRegistrationPluginValues selected=$setting->Value}
+                        </select>
+                    {elseif $setting->Key == ConfigKeys::PLUGIN_PRERESERVATION}
+                        <select id="{$name}" name="{$name}" class="form-control">
+                            {html_options values=$PreReservationPluginValues output=$PreReservationPluginValues selected=$setting->Value}
+                        </select>
+                    {elseif $setting->Key == ConfigKeys::PLUGIN_POSTRESERVATION}
+                        <select id="{$name}" name="{$name}" class="form-control">
+                            {html_options values=$PostReservationPluginValues output=$PostReservationPluginValues selected=$setting->Value}
                         </select>
                     {elseif $setting->Type == ConfigSettingType::String}
                         <input id="{$name}" type="text" size="50" name="{$name}" value="{$setting->Value|escape}"
@@ -94,7 +125,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
         {assign var=HelpUrl value="$ScriptUrl/help.php?ht=admin"}
         <h3>{translate key=ConfigurationUpdateHelp args=$HelpUrl}</h3>
-        <div id="updatedMessage" class="alert alert-success no-show">
+        <div id="updatedMessage" class="alert alert-success" style="display:none;">
             {translate key=ConfigurationUpdated}
         </div>
         <div id="configSettings">
@@ -124,7 +155,17 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
             <input type="button" value="{translate key=Update}" class='btn btn-success save'/>
 
         </div>
+
+        <form id="updateHomepageForm"
+            method="post" ajaxAction="{ConfigActions::SetHomepage}"
+            action="{$smarty.server.SCRIPT_NAME}">
+            <input type="hidden" name="homepage_id" id="homepage_id" />
+        </form>
+
         {csrf_token}
+
+        {include file="javascript-includes.tpl"}
+
         {jsfile src="ajax-helpers.js"}
         {jsfile src="js/jquery.form-3.09.min.js"}
         {jsfile src="admin/configuration.js"}

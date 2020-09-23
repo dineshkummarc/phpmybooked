@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
+Copyright 2011-2020 Nick Korbel
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -52,7 +52,13 @@ class PasswordMigration
 
 class Password implements IPassword
 {
-	/**
+    /**
+     * @internal
+     * @var null|string
+     */
+    public static $_Random = null;
+
+    /**
 	 * @var \PasswordEncryption
 	 */
 	public $Encryption;
@@ -113,10 +119,15 @@ class Password implements IPassword
 	 */
 	public static function GenerateRandom()
 	{
+	    if (self::$_Random != null)
+        {
+            return self::$_Random;
+        }
+
 		$length = 10;
 		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%';
 		$password ='';
-		$max = strlen($characters);
+		$max = strlen($characters) - 1;
 
 		for ($i = 0; $i < $length; $i++)
 		{

@@ -1,6 +1,6 @@
 <?php
 /**
-Copyright 2012-2016 Nick Korbel
+Copyright 2012-2020 Nick Korbel
 
 This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -13,6 +13,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+require_once(ROOT_DIR . 'Presenters/Reports/ReportCsvColumnView.php');
 
 class ReportEmailMessage extends EmailMessage
 {
@@ -32,8 +34,9 @@ class ReportEmailMessage extends EmailMessage
 	 * @param IReportDefinition $definition
 	 * @param string $toAddress
 	 * @param UserSession $reportUser
+	 * @param string $selectedColumns
 	 */
-	public function __construct($report, $definition, $toAddress, $reportUser)
+	public function __construct($report, $definition, $toAddress, $reportUser, $selectedColumns)
 	{
 		parent::__construct($reportUser->LanguageCode);
 
@@ -42,8 +45,8 @@ class ReportEmailMessage extends EmailMessage
 
 		$this->Set('Definition', $definition);
 		$this->Set('Report', $report);
-		$contents = $this->FetchTemplate('Reports/custom-csv.tpl');
-
+		$this->Set('ReportCsvColumnView', new ReportCsvColumnView($selectedColumns));
+		$contents = $this->FetchTemplate('Reports/custom-csv.tpl', false);
 
 		$name = $report->ReportName();
 		if (!empty($name))

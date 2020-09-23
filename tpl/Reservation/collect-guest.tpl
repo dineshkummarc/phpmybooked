@@ -1,5 +1,5 @@
 {*
-Copyright 2016 Nick Korbel
+Copyright 2017-2020 Nick Korbel
 
 This file is part of Booked Scheduler.
 
@@ -27,7 +27,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 	<div class="default-box col-xs-12 col-sm-8 col-sm-offset-2">
 		<h2>{translate key=WeNeedYourEmailAddress}</h2>
 
-		<form method="post" id="form-guest-collect" action="{$smarty.server.REQUEST_URI}" role="form">
+		<form method="post" id="form-guest-collect" action="{$smarty.server.REQUEST_URI|escape:'html'}" role="form">
 
 			<div class="row">
 				<div class="col-xs-12">
@@ -47,15 +47,8 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 	</div>
 	{setfocus key='EMAIL'}
 
+    {include file="javascript-includes.tpl"}
 	{jsfile src="ajax-helpers.js"}
-
-	<script type="text/javascript">
-
-		$(document).ready(function ()
-		{
-
-		});
-	</script>
 
 	<div id="wait-box" class="wait-box">
 		<h3>{translate key=Working}</h3>

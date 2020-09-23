@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2016 Nick Korbel
+ * Copyright 2017-2020 Nick Korbel
  *
  * This file is part of Booked Scheduler.
  *
@@ -77,7 +77,6 @@ class ReservationMovePresenter
 
 		$newDuration = new DateRange($newStart, $currentDuration->GetEnd()->ApplyDifference($difference));
 		$existingSeries->UpdateDuration($newDuration);
-
 		$this->AdjustResource($existingSeries);
 
 		$this->handler->Handle($existingSeries, $this->page);

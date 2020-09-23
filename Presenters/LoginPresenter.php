@@ -1,21 +1,21 @@
 <?php
 /**
-Copyright 2011-2016 Nick Korbel
-
-This file is part of Booked Scheduler.
-
-Booked Scheduler is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-Booked Scheduler is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
+ * Copyright 2011-2020 Nick Korbel
+ *
+ * This file is part of Booked Scheduler.
+ *
+ * Booked Scheduler is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Booked Scheduler is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 require_once(ROOT_DIR . 'lib/Config/namespace.php');
@@ -35,14 +35,29 @@ class LoginPresenter
 	private $authentication = null;
 
 	/**
-	 * Construct page type and authentication method
-	 * @param ILoginPage $page passed by reference
-	 * @param IWebAuthentication $authentication default to null
+	 * @var ICaptchaService
 	 */
-	public function __construct(ILoginPage &$page, $authentication = null)
+	private $captchaService;
+
+	/**
+	 * @var IAnnouncementRepository
+	 */
+	private $announcementRepository;
+
+	/**
+	 * @param ILoginPage $page
+	 * @param IWebAuthentication $authentication
+	 * @param ICaptchaService $captchaService
+	 * @param IAnnouncementRepository $announcementRepository
+	 */
+	public function __construct(ILoginPage &$page, $authentication = null, $captchaService = null, $announcementRepository = null)
 	{
-		$this->_page = & $page;
+		$this->_page = &$page;
 		$this->SetAuthentication($authentication);
+		$this->SetCaptchaService($captchaService);
+		$this->SetAnnouncementRepository($announcementRepository);
+
+		$this->LoadValidators();
 	}
 
 	/**
@@ -60,11 +75,42 @@ class LoginPresenter
 		}
 	}
 
+	/**
+	 * @param ICaptchaService $captchaService
+	 */
+	private function SetCaptchaService($captchaService)
+	{
+		if (is_null($captchaService))
+		{
+			$this->captchaService = CaptchaService::Create();
+		}
+		else
+		{
+			$this->captchaService = $captchaService;
+		}
+	}
+
+	/**
+	 * @param IAnnouncementRepository $announcementRepository
+	 */
+	private function SetAnnouncementRepository($announcementRepository)
+	{
+		if (is_null($announcementRepository))
+		{
+			$this->announcementRepository = new AnnouncementRepository();
+		}
+		else
+		{
+			$this->announcementRepository = $announcementRepository;
+		}
+	}
+
 	public function PageLoad()
 	{
 		if ($this->authentication->IsLoggedIn())
 		{
 			$this->_Redirect();
+			return;
 		}
 
 		$this->SetSelectedLanguage();
@@ -72,6 +118,7 @@ class LoginPresenter
 		if ($this->authentication->AreCredentialsKnown())
 		{
 			$this->Login();
+			return;
 		}
 
 		$server = ServiceLocator::GetServer();
@@ -82,26 +129,39 @@ class LoginPresenter
 			if ($this->authentication->CookieLogin($loginCookie, new WebLoginContext(new LoginData(true))))
 			{
 				$this->_Redirect();
+				return;
 			}
 		}
 
 		$allowRegistration = Configuration::Instance()->GetKey(ConfigKeys::ALLOW_REGISTRATION, new BooleanConverter());
-		$allowAnonymousSchedule = Configuration::Instance()->GetSectionKey(ConfigSection::PRIVACY,  ConfigKeys::PRIVACY_VIEW_SCHEDULES,  new BooleanConverter());
-		$allowGuestBookings = Configuration::Instance()->GetSectionKey(ConfigSection::PRIVACY, ConfigKeys::PRIVACY_ALLOW_GUEST_BOOKING,  new BooleanConverter());
+		$allowAnonymousSchedule = Configuration::Instance()->GetSectionKey(ConfigSection::PRIVACY, ConfigKeys::PRIVACY_VIEW_SCHEDULES, new BooleanConverter());
+		$allowGuestBookings = Configuration::Instance()->GetSectionKey(ConfigSection::PRIVACY, ConfigKeys::PRIVACY_ALLOW_GUEST_BOOKING, new BooleanConverter());
 		$this->_page->SetShowRegisterLink($allowRegistration);
 		$this->_page->SetShowScheduleLink($allowAnonymousSchedule || $allowGuestBookings);
 
-		$this->_page->ShowForgotPasswordPrompt(!Configuration::Instance()->GetKey(ConfigKeys::DISABLE_PASSWORD_RESET,
-																				  new BooleanConverter()) && $this->authentication->ShowForgotPasswordPrompt());
-		$this->_page->ShowPasswordPrompt($this->authentication->ShowPasswordPrompt());
+		$hideLogin = Configuration::Instance()
+								  ->GetSectionKey(ConfigSection::AUTHENTICATION, ConfigKeys::AUTHENTICATION_HIDE_BOOKED_LOGIN_PROMPT, new BooleanConverter());
+
+		$this->_page->ShowForgotPasswordPrompt(!Configuration::Instance()->GetKey(ConfigKeys::DISABLE_PASSWORD_RESET, new BooleanConverter()) &&
+											   $this->authentication->ShowForgotPasswordPrompt() &&
+											   !$hideLogin);
+		$this->_page->ShowPasswordPrompt($this->authentication->ShowPasswordPrompt() && !$hideLogin);
 		$this->_page->ShowPersistLoginPrompt($this->authentication->ShowPersistLoginPrompt());
-		$this->_page->ShowUsernamePrompt($this->authentication->ShowUsernamePrompt());
-		$this->_page->SetRegistrationUrl($this->authentication->GetRegistrationUrl());
+
+		$this->_page->ShowUsernamePrompt($this->authentication->ShowUsernamePrompt() && !$hideLogin);
+		$this->_page->SetRegistrationUrl($this->authentication->GetRegistrationUrl() && !$hideLogin);
 		$this->_page->SetPasswordResetUrl($this->authentication->GetPasswordResetUrl());
+		$this->_page->SetAnnouncements($this->announcementRepository->GetFuture(Pages::ID_LOGIN));
+		$this->_page->SetSelectedLanguage(Resources::GetInstance()->CurrentLanguage);
 	}
 
 	public function Login()
 	{
+		if (!$this->_page->IsValid())
+		{
+			return;
+		}
+
 		$id = $this->_page->GetEmailAddress();
 
 		if ($this->authentication->Validate($id, $this->_page->GetPassword()))
@@ -112,6 +172,7 @@ class LoginPresenter
 		}
 		else
 		{
+		    sleep(2);
 			$this->authentication->HandleLoginFailure($this->_page);
 			$this->_page->SetShowLoginError();
 		}
@@ -182,5 +243,13 @@ class LoginPresenter
 
 		$this->_page->SetSelectedLanguage(strtolower($languageCode));
 		$resources->SetLanguage($languageCode);
+	}
+
+	protected function LoadValidators()
+	{
+		if (Configuration::Instance()->GetSectionKey(ConfigSection::AUTHENTICATION, ConfigKeys::AUTHENTICATION_CAPTCHA_ON_LOGIN, new BooleanConverter()))
+		{
+			$this->_page->RegisterValidator('captcha', new CaptchaValidator($this->_page->GetCaptcha(), $this->captchaService));
+		}
 	}
 }
