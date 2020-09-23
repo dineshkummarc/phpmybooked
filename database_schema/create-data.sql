@@ -31,3 +31,56 @@ insert into `time_blocks` (`availability_code`, `layout_id`, `start_time`, `end_
 (2, 1, '18:00', '00:00');
 
 insert into `schedules` (`schedule_id`, `name`, `isdefault`, `weekdaystart`, `layout_id`) values (1, 'Default', 1, 0, 1);
+
+-- UPGRADE TO VERSION 2.1
+
+
+
+insert into `roles` values (3, 'Resource Admin', 3);
+
+insert into `dbversion` values('2.1', now());
+
+-- UPGRADE TO VERSION 2.2
+
+
+
+insert into `dbversion` values('2.2', now());
+
+-- UPGRADE TO VERSION 2.3
+
+
+
+insert into `roles` values (4, 'Schedule Admin', 4);
+
+insert into `dbversion` values('2.3', now());
+
+-- UPGRADE TO VERSION 2.4
+
+
+
+insert into `dbversion` values('2.4', now());
+
+-- UPGRADE TO VERSION 2.5
+
+
+
+insert into `dbversion` values('2.5', now());
+
+-- UPGRADE TO VERSION 2.6
+
+
+
+insert into `dbversion` values('2.6', now());
+
+-- UPGRADE TO VERSION 2.7
+
+
+
+insert into `dbversion` values('2.7', now());
+insert into `payment_configuration` (`credit_cost`, `credit_currency`) values(0, 'USD');
+
+-- UPGRADE TO VERSION 2.8
+
+
+
+insert into `dbversion` values('2.8', now());
