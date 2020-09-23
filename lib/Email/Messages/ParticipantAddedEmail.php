@@ -15,28 +15,53 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 require_once(ROOT_DIR . 'lib/Email/Messages/ReservationEmailMessage.php');
-require_once(ROOT_DIR . 'lib/Email/Messages/InviteeAddedEmail.php');
 
-class ParticipantAddedEmail extends InviteeAddedEmail
+class ParticipantAddedEmail extends ReservationEmailMessage
 {
+	/**
+	 * @var User
+	 */
+	private $participant;
+
+	public function __construct(User $reservationOwner, User $participant, ReservationSeries $reservationSeries,
+                                IAttributeRepository $attributeRepository, IUserRepository $userRepository)
+	{
+		parent::__construct($reservationOwner, $reservationSeries, $participant->Language(), $attributeRepository, $userRepository);
+
+		$this->reservationOwner = $reservationOwner;
+		$this->reservationSeries = $reservationSeries;
+		$this->timezone = $participant->Timezone();
+		$this->participant = $participant;
+	}
+
+	public function To()
+	{
+		$address = $this->participant->EmailAddress();
+		$name = $this->participant->FullName();
+
+		return array(new EmailAddress($address, $name));
+	}
+
 	public function Subject()
 	{
 		return $this->Translate('ParticipantAddedSubjectWithResource', array($this->reservationOwner->FullName(), $this->primaryResource->GetName()));
 	}
-}
 
-class ParticipantUpdatedEmail extends InviteeUpdatedEmail
-{
-	public function Subject()
+	public function From()
 	{
-		return $this->Translate('ParticipantUpdatedSubjectWithResource', array($this->reservationOwner->FullName(), $this->primaryResource->GetName()));
+		return new EmailAddress($this->reservationOwner->EmailAddress(), $this->reservationOwner->FullName());
 	}
+
+    public function GetTemplateName()
+    {
+        return 'ReservationCreated.tpl';
+    }
 }
 
-class ParticipantDeletedEmail extends InviteeRemovedEmail
+class ParticipantUpdatedEmail extends ParticipantAddedEmail
 {
 	public function Subject()
 	{
-		return $this->Translate('ParticipantDeletedSubjectWithResource', array($this->reservationOwner->FullName(), $this->primaryResource->GetName()));
+		return $this->Translate('ReservationUpdatedSubject');
 	}
 }
