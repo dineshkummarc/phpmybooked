@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-tpl_c/
-config/config.php
-config/log4php.config.xml
-
-=======
 /config/log4php.config.xml
 /.idea
 /tpl_c
@@ -30,4 +24,3 @@ config/log4php.config.xml
 /vendor
 /.phpunit.result.cache
 /plugins/Authentication/Saml/Saml.config.php
->>>>>>> old1/master
