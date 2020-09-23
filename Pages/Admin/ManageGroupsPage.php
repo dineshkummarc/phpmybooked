@@ -124,31 +124,6 @@ interface IManageGroupsPage extends IActionPage
      * @return int[]
      */
     public function GetScheduleAdminIds();
-
-    /**
-     * @param GroupItemView[] $groups
-     * @param UserItemView[] $users
-     * @param GroupResourcePermission[] $permissionsWrite
-     * @param GroupResourcePermission[] $permissionsRead
-     */
-    public function Export($groups, $users, $permissionsWrite, $permissionsRead);
-
-    /**
-     * @return UploadedFile
-     */
-    public function GetImportFile();
-
-    public function ShowTemplateCsv();
-
-    /**
-     * @param CsvImportResult $importResult
-     */
-    public function SetImportResult($importResult);
-
-    /**
-     * @return bool
-     */
-    public function GetUpdateOnImport();
 }
 
 class ManageGroupsPage extends ActionPage implements IManageGroupsPage
@@ -167,12 +142,7 @@ class ManageGroupsPage extends ActionPage implements IManageGroupsPage
     public function __construct()
     {
         parent::__construct('ManageGroups', 1);
-        $this->presenter = new ManageGroupsPresenter(
-            $this,
-            new GroupRepository(),
-            new ResourceRepository(),
-            new ScheduleRepository(),
-            new UserRepository());
+        $this->presenter = new ManageGroupsPresenter($this, new GroupRepository(), new ResourceRepository(), new ScheduleRepository());
 
         $this->pageable = new PageablePage($this);
     }
@@ -297,35 +267,6 @@ class ManageGroupsPage extends ActionPage implements IManageGroupsPage
     public function GetScheduleAdminIds()
     {
         return $this->GetForm(FormKeys::SCHEDULE_ID);
-    }
-
-    public function Export($groups, $users, $permissionsWrite, $permissionsRead)
-    {
-        $this->Set('Groups', $groups);
-        $this->Set('Users', $users);
-        $this->Set('PermissionsWrite', $permissionsWrite);
-        $this->Set('PermissionsRead', $permissionsRead);
-        $this->DisplayCsv('Admin/Groups/groups_csv.tpl', 'groups.csv');
-    }
-
-    public function GetImportFile()
-    {
-        return $this->server->GetFile(FormKeys::GROUP_IMPORT_FILE);
-    }
-
-    public function ShowTemplateCsv()
-    {
-        $this->DisplayCsv('Admin/Groups/groups_csv.tpl', 'groups.csv');
-    }
-
-    public function SetImportResult($importResult)
-    {
-        $this->SetJsonResponse($importResult);
-    }
-
-    public function GetUpdateOnImport()
-    {
-        return $this->GetCheckbox(FormKeys::UPDATE_ON_IMPORT);
     }
 }
 
