@@ -918,7 +918,7 @@ class en_us extends Language
 		$strings['MyDashboard'] = 'My Dashboard';
 		$strings['ServerSettings'] = 'Server Settings';
 		$strings['Dashboard'] = 'Dashboard';
-		$strings['Help'] = 'Help';
+		$strings['Help'] = 'Hep';
 		$strings['Administration'] = 'Administration';
 		$strings['About'] = 'About';
 		$strings['Bookings'] = 'Bookings';
