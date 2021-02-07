@@ -343,12 +343,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                                 <li id="navDataCleanup"><a
                                             href="{$Path}admin/data_cleanup.php">{translate key="DataCleanup"}</a>
                                 </li>
-                                {if $ShowNewVersion}
-                                    <li class="divider new-version"></li>
-                                    <li id="navNewVersion" class="new-version">
-                                        <a href="https://www.bookedscheduler.com/whatsnew">{translate key=WhatsNew}</a>
-                                    </li>
-                                {/if}
+                                
                             </ul>
                         </li>
                     {/if}
