@@ -23,12 +23,6 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
         <h1>About Booked Scheduler</h1>
 
-        <h2>Support</h2>
-
-        <p><a href="https://www.bookedscheduler.com">Booked Scheduler Official Home</a></p>
-        <p><a href="https://www.twinkletoessoftware.com">Twinkle Toes Software</a></p>
-        <p><a href="https://forums.bookedscheduler.com">Booked Scheduler Community Support</a></p>
-
         <h2>Credits</h2>
 
         <h3>Authors</h3>
