@@ -205,12 +205,7 @@ class GroupSaveController implements IGroupSaveController
 
     private function GetPresenter($page)
     {
-        return new ManageGroupsPresenter(
-            $page,
-            $this->groupRepository,
-            $this->resourceRepository,
-            $this->scheduleRepository,
-            new UserRepository());
+        return new ManageGroupsPresenter($page, $this->groupRepository, $this->resourceRepository, $this->scheduleRepository);
     }
 
     /**

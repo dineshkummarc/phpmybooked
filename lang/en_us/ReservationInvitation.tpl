@@ -16,51 +16,34 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 *}
+Reservation Details:
+<br/>
+<br/>
 
-{if $Deleted}
-    <p>{$UserName} has deleted a reservation</p>
-    {else}
-    <p>{$UserName} has added you to a reservation</p>
-{/if}
-
-{if !empty($DeleteReason)}
-    <p><strong>Delete Reason:</strong>{$DeleteReason|nl2br}</p>
-{/if}
-
-<p><strong>Reservation Details:</strong></p>
-
-<p>
-    <strong>Start:</strong> {formatdate date=$StartDate key=reservation_email}<br/>
-    <strong>End:</strong> {formatdate date=$EndDate key=reservation_email}<br/>
-</p>
-
-<p>
+Starting: {formatdate date=$StartDate key=reservation_email}<br/>
+Ending: {formatdate date=$EndDate key=reservation_email}<br/>
 {if $ResourceNames|count > 1}
-    <strong>Resources ({$ResourceNames|count}):</strong> <br />
+    Resources:
+    <br/>
     {foreach from=$ResourceNames item=resourceName}
-        {$resourceName}<br/>
+        {$resourceName}
+        <br/>
     {/foreach}
 {else}
-    <strong>Resource:</strong> {$ResourceName}<br/>
+    Resource: {$ResourceName}
+    <br/>
 {/if}
-</p>
 
 {if $ResourceImage}
-    <div class="resource-image"><img alt="{$ResourceName|escape}" src="{$ScriptUrl}/{$ResourceImage}"/></div>
+    <div class="resource-image"><img src="{$ScriptUrl}/{$ResourceImage}"/></div>
 {/if}
 
-{if $RequiresApproval && !$Deleted}
-    <p>* One or more of the resources reserved require approval before usage. This reservation will be pending until it is approved. *</p>
-{/if}
-
-<p>
-    <strong>Title:</strong> {$Title}<br/>
-    <strong>Description:</strong> {$Description|nl2br}
-</p>
+Title: {$Title}<br/>
+Description: {$Description|nl2br}
 
 {if count($RepeatRanges) gt 0}
     <br/>
-    <strong>The reservation occurs on the following dates ({$RepeatRanges|count}):</strong>
+    The reservation occurs on the following dates:
     <br/>
 {/if}
 
@@ -71,9 +54,8 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 {/foreach}
 
 {if $Participants|count >0}
-    <br />
-    <strong>Participants ({$Participants|count + $ParticipatingGuests|count}):</strong>
-    <br />
+    <br/>
+    Participants:
     {foreach from=$Participants item=user}
         {$user->FullName()}
         <br/>
@@ -88,9 +70,8 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 {/if}
 
 {if $Invitees|count >0}
-    <br />
-    <strong>Invitees ({$Invitees|count + $InvitedGuests|count}):</strong>
-    <br />
+    <br/>
+    Invitees:
     {foreach from=$Invitees item=user}
         {$user->FullName()}
         <br/>
@@ -105,24 +86,27 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 {/if}
 
 {if $Accessories|count > 0}
-    <br />
-       <strong>Accessories ({$Accessories|count}):</strong>
-       <br />
+    <br/>
+    Accessories:
+    <br/>
     {foreach from=$Accessories item=accessory}
         ({$accessory->QuantityReserved}) {$accessory->Name}
         <br/>
     {/foreach}
 {/if}
 
-{if !$Deleted && !$Updated}
-<p>
-    <strong>Attending?</strong> <a href="{$ScriptUrl}/{$AcceptUrl}">Yes</a> <a href="{$ScriptUrl}/{$DeclineUrl}">No</a>
-</p>
+{if $RequiresApproval}
+    <br/>
+    One or more of the resources reserved require approval before usage. This reservation will be pending until it is approved.
 {/if}
 
-{if !$Deleted}
+<br/>
+Attending? <a href="{$ScriptUrl}/{$AcceptUrl}">Yes</a> <a href="{$ScriptUrl}/{$DeclineUrl}">No</a>
+<br/>
+<br/>
+
 <a href="{$ScriptUrl}/{$ReservationUrl}">View this reservation</a> |
 <a href="{$ScriptUrl}/{$ICalUrl}">Add to Calendar</a> |
-<a href="{$GoogleCalendarUrl}" target="_blank" rel="nofollow">Add to Google Calendar</a> |
-{/if}
+<a href="http://www.google.com/calendar/event?action=TEMPLATE&text={$Title|escape:'url'}&dates={formatdate date=$StartDate->ToUtc() key=google}/{formatdate date=$EndDate->ToUtc() key=google}&ctz={$StartDate->Timezone()}&details={$Description|escape:'url'}&location={$ResourceName|escape:'url'}&trp=false&sprop=&sprop=name:"
+   target="_blank" rel="nofollow">Add to Google Calendar</a> |
 <a href="{$ScriptUrl}">Log in to {$AppTitle}</a>

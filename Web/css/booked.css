@@ -360,9 +360,6 @@ div.center {
 .margin-bottom-25 {
   margin-bottom: 25px;
 }
-.margin-top-15 {
-  margin-top: 15px;
-}
 .margin-bottom-15 {
   margin-bottom: 15px;
 }
@@ -1142,12 +1139,8 @@ table.reservations td.resourcename {
   background-color: #EDEDED;
   color: #999999;
   width: 150px;
-  height: 40px;
-  max-width: 100%;
-  margin: 0 auto;
-  line-height: 1;
-  overflow: hidden;
   text-overflow: ellipsis;
+  overflow: hidden;
 }
 table.reservations td.resourcename a {
   color: #0772A1;
@@ -1209,9 +1202,9 @@ table.reservations.mobile div.reservable {
 .reservations.condensed div.reservable {
   padding: 3px;
   margin: 2px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
   cursor: pointer;
 }
 .reservations.condensed div.reservable {
@@ -1240,26 +1233,14 @@ table.reservations.mobile div.reservable {
   max-width: 1px;
   overflow: hidden;
 }
-.event,
-.buffer {
+.event {
   overflow: hidden;
   position: absolute;
   background-color: #000;
   height: 40px;
   z-index: 2;
-  border-top: solid 1px #36648B;
-  border-left: solid 1px #36648B;
   border-bottom: solid 1px #36648B;
   border-right: solid 1px #36648B;
-  border-collapse: separate;
-  text-wrap: none;
-}
-.buffer {
-  z-index: 1;
-}
-.condensed-event {
-  border-width: 1px;
-  border-style: solid;
 }
 .unreservable,
 .buffer {
@@ -1379,7 +1360,6 @@ div.legend {
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
-  cursor: default;
 }
 .reservations-left-header {
   border-bottom: solid 1px #E9E9E9;
@@ -1547,24 +1527,6 @@ a.toggle-sidebar {
 }
 #reservations {
   position: relative;
-}
-#reservationsToTop {
-  display: none;
-  position: fixed;
-  bottom: 20px;
-  right: 30px;
-  z-index: 999;
-  border: none;
-  background-color: #D5DED9;
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  border-radius: 20px;
-  color: #585754;
-  cursor: pointer;
-  padding: 5px;
-}
-#reservationsToTop:hover {
-  color: #000;
 }
 #resourceDetailsPopup h4 {
   float: left;
@@ -1981,9 +1943,6 @@ a.remove {
 #page-reservation .resourceDetails {
   text-decoration: none;
   cursor: pointer;
-}
-#user-availability-box table.reservations td.resourcename {
-  color: #333;
 }
 span.error {
   font-weight: bold;
@@ -2445,14 +2404,6 @@ td.update {
 }
 #resource-images .resource-image img {
   width: 100%;
-}
-#sendStatusChangeMessageContent {
-  background-color: #fcfcfc;
-  border: solid 1px #ccc;
-  padding: 1em;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
 }
 .admin-page input,
 #page-manage-blackouts input,

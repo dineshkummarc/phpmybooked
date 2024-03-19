@@ -103,12 +103,6 @@ abstract class EmailMessage implements IEmailMessage
 		return !empty($this->attachmentContents);
 	}
 
-	public function RemoveStringAttachment()
-	{
-		$this->attachmentContents = null;
-		$this->attachmentFileName = null;
-	}
-
 	public function AttachmentContents()
 	{
 		return $this->attachmentContents;

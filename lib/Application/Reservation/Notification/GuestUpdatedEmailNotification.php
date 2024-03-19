@@ -60,25 +60,29 @@ class GuestUpdatedEmailNotification extends GuestAddedEmailNotification
 
 		foreach ($instance->UnchangedInvitedGuests() as $guestEmail)
 		{
-			$message = new GuestUpdatedEmail($owner, $guestEmail, $reservationSeries, $this->attributeRepository, $this->userRepository);
+			$guestUser = $this->userRepository->LoadByUsername($guestEmail);
+			$message = new GuestUpdatedEmail($owner, $guestUser, $reservationSeries, $this->attributeRepository, $this->userRepository);
 			ServiceLocator::GetEmailService()->Send($message);
 		}
 
 		foreach ($instance->UnchangedParticipatingGuests() as $guestEmail)
 		{
-			$message = new GuestUpdatedEmail($owner, $guestEmail, $reservationSeries, $this->attributeRepository, $this->userRepository);
+			$guestUser = $this->userRepository->LoadByUsername($guestEmail);
+			$message = new GuestUpdatedEmail($owner, $guestUser, $reservationSeries, $this->attributeRepository, $this->userRepository);
 			ServiceLocator::GetEmailService()->Send($message);
 		}
 
 		foreach ($instance->RemovedInvitedGuests() as $guestEmail)
 		{
-			$message = new GuestDeletedEmail($owner, $guestEmail, $reservationSeries, $this->attributeRepository, $this->userRepository);
+			$guestUser = $this->userRepository->LoadByUsername($guestEmail);
+			$message = new GuestDeletedEmail($owner, $guestUser, $reservationSeries, $this->attributeRepository, $this->userRepository);
 			ServiceLocator::GetEmailService()->Send($message);
 		}
 
 		foreach ($instance->RemovedParticipatingGuests() as $guestEmail)
 		{
-			$message = new GuestDeletedEmail($owner, $guestEmail, $reservationSeries, $this->attributeRepository, $this->userRepository);
+			$guestUser = $this->userRepository->LoadByUsername($guestEmail);
+			$message = new GuestDeletedEmail($owner, $guestUser, $reservationSeries, $this->attributeRepository, $this->userRepository);
 			ServiceLocator::GetEmailService()->Send($message);
 		}
 	}
